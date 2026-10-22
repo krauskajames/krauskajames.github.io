@@ -1,4 +1,497 @@
-   <!doctype html>
-   <title>James Krauska – GIS Portfolio</title>
-   <h1>James Krauska – GIS Portfolio</h1>
-   <p>Coming soon.</p>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Krauska GIS Portfolio</title>
+<meta name="description" content="James Krauska — GIS and CAD automation portfolio. Maps, models and the tools that make them faster.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: museum-catalog single column — generous margins, a topographic hero plate,
+   project "plates" with a map-collar metadata strip, quiet hairlines, one forest-green accent. */
+:root {
+  --paper: #f1f2ec;      /* green-grey paper */
+  --paper-2: #e6e9dd;    /* plate ground */
+  --ink: #1b241d;        /* forest black */
+  --ink-2: #4c5a4f;      /* secondary text */
+  --forest: #2e4a34;     /* primary accent */
+  --olive: #6d7a3a;      /* secondary accent */
+  --rule: #c7ccbb;       /* hairlines */
+  --contour: rgba(46, 74, 52, 0.22);
+  --contour-strong: rgba(109, 122, 58, 0.55);
+  --on-forest: #f1f2ec;
+
+  --display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 4vw, 3rem);
+  --step-4: clamp(2.75rem, 7vw, 5rem);
+  --measure: 62ch;
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+    --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+    --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+    --on-forest: #121813; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+  --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+  --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+  --on-forest: #121813; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-padding-top: 5rem; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 var(--step-0)/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: inherit; text-decoration-color: var(--olive); text-underline-offset: 0.2em; }
+a:hover { color: var(--forest); }
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; border-radius: 2px; }
+
+.wrap {
+  max-width: var(--wrap); margin-inline: auto;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 480px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.label {
+  font: 500 var(--step--1)/1.4 var(--mono);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; flex-wrap: wrap; }
+.wordmark { font: 600 1.5rem/1 var(--display); letter-spacing: 0.01em; text-decoration: none; }
+.wordmark span { color: var(--olive); font-style: italic; font-weight: 500; }
+.nav { display: flex; gap: clamp(1rem, 3vw, 2.25rem); font: 500 0.9375rem/1 var(--body); }
+.nav a { text-decoration: none; padding-block: 0.25rem; border-bottom: 1px solid transparent; }
+.nav a:hover { border-bottom-color: var(--olive); }
+
+/* Hero */
+.hero { position: relative; border-bottom: 1px solid var(--rule); overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .wrap { position: relative; padding-block: clamp(4rem, 10vw, 7.5rem) clamp(3rem, 7vw, 5rem); display: grid; gap: 1.75rem; }
+.hero h1 {
+  font: 500 var(--step-4)/1.02 var(--display); letter-spacing: -0.01em;
+  max-width: 14ch; margin: 0; text-wrap: balance;
+}
+.hero h1 em { color: var(--forest); font-style: italic; }
+.hero p.lede { font-size: var(--step-1); line-height: 1.55; max-width: 48ch; margin: 0; color: var(--ink-2); }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 500 0.9375rem/1 var(--body); text-decoration: none;
+  padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px;
+  transition: background-color .2s ease, color .2s ease;
+}
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+
+/* Sections */
+section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(--rule); }
+.section-head { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; align-items: baseline; margin-bottom: 3rem; }
+.section-head h2 { font: 500 var(--step-3)/1.1 var(--display); margin: 0; text-wrap: balance; }
+.section-head p { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
+@media (max-width: 760px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+
+/* Project plates */
+.plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 2.5rem; }
+@media (max-width: 760px) { .plates { grid-template-columns: minmax(0, 1fr); } }
+.plate { display: grid; gap: 1rem; min-width: 0; }
+.plate figure { margin: 0; background: var(--paper-2); border: 1px solid var(--rule); aspect-ratio: 4 / 3; max-width: 100%; position: relative; overflow: hidden; }
+.plate figure svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate .collar { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.6rem; }
+.status { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.55rem; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
+.status.live { color: var(--forest); }
+.status.planned { color: var(--olive); }
+.plate h3 { font: 600 var(--step-2)/1.15 var(--display); margin: 0; text-wrap: balance; }
+.plate p { margin: 0; color: var(--ink-2); max-width: var(--measure); }
+.plate dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.35rem 1.25rem; margin: 0.25rem 0 0; font-size: 0.9375rem; }
+.plate dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.plate dd { margin: 0; }
+
+/* svg strokes */
+.s-ink { stroke: var(--ink); } .s-forest { stroke: var(--forest); } .s-olive { stroke: var(--olive); } .s-rule { stroke: var(--rule); }
+.f-forest { fill: var(--forest); } .f-olive { fill: var(--olive); } .f-paper { fill: var(--paper); } .f-ink { fill: var(--ink); }
+.f-tint { fill: var(--olive); fill-opacity: .14; }
+.svg-label { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .06em; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; }
+@media (max-width: 760px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+.about-grid .prose p { margin: 0 0 1.1rem; max-width: var(--measure); }
+.about-grid .prose p:first-child { font: 500 var(--step-2)/1.35 var(--display); color: var(--ink); }
+.facts { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.facts div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1rem; padding-block: 0.85rem; border-bottom: 1px solid var(--rule); }
+.facts dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.facts dd { margin: 0; }
+
+/* Experience */
+.roles { display: grid; gap: 0; border-top: 1px solid var(--ink); }
+.role { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 0.5rem 3rem; padding-block: 1.75rem; border-bottom: 1px solid var(--rule); }
+@media (max-width: 760px) { .role { grid-template-columns: minmax(0, 1fr); } }
+.role h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0; }
+.role .org { color: var(--forest); font-weight: 500; }
+.role ul { margin: 0.75rem 0 0; padding-left: 1.1rem; color: var(--ink-2); max-width: var(--measure); }
+.role li + li { margin-top: 0.4rem; }
+
+/* Toolkit */
+.toolkit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+@media (max-width: 860px) { .toolkit { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .toolkit { grid-template-columns: minmax(0, 1fr); } }
+.toolkit h3 { font: 600 var(--step-1)/1.2 var(--display); margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.toolkit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; color: var(--ink-2); }
+
+/* Contact */
+.contact { display: grid; gap: 1.5rem; }
+.contact h2 { font: 500 var(--step-4)/1.05 var(--display); margin: 0; max-width: 16ch; text-wrap: balance; }
+.contact-row { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; }
+.email { font: 500 var(--step-1)/1.4 var(--mono); user-select: all; word-break: break-all; }
+.copy { font: 500 0.875rem/1 var(--body); background: none; color: var(--forest); border: 1px solid var(--forest); padding: 0.6rem 0.9rem; border-radius: 2px; cursor: pointer; }
+.copy:hover { background: var(--paper-2); }
+
+/* Footer: map collar */
+footer { padding-block: 2.5rem 3rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: end; }
+.scalebar { display: grid; gap: 0.35rem; }
+.scalebar .bar { display: flex; width: 12rem; max-width: 100%; height: 6px; border: 1px solid var(--ink); }
+.scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
+.scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="#top">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <canvas id="contours" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="meta">
+        <span class="label">GIS &amp; CAD Automation</span>
+        <span class="label">43.097° N, 89.504° W · Middleton, Wisconsin</span>
+      </div>
+      <h1>Maps, models, and the <em>tools</em> that make them faster.</h1>
+      <p class="lede">I turn drawings, field data and imagery into accurate spatial data, then write the code that automates the slow parts. B.S. in Geospatial Sciences, University of Wisconsin–Stevens Point.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#work">View selected work</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Selected work</span>
+        <div>
+          <h2>Four projects across automation, land records, ecology and cartography</h2>
+          <p>Each project lists its data, tools and status. Projects marked “Coming 2027” are being built this winter.</p>
+        </div>
+      </div>
+
+      <div class="plates">
+        <!-- PX Duct Designer -->
+        <article class="plate">
+          <figure aria-label="Diagram of traced wall centerlines turning into walls and ductwork">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <g fill="none" stroke-width="10" class="s-ink" stroke-linejoin="miter">
+                <path d="M60 60 H340 V240 H60 Z"/>
+                <path d="M200 60 V170 M200 170 H340"/>
+              </g>
+              <g fill="none" stroke-width="1.2" class="s-olive" stroke-dasharray="5 4">
+                <path d="M60 60 H340 V240 H60 Z M200 60 V170 H340"/>
+              </g>
+              <rect x="110" y="235" width="44" height="10" class="f-paper"/>
+              <path d="M110 240 A44 44 0 0 1 154 196" fill="none" class="s-ink" stroke-width="1"/>
+              <g fill="none" stroke-width="7" class="s-forest" stroke-linecap="round">
+                <path d="M90 110 H170 M130 110 V205 M240 205 H310 M260 120 H310"/>
+              </g>
+              <g class="f-olive"><circle cx="130" cy="205" r="7"/><circle cx="310" cy="205" r="7"/><circle cx="310" cy="120" r="7"/></g>
+              <text x="66" y="282" class="svg-label">TRACE → BUILD · 8 3/8" WALLS</text>
+            </svg>
+          </figure>
+          <div class="collar"><span class="label">SketchUp extension</span><span class="status live">In use</span></div>
+          <h3>PX Duct Designer</h3>
+          <p>A SketchUp Ruby extension that turns traced centerlines into finished 2D or 3D walls and HVAC ductwork, with doors, windows, diffusers and VAV boxes placed in one click. It cut PX Design's slowest modeling step from days to minutes.</p>
+          <dl>
+            <dt>Tools</dt><dd>Ruby, SketchUp API, JSON component library</dd>
+            <dt>Scope</dt><dd>16+ commercial and institutional buildings</dd>
+          </dl>
+        </article>
+
+        <!-- Parcel & NG911 -->
+        <article class="plate">
+          <figure aria-label="Diagram of parcels with a flagged overlap and an address point">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <g fill="none" stroke-width="1.2" class="s-ink">
+                <path d="M40 40 H200 V150 H40 Z M200 40 H360 V120 H200 M200 120 V150 M40 150 H360 V260 H40 Z M150 150 V260 M260 150 V260 M260 205 H360"/>
+              </g>
+              <path d="M188 112 L222 112 L222 160 L188 160 Z" class="f-tint s-olive" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <path d="M20 270 L380 30" fill="none" class="s-forest" stroke-width="3" stroke-dasharray="1 0"/>
+              <g class="f-forest"><circle cx="95" cy="95" r="5"/><circle cx="300" cy="80" r="5"/><circle cx="210" cy="200" r="5"/></g>
+              <circle cx="320" cy="232" r="6" class="f-paper s-olive" stroke-width="2"/>
+              <text x="230" y="105" class="svg-label">OVERLAP</text>
+              <text x="40" y="285" class="svg-label">TOPOLOGY · COGO · NG911</text>
+            </svg>
+          </figure>
+          <div class="collar"><span class="label">Land records · ArcPy</span><span class="status planned">Coming 2027</span></div>
+          <h3>Parcel &amp; NG911 Data QA Toolkit</h3>
+          <p>Parcels drafted from recorded legal descriptions with COGO, plus an ArcPy script tool that flags gaps, overlaps, missing attributes and address points that fall off their road centerline.</p>
+          <dl>
+            <dt>Data</dt><dd>Public Wisconsin county parcels and address points</dd>
+            <dt>Tools</dt><dd>ArcGIS Pro, Parcel Fabric, ArcPy</dd>
+          </dl>
+        </article>
+
+        <!-- Pollinator -->
+        <article class="plate">
+          <figure aria-label="Habitat suitability surface drawn as shaded bands">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <path d="M95 30 L250 30 L262 52 L300 60 L330 120 L345 190 L330 250 L270 275 L160 275 L120 250 L95 200 L80 130 Z" class="f-tint s-ink" stroke-width="1.2"/>
+              <path d="M140 80 C190 60 250 80 270 130 C285 170 250 220 200 225 C150 230 120 190 125 150 C128 120 120 95 140 80 Z" class="f-tint s-olive" stroke-width="1"/>
+              <path d="M170 110 C205 100 240 120 240 150 C240 180 210 195 185 190 C160 185 150 160 155 135 Z" class="f-tint s-forest" stroke-width="1.2"/>
+              <path d="M190 135 C205 130 220 140 218 155 C216 168 200 172 192 165 C182 158 180 142 190 135 Z" class="f-forest"/>
+              <text x="40" y="285" class="svg-label">MAXENT · TEST AUC 0.81–0.93</text>
+            </svg>
+          </figure>
+          <div class="collar"><span class="label">Species distribution · Web app</span><span class="status planned">Coming 2027</span></div>
+          <h3>Pollinator Habitat Explorer</h3>
+          <p>Statewide habitat suitability for the host plants of the monarch, the Karner blue butterfly and an endangered oil-collecting bee, modeled with MaxEnt from nearly 4,000 iNaturalist records and 32 climate and soil rasters. Being rebuilt as an interactive web app.</p>
+          <dl>
+            <dt>Data</dt><dd>GBIF / iNaturalist, WorldClim, SoilGrids</dd>
+            <dt>Tools</dt><dd>MaxEnt, ArcGIS Pro, Experience Builder</dd>
+          </dl>
+        </article>
+
+        <!-- Dark sky -->
+        <article class="plate">
+          <figure aria-label="Night sky stars over a dark landscape horizon">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" class="f-ink"/>
+              <g class="f-paper">
+                <circle cx="60" cy="50" r="1.4"/><circle cx="120" cy="90" r="1"/><circle cx="180" cy="40" r="1.8"/><circle cx="240" cy="70" r="1"/><circle cx="300" cy="35" r="1.4"/><circle cx="350" cy="95" r="1"/><circle cx="90" cy="140" r="1"/><circle cx="210" cy="120" r="1.3"/><circle cx="280" cy="150" r="1"/><circle cx="330" cy="60" r="0.9"/><circle cx="150" cy="170" r="0.9"/><circle cx="40" cy="110" r="0.9"/>
+              </g>
+              <path d="M0 230 C60 210 110 225 160 215 C220 200 260 220 320 205 C350 198 380 205 400 200 V300 H0 Z" class="f-forest"/>
+              <g class="f-olive"><circle cx="300" cy="228" r="3"/><circle cx="318" cy="232" r="2"/><circle cx="90" cy="242" r="2.5"/></g>
+              <text x="24" y="285" class="svg-label" style="fill: var(--paper)">BORTLE SCALE · WISCONSIN</text>
+            </svg>
+          </figure>
+          <div class="collar"><span class="label">Print cartography</span><span class="status planned">Coming 2027</span></div>
+          <h3>Dark Skies of Wisconsin</h3>
+          <p>A print poster of light pollution and the darkest places to stargaze in Wisconsin, designed for the WLIA 2027 map contest.</p>
+          <dl>
+            <dt>Tools</dt><dd>ArcGIS Pro, Adobe Illustrator</dd>
+            <dt>Format</dt><dd>Large-format print and web image</dd>
+          </dl>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">About</span>
+        <div><h2>Field-trained, code-minded</h2></div>
+      </div>
+      <div class="about-grid">
+        <div class="prose">
+          <p>I'm a geospatial scientist who likes the whole path from a muddy preserve to a clean dataset to a tool other people can use.</p>
+          <p>At PX Design I read architectural floor plans, turn them into accurate 2D and 3D models, and build the software that speeds that work up. Before that, I mapped trails, infrastructure and invasive species across a Wisconsin land trust's preserves with a Trimble GPS and ArcGIS Field Maps.</p>
+          <p>I graduated from UW–Stevens Point with a 3.8 GPA. I'm most interested in public-sector and conservation GIS: land records, data quality, and automating the routine so analysts can spend time on the hard problems.</p>
+        </div>
+        <dl class="facts">
+          <div><dt>Role</dt><dd>CAD Automation Specialist, PX Design</dd></div>
+          <div><dt>Degree</dt><dd>B.S. Geospatial Sciences, minor in GIS and Spatial Analysis, 2025</dd></div>
+          <div><dt>Field gear</dt><dd>Trimble GNSS, ArcGIS Field Maps, DJI UAS</dd></div>
+          <div><dt>Certificates</dt><dd>Esri: geocoding, network analysis, Business Analyst, 3D</dd></div>
+          <div><dt>Based in</dt><dd>Middleton, Wisconsin</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Experience</span>
+        <div><h2>Where I've worked</h2></div>
+      </div>
+      <div class="roles">
+        <div class="role">
+          <div><span class="label">Jan 2026 – Present</span></div>
+          <div>
+            <h3>CAD Automation Specialist · <span class="org">PX Design</span></h3>
+            <ul>
+              <li>Built PX Duct Designer, cutting wall and ductwork modeling from days to minutes.</li>
+              <li>Model 2D and 3D floor plans and HVAC systems from architectural drawings for schools, clinics, libraries and county buildings.</li>
+              <li>Collect oblique and vertical aerial photography with DJI drones.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role">
+          <div><span class="label">Jul 2025 – Nov 2025</span></div>
+          <div>
+            <h3>GIS Intern · <span class="org">Restoring Lands Wisconsin Land Trust</span></h3>
+            <ul>
+              <li>Planned and ran independent GPS data collection for a network of 40+ preserves.</li>
+              <li>Mapped 15+ invasive species, trails and infrastructure; re-shot 2020 photo-monitoring points.</li>
+              <li>Proofed field data during desktop review for the stewardship and grant teams.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="toolkit">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Toolkit</span>
+        <div><h2>Software and methods</h2></div>
+      </div>
+      <div class="toolkit">
+        <div><h3>GIS</h3><ul><li>ArcGIS Pro and Online</li><li>Field Maps, Survey123</li><li>StoryMaps</li><li>QGIS</li><li>Network Analyst</li></ul></div>
+        <div><h3>Remote sensing</h3><ul><li>ERDAS Imagine</li><li>Image classification</li><li>Accuracy assessment</li><li>LiDAR and DEMs</li><li>Photogrammetry</li></ul></div>
+        <div><h3>Code &amp; CAD</h3><ul><li>Python, Ruby, SQL, R, Java</li><li>SketchUp Pro and Ruby API</li><li>Thea Render</li><li>Git and GitHub</li><li>MaxEnt</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="border-bottom: none;">
+    <div class="wrap contact">
+      <span class="label">Contact</span>
+      <h2>Looking for a GIS specialist? Let's talk.</h2>
+      <div class="contact-row">
+        <span class="email" id="email">krauskajames@gmail.com</span>
+        <button class="copy" id="copy" type="button">Copy email</button>
+        <a href="https://github.com/krauskajames">GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="scalebar" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><i></i></div>
+      <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
+    </div>
+    <span class="label">NAD83 / Wisconsin Transverse Mercator · © 2026 James Krauska</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Topographic contours drawn with marching squares over a smooth synthetic terrain.
+  const canvas = document.getElementById('contours');
+  const ctx = canvas.getContext('2d');
+  function css(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  function height(x, y) {
+    return Math.sin(x * 0.0042 + 1.3) * Math.cos(y * 0.0061 - 0.4) * 1.2
+         + Math.sin((x + y) * 0.0027 + 2.1) * 0.9
+         + Math.cos(x * 0.009 - y * 0.004) * 0.35
+         + Math.exp(-(((x - 0.78 * W) ** 2) / (2 * (0.14 * W) ** 2) + ((y - 0.45 * H) ** 2) / (2 * (0.35 * H) ** 2))) * 1.6;
+  }
+  let W = 0, H = 0;
+  function draw() {
+    const r = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    const step = 10, cols = Math.ceil(W / step) + 1, rows = Math.ceil(H / step) + 1;
+    const v = new Float32Array(cols * rows);
+    let min = Infinity, max = -Infinity;
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      const h = height(i * step, j * step); v[j * cols + i] = h;
+      if (h < min) min = h; if (h > max) max = h;
+    }
+    const levels = 16, thin = css('--contour'), strong = css('--contour-strong');
+    for (let k = 1; k < levels; k++) {
+      const t = min + (max - min) * k / levels;
+      const index = k % 4 === 0;
+      ctx.strokeStyle = index ? strong : thin;
+      ctx.lineWidth = index ? 1.1 : 0.7;
+      ctx.beginPath();
+      for (let j = 0; j < rows - 1; j++) for (let i = 0; i < cols - 1; i++) {
+        const a = v[j * cols + i], b = v[j * cols + i + 1], c = v[(j + 1) * cols + i + 1], d = v[(j + 1) * cols + i];
+        const x = i * step, y = j * step;
+        const pts = [];
+        if ((a < t) !== (b < t)) pts.push([x + step * (t - a) / (b - a), y]);
+        if ((b < t) !== (c < t)) pts.push([x + step, y + step * (t - b) / (c - b)]);
+        if ((d < t) !== (c < t)) pts.push([x + step * (t - d) / (c - d), y + step]);
+        if ((a < t) !== (d < t)) pts.push([x, y + step * (t - a) / (d - a)]);
+        if (pts.length >= 2) { ctx.moveTo(pts[0][0], pts[0][1]); ctx.lineTo(pts[1][0], pts[1][1]); }
+        if (pts.length === 4) { ctx.moveTo(pts[2][0], pts[2][1]); ctx.lineTo(pts[3][0], pts[3][1]); }
+      }
+      ctx.stroke();
+    }
+  }
+  let raf = 0;
+  const redraw = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); };
+  window.addEventListener('resize', redraw);
+  if (window.matchMedia) {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener && mq.addEventListener('change', redraw);
+  }
+  new MutationObserver(redraw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  draw();
+
+  // Copy email
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', function () {
+    const text = document.getElementById('email').textContent;
+    const done = () => { btn.textContent = 'Copied'; setTimeout(() => btn.textContent = 'Copy email', 1800); };
+    const fallback = () => { const s = window.getSelection(), r = document.createRange(); r.selectNodeContents(document.getElementById('email')); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected — press Ctrl+C'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+  });
+})();
+</script>
+
+</body>
+</html>
