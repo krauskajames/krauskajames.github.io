@@ -141,6 +141,9 @@ section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(
 .plate dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.35rem 1.25rem; margin: 0.25rem 0 0; font-size: 0.9375rem; }
 .plate dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
 .plate dd { margin: 0; }
+.case-link { font: 500 0.9375rem/1 var(--body); color: var(--forest); text-decoration: none; margin-top: 0.25rem; }
+.case-link:hover { text-decoration: underline; }
+.plate h3 a { text-decoration: none; }
 
 /* svg strokes */
 .s-ink { stroke: var(--ink); } .s-forest { stroke: var(--forest); } .s-olive { stroke: var(--olive); } .s-rule { stroke: var(--rule); }
@@ -236,21 +239,22 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       </div>
 
       <div class="plates">
-        <!-- PX Duct Designer -->
+        <!-- DuctBuilder -->
         <article class="plate">
           <figure class="has-video">
-            <video id="pxdemo" poster="media/px-duct-designer-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Screen recording: tracing walls and ducts over a floor plan, building them in 3D with PX Duct Designer, then orbiting the finished model">
-              <source src="media/px-duct-designer-demo.webm" type="video/webm">
-              <source src="media/px-duct-designer-demo.mp4" type="video/mp4">
+            <video id="pxdemo" poster="media/ductbuilder-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Screen recording: tracing walls and ducts over a floor plan, building them in 3D with DuctBuilder, then orbiting the finished model">
+              <source src="media/ductbuilder-demo.webm" type="video/webm">
+              <source src="media/ductbuilder-demo.mp4" type="video/mp4">
             </video>
           </figure>
           <div class="collar"><span class="label">SketchUp extension</span><span class="status live">In use</span></div>
-          <h3>PX Duct Designer</h3>
-          <p>A SketchUp Ruby extension that turns traced centerlines into finished 2D or 3D walls and HVAC ductwork, with doors, windows, diffusers and VAV boxes placed in one click. It cut PX Design's slowest modeling step from days to minutes.</p>
+          <h3><a href="ductbuilder.html">DuctBuilder</a></h3>
+          <p>A SketchUp Ruby extension that turns traced centerlines into finished 2D or 3D walls and HVAC ductwork, with doors, windows, diffusers and VAV boxes placed in one click. A complex floor plan with HVAC now takes under 20 minutes instead of more than a week, so one person does the work of five.</p>
           <dl>
             <dt>Tools</dt><dd>Ruby, SketchUp API, JSON component library</dd>
             <dt>Scope</dt><dd>16+ commercial and institutional buildings</dd>
           </dl>
+          <a class="case-link" href="ductbuilder.html">Read the case study →</a>
         </article>
 
         <!-- Parcel & NG911 -->
@@ -357,7 +361,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
           <div>
             <h3>CAD Automation Specialist · <span class="org">PX Design</span></h3>
             <ul>
-              <li>Built PX Duct Designer, cutting wall and ductwork modeling from days to minutes.</li>
+              <li>Built DuctBuilder, cutting wall and ductwork modeling from days to minutes.</li>
               <li>Model 2D and 3D floor plans and HVAC systems from architectural drawings for schools, clinics, libraries and county buildings.</li>
               <li>Collect oblique and vertical aerial photography with DJI drones.</li>
             </ul>
