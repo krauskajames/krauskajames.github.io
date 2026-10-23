@@ -247,7 +247,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 .data { width: 100%; border-collapse: collapse; }
 .data th, .data td { text-align: left; padding: 0.75rem 1.25rem 0.75rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
 .data thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
-.data td:first-child { font-weight: 600; white-space: nowrap; }
+.data td:first-child { font-weight: 600; min-width: 7rem; }
 </style>
 
 <header class="site-header">
@@ -287,7 +287,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         <button class="btn btn-primary load" type="button" id="loadLive">Load the live globe</button>
       </figure>
       <div class="under">
-        <p class="label" style="margin:0">Live forecast. Drag to turn, scroll to zoom, and switch layers on the left.</p>
+        <p class="label" style="margin:0">Live forecast. Drag to turn, scroll or pinch to zoom, and switch layers.</p>
         <a class="back" href="Starcast/" target="_blank" rel="noopener">Forecasts, sky charts and alerts are in the full app ↗</a>
       </div>
     </div>
@@ -351,7 +351,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
           <li><span>Every 6 hours a GitHub Actions job finds the newest complete GFS run and downloads only the fields it needs, using byte ranges from NOAA's open data bucket on AWS.</span></li>
           <li><span>A Python script (ecCodes, NumPy) decodes the GRIB2 files, converts GFS's running cloud averages back into 3-hour values, and packs each forecast hour into a one-byte-per-value 1° grid.</span></li>
           <li><span>The files are published with the site on GitHub Pages, so every visitor downloads the same small files instead of calling a weather API.</span></li>
-          <li><span>In the browser, the app interpolates the grid smoothly in space (Catmull-Rom) and time, derives seeing and transparency, and draws the layers onto an orthographic globe with D3, blending in sharper regional data as you zoom.</span></li>
+          <li><span>In the browser, the app interpolates the grid smoothly in space (cubic B-splines) and time, derives seeing and transparency, and draws the layers onto an orthographic globe with D3, blending in sharper regional data as you zoom.</span></li>
         </ol>
         <h3>Problems worth solving</h3>
         <ul>
