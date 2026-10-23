@@ -131,6 +131,9 @@ section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(
 .plate { display: grid; gap: 1rem; min-width: 0; }
 .plate figure { margin: 0; background: var(--paper-2); border: 1px solid var(--rule); aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
 .plate figure svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.hover-video video { opacity: 0; transition: opacity .3s ease; }
+.hover-video.playing video { opacity: 1; }
 .plate figure video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .plate .collar { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.6rem; }
 .status { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.55rem; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
@@ -241,8 +244,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       <div class="plates">
         <!-- DuctBuilder -->
         <article class="plate">
-          <figure class="has-video">
-            <video id="pxdemo" poster="media/ductbuilder-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Screen recording: tracing walls and ducts over a floor plan, building them in 3D with DuctBuilder, then orbiting the finished model">
+          <figure class="has-video hover-video">
+            <img src="media/ductbuilder-render.webp" alt="3D render of a sample clinic modeled with DuctBuilder: walls, doors, windows, supply ducts, VAV boxes and diffusers" width="1200" height="720" loading="lazy">
+            <video id="pxdemo" muted loop playsinline preload="none" aria-hidden="true">
               <source src="media/ductbuilder-demo.webm" type="video/webm">
               <source src="media/ductbuilder-demo.mp4" type="video/mp4">
             </video>
@@ -499,6 +503,16 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
   // Respect reduced motion: no autoplay, show controls instead
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('video[autoplay]').forEach(function (vid) { vid.removeAttribute('autoplay'); vid.pause(); vid.controls = true; });
+  }
+
+  // DuctBuilder card: still render by default; the demo plays while a mouse hovers (desktop only)
+  const hv = document.querySelector('.hover-video');
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (hv && finePointer && !reduceMotion) {
+    const hvv = hv.querySelector('video');
+    hv.addEventListener('mouseenter', function () { hvv.currentTime = 0; const p = hvv.play(); if (p) p.catch(function () {}); hv.classList.add('playing'); });
+    hv.addEventListener('mouseleave', function () { hvv.pause(); hv.classList.remove('playing'); });
   }
 
   // Copy email
