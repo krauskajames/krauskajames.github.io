@@ -229,6 +229,12 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 .steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
 .plan-fig { margin: 0 0 1.5rem; border: 1px solid var(--rule); background: #fff; }
 .plan-fig img { display: block; width: 100%; height: auto; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0 0 1.5rem; }
+.pair .plan-fig { margin: 0; display: flex; flex-direction: column; }
+.pair .plan-fig img { aspect-ratio: 1.45; object-fit: contain; background: #fff; }
+.pair .plan-fig.render img { background: var(--paper-2); }
+.pair figcaption { font-size: 0.6875rem; padding: 0.5rem 0.75rem; border-top: 1px solid var(--rule); background: var(--paper); }
+@media (max-width: 640px) { .pair { grid-template-columns: minmax(0, 1fr); } }
 .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; }
 .chips li { margin: 0 !important; font: 500 0.8125rem/1 var(--mono); padding: 0.5rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink-2); }
 </style>
@@ -330,9 +336,16 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
     <div class="wrap cs-body">
       <span class="label">How it works</span>
       <div class="prose">
-        <figure class="plan-fig">
-          <img src="media/sample-clinic-plan.png" alt="Sample clinic floor plan with HVAC ductwork, VAV boxes and diffusers" loading="lazy" width="2000" height="1375">
-        </figure>
+        <div class="pair">
+          <figure class="plan-fig">
+            <img src="media/sample-clinic-plan.png" alt="2D floor plan of a sample clinic with HVAC ductwork, VAV boxes and diffusers" loading="lazy" width="2000" height="1375">
+            <figcaption class="label">Plan in: the 2D drawing</figcaption>
+          </figure>
+          <figure class="plan-fig render">
+            <img src="media/ductbuilder-render-top.webp" alt="The same clinic as a 3D model built with DuctBuilder, seen from above: walls, doors, windows, ducts, VAV boxes and diffusers" loading="lazy" width="1400" height="852">
+            <figcaption class="label">Model out: the 3D build, rendered in Blender</figcaption>
+          </figure>
+        </div>
         <ol class="steps">
           <li><span>Import the floor plan and scale it so a standard door frame measures 3' 6 15/16".</span></li>
           <li><span>Trace wall centerlines, then place door and window markers.</span></li>
