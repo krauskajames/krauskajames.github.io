@@ -65,7 +65,7 @@ save(gpd.GeoDataFrame(ov, crs=CRS_OUT), "PollinatorHabitatOverlap")
 pts = []
 for sid, (common, insect) in SPECIES.items():
     d = pd.read_csv(os.path.join(OCC_DIR, sid + ".csv"))
-    pts.append(gpd.GeoDataFrame({"species": common, "sci_name": sid.replace("_", " "),
-                                 "source": "iNaturalist via GBIF"},
-                                geometry=gpd.points_from_xy(d.longitude, d.latitude), crs="EPSG:4326"))
+    g = gpd.GeoDataFrame(geometry=gpd.points_from_xy(d.longitude, d.latitude), crs="EPSG:4326")
+    g["species"], g["sci_name"], g["source"] = common, sid.replace("_", " "), "iNaturalist via GBIF"
+    pts.append(g)
 save(pd.concat(pts).to_crs(CRS_OUT), "PollinatorRecords")

@@ -80,6 +80,20 @@ python make_web_layers.py
 
 This writes `web/*.png` (8-bit grayscale suitability in Web Mercator) and `web/pollinator.json` (statistics, variable importance, response curves and occurrence points). Copy both into the site's `data/pollinator/` folder.
 
+## 5. Optional: ArcGIS Online layers
+
+```powershell
+python make_agol_layers.py
+```
+
+This writes three zipped shapefiles to `MaxEnt2026/arcgis_online/` (EPSG:3071), ready to upload as hosted feature layers:
+
+- Suitable habitat for each species (10th-percentile threshold)
+- Habitat overlap (1–3 host plants)
+- The thinned records
+
+Paste the public web map URL into `AGOL_URL` in `pollinator.html` to show the "Explore the data in ArcGIS Online" button.
+
 ## Design decisions
 
 - **Target-group background.** It corrects for iNaturalist observer bias. Expect lower AUCs than an uncorrected model; the corrected ones are more trustworthy.
