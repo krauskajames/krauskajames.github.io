@@ -1074,13 +1074,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const map = L.map("map", { zoomSnap: 0.25, minZoom: 6, maxZoom: 12, attributionControl: true, scrollWheelZoom: false });
   map.on("focus", () => map.scrollWheelZoom.enable()); map.on("blur", () => map.scrollWheelZoom.disable());
   map.createPane("labels"); map.getPane("labels").style.zIndex = 650; map.getPane("labels").style.pointerEvents = "none";
-  const ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  // Esri Canvas basemaps (public tile services, no API key) with matching reference labels
+  const ATTR = 'Basemap &copy; <a href="https://www.esri.com">Esri</a>, HERE, Garmin, &copy; OpenStreetMap contributors';
+  const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
   let base, labels;
   function setBasemap() {
-    const style = isDark() ? "dark" : "light";
+    const tone = isDark() ? "Dark" : "Light";
     if (base) { map.removeLayer(base); map.removeLayer(labels); }
-    base = L.tileLayer(`https://{s}.basemaps.cartocdn.com/${style}_nolabels/{z}/{x}/{y}{r}.png`, { attribution: ATTR, subdomains: "abcd", maxZoom: 19 }).addTo(map);
-    labels = L.tileLayer(`https://{s}.basemaps.cartocdn.com/${style}_only_labels/{z}/{x}/{y}{r}.png`, { subdomains: "abcd", pane: "labels", maxZoom: 19 }).addTo(map);
+    base = L.tileLayer(`${ESRI}World_${tone}_Gray_Base/MapServer/tile/{z}/{y}/{x}`, { attribution: ATTR, maxZoom: 16 }).addTo(map);
+    labels = L.tileLayer(`${ESRI}World_${tone}_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, { pane: "labels", maxZoom: 16 }).addTo(map);
   }
   setBasemap();
 
