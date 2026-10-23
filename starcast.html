@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Starcast – James Krauska</title>
+<meta name="description" content="Case study: Starcast, a web map of stargazing conditions worldwide, built on a scheduled NOAA forecast pipeline.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: museum-catalog single column — generous margins, a topographic hero plate,
+   project "plates" with a map-collar metadata strip, quiet hairlines, one forest-green accent. */
+:root {
+  --paper: #f1f2ec;      /* green-grey paper */
+  --paper-2: #e6e9dd;    /* plate ground */
+  --ink: #1b241d;        /* forest black */
+  --ink-2: #4c5a4f;      /* secondary text */
+  --forest: #2e4a34;     /* primary accent */
+  --olive: #6d7a3a;      /* secondary accent */
+  --rule: #c7ccbb;       /* hairlines */
+  --contour: rgba(46, 74, 52, 0.22);
+  --contour-strong: rgba(109, 122, 58, 0.55);
+  --on-forest: #f1f2ec;
+
+  --display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 4vw, 3rem);
+  --step-4: clamp(2.75rem, 7vw, 5rem);
+  --measure: 62ch;
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+    --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+    --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+    --on-forest: #121813; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+  --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+  --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+  --on-forest: #121813; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+html { scroll-padding-top: 5rem; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 var(--step-0)/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: inherit; text-decoration-color: var(--olive); text-underline-offset: 0.2em; }
+a:hover { color: var(--forest); }
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; border-radius: 2px; }
+
+.wrap {
+  max-width: var(--wrap); margin-inline: auto;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 480px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.label {
+  font: 500 var(--step--1)/1.4 var(--mono);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; flex-wrap: wrap; }
+.wordmark { font: 600 1.5rem/1 var(--display); letter-spacing: 0.01em; text-decoration: none; }
+.wordmark span { color: var(--olive); font-style: italic; font-weight: 500; }
+.nav { display: flex; gap: clamp(1rem, 3vw, 2.25rem); font: 500 0.9375rem/1 var(--body); }
+.nav a { text-decoration: none; padding-block: 0.25rem; border-bottom: 1px solid transparent; }
+.nav a:hover { border-bottom-color: var(--olive); }
+
+/* Hero */
+.hero { position: relative; border-bottom: 1px solid var(--rule); overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .wrap { position: relative; padding-block: clamp(4rem, 10vw, 7.5rem) clamp(3rem, 7vw, 5rem); display: grid; gap: 1.75rem; }
+.hero h1 {
+  font: 500 var(--step-4)/1.02 var(--display); letter-spacing: -0.01em;
+  max-width: 14ch; margin: 0; text-wrap: balance;
+}
+.hero h1 em { color: var(--forest); font-style: italic; }
+.hero p.lede { font-size: var(--step-1); line-height: 1.55; max-width: 48ch; margin: 0; color: var(--ink-2); }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 500 0.9375rem/1 var(--body); text-decoration: none;
+  padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px;
+  transition: background-color .2s ease, color .2s ease;
+}
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+
+/* Sections */
+section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(--rule); }
+.section-head { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; align-items: baseline; margin-bottom: 3rem; }
+.section-head h2 { font: 500 var(--step-3)/1.1 var(--display); margin: 0; text-wrap: balance; }
+.section-head p { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
+@media (max-width: 760px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+
+/* Project plates */
+.plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 2.5rem; }
+@media (max-width: 760px) { .plates { grid-template-columns: minmax(0, 1fr); } }
+.plate { display: grid; gap: 1rem; min-width: 0; }
+.plate figure { margin: 0; background: var(--paper-2); border: 1px solid var(--rule); aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
+.plate figure svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate figure video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.plate .collar { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.6rem; }
+.status { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.55rem; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
+.status.live { color: var(--forest); }
+.status.planned { color: var(--olive); }
+.plate h3 { font: 600 var(--step-2)/1.15 var(--display); margin: 0; text-wrap: balance; }
+.plate p { margin: 0; color: var(--ink-2); max-width: var(--measure); }
+.plate dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.35rem 1.25rem; margin: 0.25rem 0 0; font-size: 0.9375rem; }
+.plate dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.plate dd { margin: 0; }
+
+/* svg strokes */
+.s-ink { stroke: var(--ink); } .s-forest { stroke: var(--forest); } .s-olive { stroke: var(--olive); } .s-rule { stroke: var(--rule); }
+.f-forest { fill: var(--forest); } .f-olive { fill: var(--olive); } .f-paper { fill: var(--paper); } .f-ink { fill: var(--ink); }
+.f-tint { fill: var(--olive); fill-opacity: .14; }
+.svg-label { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .06em; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; }
+@media (max-width: 760px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+.about-grid .prose p { margin: 0 0 1.1rem; max-width: var(--measure); }
+.about-grid .prose p:first-child { font: 500 var(--step-2)/1.35 var(--display); color: var(--ink); }
+.facts { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.facts div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1rem; padding-block: 0.85rem; border-bottom: 1px solid var(--rule); }
+.facts dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.facts dd { margin: 0; }
+
+/* Experience */
+.roles { display: grid; gap: 0; border-top: 1px solid var(--ink); }
+.role { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 0.5rem 3rem; padding-block: 1.75rem; border-bottom: 1px solid var(--rule); }
+@media (max-width: 760px) { .role { grid-template-columns: minmax(0, 1fr); } }
+.role h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0; }
+.role .org { color: var(--forest); font-weight: 500; }
+.role ul { margin: 0.75rem 0 0; padding-left: 1.1rem; color: var(--ink-2); max-width: var(--measure); }
+.role li + li { margin-top: 0.4rem; }
+
+/* Toolkit */
+.toolkit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+@media (max-width: 860px) { .toolkit { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .toolkit { grid-template-columns: minmax(0, 1fr); } }
+.toolkit h3 { font: 600 var(--step-1)/1.2 var(--display); margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.toolkit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; color: var(--ink-2); }
+
+/* Contact */
+.contact { display: grid; gap: 1.5rem; }
+.contact h2 { font: 500 var(--step-4)/1.05 var(--display); margin: 0; max-width: 16ch; text-wrap: balance; }
+.contact-row { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; }
+.email { font: 500 var(--step-1)/1.4 var(--mono); user-select: all; word-break: break-all; }
+.copy { font: 500 0.875rem/1 var(--body); background: none; color: var(--forest); border: 1px solid var(--forest); padding: 0.6rem 0.9rem; border-radius: 2px; cursor: pointer; }
+.copy:hover { background: var(--paper-2); }
+.phone { font: 500 var(--step-1)/1.4 var(--mono); text-decoration: none; white-space: nowrap; }
+
+/* Footer: map collar */
+footer { padding-block: 2.5rem 3rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: end; }
+.scalebar { display: grid; gap: 0.35rem; }
+.scalebar .bar { display: flex; width: 12rem; max-width: 100%; height: 6px; border: 1px solid var(--ink); }
+.scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
+.scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<style>
+/* Case study additions */
+.cs-hero .wrap { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 1.5rem; }
+.cs-hero h1 { font: 500 var(--step-4)/1.02 var(--display); margin: 0; letter-spacing: -0.01em; }
+.cs-hero .lede { font-size: var(--step-1); line-height: 1.55; max-width: 52ch; margin: 0; color: var(--ink-2); }
+.back { font: 500 0.875rem/1 var(--body); text-decoration: none; color: var(--forest); }
+.back:hover { text-decoration: underline; }
+.cs-video { margin: 0; border: 1px solid var(--rule); background: var(--paper-2); aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
+.cs-video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.cs-video-wrap { padding-block: 0 clamp(3rem, 7vw, 5rem); border-bottom: 1px solid var(--rule); }
+.cs-video-wrap figcaption { margin-top: 0.75rem; }
+
+.compare { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.compare th, .compare td { text-align: left; padding: 1rem 1.25rem 1rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.compare thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
+.compare td.big { font: 500 var(--step-2)/1.1 var(--display); white-space: nowrap; }
+.compare td.after { color: var(--forest); }
+.table-scroll { overflow-x: auto; }
+
+.cs-body { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; }
+@media (max-width: 760px) { .cs-body { grid-template-columns: minmax(0, 1fr); } }
+.cs-body .prose { max-width: var(--measure); }
+.cs-body .prose p { margin: 0 0 1.1rem; }
+.cs-body .prose h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 1.75rem 0 0.5rem; }
+.cs-body .prose ul, .cs-body .prose ol { margin: 0 0 1.1rem; padding-left: 1.2rem; }
+.cs-body .prose li + li { margin-top: 0.45rem; }
+.cs-body .prose strong { font-weight: 600; color: var(--ink); }
+.steps { counter-reset: s; list-style: none; padding: 0 !important; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); margin: 0 !important; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
+.plan-fig { margin: 0 0 1.5rem; border: 1px solid var(--rule); background: #fff; }
+.plan-fig img { display: block; width: 100%; height: auto; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; }
+.chips li { margin: 0 !important; font: 500 0.8125rem/1 var(--mono); padding: 0.5rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink-2); }
+</style>
+<style>
+/* Starcast additions */
+.live-fig { margin: 0; border: 1px solid var(--rule); background: #05080f; aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
+@media (max-width: 760px) { .live-fig { aspect-ratio: 4 / 5; } }
+.live-fig img, .live-fig iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.live-fig img { object-fit: cover; }
+.live-fig .load { position: absolute; left: 50%; bottom: 1.5rem; transform: translateX(-50%); }
+.live-fig .load:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.under { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; align-items: center; justify-content: space-between; margin-top: 0.75rem; }
+.shot { margin: 0; border: 1px solid var(--rule); }
+.shot img { display: block; width: 100%; height: auto; }
+.shot figcaption { padding: 0.75rem 0 0; }
+.data { width: 100%; border-collapse: collapse; }
+.data th, .data td { text-align: left; padding: 0.75rem 1.25rem 0.75rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.data thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
+.data td:first-child { font-weight: 600; white-space: nowrap; }
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="cs-hero">
+    <div class="wrap">
+      <a class="back" href="index.html#work">← All work</a>
+      <div class="meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
+        <span class="label">Case study</span>
+        <span class="label">Web map · Live data</span>
+        <span class="label">Personal project · 2026</span>
+      </div>
+      <h1>Starcast</h1>
+      <p class="lede">A web map of stargazing conditions for anywhere on Earth. It puts cloud, seeing, transparency, jet stream, dew and aurora forecasts on a turning globe, then tells you what your own telescope can see tonight from the spot you pick.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="Starcast/" target="_blank" rel="noopener">Open Starcast ↗</a>
+        <a class="btn btn-ghost" href="https://github.com/krauskajames/Starcast" target="_blank" rel="noopener">Source code</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-video-wrap">
+    <div class="wrap">
+      <figure class="live-fig" id="live">
+        <img src="media/starcast-globe.jpg" alt="Starcast globe showing worldwide cloud cover" width="1200" height="720">
+        <button class="btn btn-primary load" type="button" id="loadLive">Load the live globe</button>
+      </figure>
+      <div class="under">
+        <p class="label" style="margin:0">Live forecast. Drag to turn, scroll to zoom, and switch layers on the left.</p>
+        <a class="back" href="Starcast/" target="_blank" rel="noopener">Forecasts, sky charts and alerts are in the full app ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">The problem</span>
+      <div class="prose">
+        <p>Planning a night under the stars means juggling three tools. ClearDarkSky gives hour-by-hour cloud, seeing and transparency forecasts, but only for a list of fixed sites. earth.nullschool.net shows weather beautifully on a globe, but not the conditions astronomers care about. Stellarium shows the sky, but knows nothing about the weather.</p>
+        <p>None of them answers the real question: <strong>is it worth setting up tonight, from here, with my telescope, and what should I look at?</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">What I built</span>
+      <div class="prose">
+        <figure class="shot" style="margin-bottom:1.5rem">
+          <img src="media/starcast-ui.jpg" alt="The full Starcast interface: weather layers on the globe, a 72-hour forecast strip for the selected spot, and targets worth seeing tonight" loading="lazy" width="2880" height="1800">
+          <figcaption class="label">The full app: map layers, a 72-hour forecast for the chosen spot, and what's worth seeing tonight.</figcaption>
+        </figure>
+        <ul>
+          <li><strong>Map layers for the whole globe:</strong> cloud cover, an overall observing score, seeing, transparency, high cloud, jet stream, dew risk and light pollution, with a 72-hour time slider.</li>
+          <li><strong>Sky layers:</strong> the night side, the aurora oval from NOAA, and where on Earth each planet and the Moon can be seen.</li>
+          <li><strong>Any spot, any time:</strong> click the globe or search a place for an hourly forecast strip, and a ranked list of the Moon, planets and 146 other targets scored for your own telescope, sky darkness, moonlight and weather.</li>
+          <li><strong>Where to go:</strong> ranks real parks and public land within driving distance by darkness and forecast cloud, with drive times.</li>
+          <li><strong>Accounts and alerts:</strong> Google sign-in syncs saved locations and gear; a scheduled job sends a notice when a clear, dark night is coming.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Data</span>
+      <div class="prose">
+        <div class="table-scroll">
+          <table class="data">
+            <thead><tr><th scope="col">Source</th><th scope="col">Used for</th></tr></thead>
+            <tbody>
+              <tr><td>NOAA GFS</td><td>Worldwide map forecast: total and high cloud, humidity, temperature, dew point, and winds at the surface, 500 and 250 hPa, every 3 hours for 72 hours</td></tr>
+              <tr><td>Open-Meteo</td><td>Spot forecasts and sharper detail when zoomed in (the best local model, such as NOAA HRRR in the US), plus agreement between the US, European and Canadian models</td></tr>
+              <tr><td>Copernicus CAMS</td><td>Haze (aerosol optical depth) for transparency</td></tr>
+              <tr><td>NOAA SWPC</td><td>Kp forecast and the OVATION aurora map</td></tr>
+              <tr><td>OpenStreetMap</td><td>Parks and public land for "Where to go"; OSRM for drive times</td></tr>
+              <tr><td>Natural Earth, US Atlas</td><td>Coastlines, countries and states</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">How it works</span>
+      <div class="prose">
+        <ol class="steps">
+          <li><span>Every 6 hours a GitHub Actions job finds the newest complete GFS run and downloads only the fields it needs, using byte ranges from NOAA's open data bucket on AWS.</span></li>
+          <li><span>A Python script (ecCodes, NumPy) decodes the GRIB2 files, converts GFS's running cloud averages back into 3-hour values, and packs each forecast hour into a one-byte-per-value 1° grid.</span></li>
+          <li><span>The files are published with the site on GitHub Pages, so every visitor downloads the same small files instead of calling a weather API.</span></li>
+          <li><span>In the browser, the app interpolates the grid smoothly in space (Catmull-Rom) and time, derives seeing and transparency, and draws the layers onto an orthographic globe with D3, blending in sharper regional data as you zoom.</span></li>
+        </ol>
+        <h3>Problems worth solving</h3>
+        <ul>
+          <li><strong>Staying inside free limits.</strong> Building the map from a weather API worked for one region but would need thousands of requests per visitor worldwide. Moving to a scheduled pipeline made global coverage free and faster, and the app keeps a running request budget for the detail it still asks for.</li>
+          <li><strong>Seeing and transparency.</strong> These aren't in standard forecasts, so Starcast estimates them from jet-stream speed, mid-level and surface winds, humidity, high cloud and haze.</li>
+          <li><strong>Light pollution.</strong> Sky brightness comes from a Walker's-law model of glow from 224 North American cities, with atmospheric extinction, calibrated against known dark-sky sites.</li>
+          <li><strong>Spatial data in accounts.</strong> Saved locations are stored as PostGIS geography points in Supabase, with row-level security so each person can read only their own data.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Checking it</span>
+      <div class="prose">
+        <p>Astronomical calculations were checked against known events, such as the April 8, 2024 eclipse as seen from Madison. Forecasts are compared against ClearDarkSky's Canadian-model charts night by night, and so far they have lined up. Starcast keeps a log of these side-by-side checks so the seeing and transparency estimates can be tuned.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">My role</span>
+      <div class="prose">
+        <p>I designed and built Starcast on my own as a tool for my own observing with a 114 mm reflector, and as a test of serving live, global geospatial data with no server to run.</p>
+        <p>Built with AI-assisted coding (Claude); I set the requirements and design, chose the data sources, and tested the forecasts against real nights.</p>
+        <ul class="chips" aria-label="Tools">
+          <li>JavaScript</li><li>D3</li><li>Python</li><li>ecCodes / GRIB2</li><li>NumPy</li><li>GitHub Actions</li><li>Supabase</li><li>PostGIS</li><li>Canvas rendering</li>
+        </ul>
+        <h3>What's next</h3>
+        <p>Light pollution from NASA's VIIRS night-lights data, so it covers small towns and the whole world. That same data feeds my Dark Skies of Wisconsin print map.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between">
+      <a class="back" href="index.html#work">← Back to all work</a>
+      <div class="actions" style="margin:0">
+        <a class="btn btn-ghost" href="Starcast/" target="_blank" rel="noopener">Open Starcast ↗</a>
+        <a class="btn btn-primary" href="index.html#contact">Get in touch</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="scalebar" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><i></i></div>
+      <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
+    </div>
+    <span class="label">NAD83 / Wisconsin Transverse Mercator · © 2026 James Krauska</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // The live globe loads only when asked, so the page stays light.
+  const fig = document.getElementById('live'), btn = document.getElementById('loadLive');
+  btn.addEventListener('click', function () {
+    const f = document.createElement('iframe');
+    f.src = 'Starcast/?embed';
+    f.title = 'Starcast live globe: drag to turn, scroll to zoom, switch weather layers';
+    f.loading = 'eager';
+    fig.replaceChildren(f);
+    f.focus();
+  });
+})();
+</script>
+
+</body>
+</html>

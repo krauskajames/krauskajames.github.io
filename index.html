@@ -233,7 +233,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       <div class="section-head">
         <span class="label">Selected work</span>
         <div>
-          <h2>Four projects across automation, land records, ecology and cartography</h2>
+          <h2>Five projects across automation, web mapping, land records, ecology and cartography</h2>
           <p>Each project lists its data, tools and status. Projects marked “Coming 2027” are being built this winter.</p>
         </div>
       </div>
@@ -255,6 +255,24 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
             <dt>Scope</dt><dd>16+ commercial and institutional buildings</dd>
           </dl>
           <a class="case-link" href="ductbuilder.html">Read the case study →</a>
+        </article>
+
+        <!-- Starcast -->
+        <article class="plate">
+          <figure class="has-video">
+            <video id="scdemo" poster="media/starcast-globe.jpg" autoplay muted loop playsinline preload="metadata" aria-label="The Starcast globe turning slowly, showing live worldwide cloud cover">
+              <source src="media/starcast-globe.webm" type="video/webm">
+              <source src="media/starcast-globe.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <div class="collar"><span class="label">Web map · Live data</span><span class="status live">Live</span></div>
+          <h3><a href="starcast.html">Starcast</a></h3>
+          <p>A web map of stargazing conditions for anywhere on Earth: cloud, seeing, transparency, jet stream and aurora forecasts on a turning globe, plus what your own telescope can see tonight. A scheduled pipeline turns NOAA's global forecast into small files every 6 hours.</p>
+          <dl>
+            <dt>Data</dt><dd>NOAA GFS, Open-Meteo, NOAA SWPC, OpenStreetMap</dd>
+            <dt>Tools</dt><dd>JavaScript, D3, Python, GitHub Actions, PostGIS</dd>
+          </dl>
+          <a class="case-link" href="starcast.html">Read the case study →</a>
         </article>
 
         <!-- Parcel & NG911 -->
@@ -480,8 +498,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
   draw();
 
   // Respect reduced motion: no autoplay, show controls instead
-  const vid = document.getElementById('pxdemo');
-  if (vid && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { vid.removeAttribute('autoplay'); vid.pause(); vid.controls = true; }
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('video[autoplay]').forEach(function (vid) { vid.removeAttribute('autoplay'); vid.pause(); vid.controls = true; });
+  }
 
   // Copy email
   const btn = document.getElementById('copy');
