@@ -1,0 +1,1288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pollinator Habitat Explorer – James Krauska</title>
+<meta name="description" content="Case study: MaxEnt species distribution models for the host plants of the monarch, Karner blue butterfly and a native oil bee in Wisconsin, as an interactive map.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: museum-catalog single column — generous margins, a topographic hero plate,
+   project "plates" with a map-collar metadata strip, quiet hairlines, one forest-green accent. */
+:root {
+  --paper: #f1f2ec;      /* green-grey paper */
+  --paper-2: #e6e9dd;    /* plate ground */
+  --ink: #1b241d;        /* forest black */
+  --ink-2: #4c5a4f;      /* secondary text */
+  --forest: #2e4a34;     /* primary accent */
+  --olive: #6d7a3a;      /* secondary accent */
+  --rule: #c7ccbb;       /* hairlines */
+  --contour: rgba(46, 74, 52, 0.22);
+  --contour-strong: rgba(109, 122, 58, 0.55);
+  --on-forest: #f1f2ec;
+
+  --display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 4vw, 3rem);
+  --step-4: clamp(2.75rem, 7vw, 5rem);
+  --measure: 62ch;
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+    --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+    --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+    --on-forest: #121813; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+  --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+  --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+  --on-forest: #121813; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+html { scroll-padding-top: 5rem; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 var(--step-0)/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: inherit; text-decoration-color: var(--olive); text-underline-offset: 0.2em; }
+a:hover { color: var(--forest); }
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; border-radius: 2px; }
+
+.wrap {
+  max-width: var(--wrap); margin-inline: auto;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 480px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.label {
+  font: 500 var(--step--1)/1.4 var(--mono);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; flex-wrap: wrap; }
+.wordmark { font: 600 1.5rem/1 var(--display); letter-spacing: 0.01em; text-decoration: none; }
+.wordmark span { color: var(--olive); font-style: italic; font-weight: 500; }
+.nav { display: flex; gap: clamp(1rem, 3vw, 2.25rem); font: 500 0.9375rem/1 var(--body); }
+.nav a { text-decoration: none; padding-block: 0.25rem; border-bottom: 1px solid transparent; }
+.nav a:hover { border-bottom-color: var(--olive); }
+
+/* Hero */
+.hero { position: relative; border-bottom: 1px solid var(--rule); overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .wrap { position: relative; padding-block: clamp(4rem, 10vw, 7.5rem) clamp(3rem, 7vw, 5rem); display: grid; gap: 1.75rem; }
+.hero h1 {
+  font: 500 var(--step-4)/1.02 var(--display); letter-spacing: -0.01em;
+  max-width: 14ch; margin: 0; text-wrap: balance;
+}
+.hero h1 em { color: var(--forest); font-style: italic; }
+.hero p.lede { font-size: var(--step-1); line-height: 1.55; max-width: 48ch; margin: 0; color: var(--ink-2); }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 500 0.9375rem/1 var(--body); text-decoration: none;
+  padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px;
+  transition: background-color .2s ease, color .2s ease;
+}
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+
+/* Sections */
+section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(--rule); }
+.section-head { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; align-items: baseline; margin-bottom: 3rem; }
+.section-head h2 { font: 500 var(--step-3)/1.1 var(--display); margin: 0; text-wrap: balance; }
+.section-head p { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
+@media (max-width: 760px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+
+/* Project plates */
+.plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 2.5rem; }
+@media (max-width: 760px) { .plates { grid-template-columns: minmax(0, 1fr); } }
+.plate { display: grid; gap: 1rem; min-width: 0; }
+.plate figure { margin: 0; background: var(--paper-2); border: 1px solid var(--rule); aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
+.plate figure svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate figure video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.plate .collar { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.6rem; }
+.status { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.55rem; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
+.status.live { color: var(--forest); }
+.status.planned { color: var(--olive); }
+.plate h3 { font: 600 var(--step-2)/1.15 var(--display); margin: 0; text-wrap: balance; }
+.plate p { margin: 0; color: var(--ink-2); max-width: var(--measure); }
+.plate dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.35rem 1.25rem; margin: 0.25rem 0 0; font-size: 0.9375rem; }
+.plate dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.plate dd { margin: 0; }
+
+/* svg strokes */
+.s-ink { stroke: var(--ink); } .s-forest { stroke: var(--forest); } .s-olive { stroke: var(--olive); } .s-rule { stroke: var(--rule); }
+.f-forest { fill: var(--forest); } .f-olive { fill: var(--olive); } .f-paper { fill: var(--paper); } .f-ink { fill: var(--ink); }
+.f-tint { fill: var(--olive); fill-opacity: .14; }
+.svg-label { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .06em; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; }
+@media (max-width: 760px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+.about-grid .prose p { margin: 0 0 1.1rem; max-width: var(--measure); }
+.about-grid .prose p:first-child { font: 500 var(--step-2)/1.35 var(--display); color: var(--ink); }
+.facts { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.facts div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1rem; padding-block: 0.85rem; border-bottom: 1px solid var(--rule); }
+.facts dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.facts dd { margin: 0; }
+
+/* Experience */
+.roles { display: grid; gap: 0; border-top: 1px solid var(--ink); }
+.role { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 0.5rem 3rem; padding-block: 1.75rem; border-bottom: 1px solid var(--rule); }
+@media (max-width: 760px) { .role { grid-template-columns: minmax(0, 1fr); } }
+.role h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0; }
+.role .org { color: var(--forest); font-weight: 500; }
+.role ul { margin: 0.75rem 0 0; padding-left: 1.1rem; color: var(--ink-2); max-width: var(--measure); }
+.role li + li { margin-top: 0.4rem; }
+
+/* Toolkit */
+.toolkit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+@media (max-width: 860px) { .toolkit { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .toolkit { grid-template-columns: minmax(0, 1fr); } }
+.toolkit h3 { font: 600 var(--step-1)/1.2 var(--display); margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.toolkit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; color: var(--ink-2); }
+
+/* Contact */
+.contact { display: grid; gap: 1.5rem; }
+.contact h2 { font: 500 var(--step-4)/1.05 var(--display); margin: 0; max-width: 16ch; text-wrap: balance; }
+.contact-row { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; }
+.email { font: 500 var(--step-1)/1.4 var(--mono); user-select: all; word-break: break-all; }
+.copy { font: 500 0.875rem/1 var(--body); background: none; color: var(--forest); border: 1px solid var(--forest); padding: 0.6rem 0.9rem; border-radius: 2px; cursor: pointer; }
+.copy:hover { background: var(--paper-2); }
+.phone { font: 500 var(--step-1)/1.4 var(--mono); text-decoration: none; white-space: nowrap; }
+
+/* Footer: map collar */
+footer { padding-block: 2.5rem 3rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: end; }
+.scalebar { display: grid; gap: 0.35rem; }
+.scalebar .bar { display: flex; width: 12rem; max-width: 100%; height: 6px; border: 1px solid var(--ink); }
+.scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
+.scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>/* Leaflet 1.9.4 (BSD-2-Clause) */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;
+	}
+.leaflet-tile::selection {
+	background: transparent;
+}
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+.leaflet-container .leaflet-overlay-pane svg {
+	max-width: none !important;
+	max-height: none !important;
+	}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;
+	}
+.leaflet-container img.leaflet-tile {
+	mix-blend-mode: plus-lighter;
+}
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	touch-action: none;
+	touch-action: pinch-zoom;
+}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;
+	}
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+.leaflet-pane         { z-index: 400; }
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane   { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; 
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+}
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;
+	}
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted; 
+	pointer-events: auto;
+	}
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: url(images/layers.png);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(images/layers-2x.png);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+.leaflet-default-icon-path { 
+	background-image: url(images/marker-icon.png);
+	}
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+	margin: -10px auto 0;
+	pointer-events: auto;
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-interactive {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+@media print {
+	.leaflet-control {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		}
+	}
+</style>
+</head>
+<body>
+<style>
+/* Case study additions (shared with ductbuilder.html) */
+.cs-hero .wrap { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 1.5rem; }
+.cs-hero h1 { font: 500 var(--step-4)/1.02 var(--display); margin: 0; letter-spacing: -0.01em; }
+.cs-hero .lede { font-size: var(--step-1); line-height: 1.55; max-width: 56ch; margin: 0; color: var(--ink-2); }
+.back { font: 500 0.875rem/1 var(--body); text-decoration: none; color: var(--forest); }
+.back:hover { text-decoration: underline; }
+.compare { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.compare th, .compare td { text-align: left; padding: 1rem 1.25rem 1rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.compare thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
+.compare td.big { font: 500 var(--step-2)/1.1 var(--display); white-space: nowrap; }
+.compare .sci { display: block; font-style: italic; color: var(--ink-2); font-size: 0.9375rem; }
+.table-scroll { overflow-x: auto; }
+.cs-body { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; }
+@media (max-width: 760px) { .cs-body { grid-template-columns: minmax(0, 1fr); } }
+.cs-body .prose { max-width: var(--measure); }
+.cs-body .prose p { margin: 0 0 1.1rem; }
+.cs-body .prose h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 1.75rem 0 0.5rem; }
+.cs-body .prose ul, .cs-body .prose ol { margin: 0 0 1.1rem; padding-left: 1.2rem; }
+.cs-body .prose li + li { margin-top: 0.45rem; }
+.cs-body .prose strong { font-weight: 600; color: var(--ink); }
+.steps { counter-reset: s; list-style: none; padding: 0 !important; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); margin: 0 !important; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; }
+.chips li { margin: 0 !important; font: 500 0.8125rem/1 var(--mono); padding: 0.5rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink-2); }
+
+/* Explorer */
+.explorer { padding-block: 0 clamp(3rem, 7vw, 5rem); border-bottom: 1px solid var(--rule); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; align-items: center; justify-content: space-between; padding-block: 0 1rem; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--forest); border-radius: 2px; overflow: hidden; }
+.seg button { font: 500 0.875rem/1 var(--body); background: none; color: var(--forest); border: 0; border-left: 1px solid var(--forest); padding: 0.7rem 1rem; cursor: pointer; }
+.seg button:first-child { border-left: 0; }
+.seg button[aria-pressed="true"] { background: var(--forest); color: var(--on-forest); }
+.seg button:hover:not([aria-pressed="true"]) { background: var(--paper-2); }
+.toggles { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; align-items: center; font-size: 0.9375rem; color: var(--ink-2); }
+.toggles label { display: inline-flex; gap: 0.45rem; align-items: center; cursor: pointer; }
+.toggles input[type="checkbox"] { accent-color: var(--forest); width: 1rem; height: 1rem; }
+.toggles input[type="range"] { accent-color: var(--forest); width: 7rem; }
+.map-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 19rem); gap: 0; border: 1px solid var(--rule); background: var(--paper-2); }
+@media (max-width: 900px) { .map-grid { grid-template-columns: minmax(0, 1fr); } }
+#map { height: min(72vh, 640px); min-height: 380px; background: var(--paper-2); }
+.panel { border-left: 1px solid var(--rule); padding: 1.25rem; display: grid; gap: 1.1rem; align-content: start; background: var(--paper); }
+@media (max-width: 900px) { .panel { border-left: 0; border-top: 1px solid var(--rule); } }
+.panel h2 { font: 600 var(--step-2)/1.1 var(--display); margin: 0; }
+.panel .sci { font-style: italic; color: var(--ink-2); margin: 0.15rem 0 0; }
+.panel .host { margin: 0; color: var(--ink-2); font-size: 0.9375rem; }
+.stat-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
+.stat .num { font: 500 var(--step-2)/1 var(--display); font-variant-numeric: tabular-nums; }
+.stat .label { display: block; margin-top: 0.3rem; font-size: 0.6875rem; }
+.legend { display: grid; gap: 0.4rem; }
+.ramp { height: 12px; border: 1px solid var(--rule); position: relative; }
+.ramp .tick { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
+.ramp-labels { display: flex; justify-content: space-between; font: 500 0.75rem/1.2 var(--mono); color: var(--ink-2); }
+.swatches { display: grid; gap: 0.35rem; font-size: 0.875rem; }
+.swatches span { display: inline-block; width: 14px; height: 14px; border: 1px solid var(--rule); vertical-align: -2px; margin-right: 0.5rem; }
+.readout { font: 500 0.8125rem/1.5 var(--mono); color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 1rem; min-height: 4.5em; }
+.readout strong { color: var(--ink); font-weight: 500; }
+.leaflet-container { font: 400 0.8125rem/1.4 var(--body); background: var(--paper-2); }
+.leaflet-control-attribution { background: color-mix(in srgb, var(--paper) 85%, transparent) !important; color: var(--ink-2) !important; }
+.leaflet-control-attribution a { color: var(--ink-2) !important; }
+.leaflet-bar a { background: var(--paper) !important; color: var(--ink) !important; border-color: var(--rule) !important; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; z-index: 500; pointer-events: none; font: 500 0.8125rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.map-wrap { position: relative; }
+
+/* Charts */
+.charts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.5rem; }
+@media (max-width: 860px) { .charts { grid-template-columns: minmax(0, 1fr); } }
+.chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1rem; align-items: baseline; margin-bottom: 0.75rem; }
+.chart-head h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0; }
+.seg.small button { padding: 0.45rem 0.7rem; font-size: 0.8125rem; }
+.bars { display: grid; gap: 0.4rem; }
+.bar-row { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 3.2rem; gap: 0.75rem; align-items: center; font-size: 0.875rem; padding: 2px 0; border-radius: 2px; }
+.bar-row:hover { background: var(--paper-2); }
+.bar-row .name { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-row .grp { color: var(--ink-2); font: 500 0.6875rem/1 var(--mono); letter-spacing: .04em; text-transform: uppercase; margin-left: 0.35rem; }
+.bar-track { height: 14px; position: relative; }
+.bar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--forest); border-radius: 0 4px 4px 0; min-width: 1px; }
+.bar-row .val { font: 500 0.8125rem/1 var(--mono); color: var(--ink-2); text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) { .bar-row { grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr) 2.8rem; } .bar-row .grp { display: none; } }
+.curves { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem 1.5rem; }
+@media (max-width: 480px) { .curves { grid-template-columns: minmax(0, 1fr); } }
+.curve h4 { font: 500 0.875rem/1.3 var(--body); margin: 0 0 0.35rem; }
+.curve h4 span { color: var(--ink-2); font-weight: 400; }
+.curve svg { display: block; width: 100%; height: auto; overflow: visible; }
+.curve .axis { stroke: var(--rule); stroke-width: 1; }
+.curve .line { fill: none; stroke: var(--forest); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.curve .lbl { font: 500 10px var(--mono); fill: var(--ink-2); }
+.curve .hair { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 2 2; }
+.curve .dot { fill: var(--forest); stroke: var(--paper); stroke-width: 2; }
+.tip { position: fixed; z-index: 1000; pointer-events: none; background: var(--ink); color: var(--paper); font: 500 0.75rem/1.45 var(--mono); padding: 0.45rem 0.6rem; border-radius: 2px; max-width: 16rem; opacity: 0; transition: opacity .1s; }
+.note { font-size: 0.875rem; color: var(--ink-2); margin: 1rem 0 0; max-width: var(--measure); }
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="cs-hero">
+    <div class="wrap">
+      <a class="back" href="index.html#work">← All work</a>
+      <div class="meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
+        <span class="label">Case study</span>
+        <span class="label">Species distribution modeling · MaxEnt</span>
+        <span class="label">UW–Stevens Point GEOG 399 · rebuilt 2026</span>
+      </div>
+      <h1>Pollinator Habitat Explorer</h1>
+      <p class="lede">Where in Wisconsin can the host plants of three specialist pollinators grow? I modeled statewide habitat suitability for swamp milkweed, wild lupine and fringed loosestrife from iNaturalist records, WorldClim climate, SoilGrids soils and the DNR's WISCLAND 2.0 land cover.</p>
+    </div>
+  </div>
+
+  <div class="explorer">
+    <div class="wrap">
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="Species" id="speciesSeg"></div>
+        <div class="toggles">
+          <label><input type="checkbox" id="thrToggle"> Suitable habitat only</label>
+          <label><input type="checkbox" id="ptsToggle"> Records</label>
+          <label>Opacity <input type="range" id="opacity" min="0.2" max="1" step="0.05" value="0.85" aria-label="Layer opacity"></label>
+        </div>
+      </div>
+      <div class="map-grid">
+        <div class="map-wrap"><div id="map" role="region" aria-label="Interactive habitat suitability map of Wisconsin"></div><div class="loading" id="loading">Loading layers…</div></div>
+        <aside class="panel" aria-live="polite">
+          <div>
+            <h2 id="pName">—</h2>
+            <p class="sci" id="pSci"></p>
+          </div>
+          <p class="host" id="pHost"></p>
+          <div class="stat-row" id="pStats"></div>
+          <div class="legend" id="legend"></div>
+          <div class="readout" id="readout">Click the map to read suitability at any point.</div>
+        </aside>
+      </div>
+      <p class="label" style="margin-top:0.75rem">Cloglog suitability, 0–1, on a ~250 m grid. “Suitable habitat” uses each model's 10th-percentile training-presence threshold.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Results</span>
+        <div>
+          <h2>Three models, all better than chance</h2>
+          <p>Each model was trained on 75% of the cleaned records and tested on the other 25%, against a background corrected for where iNaturalist users actually look. Test AUC of 0.5 is a coin flip; 1.0 is perfect.</p>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th scope="col">Host plant</th><th scope="col">Pollinator</th><th scope="col">Records (train / test)</th><th scope="col">Test AUC</th><th scope="col">Strongest drivers</th></tr></thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">What drives it</span>
+        <div>
+          <h2 id="driversTitle">What the model learned</h2>
+          <p>Variable importance and response curves for the species selected above. Response curves show how predicted suitability changes with one variable while the others are held at their average.</p>
+        </div>
+      </div>
+      <div class="charts">
+        <div>
+          <div class="chart-head">
+            <h3>Variable importance</h3>
+            <div class="seg small" role="group" aria-label="Importance measure" id="measureSeg">
+              <button type="button" data-m="permutation" aria-pressed="true">Permutation</button>
+              <button type="button" data-m="contribution" aria-pressed="false">% contribution</button>
+            </div>
+          </div>
+          <div class="bars" id="bars"></div>
+          <p class="note">Permutation importance: how much test AUC drops when that variable's values are shuffled. Percent contribution: its share of the model's training gain. Showing the top 10 of 22.</p>
+        </div>
+        <div>
+          <div class="chart-head"><h3>Response curves</h3></div>
+          <div class="curves" id="curves"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Method</span>
+      <div class="prose">
+        <ol class="steps">
+          <li><span><strong>Occurrences.</strong> 454,717 research-grade iNaturalist plant observations in Wisconsin (GBIF). Kept records with location uncertainty ≤ 1 km, then thinned to one record per ~1 km cell to reduce clustering: 626 swamp milkweed, 411 wild lupine, 232 fringed loosestrife.</span></li>
+          <li><span><strong>Predictors.</strong> 19 WorldClim 2.1 bioclimatic variables and elevation (30 arc-seconds), 13 SoilGrids 2.0 soil properties converted to real units, and 8 percent-cover layers from WISCLAND 2.0 Level 2, all resampled to one 0.0025° grid and masked to Wisconsin.</span></li>
+          <li><span><strong>Collinearity screen.</strong> Dropped any variable correlated at |r| ≥ 0.7 with a higher-priority one, leaving 22 of 41 predictors.</span></li>
+          <li><span><strong>Sampling-bias correction.</strong> A target-group bias surface — the smoothed density of all 264,899 well-located plant observations — so background points mirror where people go looking, not just where plants grow.</span></li>
+          <li><span><strong>MaxEnt 3.4.4.</strong> Auto features, regularization 1, 10,000 background points, 25% random test split, fixed seed, up to 5,000 iterations, jackknife and response curves on.</span></li>
+          <li><span><strong>Web.</strong> Outputs reprojected to Web Mercator and stored as 8-bit grayscale PNGs, coloured in the browser so every click reads the real model value.</span></li>
+        </ol>
+        <h3>Reading the results honestly</h3>
+        <ul>
+          <li><strong>Lower AUCs than a typical student model, on purpose.</strong> Correcting for observer bias removes the easy win of “predict near Madison and Milwaukee,” so AUCs fall. The first, uncorrected version of this project reported 0.81–0.93; the rebuilt models are the more trustworthy ones.</li>
+          <li><strong>Wild lupine is the strongest model</strong> (test AUC 0.84). Its predicted range traces the Central Sands and northwest sand barrens, where Wisconsin's Karner blue populations are concentrated.</li>
+          <li><strong>The wetland plants needed land cover.</strong> With climate and soil alone, milkweed and loosestrife scored 0.58 and 0.56. Adding WISCLAND wetland and land-use classes raised them to 0.71 and 0.68.</li>
+          <li><strong>Suitability is not presence.</strong> The maps show where conditions resemble known sites. Fine-scale habitat such as roadside ditches and stream banks sits below the 250 m grid.</li>
+          <li><strong>Some residual bias remains.</strong> Fringed loosestrife's positive link with developed land likely reflects where people walk, not the plant's preference.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">My role</span>
+      <div class="prose">
+        <p>I designed and ran this as my senior research project at UW–Stevens Point, then rebuilt it in 2026: rebuilt the predictor stack at finer resolution, fixed NoData handling, added land cover and bias correction, and published it as an interactive map.</p>
+        <p>Data preparation and the web build were written with AI-assisted coding (Claude); I chose the methods, ran the models and checked every output.</p>
+        <p><a href="https://github.com/krauskajames/krauskajames.github.io/tree/main/projects/pollinator">Scripts and a step-by-step reproduction guide</a> are on GitHub.</p>
+        <ul class="chips" aria-label="Tools">
+          <li>MaxEnt</li><li>Python · rasterio · geopandas</li><li>R · terra · geodata</li><li>QGIS</li><li>Leaflet</li><li>GBIF / iNaturalist</li><li>WorldClim</li><li>SoilGrids</li><li>WISCLAND 2.0</li>
+        </ul>
+        <h3>Data sources</h3>
+        <ul>
+          <li>GBIF.org occurrence download (iNaturalist research-grade observations, Wisconsin).</li>
+          <li>Fick, S.E. &amp; Hijmans, R.J. (2017). WorldClim 2. <em>International Journal of Climatology</em> 37: 4302–4315.</li>
+          <li>Poggio, L. et al. (2021). SoilGrids 2.0. <em>SOIL</em> 7: 217–240.</li>
+          <li>Wisconsin DNR (2016). Wiscland 2.0 Land Cover, Level 2.</li>
+          <li>Phillips, S.J., Anderson, R.P. &amp; Schapire, R.E. (2006). Maximum entropy modeling of species geographic distributions. <em>Ecological Modelling</em> 190: 231–259.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between">
+      <a class="back" href="index.html#work">← Back to all work</a>
+      <a class="btn btn-primary" href="index.html#contact">Get in touch</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="scalebar" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><i></i></div>
+      <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
+    </div>
+    <span class="label">WGS 84 / Web Mercator · © 2026 James Krauska</span>
+  </div>
+</footer>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+  const DATA = "data/pollinator/";
+  // Sequential single-hue ramps (paper -> forest), separate steps for each theme
+  const RAMPS = {
+    light: ["#eef0e2", "#cdd6a3", "#9bb26a", "#5f8c4c", "#2d5638", "#173322"],
+    dark:  ["#1c251d", "#2f4430", "#4b6d40", "#759a55", "#a9c97f", "#dcedb6"]
+  };
+  const isDark = () => {
+    const t = document.documentElement.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  };
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  function lut(stops) {          // 251-entry RGB lookup for values 0..250
+    const c = stops.map(hex), out = new Uint8ClampedArray(251 * 3);
+    for (let v = 0; v <= 250; v++) {
+      const t = v / 250 * (c.length - 1), i = Math.min(Math.floor(t), c.length - 2), f = t - i;
+      for (let k = 0; k < 3; k++) out[v * 3 + k] = Math.round(c[i][k] + (c[i + 1][k] - c[i][k]) * f);
+    }
+    return out;
+  }
+  const $ = id => document.getElementById(id);
+  const fmt = (n, d = 2) => Number(n).toFixed(d);
+  const tip = $("tip");
+  function showTip(html, x, y) { tip.innerHTML = html; tip.style.opacity = 1; const w = tip.offsetWidth; tip.style.left = Math.min(x + 14, innerWidth - w - 8) + "px"; tip.style.top = (y + 14) + "px"; }
+  function hideTip() { tip.style.opacity = 0; }
+
+  let meta, cur = 0, overlap = false, measure = "permutation";
+  const vals = [];                  // Uint8Array per species (0..250), 255 = no data
+  let overlay = null, ptsLayer = null;
+
+  const map = L.map("map", { zoomSnap: 0.25, minZoom: 6, maxZoom: 12, attributionControl: true, scrollWheelZoom: false });
+  map.on("focus", () => map.scrollWheelZoom.enable()); map.on("blur", () => map.scrollWheelZoom.disable());
+  map.createPane("labels"); map.getPane("labels").style.zIndex = 650; map.getPane("labels").style.pointerEvents = "none";
+  const ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  let base, labels;
+  function setBasemap() {
+    const style = isDark() ? "dark" : "light";
+    if (base) { map.removeLayer(base); map.removeLayer(labels); }
+    base = L.tileLayer(`https://{s}.basemaps.cartocdn.com/${style}_nolabels/{z}/{x}/{y}{r}.png`, { attribution: ATTR, subdomains: "abcd", maxZoom: 19 }).addTo(map);
+    labels = L.tileLayer(`https://{s}.basemaps.cartocdn.com/${style}_only_labels/{z}/{x}/{y}{r}.png`, { subdomains: "abcd", pane: "labels", maxZoom: 19 }).addTo(map);
+  }
+  setBasemap();
+
+  function loadPng(url) {
+    return new Promise((res, rej) => {
+      const img = new Image(); img.crossOrigin = "anonymous";
+      img.onload = () => {
+        const c = document.createElement("canvas"); c.width = img.width; c.height = img.height;
+        const g = c.getContext("2d", { willReadFrequently: true }); g.drawImage(img, 0, 0);
+        const d = g.getImageData(0, 0, c.width, c.height).data, a = new Uint8Array(c.width * c.height);
+        for (let i = 0, j = 0; j < a.length; i += 4, j++) a[j] = d[i + 3] ? d[i] : 255;
+        res(a);
+      };
+      img.onerror = rej; img.src = url;
+    });
+  }
+
+  function render() {
+    const { width: W, height: H } = meta.raster, ramp = lut(RAMPS[isDark() ? "dark" : "light"]);
+    const c = document.createElement("canvas"); c.width = W; c.height = H;
+    const g = c.getContext("2d"), img = g.createImageData(W, H), px = img.data;
+    const thrOnly = $("thrToggle").checked;
+    if (overlap) {
+      const thr = meta.species.map(s => Math.round(s.threshold * 250));
+      const steps = [null, 60, 150, 250];
+      for (let j = 0; j < W * H; j++) {
+        if (vals[0][j] === 255) continue;
+        let n = 0; for (let s = 0; s < 3; s++) if (vals[s][j] >= thr[s]) n++;
+        if (!n) continue;
+        const v = steps[n], i = j * 4;
+        px[i] = ramp[v * 3]; px[i + 1] = ramp[v * 3 + 1]; px[i + 2] = ramp[v * 3 + 2]; px[i + 3] = 235;
+      }
+    } else {
+      const a = vals[cur], thr = Math.round(meta.species[cur].threshold * 250);
+      for (let j = 0; j < W * H; j++) {
+        const v = a[j]; if (v === 255) continue;
+        if (thrOnly && v < thr) continue;
+        const i = j * 4, vv = thrOnly ? 200 : v;
+        px[i] = ramp[vv * 3]; px[i + 1] = ramp[vv * 3 + 1]; px[i + 2] = ramp[vv * 3 + 2];
+        px[i + 3] = thrOnly ? 230 : 70 + Math.round(v / 250 * 185);   // low values fade toward the basemap
+      }
+    }
+    g.putImageData(img, 0, 0);
+    c.toBlob(b => {
+      const url = URL.createObjectURL(b), op = +$("opacity").value;
+      if (overlay) { const old = overlay._url; overlay.setUrl(url); setTimeout(() => URL.revokeObjectURL(old), 1000); }
+      else overlay = L.imageOverlay(url, meta.raster.latlng_bounds, { opacity: op, interactive: false, className: "suit" }).addTo(map);
+    });
+    renderLegend(ramp);
+  }
+
+  function rgb(r, v) { return `rgb(${r[v * 3]},${r[v * 3 + 1]},${r[v * 3 + 2]})`; }
+  function renderLegend(ramp) {
+    const el = $("legend");
+    if (overlap) {
+      el.innerHTML = '<span class="label">Species with suitable habitat</span><div class="swatches">' +
+        [[60, "1 of 3"], [150, "2 of 3"], [250, "All 3 host plants"]].map(([v, t]) => `<div><span style="background:${rgb(ramp, v)}"></span>${t}</div>`).join("") + "</div>";
+      return;
+    }
+    if ($("thrToggle").checked) {
+      el.innerHTML = `<span class="label">Suitable habitat</span><div class="swatches"><div><span style="background:${rgb(ramp, 200)}"></span>Suitability ≥ ${fmt(meta.species[cur].threshold)}</div></div>`;
+      return;
+    }
+    const stops = Array.from({ length: 11 }, (_, i) => rgb(ramp, i * 25)).join(",");
+    const t = meta.species[cur].threshold * 100;
+    el.innerHTML = `<span class="label">Habitat suitability</span><div class="ramp" style="background:linear-gradient(90deg,${stops})"><i class="tick" style="left:calc(${t}% - 1px)" title="Suitable-habitat threshold"></i></div><div class="ramp-labels"><span>0 low</span><span>threshold ${fmt(meta.species[cur].threshold)}</span><span>1 high</span></div>`;
+  }
+
+  function renderPanel() {
+    if (overlap) {
+      $("pName").textContent = "Overlap"; $("pSci").textContent = "All three host plants";
+      $("pHost").textContent = "Cells where one, two or all three models predict suitable habitat. Areas suitable for several host plants are candidates for pollinator habitat work that helps more than one species.";
+      $("pStats").innerHTML = ""; return;
+    }
+    const s = meta.species[cur];
+    $("pName").textContent = s.common; $("pSci").textContent = s.sci;
+    $("pHost").innerHTML = `Host plant for the <strong>${s.insect}</strong> <em>(${s.insect_sci})</em>.`;
+    $("pStats").innerHTML = `<div class="stat"><div class="num">${fmt(s.auc_test)}</div><span class="label">Test AUC ± ${fmt(s.auc_sd)}</span></div><div class="stat"><div class="num">${s.n_train + s.n_test}</div><span class="label">Thinned records</span></div>`;
+  }
+
+  function renderPoints() {
+    if (ptsLayer) { map.removeLayer(ptsLayer); ptsLayer = null; }
+    if (!$("ptsToggle").checked || overlap) return;
+    const col = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim();
+    const paper = getComputedStyle(document.documentElement).getPropertyValue("--paper").trim();
+    ptsLayer = L.layerGroup(meta.species[cur].points.map(([x, y]) =>
+      L.circleMarker([y, x], { radius: 3, weight: 1, color: paper, fillColor: col, fillOpacity: 0.9, interactive: false }))).addTo(map);
+  }
+
+  function renderResults() {
+    $("resultsBody").innerHTML = meta.species.map(s => {
+      const top = s.importance.slice(0, 3).map(i => meta.variables[i.var].label.toLowerCase()).join(", ");
+      const p = s.binomial_p < 0.001 ? "p < 0.001" : "p = " + s.binomial_p.toPrecision(2);
+      return `<tr><td>${s.common}<span class="sci">${s.sci}</span></td><td>${s.insect}<span class="sci">${s.insect_sci}</span></td><td>${s.n_train} / ${s.n_test}</td><td class="big">${fmt(s.auc_test)}<span class="sci" style="font-style:normal;font-family:var(--mono);font-size:.75rem">± ${fmt(s.auc_sd)} · ${p}</span></td><td>${top[0].toUpperCase() + top.slice(1)}</td></tr>`;
+    }).join("");
+  }
+
+  function renderBars() {
+    const s = meta.species[overlap ? 0 : cur];
+    const rows = [...s.importance].sort((a, b) => b[measure] - a[measure]).slice(0, 10);
+    const max = Math.max(...rows.map(r => r[measure]), 1);
+    $("bars").innerHTML = rows.map(r => {
+      const v = meta.variables[r.var];
+      return `<div class="bar-row" data-v="${r.var}" tabindex="0"><span class="name">${v.label}<span class="grp">${v.group}</span></span><span class="bar-track"><span class="bar-fill" style="width:${r[measure] / max * 100}%"></span></span><span class="val">${fmt(r[measure], 1)}</span></div>`;
+    }).join("");
+    $("bars").querySelectorAll(".bar-row").forEach(el => {
+      const r = s.importance.find(i => i.var === el.dataset.v), v = meta.variables[r.var];
+      const html = `<strong>${v.label}</strong><br>${v.group} · ${v.unit}<br>Permutation ${fmt(r.permutation, 1)}<br>Contribution ${fmt(r.contribution, 1)}%`;
+      el.addEventListener("mousemove", e => showTip(html, e.clientX, e.clientY));
+      el.addEventListener("mouseleave", hideTip);
+      el.addEventListener("focus", () => { const b = el.getBoundingClientRect(); showTip(html, b.left + 40, b.bottom - 6); });
+      el.addEventListener("blur", hideTip);
+    });
+    $("driversTitle").textContent = `What the ${s.common.toLowerCase()} model learned`;
+  }
+
+  function renderCurves() {
+    const s = meta.species[overlap ? 0 : cur], W = 300, H = 150, P = { l: 30, r: 8, t: 8, b: 26 };
+    $("curves").innerHTML = s.curves.map((c, k) => {
+      const v = meta.variables[c.var], xs = c.points.map(p => p[0]);
+      const x0 = Math.min(...xs), x1 = Math.max(...xs);
+      const X = x => P.l + (x - x0) / (x1 - x0 || 1) * (W - P.l - P.r), Y = y => P.t + (1 - y) * (H - P.t - P.b);
+      const d = c.points.map((p, i) => (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)).join("");
+      const nice = n => Math.abs(n) >= 100 ? Math.round(n) : +n.toFixed(1);
+      return `<div class="curve" data-k="${k}"><h4>${v.label} <span>(${v.unit})</span></h4>
+        <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Response of ${s.common} suitability to ${v.label}">
+          <line class="axis" x1="${P.l}" x2="${W - P.r}" y1="${Y(0)}" y2="${Y(0)}"/><line class="axis" x1="${P.l}" x2="${W - P.r}" y1="${Y(0.5)}" y2="${Y(0.5)}" stroke-dasharray="2 3"/><line class="axis" x1="${P.l}" x2="${W - P.r}" y1="${Y(1)}" y2="${Y(1)}" stroke-dasharray="2 3"/>
+          <text class="lbl" x="${P.l - 6}" y="${Y(0) + 3}" text-anchor="end">0</text><text class="lbl" x="${P.l - 6}" y="${Y(0.5) + 3}" text-anchor="end">0.5</text><text class="lbl" x="${P.l - 6}" y="${Y(1) + 3}" text-anchor="end">1</text>
+          <text class="lbl" x="${P.l}" y="${H - 8}">${nice(x0)}</text><text class="lbl" x="${W - P.r}" y="${H - 8}" text-anchor="end">${nice(x1)}</text>
+          <path class="line" d="${d}"/>
+          <line class="hair" y1="${P.t}" y2="${H - P.b}" style="display:none"/><circle class="dot" r="4" style="display:none"/>
+          <rect x="${P.l}" y="0" width="${W - P.l - P.r}" height="${H}" fill="transparent"/>
+        </svg></div>`;
+    }).join("");
+    $("curves").querySelectorAll(".curve").forEach(el => {
+      const c = s.curves[+el.dataset.k], v = meta.variables[c.var], svg = el.querySelector("svg");
+      const xs = c.points.map(p => p[0]), x0 = Math.min(...xs), x1 = Math.max(...xs);
+      const hair = svg.querySelector(".hair"), dot = svg.querySelector(".dot");
+      svg.addEventListener("mousemove", e => {
+        const b = svg.getBoundingClientRect(), sx = (e.clientX - b.left) / b.width * W;
+        const xv = x0 + (sx - P.l) / (W - P.l - P.r) * (x1 - x0);
+        let best = c.points[0]; for (const p of c.points) if (Math.abs(p[0] - xv) < Math.abs(best[0] - xv)) best = p;
+        const X = P.l + (best[0] - x0) / (x1 - x0 || 1) * (W - P.l - P.r), Y = P.t + (1 - best[1]) * (H - P.t - P.b);
+        hair.setAttribute("x1", X); hair.setAttribute("x2", X); hair.style.display = ""; dot.setAttribute("cx", X); dot.setAttribute("cy", Y); dot.style.display = "";
+        showTip(`${v.label}: ${fmt(best[0], 1)} ${v.unit}<br>Suitability ${fmt(best[1])}`, e.clientX, e.clientY);
+      });
+      svg.addEventListener("mouseleave", () => { hair.style.display = "none"; dot.style.display = "none"; hideTip(); });
+    });
+  }
+
+  function renderSeg() {
+    const opts = meta.species.map((s, i) => [i, s.common]).concat([["o", "Overlap"]]);
+    $("speciesSeg").innerHTML = opts.map(([i, t]) => `<button type="button" data-i="${i}" aria-pressed="${(i === "o" ? overlap : !overlap && i === cur)}">${t}</button>`).join("");
+    $("speciesSeg").querySelectorAll("button").forEach(b => b.onclick = () => {
+      if (b.dataset.i === "o") overlap = true; else { overlap = false; cur = +b.dataset.i; }
+      try { localStorage.setItem("pollinator-species", b.dataset.i); } catch (e) {}
+      update();
+    });
+  }
+  function update() {
+    renderSeg(); renderPanel(); render(); renderPoints(); renderBars(); renderCurves();
+    $("thrToggle").disabled = overlap; $("ptsToggle").disabled = overlap;
+    $("readout").innerHTML = "Click the map to read suitability at any point.";
+  }
+
+  map.on("click", e => {
+    const R = meta.raster, p = L.CRS.EPSG3857.project(e.latlng);
+    const col = Math.floor((p.x - R.merc_bounds[0]) / R.res), row = Math.floor((R.merc_bounds[3] - p.y) / R.res);
+    const where = `${e.latlng.lat.toFixed(3)}°N, ${Math.abs(e.latlng.lng).toFixed(3)}°W`;
+    if (col < 0 || row < 0 || col >= R.width || row >= R.height || vals[0][row * R.width + col] === 255) {
+      $("readout").innerHTML = `${where}<br>Outside the model area`; return;
+    }
+    const j = row * R.width + col;
+    $("readout").innerHTML = where + "<br>" + meta.species.map((s, i) => {
+      const v = vals[i][j] / 250, ok = v >= s.threshold;
+      const line = `${s.common}: <strong>${fmt(v)}</strong> ${ok ? "· suitable" : ""}`;
+      return (!overlap && i === cur) ? `<span style="color:var(--ink)">${line}</span>` : line;
+    }).join("<br>");
+  });
+
+  $("thrToggle").onchange = () => { render(); };
+  $("ptsToggle").onchange = renderPoints;
+  $("opacity").oninput = e => overlay && overlay.setOpacity(+e.target.value);
+  $("measureSeg").querySelectorAll("button").forEach(b => b.onclick = () => {
+    measure = b.dataset.m; $("measureSeg").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); renderBars();
+  });
+  const retheme = () => { setBasemap(); if (meta && vals.length) { render(); renderPoints(); } };
+  if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", retheme);
+  new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  fetch(DATA + "pollinator.json").then(r => r.json()).then(async m => {
+    meta = m;
+    map.fitBounds(m.raster.latlng_bounds, { padding: [8, 8] });
+    map.setMaxBounds(L.latLngBounds(m.raster.latlng_bounds).pad(0.6));
+    try { const s = localStorage.getItem("pollinator-species"); if (s === "o") overlap = true; else if (s !== null && m.species[+s]) cur = +s; } catch (e) {}
+    renderResults();
+    const arrs = await Promise.all(m.species.map(s => loadPng(DATA + s.png)));
+    arrs.forEach((a, i) => vals[i] = a);
+    $("loading").remove();
+    update();
+  }).catch(err => { $("loading").textContent = "Map data failed to load"; console.error(err); });
+})();
+</script>
+</body>
+</html>
