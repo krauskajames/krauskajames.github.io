@@ -235,6 +235,14 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 .scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
 .scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
 
+.outside-card { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 2.5rem; align-items: center; }
+.outside-card figure { margin: 0; border: 1px solid var(--rule); aspect-ratio: 5 / 3; max-width: 100%; overflow: hidden; background: var(--paper-2); }
+.outside-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.outside-text { display: grid; gap: 1rem; min-width: 0; }
+.outside-text .collar { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.6rem; }
+.outside-text h3 { font: 600 var(--step-2)/1.15 var(--display); margin: 0; }
+.outside-text p { margin: 0; color: var(--ink-2); max-width: var(--measure); }
+@media (max-width: 760px) { .outside-card { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -487,6 +495,25 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         <div><h3>Remote sensing</h3><ul><li>ERDAS Imagine</li><li>Image classification</li><li>Accuracy assessment</li><li>LiDAR and DEMs</li><li>Photogrammetry</li></ul></div>
         <div><h3>Code &amp; CAD</h3><ul><li>Python, Ruby, SQL, R, Java</li><li>SketchUp Pro and Ruby API</li><li>Thea Render</li><li>Git and GitHub</li><li>MaxEnt</li></ul></div>
       </div>
+    </div>
+  </section>
+
+  <section id="outside">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Outside work</span>
+        <div><h2>Maps I make for fun</h2></div>
+      </div>
+      <article class="outside-card">
+        <figure>
+          <img src="media/camino-finisterre.webp" alt="James at the Km 0.000 Camino marker at Cape Finisterre, with the lighthouse and the Atlantic behind him" width="1200" height="720" loading="lazy">
+        </figure>
+        <div class="outside-text">
+          <div class="collar"><span class="label">ArcGIS StoryMaps · Personal</span><span class="status planned">Coming soon</span></div>
+          <h3>Walking the Camino Francés</h3>
+          <p>A StoryMap of my spring 2026 walk across northern Spain, from the Pyrenees to the Atlantic at Finisterre: the route, the daily stages, and the places and people along the way, built from the GPS locations in my phone photos.</p>
+        </div>
+      </article>
     </div>
   </section>
 
