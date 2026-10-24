@@ -148,6 +148,14 @@ section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(
 .case-link:hover { text-decoration: underline; }
 .plate h3 a { text-decoration: none; }
 /* Pollinator card: triptych at rest; on hover 22 predictor sheets stack into the lupine model */
+/* Winnebago prism card */
+.prism-card { --pc-green-lo: #dde5cc; --pc-green-hi: #2e4a34; --pc-red-lo: #ebdcd6; --pc-red-hi: #b3837a; --pc-lake: #d9e3e3; --pc-edge: #f1f2ec; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .prism-card { --pc-green-lo: #2b3a2e; --pc-green-hi: #a3c99a; --pc-red-lo: #382d2b; --pc-red-hi: #977168; --pc-lake: #1d2a2c; --pc-edge: #121813; } }
+:root[data-theme="dark"] .prism-card { --pc-green-lo: #2b3a2e; --pc-green-hi: #a3c99a; --pc-red-lo: #382d2b; --pc-red-hi: #977168; --pc-lake: #1d2a2c; --pc-edge: #121813; }
+.prism-card img, .prism-card canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.prism-card canvas { opacity: 0; transition: opacity .3s ease; }
+.prism-card.ready canvas { opacity: 1; } .prism-card.ready img { visibility: hidden; }
+.pc-label { position: absolute; left: 4%; bottom: 5%; font-size: clamp(9px, 1.6vw, 11px); transition: opacity .18s ease; pointer-events: none; }
 .layer-card { --mc-asc: url(media/pollinator-card/Asclepias_incarnata_light.webp); --mc-lup: url(media/pollinator-card/Lupinus_perennis_light.webp); --mc-lys: url(media/pollinator-card/Lysimachia_ciliata_light.webp); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .layer-card { --mc-asc: url(media/pollinator-card/Asclepias_incarnata_dark.webp); --mc-lup: url(media/pollinator-card/Lupinus_perennis_dark.webp); --mc-lys: url(media/pollinator-card/Lysimachia_ciliata_dark.webp); } }
 :root[data-theme="dark"] .layer-card { --mc-asc: url(media/pollinator-card/Asclepias_incarnata_dark.webp); --mc-lup: url(media/pollinator-card/Lupinus_perennis_dark.webp); --mc-lys: url(media/pollinator-card/Lysimachia_ciliata_dark.webp); }
@@ -393,8 +401,10 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 
         <!-- Winnebago County -->
         <article class="plate">
-          <figure>
-            <img src="media/winnebago-card.webp" alt="Map of Winnebago County's 22 municipalities colored by population change since 2020, brown for decline and green for growth" width="1200" height="720" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+          <figure class="prism-card" id="wcard" aria-label="Map of Winnebago County's 22 municipalities shaded by population growth since 2020. On hover the map tilts and each municipality rises or sinks by population change, projected change to 2050, share of residents 65 and older, and median household income.">
+            <img src="media/winnebago-card.webp" alt="" width="1200" height="720" loading="lazy">
+            <canvas aria-hidden="true"></canvas>
+            <span class="pc-label label" aria-hidden="true">Winnebago County · population change since 2020</span>
           </figure>
           <div class="collar"><span class="label">Planning analysis · Web map</span><span class="status live">Live</span></div>
           <h3><a href="winnebago.html">Winnebago County Community Profile</a></h3>
@@ -669,6 +679,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
   });
 })();
 </script>
+<script src="media/winnebago-card/prism.js" defer></script>
 
 </body>
 </html>
