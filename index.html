@@ -83,7 +83,7 @@ a:hover { color: var(--forest); }
 
 /* Header */
 .site-header {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
   background: color-mix(in srgb, var(--paper) 92%, transparent);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--rule);
@@ -153,6 +153,7 @@ section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(
 :root[data-theme="dark"] .layer-card { --mc-asc: url(media/pollinator-card/Asclepias_incarnata_dark.webp); --mc-lup: url(media/pollinator-card/Lupinus_perennis_dark.webp); --mc-lys: url(media/pollinator-card/Lysimachia_ciliata_dark.webp); }
 .lc-stage { position: absolute; inset: 0; }
 .lc-map, .lc-sheet { position: absolute; left: 50%; top: 44%; width: 27%; aspect-ratio: 321 / 330; }
+.layer-card { isolation: isolate; }
 .lc-map { transform: translate(-50%, -50%) translateX(var(--x, 0%)); transition: transform .7s cubic-bezier(.65,0,.35,1), opacity .45s ease; z-index: 30; }
 .lc-map[data-pos="l"] { --x: -118%; z-index: 29; } .lc-map[data-pos="r"] { --x: 118%; z-index: 29; }
 .lc-map .m { position: absolute; inset: 0; background: center / contain no-repeat; }
