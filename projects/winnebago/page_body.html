@@ -1,0 +1,787 @@
+<style>
+/* Case study additions (shared with ductbuilder.html / pollinator.html) */
+.cs-hero .wrap { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 1.5rem; }
+.cs-hero h1 { font: 500 var(--step-4)/1.02 var(--display); margin: 0; letter-spacing: -0.01em; max-width: 18ch; text-wrap: balance; }
+.cs-hero .lede { font-size: var(--step-1); line-height: 1.55; max-width: 58ch; margin: 0; color: var(--ink-2); }
+.back { font: 500 0.875rem/1 var(--body); text-decoration: none; color: var(--forest); }
+.back:hover { text-decoration: underline; }
+.compare { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.compare th, .compare td { text-align: left; padding: 0.7rem 1rem 0.7rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.compare thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
+.compare td.num, .compare th.num { text-align: right; padding-right: 0; padding-left: 1rem; }
+.compare tr.hl td { background: var(--paper-2); }
+.table-scroll { overflow-x: auto; }
+.cs-body { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; }
+@media (max-width: 760px) { .cs-body { grid-template-columns: minmax(0, 1fr); } }
+.cs-body .prose { max-width: var(--measure); }
+.cs-body .prose p { margin: 0 0 1.1rem; }
+.cs-body .prose h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 1.75rem 0 0.5rem; }
+.cs-body .prose ul, .cs-body .prose ol { margin: 0 0 1.1rem; padding-left: 1.2rem; }
+.cs-body .prose li + li { margin-top: 0.45rem; }
+.cs-body .prose strong { font-weight: 600; color: var(--ink); }
+.steps { counter-reset: s; list-style: none; padding: 0 !important; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); margin: 0 !important; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; }
+.chips li { margin: 0 !important; font: 500 0.8125rem/1 var(--mono); padding: 0.5rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink-2); }
+
+/* Dashboard */
+:root {
+  --s-actual: #2f7a4b; --s-mine: #3d6fb0; --s-doa: #c0662a;
+  --lake: #d9e3e3; --lake-edge: #b7c8c9;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --s-actual: #4f9e6a; --s-mine: #6b93d0; --s-doa: #d07a40; --lake: #1d2a2c; --lake-edge: #2f4245; } }
+:root[data-theme="dark"] { --s-actual: #4f9e6a; --s-mine: #6b93d0; --s-doa: #d07a40; --lake: #1d2a2c; --lake-edge: #2f4245; }
+
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+@media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tile { padding: 1.25rem 1.25rem 1.4rem 0; border-bottom: 1px solid var(--rule); display: grid; gap: 0.35rem; align-content: start; }
+.tile + .tile { padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+@media (max-width: 900px) { .tile:nth-child(odd) { padding-left: 0; border-left: 0; } }
+.tile .num { font: 500 var(--step-3)/1 var(--display); font-variant-numeric: tabular-nums; }
+.tile .ctx { font-size: 0.875rem; color: var(--ink-2); }
+.tile .ctx b { font-weight: 600; color: var(--ink); }
+.tiles-note { font-size: 0.8125rem; color: var(--ink-2); margin: 0.9rem 0 0; }
+
+.explorer { padding-block: clamp(3rem, 7vw, 5rem); border-bottom: 1px solid var(--rule); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; align-items: center; justify-content: space-between; padding-block: 0 1rem; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--forest); border-radius: 2px; overflow: hidden; }
+.seg button { font: 500 0.875rem/1 var(--body); background: none; color: var(--forest); border: 0; border-left: 1px solid var(--forest); padding: 0.7rem 0.95rem; cursor: pointer; }
+.seg button:first-child { border-left: 0; }
+.seg button[aria-pressed="true"] { background: var(--forest); color: var(--on-forest); }
+.seg button:hover:not([aria-pressed="true"]) { background: var(--paper-2); }
+.seg.small button { padding: 0.45rem 0.7rem; font-size: 0.8125rem; }
+@media (max-width: 640px) { .seg button { padding: 0.6rem 0.7rem; font-size: 0.8125rem; } }
+.map-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); border: 1px solid var(--rule); background: var(--paper-2); }
+@media (max-width: 900px) { .map-grid { grid-template-columns: minmax(0, 1fr); } }
+#map { height: min(74vh, 660px); min-height: 400px; background: var(--paper-2); }
+@media (max-width: 640px) { #map { height: 440px; min-height: 0; } }
+.panel { border-left: 1px solid var(--rule); padding: 1.25rem; display: grid; gap: 1rem; align-content: start; background: var(--paper); }
+@media (max-width: 900px) { .panel { border-left: 0; border-top: 1px solid var(--rule); } }
+.panel h2 { font: 600 var(--step-2)/1.1 var(--display); margin: 0; }
+.panel .sub { margin: 0.2rem 0 0; color: var(--ink-2); font-size: 0.875rem; }
+.kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.35rem 1rem; margin: 0; font-size: 0.9375rem; border-top: 1px solid var(--rule); padding-top: 0.9rem; }
+.kv dt { color: var(--ink-2); }
+.kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; }
+.kv dd small { font-weight: 400; color: var(--ink-2); }
+.legend { display: grid; gap: 0.4rem; }
+.legend .title { font: 500 0.75rem/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.legend .keys { display: grid; grid-template-columns: repeat(var(--n, 6), minmax(0, 1fr)); gap: 2px; }
+.legend .keys span { height: 12px; }
+.legend .keys span:first-child { border-radius: 2px 0 0 2px; } .legend .keys span:last-child { border-radius: 0 2px 2px 0; }
+.legend .ticks { position: relative; height: 1.1rem; font: 500 0.6875rem/1.2 var(--mono); color: var(--ink-2); }
+.legend .ticks span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+.legend .labs { display: grid; grid-template-columns: repeat(var(--n, 6), minmax(0, 1fr)); gap: 2px; font: 500 0.6875rem/1.2 var(--mono); color: var(--ink-2); }
+.legend .labs span { text-align: center; }
+.map-note { font-size: 0.8125rem; color: var(--ink-2); margin: 0; }
+.leaflet-container { font: 400 0.8125rem/1.4 var(--body); background: var(--paper-2); }
+.leaflet-control-attribution { background: color-mix(in srgb, var(--paper) 85%, transparent) !important; color: var(--ink-2) !important; }
+.leaflet-control-attribution a { color: var(--ink-2) !important; }
+.leaflet-bar a { background: var(--paper) !important; color: var(--ink) !important; border-color: var(--rule) !important; }
+.muni-label { position: absolute; font: 500 10.5px/1.1 var(--body); color: var(--ink); text-align: center; white-space: nowrap; text-shadow: 0 0 3px var(--paper), 0 0 3px var(--paper), 0 0 2px var(--paper); pointer-events: none; }
+.muni-label.big { font: 600 12px/1.1 var(--body); }
+.map-wrap { position: relative; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; z-index: 500; pointer-events: none; font: 500 0.8125rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+details.tableview { margin-top: 1rem; }
+details.tableview summary { cursor: pointer; font: 500 0.875rem/1.4 var(--body); color: var(--forest); }
+details.tableview .compare { font-size: 0.875rem; margin-top: 0.75rem; }
+details.tableview th button { all: unset; cursor: pointer; }
+details.tableview th button:hover { color: var(--forest); }
+
+.chart-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 2.5rem 3rem; }
+@media (max-width: 960px) { .chart-grid { grid-template-columns: minmax(0, 1fr); } }
+.chart-grid.even { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 960px) { .chart-grid.even { grid-template-columns: minmax(0, 1fr); } }
+.chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1rem; align-items: baseline; margin-bottom: 0.75rem; }
+.chart-head h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0; }
+.chart { position: relative; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart .grid line { stroke: var(--rule); stroke-width: 1; }
+.chart .axis text, .chart .lbl { font: 500 11px var(--mono); fill: var(--ink-2); }
+.chart .dlabel { font: 600 11.5px var(--body); }
+.chart .base { stroke: var(--ink-2); stroke-width: 1; }
+.chart .hair { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 2 3; }
+.note { font-size: 0.875rem; color: var(--ink-2); margin: 0.9rem 0 0; max-width: var(--measure); }
+.legend-inline { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-size: 0.8125rem; color: var(--ink-2); margin: 0 0 0.6rem; }
+.legend-inline i { display: inline-block; width: 18px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 0.4rem; }
+.legend-inline i.sw { width: 12px; height: 12px; border: 0; border-radius: 2px; vertical-align: -1px; }
+.controls { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; align-items: center; margin-bottom: 0.9rem; font-size: 0.875rem; color: var(--ink-2); }
+.controls select { font: 500 0.875rem/1 var(--body); color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 2px; padding: 0.5rem 0.6rem; }
+.controls input[type="range"] { accent-color: var(--forest); width: 9rem; }
+.controls output { font: 500 0.8125rem var(--mono); color: var(--ink); }
+.tip { position: fixed; z-index: 1000; pointer-events: none; background: var(--ink); color: var(--paper); font: 500 0.75rem/1.45 var(--mono); padding: 0.45rem 0.6rem; border-radius: 2px; max-width: 17rem; opacity: 0; transition: opacity .1s; }
+.flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); margin-bottom: 1.5rem; }
+.flow > div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--rule); }
+.flow > div + div { padding-left: 1rem; border-left: 1px solid var(--rule); }
+.flow .num { font: 500 var(--step-2)/1 var(--display); font-variant-numeric: tabular-nums; }
+.flow .label { display: block; margin-top: 0.35rem; font-size: 0.6875rem; }
+@media (max-width: 520px) { .flow { grid-template-columns: minmax(0, 1fr); } .flow > div + div { padding-left: 0; border-left: 0; } }
+.hbars { display: grid; gap: 0.35rem; }
+.hbar { display: grid; grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr) 4.2rem; gap: 0.75rem; align-items: center; font-size: 0.875rem; padding: 2px 0; border-radius: 2px; }
+.hbar:hover { background: var(--paper-2); }
+.hbar .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hbar .track { height: 14px; position: relative; }
+.hbar .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; min-width: 1px; }
+.hbar .val { font: 500 0.8125rem/1 var(--mono); color: var(--ink-2); text-align: right; font-variant-numeric: tabular-nums; }
+.compare-bars { display: grid; gap: 1.1rem; }
+.cb h4 { font: 500 0.9375rem/1.3 var(--body); margin: 0 0 0.4rem; display: flex; justify-content: space-between; gap: 1rem; }
+.cb h4 span { color: var(--ink-2); font: 500 0.8125rem/1.3 var(--mono); }
+.cb .row { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 4.2rem; gap: 0.6rem; align-items: center; font-size: 0.8125rem; color: var(--ink-2); }
+.cb .row + .row { margin-top: 3px; }
+.cb .row .track { height: 10px; position: relative; }
+.cb .row .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; }
+.cb .row .val { font: 500 0.8125rem/1 var(--mono); text-align: right; color: var(--ink); }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; font: 500 0.9375rem/1 var(--body); text-decoration: none; padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px; }
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="cs-hero">
+    <div class="wrap">
+      <a class="back" href="index.html#work">← All work</a>
+      <div class="meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
+        <span class="label">Community profile</span>
+        <span class="label">Demographic &amp; economic analysis</span>
+        <span class="label">Built 2026 · Data through 1/1/2026</span>
+      </div>
+      <h1>Winnebago County Community Profile</h1>
+      <p class="lede">How Winnebago County is growing, aging and working, municipality by municipality. Built from public state and federal data, using the projection and economic-base methods I used in my UW–Stevens Point planning coursework, in the format of a briefing for a county board.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#explore">Explore the map</a>
+        <a class="btn btn-ghost" href="media/winnebago-county-board-memo.pdf" id="memoLink">One-page board memo (PDF)</a>
+        <a class="btn btn-ghost" id="agolLink" href="#" target="_blank" rel="noopener" hidden>ArcGIS Online dashboard ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding-block: 0 clamp(3rem, 7vw, 5rem)">
+    <div class="wrap">
+      <div class="tiles" id="tiles"></div>
+      <p class="tiles-note" id="tilesNote"></p>
+    </div>
+  </section>
+
+  <div class="explorer" id="explore">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:1.75rem">
+        <span class="label">Municipalities</span>
+        <div>
+          <h2>Where the county is changing</h2>
+          <p>Winnebago County has 22 towns, villages and cities. Choose a measure, then click a municipality for its numbers and its population history and projection.</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="Map measure" id="metricSeg"></div>
+      </div>
+      <div class="map-grid">
+        <div class="map-wrap"><div id="map" role="region" aria-label="Map of Winnebago County municipalities"></div><div class="loading" id="loading">Loading map…</div></div>
+        <aside class="panel" aria-live="polite">
+          <div class="legend" id="legend"></div>
+          <div>
+            <h2 id="pName">Winnebago County</h2>
+            <p class="sub" id="pSub">All 22 municipalities. Click the map to select one.</p>
+          </div>
+          <dl class="kv" id="pKv"></dl>
+          <div class="chart" id="spark"></div>
+          <p class="map-note" id="pNote"></p>
+        </aside>
+      </div>
+      <p class="map-note" style="margin-top:0.75rem" id="metricNote"></p>
+      <details class="tableview">
+        <summary>Show the data as a table</summary>
+        <div class="table-scroll"><table class="compare" id="muniTable"></table></div>
+      </details>
+    </div>
+  </div>
+
+  <section id="population">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Population</span>
+        <div>
+          <h2>Growing slowly, and only through migration</h2>
+          <p id="popIntro"></p>
+        </div>
+      </div>
+      <div class="chart-grid">
+        <div>
+          <div class="chart-head"><h3>Population, 1970–2050</h3></div>
+          <div class="controls">
+            <label>My extrapolation curve <select id="curveSel"></select></label>
+            <label id="ulWrap">Assumed upper limit <input type="range" id="ul" min="180000" max="260000" step="2000" value="200000"> <output id="ulOut"></output></label>
+          </div>
+          <div class="legend-inline">
+            <span><i style="border-color:var(--s-actual)"></i>Census and DOA estimates</span>
+            <span><i style="border-color:var(--s-mine);border-top-style:dotted;border-top-width:3px"></i>My extrapolation (2000–2020 base)</span>
+            <span><i style="border-color:var(--s-doa);border-top-style:dashed"></i>DOA projection</span>
+          </div>
+          <div class="chart" id="popChart"></div>
+          <p class="note">Extrapolation fits each curve to the 2000, 2010 and 2020 censuses only, the base period I used in GEOG 330. The 2026 DOA estimate was not used in the fit, so it works as a check on each curve.</p>
+        </div>
+        <div>
+          <div class="chart-head"><h3>Nine curves, one county</h3></div>
+          <div class="table-scroll"><table class="compare" id="curveTable"></table></div>
+          <p class="note">Error is the curve's 2026 value minus the DOA 1/1/2026 estimate. Upper-limit curves use the assumed limit set on the left.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="chart-grid even">
+        <div>
+          <div class="chart-head"><h3>Where the growth came from, April 2020 – January 2026</h3></div>
+          <div class="chart" id="compChart"></div>
+          <p class="note" id="compNote"></p>
+        </div>
+        <div>
+          <div class="chart-head">
+            <h3>Age and sex</h3>
+            <div class="seg small" role="group" aria-label="Projection year" id="pyrSeg"></div>
+          </div>
+          <div class="legend-inline">
+            <span><i class="sw" style="background:var(--s-actual)"></i>2020 Census</span>
+            <span id="pyrLegend"><i style="border-color:var(--s-doa)"></i>DOA projection, 2050</span>
+          </div>
+          <div class="chart" id="pyrChart"></div>
+          <p class="note" id="pyrNote"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="economy">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Economy</span>
+        <div>
+          <h2>A manufacturing county</h2>
+          <p id="econIntro"></p>
+        </div>
+      </div>
+      <div class="chart-grid even">
+        <div>
+          <div class="chart-head">
+            <h3>Location quotients, 2022</h3>
+            <div class="seg small" role="group" aria-label="Compare with" id="lqSeg">
+              <button type="button" data-k="lq_us" aria-pressed="true">vs. U.S.</button>
+              <button type="button" data-k="lq_wi" aria-pressed="false">vs. Wisconsin</button>
+            </div>
+          </div>
+          <div class="chart" id="lqChart"></div>
+          <p class="note">A location quotient above 1 means a sector holds a larger share of county jobs than of jobs nationally (or statewide), a sign it sells to markets outside the county. Sectors BEA suppresses for confidentiality are left out.</p>
+        </div>
+        <div>
+          <div class="chart-head"><h3>Shift-share, 2012–2022</h3></div>
+          <div class="legend-inline">
+            <span><i class="sw" style="background:var(--s-actual)"></i>Regional competitive effect (jobs)</span>
+          </div>
+          <div class="chart" id="ssChart"></div>
+          <p class="note">Shift-share splits each sector's change into national growth, industry mix and a regional competitive effect: the jobs a sector gained or lost beyond what its national trend predicts. Hover a bar for all three parts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="commuting">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Commuting</span>
+        <div>
+          <h2>A job center for the Fox Valley</h2>
+          <p id="commIntro"></p>
+        </div>
+      </div>
+      <div class="flow" id="flowTiles"></div>
+      <div class="chart-grid even">
+        <div>
+          <div class="chart-head"><h3>Where in-commuters live</h3></div>
+          <div class="hbars" id="inBars"></div>
+        </div>
+        <div>
+          <div class="chart-head"><h3>Where out-commuters work</h3></div>
+          <div class="hbars" id="outBars"></div>
+        </div>
+      </div>
+      <p class="note">Primary and secondary jobs, all workers, 2023 (LEHD LODES 8). Out-commuting to jobs in other states is not counted, because those flows sit in other states' files.</p>
+    </div>
+  </section>
+
+  <section id="housing">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Housing &amp; income</span>
+        <div>
+          <h2>Cheaper to live in than Wisconsin as a whole</h2>
+          <p id="housingIntro"></p>
+        </div>
+      </div>
+      <div class="compare-bars" id="acsBars" style="max-width:52rem"></div>
+      <p class="note" id="acsNote"></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Method</span>
+      <div class="prose">
+        <ol class="steps">
+          <li><span><strong>Population.</strong> Census counts 1970–2020 and the Wisconsin DOA's final January 1 estimates through 2026, for the county and each municipality. The Village of Fox Crossing's history before 2016 is the Town of Menasha, from which it incorporated.</span></li>
+          <li><span><strong>Projections.</strong> The DOA's Vintage 2024 cohort-component projections to 2050, shown next to my own extrapolation model: linear, geometric and parabolic curves, plus modified exponential, Gompertz and logistic curves, each with an internally calculated limit and with an assumed upper limit.</span></li>
+          <li><span><strong>Economic base.</strong> BEA total employment by NAICS sector (CAEMP25N, 2012 and 2022). Location quotients against the U.S. and Wisconsin; basic jobs as each sector's employment above its national share; the base multiplier as total jobs divided by basic jobs; and a three-part shift-share against the U.S.</span></li>
+          <li><span><strong>Commuting.</strong> LEHD origin–destination blocks aggregated to counties and to municipalities through the LODES geography crosswalk.</span></li>
+          <li><span><strong>Housing and income.</strong> 2020–2024 American Community Survey 5-year estimates through the Census Data API.</span></li>
+          <li><span><strong>Map.</strong> TIGERweb county subdivisions with Lake Winnebago, Lake Butte des Morts and Lake Poygan cut out, simplified for the web and drawn with Leaflet.</span></li>
+        </ol>
+        <h3>Reading the results honestly</h3>
+        <ul>
+          <li><strong>Small towns, wide margins.</strong> ACS figures for towns under about 3,000 people carry large margins of error. Where a median income's coefficient of variation passes 12%, the panel flags it.</li>
+          <li><strong>Extrapolation is a check, not a forecast.</strong> Curves fitted to three censuses know nothing about births, deaths or migration. They are useful for asking whether the DOA's projected decline is a break from recent trends, which it is.</li>
+          <li><strong>The DOA projection was made before the latest estimates.</strong> Vintage 2024 projects a slow decline from 2020, but the county has grown each year since 2022 on net in-migration.</li>
+          <li><strong>Split municipalities.</strong> Appleton, Menasha and Fox Crossing extend into neighboring counties. Only the Winnebago County portion is shown.</li>
+          <li><strong>BEA counts jobs, not people.</strong> A worker with two jobs counts twice, and proprietors are included, so BEA totals run higher than LODES or ACS counts.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">My role</span>
+      <div class="prose">
+        <p>I chose the measures and methods, carried my GEOG 330 extrapolation and economic-base spreadsheets over to Winnebago County, and checked the outputs against the source tables. The data pipeline and web page were written with AI-assisted coding (Claude).</p>
+        <p><a href="https://github.com/krauskajames/krauskajames.github.io/tree/main/projects/winnebago">The pipeline scripts</a> rebuild every number on this page from the original downloads.</p>
+        <ul class="chips" aria-label="Tools">
+          <li>Python · pandas · shapely</li><li>Census Data API</li><li>LEHD LODES</li><li>BEA Regional Data</li><li>Leaflet</li><li>ArcGIS Online Dashboards</li><li>Excel</li>
+        </ul>
+        <h3>Data sources</h3>
+        <ul>
+          <li>Wisconsin Department of Administration, Demographic Services Center: Final Population Estimates, January 1, 2026; Time Series of Population Estimates, 1970–2026; Estimated Components of Population Change, 2020–2026; Estimated Housing Units; Vintage 2024 Population and Household Projections, 2020–2050.</li>
+          <li>U.S. Bureau of Economic Analysis: CAEMP25N Total Full-Time and Part-Time Employment by NAICS Industry; CAINC1 Personal Income Summary.</li>
+          <li>U.S. Census Bureau: LEHD Origin-Destination Employment Statistics (LODES 8), 2023; American Community Survey 5-Year Estimates, 2020–2024; TIGERweb county subdivisions and areal hydrography.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between">
+      <a class="back" href="index.html#work">← Back to all work</a>
+      <a class="btn btn-primary" href="index.html#contact">Get in touch</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="scalebar" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><i></i></div>
+      <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
+    </div>
+    <span class="label">NAD83 / WGS 84 · Data: WI DOA, U.S. Census Bureau, BEA · © 2026 James Krauska</span>
+  </div>
+</footer>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+'use strict';
+const AGOL_URL = '';  // set to the ArcGIS Online dashboard URL once published
+if (AGOL_URL) { const a = document.getElementById('agolLink'); a.href = AGOL_URL; a.hidden = false; }
+
+const $ = (id) => document.getElementById(id);
+const NS = 'http://www.w3.org/2000/svg';
+const fmt = (n) => n == null ? '—' : Math.round(n).toLocaleString('en-US');
+const fmtK = (n) => n == null ? '—' : (Math.abs(n) >= 1e6 ? (n / 1e6).toFixed(2) + 'M' : Math.round(n / 1000) + 'k');
+const pct = (x, d = 1) => x == null ? '—' : (x * 100).toFixed(d) + '%';
+const spct = (x, d = 1) => x == null ? '—' : (x > 0 ? '+' : x < 0 ? '−' : '') + Math.abs(x * 100).toFixed(d) + '%';
+const sint = (x) => (x > 0 ? '+' : x < 0 ? '−' : '') + Math.abs(Math.round(x)).toLocaleString('en-US');
+const money = (x) => x == null ? '—' : '$' + Math.round(x).toLocaleString('en-US');
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const dark = () => document.documentElement.dataset.theme === 'dark' || (document.documentElement.dataset.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+const tip = $('tip');
+function showTip(html, ev) { tip.innerHTML = html; tip.style.opacity = 1; moveTip(ev); }
+function moveTip(ev) { const x = ev.clientX + 14, y = ev.clientY + 14; const w = tip.offsetWidth, h = tip.offsetHeight; tip.style.left = Math.min(x, innerWidth - w - 8) + 'px'; tip.style.top = (y + h > innerHeight - 8 ? ev.clientY - h - 10 : y) + 'px'; }
+function hideTip() { tip.style.opacity = 0; }
+
+Promise.all([
+  fetch('data/winnebago/profile.json').then(r => r.json()),
+  fetch('data/winnebago/municipalities.geojson').then(r => r.json()),
+  fetch('data/winnebago/context.geojson').then(r => r.json()),
+]).then(([P, M, C]) => { init(P, M, C); }).catch(err => { $('loading').textContent = 'Could not load data'; console.error(err); });
+
+function init(P, M, C) {
+  const co = P.county, s = co.series, w = co.wi, acs = co.acs || {}, acsWi = co.acs_wi || {};
+  const pop26 = s.e2026, pop20 = s.c2020, wi26 = w.e2026, wi20 = w.c2020;
+  const comp = co.components;
+  const hu = co.housing_units, hu0 = hu[2020], hu1 = hu[2026];
+  const econ = co.econ;
+
+  // ---------------- tiles
+  const tiles = [
+    { num: fmt(pop26), lab: 'Residents, Jan 1, 2026', ctx: `<b>${spct((pop26 - pop20) / pop20)}</b> since the 2020 Census (Wisconsin ${spct((wi26 - wi20) / wi20)})` },
+    { num: sint(comp.migration), lab: 'Net migration, 2020–2026', ctx: `Deaths outnumbered births by <b>${fmt(-comp.natural)}</b>, so all growth came from people moving in` },
+    { num: money(acs.med_income), lab: 'Median household income', ctx: `Wisconsin ${money(acsWi.med_income)} · ACS 2020–2024` },
+    { num: fmt(econ.totals.emp2022), lab: 'Jobs in the county, 2022', ctx: `Manufacturing holds <b>${pct(econ.rows.find(r => r.line === 500).share, 0)}</b> of them · BEA` },
+  ];
+  $('tiles').innerHTML = tiles.map(t => `<div class="tile"><span class="label">${t.lab}</span><span class="num">${t.num}</span><span class="ctx">${t.ctx}</span></div>`).join('');
+  $('tilesNote').textContent = `Housing units grew ${spct((hu1 - hu0) / hu0)} from 2020 to 2026 (${fmt(hu1 - hu0)} units), faster than population. Sources: Wisconsin DOA, U.S. Census Bureau, BEA.`;
+
+  // ---------------- map
+  const METRICS = [
+    { k: 'pct20_26', name: 'Change since 2020', title: 'Population change, 2020 Census to Jan 2026', type: 'div', breaks: [-0.03, -0.01, -0.0025, 0.0025, 0.01, 0.03], f: (v) => spct(v), lf: (v) => spct(v, Math.abs(v) < 0.01 ? 2 : 0), note: 'DOA final estimates for January 1, 2026, compared with the April 2020 Census.' },
+    { k: 'pct20_50', name: 'Projected to 2050', title: 'DOA projected change, 2020–2050', type: 'div', breaks: [-0.15, -0.07, -0.02, 0.02, 0.07, 0.15], f: (v) => spct(v, 0), note: 'Wisconsin DOA Vintage 2024 projections.' },
+    { k: 'density2026', name: 'Density', title: 'People per square mile of land, 2026', type: 'seq', breaks: [50, 100, 250, 1000, 2500], f: (v) => fmt(v), note: 'Land area only; lakes and rivers are excluded.' },
+    { k: 'med_income', name: 'Income', title: 'Median household income, 2020–2024', type: 'seq', breaks: [70000, 85000, 100000, 110000, 120000], f: (v) => '$' + Math.round(v / 1000) + 'k', note: 'ACS 5-year estimates. Small towns carry wide margins of error.' },
+    { k: 'pct65', name: 'Age 65+', title: 'Share of residents 65 and older, 2020–2024', type: 'seq', breaks: [0.15, 0.18, 0.21, 0.24, 0.27], f: (v) => pct(v, 0), note: 'ACS 5-year estimates.' },
+    { k: 'jobs_per_worker', name: 'Jobs per worker', title: 'Jobs located here per employed resident, 2023', type: 'seq', breaks: [0.2, 0.4, 0.7, 1.0, 1.5], f: (v) => v.toFixed(1), note: 'Above 1.0, a municipality draws in more workers than it sends out (LEHD LODES).' },
+  ];
+  const RAMPS = {
+    seq: { light: ['#e6eadb', '#c6d3ad', '#9bb784', '#6b9563', '#3f6e45', '#1f4a2c'], dark: ['#26332a', '#34503b', '#46704f', '#5f9266', '#82b583', '#b2d7a8'] },
+    div: { light: ['#8a4b1c', '#bf7d47', '#e3bf96', '#dfe1d8', '#a8c69a', '#5f945f', '#2b5c37'], dark: ['#e0a46e', '#b37848', '#6d5038', '#353b35', '#4d7250', '#78a878', '#a9d69f'] },
+  };
+  let metric = METRICS[0], selected = null;
+  const ramp = (t) => RAMPS[t][dark() ? 'dark' : 'light'];
+  function color(v, m) { if (v == null) return 'transparent'; const r = ramp(m.type); let i = 0; while (i < m.breaks.length && v >= m.breaks[i]) i++; return r[i]; }
+
+  const map = L.map('map', { zoomSnap: 0.25, scrollWheelZoom: false, attributionControl: true, zoomControl: true });
+  map.attributionControl.setPrefix(false).addAttribution('U.S. Census Bureau TIGERweb · WI DOA · ACS · LODES');
+  const lakeStyle = () => ({ color: css('--lake-edge'), weight: 0.8, fillColor: css('--lake'), fillOpacity: 1 });
+  const lakes = L.geoJSON({ type: 'FeatureCollection', features: C.features.filter(f => f.properties.name !== 'outline') }, { style: lakeStyle, interactive: false }).addTo(map);
+  const style = (f) => ({ color: css('--paper'), weight: 1, fillColor: color(f.properties[metric.k], metric), fillOpacity: 1 });
+  const layer = L.geoJSON(M, {
+    style,
+    onEachFeature: (f, lyr) => {
+      lyr.on('mouseover', (e) => { if (lyr !== selected) lyr.setStyle({ weight: 2.5, color: css('--ink') }); lyr.bringToFront(); if (selected) selected.bringToFront(); showTip(`<strong>${f.properties.name}</strong><br>${metric.title.split(',')[0]}: ${metric.f(f.properties[metric.k])}`, e.originalEvent); });
+      lyr.on('mousemove', (e) => moveTip(e.originalEvent));
+      lyr.on('mouseout', () => { if (lyr !== selected) layer.resetStyle(lyr); hideTip(); });
+      lyr.on('click', () => select(lyr));
+    },
+  }).addTo(map);
+  const outline = C.features.find(f => f.properties.name === 'outline');
+  L.geoJSON(outline, { style: { color: css('--ink'), weight: 1.4, fill: false }, interactive: false }).addTo(map);
+  map.fitBounds(layer.getBounds(), { padding: [12, 12] });
+  // labels: towns that share a name with a city or village are left to the city's label
+  const SKIP = new Set(['Town:Neenah', 'Town:Omro', 'Town:Oshkosh', 'Town:Winneconne', 'Town:Menasha', 'City:Appleton']);
+  const OFFSET = { 'City:Menasha': [10, -2], 'Village:Fox Crossing': [-24, 6], 'City:Neenah': [-6, 0], 'Village:Winneconne': [0, -9], 'City:Omro': [0, -8] };
+  layer.eachLayer((lyr) => {
+    const p = lyr.feature.properties, key = p.type + ':' + p.short;
+    if (SKIP.has(key)) return;
+    const big = p.pop2026 > 15000, off = OFFSET[key] || [0, 0];
+    L.marker([p.lab_lat, p.lab_lon], { interactive: false, keyboard: false, icon: L.divIcon({ className: '', html: `<div class="muni-label${big ? ' big' : ''}" style="transform:translate(calc(-50% + ${off[0]}px), calc(-50% + ${off[1]}px))">${p.short}</div>`, iconSize: [0, 0] }) }).addTo(map);
+  });
+  $('loading').remove();
+
+  function legend() {
+    const r = ramp(metric.type), n = r.length;
+    const half = metric.type === 'div' ? (n - 1) / 2 : -9;
+    const ticks = metric.breaks.map((b, i) => (i === half - 1 || i === half) ? '' : `<span style="left:${(i + 1) / n * 100}%">${(metric.lf || metric.f)(b)}</span>`).join('') + (metric.type === 'div' ? `<span style="left:50%">≈ 0</span>` : '');
+    $('legend').innerHTML = `<span class="title">${metric.title}</span><div class="keys" style="--n:${n}">${r.map(c => `<span style="background:${c}"></span>`).join('')}</div><div class="ticks">${ticks}</div>`;
+    $('metricNote').textContent = metric.note + (metric.type === 'div' ? ' Brown is decline, green is growth, grey is roughly no change.' : '');
+  }
+  const seg = $('metricSeg');
+  METRICS.forEach((m, i) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = m.name; b.setAttribute('aria-pressed', i === 0); b.onclick = () => { metric = m; [...seg.children].forEach(x => x.setAttribute('aria-pressed', x === b)); layer.setStyle(style); if (selected) selected.setStyle({ weight: 3, color: css('--ink') }); legend(); }; seg.appendChild(b); });
+  legend();
+
+  const muniById = Object.fromEntries(P.munis.map(m => [m.geoid, m]));
+  function panelFor(p) {
+    const m = muniById[p.geoid];
+    $('pName').textContent = p.name;
+    $('pSub').textContent = (p.split ? 'Winnebago County portion only. ' : '') + `${p.sqmi.toFixed(1)} sq mi of land`;
+    const cvFlag = p.med_income_cv > 0.12 ? ' <small>(wide margin)</small>' : '';
+    $('pKv').innerHTML = [
+      ['Residents, 2026', fmt(p.pop2026)],
+      ['Change since 2020', `${sint(p.chg20_26)} <small>(${spct(p.pct20_26)})</small>`],
+      ['DOA projection, 2050', `${fmt(p.proj2050)} <small>(${spct(p.pct20_50, 0)})</small>`],
+      ['Median household income', money(p.med_income) + cvFlag],
+      ['Age 65 and older', pct(p.pct65, 0)],
+      ['Jobs located here, 2023', fmt(p.jobs2023)],
+      ['Employed residents, 2023', fmt(p.workers2023)],
+    ].map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+    spark(m.series, m.proj, p.name);
+    $('pNote').textContent = '';
+  }
+  function panelCounty() {
+    $('pName').textContent = 'Winnebago County';
+    $('pSub').textContent = 'All 22 municipalities. Click the map to select one.';
+    $('pKv').innerHTML = [
+      ['Residents, 2026', fmt(pop26)], ['Change since 2020', `${sint(pop26 - pop20)} <small>(${spct((pop26 - pop20) / pop20)})</small>`],
+      ['DOA projection, 2050', `${fmt(co.proj[2050])} <small>(${spct((co.proj[2050] - co.proj[2020]) / co.proj[2020], 0)})</small>`],
+      ['Median household income', money(acs.med_income)], ['Age 65 and older', pct(acs.pct65, 0)],
+      ['Jobs located here, 2023', fmt(co.commute.live_work + co.commute.inflow_total)], ['Employed residents, 2023', fmt(co.commute.live_work + co.commute.outflow_total)],
+    ].map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+    const ser = {}; for (const y of [1970, 1980, 1990, 2000, 2010, 2020]) ser[y] = s['c' + y]; for (let y = 2021; y <= 2026; y++) ser[y] = s['e' + y];
+    spark(ser, co.proj, 'Winnebago County');
+  }
+  function select(lyr) {
+    if (selected) layer.resetStyle(selected);
+    if (selected === lyr) { selected = null; panelCounty(); return; }
+    selected = lyr; lyr.setStyle({ weight: 3, color: css('--ink') }); lyr.bringToFront(); panelFor(lyr.feature.properties);
+  }
+  panelCounty();
+
+  function spark(series, proj, name) {
+    const box = $('spark'); box.innerHTML = '';
+    const W = 300, H = 120, pad = { l: 34, r: 8, t: 10, b: 18 };
+    const pts = Object.entries(series).filter(([, v]) => v != null).map(([y, v]) => [+y, v]).sort((a, b) => a[0] - b[0]);
+    const pp = proj ? Object.entries(proj).map(([y, v]) => [+y, v]) : [];
+    const all = pts.concat(pp).map(d => d[1]);
+    let lo = Math.min(...all), hi = Math.max(...all); const span = hi - lo || hi * 0.1; lo -= span * 0.12; hi += span * 0.12;
+    const x = (y) => pad.l + (y - 1970) / 80 * (W - pad.l - pad.r), yv = (v) => pad.t + (1 - (v - lo) / (hi - lo)) * (H - pad.t - pad.b);
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `${name} population 1970 to 2026 with DOA projection to 2050` }, box);
+    const g = el('g', { class: 'grid' }, svg);
+    [lo + (hi - lo) * 0.12, hi - (hi - lo) * 0.12].forEach(v => { el('line', { x1: pad.l, x2: W - pad.r, y1: yv(v), y2: yv(v) }, g); const t = el('text', { x: pad.l - 4, y: yv(v) + 3.5, 'text-anchor': 'end', class: 'lbl' }, svg); t.textContent = fmtK(v); });
+    [1970, 2000, 2026, 2050].forEach(yr => { const t = el('text', { x: x(yr), y: H - 4, 'text-anchor': 'middle', class: 'lbl' }, svg); t.textContent = yr; });
+    el('path', { d: 'M' + pts.map(d => `${x(d[0])},${yv(d[1])}`).join('L'), fill: 'none', stroke: css('--s-actual'), 'stroke-width': 2, 'stroke-linejoin': 'round' }, svg);
+    if (pp.length) el('path', { d: 'M' + pp.map(d => `${x(d[0])},${yv(d[1])}`).join('L'), fill: 'none', stroke: css('--s-doa'), 'stroke-width': 2, 'stroke-dasharray': '5 4' }, svg);
+    const last = pts[pts.length - 1]; el('circle', { cx: x(last[0]), cy: yv(last[1]), r: 4, fill: css('--s-actual'), stroke: css('--paper'), 'stroke-width': 2 }, svg);
+    const cap = document.createElement('p'); cap.className = 'map-note'; cap.style.margin = '0.25rem 0 0'; cap.innerHTML = `<span style="color:var(--s-actual)">━</span> Census &amp; estimates &nbsp; <span style="color:var(--s-doa)">╍</span> DOA projection`; box.appendChild(cap);
+  }
+
+  // table view
+  const cols = [['name', 'Municipality', (v) => v], ['pop2026', 'Residents 2026', fmt], ['pct20_26', 'Change since 2020', (v) => spct(v)], ['pct20_50', 'Projected 2020–50', (v) => spct(v, 0)], ['density2026', 'Per sq mi', fmt], ['med_income', 'Median income', money], ['pct65', 'Age 65+', (v) => pct(v, 0)], ['jobs2023', 'Jobs 2023', fmt]];
+  let sortK = 'pop2026', sortDir = -1;
+  function table() {
+    const rows = M.features.map(f => f.properties).sort((a, b) => (a[sortK] > b[sortK] ? 1 : -1) * sortDir);
+    $('muniTable').innerHTML = `<thead><tr>${cols.map(([k, l], i) => `<th scope="col" class="${i ? 'num' : ''}"><button data-k="${k}">${l}${k === sortK ? (sortDir < 0 ? ' ↓' : ' ↑') : ''}</button></th>`).join('')}</tr></thead><tbody>${rows.map(p => `<tr>${cols.map(([k, , f], i) => `<td class="${i ? 'num' : ''}">${f(p[k])}</td>`).join('')}</tr>`).join('')}</tbody>`;
+    $('muniTable').querySelectorAll('th button').forEach(b => b.onclick = () => { if (sortK === b.dataset.k) sortDir *= -1; else { sortK = b.dataset.k; sortDir = sortK === 'name' ? 1 : -1; } table(); });
+  }
+  table();
+
+  // ---------------- population & extrapolation
+  const Y = [s.c2000, s.c2010, s.c2020];
+  $('popIntro').textContent = `The county gained ${fmt(s.c2020 - s.c2000)} residents from 2000 to 2020, but growth slowed by more than half in the second decade. The DOA estimates ${fmt(pop26)} residents in 2026, yet its Vintage 2024 projection has the county shrinking to ${fmt(co.proj[2050])} by 2050.`;
+  const lsq = (xs, ys) => { const n = xs.length, mx = xs.reduce((a, b) => a + b) / n, my = ys.reduce((a, b) => a + b) / n; let sxy = 0, sxx = 0; xs.forEach((x, i) => { sxy += (x - mx) * (ys[i] - my); sxx += (x - mx) ** 2; }); const b = sxy / sxx; return [my - b * mx, b]; };
+  const T = [0, 1, 2];
+  function threePoint(z) { const b = (z[2] - z[1]) / (z[1] - z[0]); const a = (z[1] - z[0]) / (b - 1); const c = z[0] - a; return { a, b, c, ok: b > 0 && b !== 1 }; }
+  function curves(UL) {
+    const out = [];
+    { const [a, b] = lsq(T, Y); out.push({ k: 'lin', name: 'Linear', f: t => a + b * t }); }
+    { const [a, b] = lsq(T, Y.map(Math.log10)); out.push({ k: 'geo', name: 'Geometric', f: t => 10 ** (a + b * t) }); }
+    { const a = Y[0], b = (4 * Y[1] - 3 * Y[0] - Y[2]) / 2, c = (Y[2] - 2 * Y[1] + Y[0]) / 2; out.push({ k: 'par', name: 'Parabolic', f: t => a + b * t + c * t * t }); }
+    { const p = threePoint(Y); out.push({ k: 'me', name: 'Modified exponential', limit: p.c, f: t => p.c + p.a * p.b ** t, ok: p.ok }); }
+    { const L10 = Y.map(Math.log10), p = threePoint(L10); out.push({ k: 'gom', name: 'Gompertz', limit: 10 ** p.c, f: t => 10 ** (p.c + p.a * p.b ** t), ok: p.ok }); }
+    { const R = Y.map(v => 1 / v), p = threePoint(R); out.push({ k: 'log', name: 'Logistic', limit: 1 / p.c, f: t => 1 / (p.c + p.a * p.b ** t), ok: p.ok }); }
+    if (UL > Y[2]) {
+      { const [la, lb] = lsq(T, Y.map(v => Math.log10(UL - v))); out.push({ k: 'meul', name: 'Mod. exponential, assumed limit', ul: true, f: t => UL - 10 ** (la + lb * t) }); }
+      { const lu = Math.log10(UL), [la, lb] = lsq(T, Y.map(v => Math.log10(lu - Math.log10(v)))); out.push({ k: 'gomul', name: 'Gompertz, assumed limit', ul: true, f: t => 10 ** (lu - 10 ** (la + lb * t)) }); }
+      { const [la, lb] = lsq(T, Y.map(v => Math.log10(1 / v - 1 / UL))); out.push({ k: 'logul', name: 'Logistic, assumed limit', ul: true, f: t => 1 / (1 / UL + 10 ** (la + lb * t)) }); }
+    }
+    return out;
+  }
+  const sel = $('curveSel');
+  curves(200000).forEach(c => { const o = document.createElement('option'); o.value = c.k; o.textContent = c.name; sel.appendChild(o); });
+  sel.value = 'me';
+  const ul = $('ul');
+  const t = (yr) => (yr - 2000) / 10;
+  function popChart() {
+    const UL = +ul.value; $('ulOut').textContent = fmt(UL);
+    const cs = curves(UL), cur = cs.find(c => c.k === sel.value) || cs[0];
+    $('ulWrap').style.opacity = cur.ul ? 1 : 0.55;
+    // table
+    const est26 = pop26;
+    $('curveTable').innerHTML = `<thead><tr><th scope="col">Curve</th><th scope="col" class="num">2030</th><th scope="col" class="num">2050</th><th scope="col" class="num">2026 error</th></tr></thead><tbody>${cs.map(c => `<tr class="${c.k === cur.k ? 'hl' : ''}"><td>${c.name}</td><td class="num">${fmt(c.f(t(2030)))}</td><td class="num">${fmt(c.f(t(2050)))}</td><td class="num">${sint(c.f(t(2026)) - est26)}</td></tr>`).join('')}<tr><td>DOA Vintage 2024</td><td class="num">${fmt(co.proj[2030])}</td><td class="num">${fmt(co.proj[2050])}</td><td class="num">${sint((co.proj[2020] + (co.proj[2030] - co.proj[2020]) * 0.575) - est26)}</td></tr></tbody>`;
+    // chart
+    const box = $('popChart'); box.innerHTML = '';
+    const W = 640, H = 330, pad = { l: 56, r: 118, t: 14, b: 28 };
+    const hist = []; for (const y of [1970, 1980, 1990, 2000, 2010, 2020]) hist.push([y, s['c' + y]]); for (let y = 2021; y <= 2026; y++) hist.push([y, s['e' + y]]);
+    const mine = []; for (let y = 2000; y <= 2050; y += 1) mine.push([y, cur.f(t(y))]);
+    const doa = [2020, 2030, 2040, 2050].map(y => [y, co.proj[y]]);
+    const vals = hist.concat(mine, doa).map(d => d[1]);
+    const lo = Math.floor(Math.min(...vals) / 10000) * 10000, hi = Math.ceil(Math.max(...vals) / 10000) * 10000;
+    const x = (yr) => pad.l + (yr - 1970) / 80 * (W - pad.l - pad.r), yv = (v) => pad.t + (1 - (v - lo) / (hi - lo)) * (H - pad.t - pad.b);
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Winnebago County population 1970 to 2026 with projections to 2050' }, box);
+    const g = el('g', { class: 'grid' }, svg);
+    for (let v = lo; v <= hi; v += 10000) { el('line', { x1: pad.l, x2: W - pad.r, y1: yv(v), y2: yv(v) }, g); const tx = el('text', { x: pad.l - 8, y: yv(v) + 4, 'text-anchor': 'end', class: 'lbl' }, svg); tx.textContent = fmtK(v); }
+    for (let yr = 1970; yr <= 2050; yr += 10) { const tx = el('text', { x: x(yr), y: H - 8, 'text-anchor': 'middle', class: 'lbl' }, svg); tx.textContent = yr; }
+    el('rect', { x: x(2026), y: pad.t, width: x(2050) - x(2026), height: H - pad.t - pad.b, fill: css('--paper-2'), opacity: 0.7 }, svg);
+    const tl = el('text', { x: x(2049), y: H - pad.b - 8, class: 'lbl', 'text-anchor': 'end' }, svg); tl.textContent = 'PROJECTED';
+    const path = (pts, attrs) => el('path', Object.assign({ d: 'M' + pts.map(d => `${x(d[0]).toFixed(1)},${yv(d[1]).toFixed(1)}`).join('L'), fill: 'none', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, attrs), svg);
+    path(doa, { stroke: css('--s-doa'), 'stroke-dasharray': '6 5' });
+    path(mine, { stroke: css('--s-mine'), 'stroke-dasharray': '1 5', 'stroke-width': 3 });
+    path(hist, { stroke: css('--s-actual') });
+    [[2000, s.c2000], [2010, s.c2010], [2020, s.c2020]].forEach(d => el('circle', { cx: x(d[0]), cy: yv(d[1]), r: 4.5, fill: css('--s-actual'), stroke: css('--paper'), 'stroke-width': 2 }, svg));
+    el('circle', { cx: x(2026), cy: yv(pop26), r: 4.5, fill: css('--paper'), stroke: css('--s-actual'), 'stroke-width': 2 }, svg);
+    // direct labels at the right edge, nudged apart
+    const ends = [[mine[mine.length - 1][1], 'Mine ' + fmtK(mine[mine.length - 1][1]), css('--s-mine')], [co.proj[2050], 'DOA ' + fmtK(co.proj[2050]), css('--s-doa')]].sort((a, b) => b[0] - a[0]);
+    let prevY = -1e9; ends.forEach(([v, label, c]) => { let yy = yv(v) + 4; if (yy - prevY < 15) yy = prevY + 15; prevY = yy; const tx = el('text', { x: x(2050) + 8, y: yy, class: 'dlabel', fill: c }, svg); tx.textContent = label; });
+    const tx = el('text', { x: x(2026) - 8, y: yv(pop26) - 12, class: 'dlabel', fill: css('--s-actual'), 'text-anchor': 'end' }, svg); tx.textContent = '2026: ' + fmtK(pop26);
+    // hover crosshair
+    const hair = el('line', { class: 'hair', y1: pad.t, y2: H - pad.b, visibility: 'hidden' }, svg);
+    const hit = el('rect', { x: pad.l, y: pad.t, width: W - pad.l - pad.r, height: H - pad.t - pad.b, fill: 'transparent' }, svg);
+    const lookup = (arr, yr) => { let best = null; arr.forEach(d => { if (Math.abs(d[0] - yr) < 0.5) best = d[1]; }); return best; };
+    hit.addEventListener('mousemove', (ev) => {
+      const r = svg.getBoundingClientRect(); const yr = Math.round(1970 + ((ev.clientX - r.left) / r.width * W - pad.l) / (W - pad.l - pad.r) * 80);
+      if (yr < 1970 || yr > 2050) return; hair.setAttribute('x1', x(yr)); hair.setAttribute('x2', x(yr)); hair.setAttribute('visibility', 'visible');
+      const lines = [`<strong>${yr}</strong>`]; const a = lookup(hist, yr); if (a) lines.push(`Census/estimate ${fmt(a)}`);
+      const m = yr >= 2000 ? cur.f(t(yr)) : null; if (m) lines.push(`${cur.name} ${fmt(m)}`);
+      if (yr >= 2020) { const k = Math.floor((yr - 2020) / 10) * 10 + 2020; const k2 = Math.min(k + 10, 2050); const dv = co.proj[k] + (co.proj[k2] - co.proj[k]) * ((yr - k) / 10 || 0); lines.push(`DOA ${fmt(dv)}${yr % 10 ? ' (interpolated)' : ''}`); }
+      showTip(lines.join('<br>'), ev);
+    });
+    hit.addEventListener('mouseleave', () => { hair.setAttribute('visibility', 'hidden'); hideTip(); });
+  }
+  sel.onchange = popChart; ul.oninput = popChart;
+  popChart();
+
+  // components
+  (function () {
+    const box = $('compChart'); const items = [['Births', comp.births], ['Deaths', -comp.deaths], ['Natural change', comp.natural], ['Net migration', comp.migration], ['Total change', comp.total]];
+    const W = 520, rowH = 34, H = items.length * rowH + 24, pad = { l: 120, r: 70 };
+    const max = Math.max(...items.map(d => Math.abs(d[1])));
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Components of population change, 2020 to 2026' }, box);
+    const x0 = pad.l + (W - pad.l - pad.r) / 2, sc = (W - pad.l - pad.r) / 2 / max;
+    el('line', { x1: x0, x2: x0, y1: 0, y2: H - 20, class: 'base' }, svg);
+    items.forEach(([name, v], i) => {
+      const y = i * rowH + 6; const wbar = Math.abs(v) * sc; const c = v >= 0 ? css('--s-actual') : css('--s-doa');
+      const tx = el('text', { x: 0, y: y + 15, class: 'lbl', style: 'font-family:var(--body);font-size:13px;fill:var(--ink)' }, svg); tx.textContent = name;
+      const r = el('rect', { x: v >= 0 ? x0 : x0 - wbar, y, width: Math.max(wbar, 1.5), height: 20, rx: 3, fill: c, opacity: i >= 2 ? 1 : 0.55 }, svg);
+      const vt = el('text', { x: v >= 0 ? x0 + wbar + 6 : x0 - wbar - 6, y: y + 15, 'text-anchor': v >= 0 ? 'start' : 'end', class: 'lbl', style: 'fill:var(--ink)' }, svg); vt.textContent = sint(v);
+      r.addEventListener('mousemove', (ev) => showTip(`<strong>${name}</strong><br>${sint(v)} people`, ev)); r.addEventListener('mouseleave', hideTip);
+    });
+    const cw = co.components_wi;
+    $('compNote').textContent = `Since the 2020 Census, ${fmt(comp.deaths)} residents died and ${fmt(comp.births)} were born. Net in-migration of ${fmt(comp.migration)} people made up the difference. Statewide, natural change was close to zero (${sint(cw.natural)}) and migration added ${fmt(cw.migration)}.`;
+  })();
+
+  // pyramid
+  let pyrYear = 2050;
+  const pseg = $('pyrSeg');
+  [2030, 2040, 2050].forEach(y => { const b = document.createElement('button'); b.type = 'button'; b.textContent = y; b.setAttribute('aria-pressed', y === pyrYear); b.onclick = () => { pyrYear = y; [...pseg.children].forEach(x => x.setAttribute('aria-pressed', x === b)); pyramid(); }; pseg.appendChild(b); });
+  function pyramid() {
+    const box = $('pyrChart'); box.innerHTML = '';
+    const rows = co.pyramid.slice().reverse(); const W = 520, rh = 15, H = rows.length * rh + 30, mid = W / 2, gap = 46;
+    const max = Math.max(...rows.flatMap(r => [r.m[2020], r.f[2020], r.m[pyrYear], r.f[pyrYear]]));
+    const sc = (mid - gap - 14) / max;
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Age and sex pyramid, 2020 Census and DOA projection for ${pyrYear}` }, box);
+    const totalF = (yr) => co.pyramid.reduce((a, r) => a + r.f[yr] + r.m[yr], 0);
+    rows.forEach((r, i) => {
+      const y = i * rh + 4;
+      const lab = el('text', { x: mid, y: y + 10.5, 'text-anchor': 'middle', class: 'lbl', style: 'font-size:9.5px' }, svg); lab.textContent = r.age.replace(/\s*(&|and)\s*over/i, '+');
+      [['m', -1], ['f', 1]].forEach(([sx, dir]) => {
+        const v0 = r[sx][2020], v1 = r[sx][pyrYear];
+        const x0 = dir < 0 ? mid - gap / 2 - v0 * sc : mid + gap / 2;
+        const rect = el('rect', { x: x0, y, width: v0 * sc, height: rh - 3, fill: css('--s-actual'), rx: 2 }, svg);
+        const xe = dir < 0 ? mid - gap / 2 - v1 * sc : mid + gap / 2 + v1 * sc;
+        el('line', { x1: xe, x2: xe, y1: y - 1, y2: y + rh - 2, stroke: css('--s-doa'), 'stroke-width': 2.5 }, svg);
+        const hitr = el('rect', { x: dir < 0 ? 0 : mid, y, width: mid, height: rh, fill: 'transparent' }, svg);
+        hitr.addEventListener('mousemove', (ev) => showTip(`<strong>${sx === 'm' ? 'Male' : 'Female'}, ${r.age}</strong><br>2020: ${fmt(v0)}<br>${pyrYear}: ${fmt(v1)} (${sint(v1 - v0)})`, ev));
+        hitr.addEventListener('mouseleave', hideTip);
+      });
+    });
+    const ml = el('text', { x: mid - gap / 2 - 4, y: H - 6, 'text-anchor': 'end', class: 'lbl' }, svg); ml.textContent = '← MALE';
+    const fl = el('text', { x: mid + gap / 2 + 4, y: H - 6, class: 'lbl' }, svg); fl.textContent = 'FEMALE →';
+    $('pyrLegend').innerHTML = `<i style="border-color:var(--s-doa);width:3px;height:12px;border-top:0;border-left:2.5px solid var(--s-doa);vertical-align:-1px"></i>DOA projection, ${pyrYear}`;
+    const old = (yr) => co.pyramid.filter(r => /^(6[5-9]|[7-9]\d|85)/.test(r.age)).reduce((a, r) => a + r.f[yr] + r.m[yr], 0);
+    const kids = (yr) => co.pyramid.filter(r => /^(0-4|5-9|10-14|15-19)$/.test(r.age)).reduce((a, r) => a + r.f[yr] + r.m[yr], 0);
+    $('pyrNote').textContent = `Residents 65 and older: ${pct(old(2020) / totalF(2020), 0)} in 2020, projected ${pct(old(pyrYear) / totalF(pyrYear), 0)} in ${pyrYear}. Under 20: ${pct(kids(2020) / totalF(2020), 0)} falling to ${pct(kids(pyrYear) / totalF(pyrYear), 0)}.`;
+  }
+  pyramid();
+
+  // ---------------- economy
+  const mfg = econ.rows.find(r => r.line === 500);
+  $('econIntro').textContent = `Manufacturing employed ${fmt(mfg.emp2022)} people in 2022, ${pct(mfg.share, 0)} of all jobs and ${mfg.lq_us.toFixed(1)} times its national share. Using the excess-employment method, about ${fmt(econ.totals.basic)} jobs are "basic" (selling outside the county), for an economic base multiplier of ${econ.totals.multiplier.toFixed(1)}. The county lost ${fmt(-mfg.chg)} manufacturing jobs over the decade while construction, transportation and finance grew.`;
+  let lqK = 'lq_us';
+  const lqSeg = $('lqSeg');
+  lqSeg.querySelectorAll('button').forEach(b => b.onclick = () => { lqK = b.dataset.k; lqSeg.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); lqChart(); });
+  function lqChart() {
+    const rows = econ.rows.filter(r => r[lqK] != null && r.line !== 70).sort((a, b) => b[lqK] - a[lqK]);
+    const box = $('lqChart'); box.innerHTML = '';
+    const W = 520, rh = 22, pad = { l: 200, r: 44, t: 6, b: 24 }, H = rows.length * rh + pad.t + pad.b;
+    const max = Math.max(2.4, Math.ceil(Math.max(...rows.map(r => r[lqK])) * 2) / 2);
+    const x = (v) => pad.l + v / max * (W - pad.l - pad.r);
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Location quotients by sector' }, box);
+    const g = el('g', { class: 'grid' }, svg);
+    for (let v = 0; v <= max; v += 0.5) { el('line', { x1: x(v), x2: x(v), y1: pad.t, y2: H - pad.b }, g); const t = el('text', { x: x(v), y: H - 6, 'text-anchor': 'middle', class: 'lbl' }, svg); t.textContent = v.toFixed(1); }
+    el('line', { x1: x(1), x2: x(1), y1: pad.t - 4, y2: H - pad.b, stroke: css('--ink'), 'stroke-width': 1.5 }, svg);
+    rows.forEach((r, i) => {
+      const y = pad.t + i * rh, v = r[lqK];
+      const nm = el('text', { x: pad.l - 10, y: y + 14, 'text-anchor': 'end', style: 'font:500 12px var(--body);fill:var(--ink)' }, svg); nm.textContent = r.name;
+      el('line', { x1: x(1), x2: x(v), y1: y + 10, y2: y + 10, stroke: css('--rule'), 'stroke-width': 2 }, svg);
+      const c = el('circle', { cx: x(v), cy: y + 10, r: 5.5, fill: v >= 1 ? css('--s-actual') : css('--paper'), stroke: css('--s-actual'), 'stroke-width': 2 }, svg);
+      const t = el('text', { x: x(v) + (v >= 1 ? 10 : -10), y: y + 14, 'text-anchor': v >= 1 ? 'start' : 'end', class: 'lbl' }, svg); t.textContent = v.toFixed(2);
+      if (v < 1 && x(v) - 10 < pad.l + 26) t.setAttribute('visibility', 'hidden');
+      const hit = el('rect', { x: 0, y, width: W, height: rh, fill: 'transparent' }, svg);
+      hit.addEventListener('mousemove', (ev) => showTip(`<strong>${r.name}</strong><br>${fmt(r.emp2022)} jobs (${pct(r.share)})<br>LQ vs U.S. ${r.lq_us.toFixed(2)} · vs WI ${r.lq_wi.toFixed(2)}${r.basic > 0 ? `<br>Basic jobs ≈ ${fmt(r.basic)}` : ''}`, ev));
+      hit.addEventListener('mouseleave', hideTip);
+    });
+  }
+  lqChart();
+  (function () {
+    const rows = econ.rows.filter(r => r.rs != null && r.line !== 70).sort((a, b) => b.rs - a.rs);
+    const box = $('ssChart');
+    const W = 520, rh = 22, pad = { l: 200, r: 56, t: 6, b: 24 }, H = rows.length * rh + pad.t + pad.b;
+    const ext = Math.max(...rows.map(r => Math.abs(r.rs))); const lim = Math.ceil(ext / 1000) * 1000;
+    const x = (v) => pad.l + (v + lim) / (2 * lim) * (W - pad.l - pad.r);
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Regional competitive effect by sector, 2012 to 2022' }, box);
+    const g = el('g', { class: 'grid' }, svg);
+    for (let v = -lim; v <= lim; v += lim / 2) { el('line', { x1: x(v), x2: x(v), y1: pad.t, y2: H - pad.b }, g); const t = el('text', { x: x(v), y: H - 6, 'text-anchor': 'middle', class: 'lbl' }, svg); t.textContent = v === 0 ? '0' : sint(v); }
+    el('line', { x1: x(0), x2: x(0), y1: pad.t - 4, y2: H - pad.b, stroke: css('--ink'), 'stroke-width': 1.5 }, svg);
+    rows.forEach((r, i) => {
+      const y = pad.t + i * rh;
+      const nm = el('text', { x: pad.l - 10, y: y + 14, 'text-anchor': 'end', style: 'font:500 12px var(--body);fill:var(--ink)' }, svg); nm.textContent = r.name;
+      const x0 = x(Math.min(0, r.rs)), wbar = Math.abs(x(r.rs) - x(0));
+      el('rect', { x: x0, y: y + 3, width: Math.max(wbar, 1.5), height: rh - 7, rx: 3, fill: r.rs >= 0 ? css('--s-actual') : css('--s-doa') }, svg);
+      const hit = el('rect', { x: 0, y, width: W, height: rh, fill: 'transparent' }, svg);
+      hit.addEventListener('mousemove', (ev) => showTip(`<strong>${r.name}</strong><br>2012 ${fmt(r.emp2012)} → 2022 ${fmt(r.emp2022)} (${sint(r.chg)})<br>National growth ${sint(r.ns)}<br>Industry mix ${sint(r.im)}<br>Regional competitive ${sint(r.rs)}`, ev));
+      hit.addEventListener('mouseleave', hideTip);
+    });
+  })();
+
+  // ---------------- commuting
+  const cm = co.commute;
+  const jobs = cm.live_work + cm.inflow_total, workers = cm.live_work + cm.outflow_total;
+  $('commIntro').textContent = `${fmt(jobs)} jobs are located in Winnebago County and ${fmt(workers)} employed residents live here. More workers commute in (${fmt(cm.inflow_total)}) than out (${fmt(cm.outflow_total)}), so the county is a net importer of about ${fmt(cm.inflow_total - cm.outflow_total)} workers a day.`;
+  $('flowTiles').innerHTML = [[fmt(cm.live_work), 'Live and work in the county'], [fmt(cm.inflow_total), 'Commute in'], [fmt(cm.outflow_total), 'Commute out']].map(([n, l]) => `<div><span class="num">${n}</span><span class="label">${l}</span></div>`).join('');
+  function hbars(id, list, c) {
+    const max = Math.max(...list.filter(d => d.fips !== 'other').map(d => d.n));
+    $(id).innerHTML = list.map(d => `<div class="hbar" data-tip="${d.name}: ${fmt(d.n)} workers"><span class="name">${d.name}${d.fips === 'other' ? '' : ''}</span><span class="track"><span class="fill" style="width:${Math.min(100, d.n / max * 100)}%;background:${d.fips === 'other' ? 'var(--rule)' : c}"></span></span><span class="val">${fmt(d.n)}</span></div>`).join('');
+    $(id).querySelectorAll('.hbar').forEach(b => { b.onmousemove = (ev) => showTip(b.dataset.tip, ev); b.onmouseleave = hideTip; });
+  }
+  hbars('inBars', cm.inflow, 'var(--s-actual)');
+  hbars('outBars', cm.outflow, 'var(--s-mine)');
+
+  // ---------------- housing & income
+  if (co.acs) {
+    const us = null;
+    const items = [
+      ['Median household income', 'med_income', money],
+      ['Median home value', 'med_value', money],
+      ['Median gross rent', 'med_rent', (v) => money(v) + '/mo'],
+      ['Renters paying 30%+ of income on housing', 'rent_burden', (v) => pct(v, 0)],
+      ['Owners paying 30%+ of income on housing', 'own_burden', (v) => pct(v, 0)],
+      ['Residents in poverty', 'poverty', (v) => pct(v, 1)],
+      ['Adults 25+ with a bachelor\'s degree or higher', 'ba_plus', (v) => pct(v, 0)],
+      ['Housing units vacant', 'vacancy', (v) => pct(v, 1)],
+    ];
+    $('housingIntro').textContent = `Homes in Winnebago County are worth ${pct(1 - acs.med_value / acsWi.med_value, 0)} less than the Wisconsin median and rents run ${money(acsWi.med_rent - acs.med_rent)} a month lower, Even so, ${pct(acs.rent_burden, 0)} of renter households spend 30% or more of their income on housing (Wisconsin ${pct(acsWi.rent_burden, 0)}). About a third of households rent, slightly more than statewide, and median income trails the state by ${money(acsWi.med_income - acs.med_income)}. Incomes are lowest in the cities of Oshkosh, Menasha and Omro and highest in the suburban towns around them.`;
+    $('acsBars').innerHTML = items.map(([name, k, f]) => {
+      const a = acs[k], b = acsWi[k], max = Math.max(a, b) * 1.08;
+      return `<div class="cb"><h4>${name}</h4><div class="row"><span>Winnebago</span><span class="track"><span class="fill" style="width:${a / max * 100}%;background:var(--s-actual)"></span></span><span class="val">${f(a)}</span></div><div class="row"><span>Wisconsin</span><span class="track"><span class="fill" style="width:${b / max * 100}%;background:var(--rule)"></span></span><span class="val">${f(b)}</span></div></div>`;
+    }).join('');
+    $('acsNote').textContent = 'American Community Survey 5-year estimates, 2020–2024. Cost burden excludes households with no cash rent or zero income.';
+  }
+
+  // re-theme on scheme change
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { layer.setStyle(style); lakes.setStyle(lakeStyle); legend(); popChart(); pyramid(); lqChart(); });
+}
+})();
+</script>
+</body>
+</html>
