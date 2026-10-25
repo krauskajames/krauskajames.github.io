@@ -21,33 +21,128 @@ Percent fields (`Pct20_26`, `Pct20_50`, `Pct65Plus`, `PctPoverty`, `PctBAplus`, 
 
 ## 2. Make the web map
 
-1. Open the municipalities layer in **Map Viewer**.
-2. Basemap: **Light Gray Canvas** (or Human Geography) so the colors carry the message.
-3. **Styles → Choose attribute → Pct20_26 → Counts and Amounts (color)**. Set the theme to *High to low* with a diverging ramp (brown to green), then **Classify data → Manual breaks**: −3, −1, −0.25, 0.25, 1, 3. This matches the web page.
-4. **Pop-ups**: use a custom attribute expression or the field list. Show Muni_Name as the title, then Pop2026, Pct20_26, Proj2050, MedHHInc, Pct65Plus, Jobs2023. Format Pop fields with thousands separators and the percent fields with one decimal.
-5. **Labels**: Short_Name, 9 pt, with a white halo.
-6. Optional: duplicate the layer and style the copies by MedHHInc, Pct65Plus and Density26 (sequential greens), so the dashboard can switch layers.
-7. **Save as** *Winnebago County Profile Map*.
+Your map is saved as *Winnebago Community Profile Webmap*. It ends up with four copies of the municipalities layer, one per measure.
+
+### 2a. Basemap
+
+1. **Basemap → Light Gray Canvas**.
+2. In the basemap's layer list, hide or remove **Light Gray Reference**. This drops the basemap's own place names (Orihula, Larsen, Waukau) so they don't double up with your labels.
+
+### 2b. Population change since 2020 (main layer)
+
+Map Viewer's diverging themes ("Above and below") didn't work reliably on this layer, so the style uses an Arcade expression instead.
+
+1. Rename the layer *Population change since 2020*.
+2. **Styles → + Expression**, name it **Change since 2020**, and paste:
+
+```
+var v = $feature.Pct20_26;
+When(
+  v < -1,    "1. Lost more than 1%",
+  v < -0.25, "2. Lost 0.25–1%",
+  v <= 0.25, "3. About the same",
+  v <= 1,    "4. Grew 0.25–1%",
+  v <= 3,    "5. Grew 1–3%",
+             "6. Grew more than 3%"
+)
+```
+
+3. Make sure it is the **only** attribute selected (remove Pct20_26 if it is listed, or you get sized circles), then pick **Types (unique symbols)**.
+4. In **Style options**, use the **⋯** next to the category count to **Sort by label**. Then set each color by clicking its swatch:
+
+| Category | Color |
+|---|---|
+| 1. Lost more than 1% | `#bf7d47` |
+| 2. Lost 0.25–1% | `#e3bf96` |
+| 3. About the same | `#dfe1d8` |
+| 4. Grew 0.25–1% | `#a8c69a` |
+| 5. Grew 1–3% | `#5f945f` |
+| 6. Grew more than 3% | `#2b5c37` |
+
+5. Check the result: Clayton, Poygan, Rushford and the towns of Omro and Winneconne are darkest green. The City of Menasha, Town of Neenah, Appleton, Nekimi and Nepeuskun are brown.
+
+### 2c. Pop-up
+
+1. **Pop-ups → Title:** `{Muni_Name}`.
+2. Delete the default fields list, then **+ Add content → Arcade**, and paste:
+
+```
+var f = $feature;
+var chg = f.Pct20_26;
+var sign = IIf(chg > 0, "+", "");
+var inc = Text(f.MedHHInc, "$#,###");
+var incNote = IIf(f.MedInc_CV > 12, " (wide margin of error)", "");
+
+var html =
+  "<b>" + Text(f.Pop2026, "#,###") + "</b> residents, Jan 1, 2026<br>" +
+  sign + Text(f.Chg20_26, "#,###") + " (" + sign + Text(chg, "0.0") + "%) since the 2020 Census<br>" +
+  "DOA projection for 2050: " + Text(f.Proj2050, "#,###") + "<br><br>" +
+  "Median household income: " + inc + incNote + "<br>" +
+  "Age 65 and older: " + Text(f.Pct65Plus, "0") + "%<br>" +
+  "Jobs located here (2023): " + Text(f.Jobs2023, "#,###");
+
+if (f.Split_Muni) { html += "<br><br><i>Winnebago County portion only.</i>"; }
+
+return { type: "text", text: html };
+```
+
+Test it on Clayton: 5,213 residents, +884 (+20.4%) since the 2020 Census.
+
+### 2d. Labels (two classes)
+
+Several towns share a name with a city or village (Omro, Winneconne, Neenah, Oshkosh), so cities and towns get separate label classes.
+
+1. **Labels → Enable labels**.
+2. **Class 1, cities and villages.** Filter: `Muni_Type is not Town`. Label field: Short_Name. Bold, 10–11 pt, white halo.
+3. **Class 2, towns.** **Add label class**, filter `Muni_Type is Town`. For the label, click **</>** and enter `"Town of " + $feature.Short_Name`. Regular or italic, 9 pt, slightly grey, white halo.
+
+### 2e. Three more measures (duplicate layers)
+
+1. In **Layers**, use the layer's **⋯ → Duplicate** three times. The copies keep the pop-up and labels.
+2. Rename the copies *Median household income*, *Residents 65 and older* and *Population density*.
+3. Style each one. Remove the expression, then **+ Field**, **Counts and Amounts (color)**, and a **Greens** ramp from very light to dark forest green.
+4. Turn on **Classify data** with **Manual breaks**:
+
+| Layer | Field | Breaks |
+|---|---|---|
+| Median household income | MedHHInc | 70000, 85000, 100000, 110000, 120000 |
+| Residents 65 and older | Pct65Plus | 15, 18, 21, 24, 27 |
+| Population density | Density26 | 50, 100, 250, 1000, 2500 |
+
+   If **Classify data** stays greyed out, leave the style continuous and drag the histogram handles to the first and last break.
+5. Use the eye icons so only *Population change since 2020* is visible, then **Save**.
 
 ## 3. Build the dashboard
 
-**Create app → Dashboards**, title *Winnebago County Community Profile*. Pick a light theme, then set the background and text colors under **Theme** to match the site if you want (paper `#f1f2ec`, forest `#2e4a34`).
+These steps are for the current ArcGIS Dashboards editor, where selectors are elements on the canvas rather than part of the header.
 
-Suggested layout: a header across the top, indicators in a row under it, the map on the left, charts in a stacked column on the right.
+**Create app → Dashboards**, title *Winnebago County Community Profile*. Under **Theme**, set the background to `#f1f2ec` and the text and accent color to `#2e4a34` to match the site.
 
-1. **Header**: title plus a link to `https://krauskagis.com/winnebago.html`. Add a **Category selector** to the header on *Muni_Type* (City, Village, Town) so viewers can filter.
-2. **Map**: add the web map. Under **Map actions**, turn on *Filter* for the list and indicators so selecting municipalities on the map updates them.
-3. **Indicators** (four, all on the municipalities layer, *Statistic*):
+Suggested layout: header across the top, a thin selector strip under it, indicators in a row, the map on the left, and charts stacked on the right.
+
+1. **Header** (gear icon on the header):
+   - Title: `{item/title}`. Subtitle: *Independent portfolio project · public data, 2026*.
+   - **Menu items:** add **Full interactive profile** linking to `https://krauskagis.com/winnebago.html`. A URL typed in the subtitle isn't clickable; menu items are.
+2. **Map:** **Add element → Map**, pick *Winnebago Community Profile Webmap*. In its settings, turn on **Legend** and **Layer visibility** so viewers can switch between the four measures.
+3. **Category selector:** **Add element → Category selector** (it may be inside a **Selectors** group).
+   - Data: **Grouped values**, layer *Population change since 2020*, field **Muni_Type** (City 5, Village 2, Town 15).
+   - Display: **Button bar**, single selection, **None** option labeled **All**.
+   - Actions: **Filter** the map's four municipality layers, the list and the four indicators. Leave the county-wide charts unticked, because their tables have no Muni_Type field.
+   - Drag it into a short strip directly under the header.
+4. **Indicators** (four, on *Population change since 2020*, **Statistic**):
    - Residents 2026: Sum of Pop2026.
-   - Change since 2020: Sum of Chg20_26, with a prefix "+".
-   - Jobs located in the county, 2023: Sum of Jobs2023.
-   - DOA projection 2050: Sum of Proj2050. Use the reference value Sum of Pop2020 and show the percent change.
-4. **List**: municipalities, sorted by Pop2026 descending. Line item text, for example: `{Muni_Name}` in bold, then `{Pop2026} residents · {Pct20_26}% since 2020`.
-5. **Serial chart, population**: data = *county_population* table. Category from **Grouped values**, category field **Year**, split by **Series**, statistic **Sum of Population**. Use a line for Census and DOA estimate and dashed lines for the two projections (each series is styled in the **Series** tab).
-6. **Serial chart, location quotients**: data = *economy_sectors*. Category from **Features**, category field **Sector**, value field **LQ_US**. Rotate the chart to horizontal, sort by value descending, and under **Value axis → Guides** add a guide line at 1.0 labeled "U.S. average".
-7. **Serial chart, shift-share**: same table, value field **RegionalComp**, horizontal, with a guide at 0. Color the bars by value if your version supports it; otherwise leave them one color.
-8. **Serial chart, commuting**: data = *commute_flows*. Category field **County**, split by **Direction**, Sum of Workers. Add a filter on the element to hide "All other" if it dominates.
-9. **Details** or **Rich text** element: a short methods and sources note (copy it from the Method section of the web page) and the line "Independent portfolio project. Not an official Winnebago County product."
+   - Change since 2020: Sum of Chg20_26, with a "+" prefix.
+   - Jobs located here, 2023: Sum of Jobs2023.
+   - DOA projection 2050: Sum of Proj2050, with reference value Sum of Pop2020 shown as a percent change.
+5. **List:** municipalities sorted by Pop2026, descending. Line item: `{Muni_Name}` in bold, then `{Pop2026} residents · {Pct20_26}% since 2020`.
+6. **Map actions:** in the map element's **Actions** tab, add **Filter** on selection for the list and indicators, so clicking municipalities on the map narrows them.
+7. **Serial chart, population:** table *county_population*. Category from **Grouped values**, field **Year**, split by **Series**, **Sum of Population**. Use solid lines for Census and DOA estimate and dashed lines for the two projections (styled in the **Series** tab).
+8. **Serial chart, location quotients:** table *economy_sectors*. Category from **Features**, field **Sector**, value **LQ_US**. Horizontal, sorted by value descending, with a value-axis guide at 1.0 labeled "U.S. average".
+9. **Serial chart, shift-share:** same table, value **RegionalComp**, horizontal, with a guide at 0.
+10. **Serial chart, commuting:** table *commute_flows*. Category **County**, split by **Direction**, Sum of Workers. Filter out "All other" if it dominates.
+11. **Rich text:** a short methods and sources note (from the Method section of the web page), plus "Independent portfolio project. Not an official Winnebago County product."
+
+To test, click **Town** in the selector. The map should keep only the 15 towns, and the residents indicator should drop from 174,690 to 36,973. Click **All** to reset.
 
 ## 4. Share it
 
@@ -57,7 +152,8 @@ Suggested layout: a header across the top, indicators in a row under it, the map
 
 ## Talking points for interviews
 
-- Why a diverging ramp for change but a sequential ramp for income.
+- Why a diverging (brown–grey–green) scheme for change but a single-hue sequential ramp for income, age and density.
+- Why you switched to an Arcade expression for the change classes when the built-in theme failed.
 - Why the map cuts out the lakes (density and choropleth area are based on land).
 - Why the DOA projection and the extrapolation disagree, and which you'd plan around.
 - Why small-town ACS numbers need margin-of-error caveats (MedInc_CV field).
