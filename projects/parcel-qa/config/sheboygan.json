@@ -1,0 +1,20 @@
+{
+ "county": "Sheboygan County, Wisconsin",
+ "sources": {
+  "addresses": "https://gis2.sheboygancounty.com/publicgis1/rest/services/Addressing/AddressPoints/FeatureServer/0",
+  "roads": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/Addressing/Roads/FeatureServer", "layer": "road|centerline"},
+  "parcels": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/TaxParcelCurrent/FeatureServer", "layer": "parcel"},
+  "municipalities": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/BaseMap/MunicipalBoundaries/FeatureServer", "layer": "munic|boundar"},
+  "sections": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/SecTwnRange/FeatureServer", "layer": "sec"},
+  "conveyance": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/ConveyanceDivisions/FeatureServer", "layer": "."},
+  "control_corners": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/ControlCorners/FeatureServer", "layer": "."}
+ },
+ "inputs": {"parcels": "../raw/parcels.gpkg", "addresses": "../raw/addresses.gpkg", "roads": "../raw/roads.gpkg", "municipalities": "../raw/municipalities.gpkg"},
+ "parcel_fields": {"id": "TODO", "required": []},
+ "road_fields": {"id": "TODO", "name": "TODO", "municipality": null, "fromleft": "TODO", "toleft": "TODO", "fromright": "TODO", "toright": "TODO"},
+ "address_fields": {"id": "siteaddid", "number": "addrnum", "street": "fullname", "full": "fulladdr", "unit": "unitid", "parcel_id": "ParcelID",
+   "road_id": "RdCLID", "municipality": "municipality", "status": "status", "required": ["addrnum", "fullname", "municipality", "esn", "msag"]},
+ "muni_fields": {"name": "TODO"},
+ "active_status_values": [],
+ "far_from_road_m": 400
+}

@@ -1,0 +1,50 @@
+{
+ "county": "Synthetic test county",
+ "inputs": {
+  "parcels": "synthetic/parcels.gpkg",
+  "addresses": "synthetic/addresses.gpkg",
+  "roads": "synthetic/roads.gpkg",
+  "municipalities": "synthetic/munis.gpkg"
+ },
+ "parcel_fields": {
+  "id": "PARCELNO",
+  "required": [
+   "PARCELNO",
+   "OWNER"
+  ]
+ },
+ "road_fields": {
+  "id": "CLID",
+  "name": "FULLNAME",
+  "municipality": "MUNI",
+  "fromleft": "FROMLEFT",
+  "toleft": "TOLEFT",
+  "fromright": "FROMRIGHT",
+  "toright": "TORIGHT"
+ },
+ "address_fields": {
+  "id": "SITEADDID",
+  "number": "ADDRNUM",
+  "street": "FULLNAME",
+  "full": "FULLADDR",
+  "unit": "UNITID",
+  "parcel_id": "PARCELID",
+  "road_id": "RDCLID",
+  "municipality": "MUNICIPALITY",
+  "status": "STATUS",
+  "required": [
+   "ADDRNUM",
+   "FULLNAME",
+   "MUNICIPALITY",
+   "ESN",
+   "MSAG"
+  ]
+ },
+ "muni_fields": {
+  "name": "NAME"
+ },
+ "active_status_values": [
+  "Current"
+ ],
+ "far_from_road_m": 200
+}
