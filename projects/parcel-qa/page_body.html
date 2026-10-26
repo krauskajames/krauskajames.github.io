@@ -150,7 +150,7 @@
           <div class="filters" id="filters"></div>
         </aside>
       </div>
-      <p class="map-note">Basemap © OpenStreetMap contributors © CARTO. Findings from Sheboygan County's public parcel, address point and road centerline services, downloaded October 26, 2026.</p>
+      <p class="map-note">Basemap: Esri World Light Gray Canvas. Findings from Sheboygan County's public parcel, address point and road centerline services, downloaded October 26, 2026.</p>
     </div>
   </div>
 
@@ -282,7 +282,9 @@ function init(S, F, M, X) {
 
   // map
   const map = L.map('map', { zoomSnap: 0.25, scrollWheelZoom: false, preferCanvas: true });
-  const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { subdomains: 'abcd', maxZoom: 20, attribution: '© OpenStreetMap © CARTO', className: dark() ? 'dark-tiles' : '' }).addTo(map);
+  const esri = (name) => `https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${name}/MapServer/tile/{z}/{y}/{x}`;
+  const ATTR = 'Esri, HERE, Garmin, © OpenStreetMap contributors, and the GIS user community';
+  let tiles = L.tileLayer(esri(dark() ? 'World_Dark_Gray_Base' : 'World_Light_Gray_Base'), { maxZoom: 16, attribution: ATTR }).addTo(map);
   L.geoJSON(M, { style: { color: css('--ink-2'), weight: 1, opacity: .45, fill: false }, interactive: false }).addTo(map);
   const on = new Set(Object.keys(S.checks));
   const markers = [];
@@ -317,7 +319,7 @@ function init(S, F, M, X) {
     refresh();
   });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    tiles.getContainer().classList.toggle('dark-tiles', dark());
+    map.removeLayer(tiles); tiles = L.tileLayer(esri(dark() ? 'World_Dark_Gray_Base' : 'World_Light_Gray_Base'), { maxZoom: 16, attribution: ATTR }).addTo(map); tiles.bringToBack();
     markers.forEach(m => m.setStyle({ fillColor: css('--c-' + layerOf(m.feature.properties.c)), color: css('--paper') }));
   });
 }
