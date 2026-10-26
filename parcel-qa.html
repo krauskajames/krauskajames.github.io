@@ -822,7 +822,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 @media (max-width: 900px) { .map-grid { grid-template-columns: minmax(0, 1fr); } }
 #map { height: min(76vh, 680px); min-height: 420px; background: var(--paper-2); }
 @media (max-width: 640px) { #map { height: 460px; min-height: 0; } }
-.panel { border-left: 1px solid var(--rule); padding: 1.1rem 1.25rem; display: grid; gap: 1rem; align-content: start; background: var(--paper); max-height: min(76vh, 680px); overflow: auto; }
+.panel { border-left: 1px solid var(--rule); padding: 1.1rem 1.25rem; display: grid; gap: 1rem; align-content: start; grid-auto-rows: max-content; background: var(--paper); max-height: min(76vh, 680px); overflow: auto; }
 @media (max-width: 900px) { .panel { border-left: 0; border-top: 1px solid var(--rule); max-height: none; } }
 .filters { display: grid; gap: 0.9rem; }
 .filters fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 0.3rem; }
