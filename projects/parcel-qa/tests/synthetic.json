@@ -11,6 +11,10 @@
   "required": [
    "PARCELNO",
    "OWNER"
+  ],
+  "identity_fields": [
+   "OWNER",
+   "SITEADDR"
   ]
  },
  "road_fields": {

@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Parcel & NG911 Data QA Toolkit – James Krauska</title>
+<meta name="description" content="A Python QA toolkit that checks Sheboygan County's tax parcels, address points and road centerlines against each other and NG911 rules, with an interactive map of findings.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: museum-catalog single column — generous margins, a topographic hero plate,
+   project "plates" with a map-collar metadata strip, quiet hairlines, one forest-green accent. */
+:root {
+  --paper: #f1f2ec;      /* green-grey paper */
+  --paper-2: #e6e9dd;    /* plate ground */
+  --ink: #1b241d;        /* forest black */
+  --ink-2: #4c5a4f;      /* secondary text */
+  --forest: #2e4a34;     /* primary accent */
+  --olive: #6d7a3a;      /* secondary accent */
+  --rule: #c7ccbb;       /* hairlines */
+  --contour: rgba(46, 74, 52, 0.22);
+  --contour-strong: rgba(109, 122, 58, 0.55);
+  --on-forest: #f1f2ec;
+
+  --display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 4vw, 3rem);
+  --step-4: clamp(2.75rem, 7vw, 5rem);
+  --measure: 62ch;
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+    --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+    --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+    --on-forest: #121813; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+  --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+  --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+  --on-forest: #121813; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+html { scroll-padding-top: 5rem; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 var(--step-0)/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: inherit; text-decoration-color: var(--olive); text-underline-offset: 0.2em; }
+a:hover { color: var(--forest); }
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; border-radius: 2px; }
+
+.wrap {
+  max-width: var(--wrap); margin-inline: auto;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 480px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.label {
+  font: 500 var(--step--1)/1.4 var(--mono);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; flex-wrap: wrap; }
+.wordmark { font: 600 1.5rem/1 var(--display); letter-spacing: 0.01em; text-decoration: none; }
+.wordmark span { color: var(--olive); font-style: italic; font-weight: 500; }
+.nav { display: flex; gap: clamp(1rem, 3vw, 2.25rem); font: 500 0.9375rem/1 var(--body); }
+.nav a { text-decoration: none; padding-block: 0.25rem; border-bottom: 1px solid transparent; }
+.nav a:hover { border-bottom-color: var(--olive); }
+
+/* Hero */
+.hero { position: relative; border-bottom: 1px solid var(--rule); overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .wrap { position: relative; padding-block: clamp(4rem, 10vw, 7.5rem) clamp(3rem, 7vw, 5rem); display: grid; gap: 1.75rem; }
+.hero h1 {
+  font: 500 var(--step-4)/1.02 var(--display); letter-spacing: -0.01em;
+  max-width: 14ch; margin: 0; text-wrap: balance;
+}
+.hero h1 em { color: var(--forest); font-style: italic; }
+.hero p.lede { font-size: var(--step-1); line-height: 1.55; max-width: 48ch; margin: 0; color: var(--ink-2); }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 500 0.9375rem/1 var(--body); text-decoration: none;
+  padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px;
+  transition: background-color .2s ease, color .2s ease;
+}
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+
+/* Sections */
+section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(--rule); }
+.section-head { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; align-items: baseline; margin-bottom: 3rem; }
+.section-head h2 { font: 500 var(--step-3)/1.1 var(--display); margin: 0; text-wrap: balance; }
+.section-head p { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
+@media (max-width: 760px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+
+/* Project plates */
+.plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 2.5rem; }
+@media (max-width: 760px) { .plates { grid-template-columns: minmax(0, 1fr); } }
+.plate { display: grid; gap: 1rem; min-width: 0; }
+.plate figure { margin: 0; background: var(--paper-2); border: 1px solid var(--rule); aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
+.plate figure svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate figure video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.plate .collar { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.6rem; }
+.status { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.55rem; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
+.status.live { color: var(--forest); }
+.status.planned { color: var(--olive); }
+.plate h3 { font: 600 var(--step-2)/1.15 var(--display); margin: 0; text-wrap: balance; }
+.plate p { margin: 0; color: var(--ink-2); max-width: var(--measure); }
+.plate dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.35rem 1.25rem; margin: 0.25rem 0 0; font-size: 0.9375rem; }
+.plate dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.plate dd { margin: 0; }
+
+/* svg strokes */
+.s-ink { stroke: var(--ink); } .s-forest { stroke: var(--forest); } .s-olive { stroke: var(--olive); } .s-rule { stroke: var(--rule); }
+.f-forest { fill: var(--forest); } .f-olive { fill: var(--olive); } .f-paper { fill: var(--paper); } .f-ink { fill: var(--ink); }
+.f-tint { fill: var(--olive); fill-opacity: .14; }
+.svg-label { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .06em; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; }
+@media (max-width: 760px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+.about-grid .prose p { margin: 0 0 1.1rem; max-width: var(--measure); }
+.about-grid .prose p:first-child { font: 500 var(--step-2)/1.35 var(--display); color: var(--ink); }
+.facts { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.facts div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1rem; padding-block: 0.85rem; border-bottom: 1px solid var(--rule); }
+.facts dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.facts dd { margin: 0; }
+
+/* Experience */
+.roles { display: grid; gap: 0; border-top: 1px solid var(--ink); }
+.role { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 0.5rem 3rem; padding-block: 1.75rem; border-bottom: 1px solid var(--rule); }
+@media (max-width: 760px) { .role { grid-template-columns: minmax(0, 1fr); } }
+.role h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0; }
+.role .org { color: var(--forest); font-weight: 500; }
+.role ul { margin: 0.75rem 0 0; padding-left: 1.1rem; color: var(--ink-2); max-width: var(--measure); }
+.role li + li { margin-top: 0.4rem; }
+
+/* Toolkit */
+.toolkit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+@media (max-width: 860px) { .toolkit { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .toolkit { grid-template-columns: minmax(0, 1fr); } }
+.toolkit h3 { font: 600 var(--step-1)/1.2 var(--display); margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.toolkit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; color: var(--ink-2); }
+
+/* Contact */
+.contact { display: grid; gap: 1.5rem; }
+.contact h2 { font: 500 var(--step-4)/1.05 var(--display); margin: 0; max-width: 16ch; text-wrap: balance; }
+.contact-row { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; }
+.email { font: 500 var(--step-1)/1.4 var(--mono); user-select: all; word-break: break-all; }
+.copy { font: 500 0.875rem/1 var(--body); background: none; color: var(--forest); border: 1px solid var(--forest); padding: 0.6rem 0.9rem; border-radius: 2px; cursor: pointer; }
+.copy:hover { background: var(--paper-2); }
+.phone { font: 500 var(--step-1)/1.4 var(--mono); text-decoration: none; white-space: nowrap; }
+
+/* Footer: map collar */
+footer { padding-block: 2.5rem 3rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: end; }
+.scalebar { display: grid; gap: 0.35rem; }
+.scalebar .bar { display: flex; width: 12rem; max-width: 100%; height: 6px; border: 1px solid var(--ink); }
+.scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
+.scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>/* Leaflet 1.9.4 (BSD-2-Clause) */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;
+	}
+.leaflet-tile::selection {
+	background: transparent;
+}
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+.leaflet-container .leaflet-overlay-pane svg {
+	max-width: none !important;
+	max-height: none !important;
+	}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;
+	}
+.leaflet-container img.leaflet-tile {
+	mix-blend-mode: plus-lighter;
+}
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	touch-action: none;
+	touch-action: pinch-zoom;
+}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;
+	}
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+.leaflet-pane         { z-index: 400; }
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane   { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; 
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+}
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;
+	}
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted; 
+	pointer-events: auto;
+	}
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: url(images/layers.png);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(images/layers-2x.png);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+.leaflet-default-icon-path { 
+	background-image: url(images/marker-icon.png);
+	}
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+	margin: -10px auto 0;
+	pointer-events: auto;
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-interactive {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+@media print {
+	.leaflet-control {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		}
+	}
+</style>
+</head>
+<body>
+<style>
+.cs-hero .wrap { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 1.5rem; }
+.cs-hero h1 { font: 500 var(--step-4)/1.02 var(--display); margin: 0; letter-spacing: -0.01em; max-width: 18ch; text-wrap: balance; }
+.cs-hero .lede { font-size: var(--step-1); line-height: 1.55; max-width: 60ch; margin: 0; color: var(--ink-2); }
+.back { font: 500 0.875rem/1 var(--body); text-decoration: none; color: var(--forest); }
+.back:hover { text-decoration: underline; }
+.compare { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.9375rem; }
+.compare th, .compare td { text-align: left; padding: 0.65rem 1rem 0.65rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.compare thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
+.compare .num { text-align: right; padding-right: 0; padding-left: 1rem; }
+.compare .code { font: 500 0.8125rem/1.5 var(--mono); color: var(--ink-2); white-space: nowrap; }
+.compare td small { display: block; color: var(--ink-2); font-size: 0.8125rem; margin-top: 0.15rem; }
+.table-scroll { overflow-x: auto; }
+.cs-body { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; }
+@media (max-width: 760px) { .cs-body { grid-template-columns: minmax(0, 1fr); } }
+.cs-body .prose { max-width: var(--measure); }
+.cs-body .prose p { margin: 0 0 1.1rem; }
+.cs-body .prose h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 1.75rem 0 0.5rem; }
+.cs-body .prose ul, .cs-body .prose ol { margin: 0 0 1.1rem; padding-left: 1.2rem; }
+.cs-body .prose li + li { margin-top: 0.45rem; }
+.cs-body .prose strong { font-weight: 600; color: var(--ink); }
+.steps { counter-reset: s; list-style: none; padding: 0 !important; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); margin: 0 !important; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; }
+.chips li { margin: 0 !important; font: 500 0.8125rem/1 var(--mono); padding: 0.5rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink-2); }
+
+:root { --c-parcels: #c0662a; --c-addresses: #3d6fb0; --c-roads: #2f7a4b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-parcels: #d07a40; --c-addresses: #6b93d0; --c-roads: #4f9e6a; } }
+:root[data-theme="dark"] { --c-parcels: #d07a40; --c-addresses: #6b93d0; --c-roads: #4f9e6a; }
+
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+@media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tile { padding: 1.25rem 1.25rem 1.4rem 0; border-bottom: 1px solid var(--rule); display: grid; gap: 0.35rem; align-content: start; }
+.tile + .tile { padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+@media (max-width: 900px) { .tile:nth-child(odd) { padding-left: 0; border-left: 0; } }
+.tile .num { font: 500 var(--step-3)/1 var(--display); font-variant-numeric: tabular-nums; }
+.tile .ctx { font-size: 0.875rem; color: var(--ink-2); }
+
+.explorer { padding-block: clamp(3rem, 7vw, 5rem); border-bottom: 1px solid var(--rule); }
+.map-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 21rem); border: 1px solid var(--rule); background: var(--paper-2); }
+@media (max-width: 900px) { .map-grid { grid-template-columns: minmax(0, 1fr); } }
+#map { height: min(76vh, 680px); min-height: 420px; background: var(--paper-2); }
+@media (max-width: 640px) { #map { height: 460px; min-height: 0; } }
+.panel { border-left: 1px solid var(--rule); padding: 1.1rem 1.25rem; display: grid; gap: 1rem; align-content: start; background: var(--paper); max-height: min(76vh, 680px); overflow: auto; }
+@media (max-width: 900px) { .panel { border-left: 0; border-top: 1px solid var(--rule); max-height: none; } }
+.filters { display: grid; gap: 0.9rem; }
+.filters fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 0.3rem; }
+.filters legend { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem; }
+.filters legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.filters label { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.5rem; align-items: center; font-size: 0.875rem; cursor: pointer; padding: 1px 0; }
+.filters label:hover { color: var(--forest); }
+.filters input { accent-color: var(--forest); width: 0.95rem; height: 0.95rem; margin: 0; }
+.filters .n { font: 500 0.75rem/1 var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.filters .n.zero { opacity: .5; }
+.allnone { display: flex; gap: 0.75rem; font-size: 0.8125rem; }
+.allnone button { all: unset; cursor: pointer; color: var(--forest); text-decoration: underline; text-underline-offset: 0.2em; }
+.detail { border-bottom: 1px solid var(--rule); padding-bottom: 0.9rem; font-size: 0.9375rem; min-height: 5rem; }
+.detail h3 { font: 600 var(--step-1)/1.25 var(--body); margin: 0.3rem 0 0.35rem; }
+.detail .code { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; color: var(--ink-2); }
+.detail p { margin: 0 0 0.5rem; color: var(--ink-2); }
+.detail .what { color: var(--ink); }
+.detail .fid { font: 500 0.8125rem/1.4 var(--mono); color: var(--ink); word-break: break-all; }
+.map-note { font-size: 0.8125rem; color: var(--ink-2); margin: 0.75rem 0 0; }
+.leaflet-container { font: 400 0.8125rem/1.4 var(--body); background: var(--paper-2); }
+.leaflet-control-attribution { background: color-mix(in srgb, var(--paper) 85%, transparent) !important; color: var(--ink-2) !important; }
+.leaflet-control-attribution a { color: var(--ink-2) !important; }
+.leaflet-bar a { background: var(--paper) !important; color: var(--ink) !important; border-color: var(--rule) !important; }
+.map-wrap { position: relative; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; z-index: 500; pointer-events: none; font: 500 0.8125rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.dark-tiles { filter: invert(1) hue-rotate(180deg) brightness(.85) contrast(.9); }
+
+.examples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
+@media (max-width: 860px) { .examples { grid-template-columns: minmax(0, 1fr); } }
+.ex figure { margin: 0 0 0.75rem; border: 1px solid var(--rule); background: var(--paper-2); }
+.ex svg { display: block; width: 100%; height: auto; }
+.ex svg .p { fill: var(--paper-2); stroke: color-mix(in srgb, var(--ink-2) 55%, transparent); stroke-width: .6; }
+.ex svg .row { fill: var(--paper); stroke: var(--rule); stroke-width: .4; }
+.ex svg .hp { fill: color-mix(in srgb, var(--c-parcels) 30%, transparent); stroke: var(--c-parcels); stroke-width: 1.6; }
+.ex svg .r { stroke: color-mix(in srgb, var(--ink-2) 70%, transparent); stroke-width: 1.2; fill: none; }
+.ex svg .hr { stroke: var(--c-addresses); stroke-width: 3.2; fill: none; stroke-linecap: round; }
+.ex svg .a { fill: var(--ink-2); }
+.ex svg .ha { fill: var(--c-parcels); stroke: var(--paper); stroke-width: 1.6; }
+.ex svg .mk { fill: none; stroke: var(--c-parcels); stroke-width: 2.2; }
+.ex svg .rl { font: 500 10.5px var(--mono); fill: var(--c-addresses); paint-order: stroke; stroke: var(--paper-2); stroke-width: 3px; }
+.ex svg .sb path { stroke: var(--ink); stroke-width: 2; }
+.ex svg .sb text { font: 500 10px var(--mono); fill: var(--ink); }
+.ex .label { display: block; margin-bottom: 0.35rem; }
+.ex h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0 0 0.35rem; }
+.ex p { margin: 0 0 0.4rem; color: var(--ink-2); font-size: 0.9375rem; max-width: 52ch; }
+.ex .finding { font: 500 0.8125rem/1.5 var(--mono); color: var(--ink); }
+.tip { position: fixed; z-index: 1000; pointer-events: none; background: var(--ink); color: var(--paper); font: 500 0.75rem/1.45 var(--mono); padding: 0.45rem 0.6rem; border-radius: 2px; max-width: 18rem; opacity: 0; transition: opacity .1s; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; font: 500 0.9375rem/1 var(--body); text-decoration: none; padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px; }
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="cs-hero">
+    <div class="wrap">
+      <a class="back" href="index.html#work">← All work</a>
+      <div class="meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
+        <span class="label">Case study</span>
+        <span class="label">Land records · NG911 · Python</span>
+        <span class="label">Sheboygan County data · October 2026</span>
+      </div>
+      <h1>Parcel &amp; NG911 Data QA Toolkit</h1>
+      <p class="lede">A script tool that checks a county's tax parcels, address points and road centerlines against each other and against NG911 rules, then maps every item that needs a second look. Run here on all of Sheboygan County's public land records.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#explore">Explore the findings</a>
+        <a class="btn btn-ghost" href="https://github.com/krauskajames/krauskajames.github.io/tree/main/projects/parcel-qa">Code on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding-block: 0 clamp(3rem, 7vw, 5rem)">
+    <div class="wrap">
+      <div class="tiles" id="tiles"></div>
+      <p class="map-note">These are items to review, not a grade. Some will be legitimate exceptions that only the county's records staff can confirm. Not an official Sheboygan County product.</p>
+    </div>
+  </section>
+
+  <div class="explorer" id="explore">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:1.75rem">
+        <span class="label">Findings map</span>
+        <div>
+          <h2>Every item to review, by check</h2>
+          <p>Turn checks on and off, zoom in, and click a dot for the details and the feature IDs a records clerk would need to find it.</p>
+        </div>
+      </div>
+      <div class="map-grid">
+        <div class="map-wrap"><div id="map" role="region" aria-label="Map of QA findings in Sheboygan County"></div><div class="loading" id="loading">Loading findings…</div></div>
+        <aside class="panel">
+          <div class="detail" id="detail" aria-live="polite"><p>Click a dot on the map to see what was found.</p></div>
+          <div class="filters" id="filters"></div>
+        </aside>
+      </div>
+      <p class="map-note">Basemap © OpenStreetMap contributors © CARTO. Findings from Sheboygan County's public parcel, address point and road centerline services, downloaded October 26, 2026.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Close-ups</span>
+        <div>
+          <h2>What the checks catch</h2>
+          <p>Four real findings, drawn from the county's own geometry.</p>
+        </div>
+      </div>
+      <div class="examples" id="examples"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Results</span>
+        <div>
+          <h2>Nineteen checks, three layers</h2>
+          <p>Counts are per feature, or per street address for address-point checks, so an apartment building's 40 unit points count once.</p>
+        </div>
+      </div>
+      <div class="table-scroll"><table class="compare" id="checkTable"></table></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Method</span>
+      <div class="prose">
+        <ol class="steps">
+          <li><span><strong>Download.</strong> A Python script pages through the county's ArcGIS REST services and saves every feature in the county's own coordinate system (WISCRS Sheboygan, US feet). Downloading in latitude and longitude first produced 62 false "invalid geometry" errors from rounding; the native download left 5 real ones.</span></li>
+          <li><span><strong>Parcels.</strong> Overlaps found with a spatial index; gaps found as holes in the dissolved parcel fabric that are not road right-of-way; duplicate IDs, empty required fields, slivers and invalid shapes.</span></li>
+          <li><span><strong>Address points.</strong> Each point is tested against the parcel it sits in, the road segment its centerline ID points to (street name, house number inside the range, odd or even on the correct side, distance), the municipal boundary, and every other point for duplicates.</span></li>
+          <li><span><strong>Road centerlines.</strong> Address ranges that mix odd and even numbers, segments of one street that claim the same numbers, and segments that addresses link to but that have no range.</span></li>
+          <li><span><strong>Output.</strong> One error layer (GeoPackage) with a check code, severity, the feature IDs involved and a plain-language description, plus a summary table. Field names live in a small settings file, so another county is a new settings file, not new code.</span></li>
+        </ol>
+        <h3>Keeping false alarms down</h3>
+        <ul>
+          <li><strong>Right-of-way is not a parcel.</strong> 3,670 polygons in the parcel layer are road right-of-way strips with no owner or municipality. They count as fabric for gap detection but are never flagged as parcels missing an owner.</li>
+          <li><strong>One parcel can have several pieces.</strong> Pieces that share an ID and an owner are normal; only pieces that disagree on owner or address, or overlap each other, are flagged.</li>
+          <li><strong>Direction doesn't matter.</strong> Road ranges are compared odd with odd and even with even, so two segments of a street digitized in opposite directions don't trigger a false overlap.</li>
+          <li><strong>Highways and ramps</strong> are expected to have no address range and are skipped.</li>
+          <li><strong>Tested on a planted county.</strong> A small synthetic county with one error planted for every check runs before each change; every check has to catch its error and nothing else.</li>
+        </ul>
+        <h3>What I'd do with the results</h3>
+        <ul>
+          <li>Send the 545 address-to-segment link fixes to the addressing editor first: they are quick to correct and they feed 911 call routing.</li>
+          <li>Check the overlaps where one parcel sits inside another against the recorded Certified Survey Maps; those are likely splits that never reached the tax parcel layer.</li>
+          <li>Rerun the tool after each edit cycle and track the counts over time.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">My role</span>
+      <div class="prose">
+        <p>I chose the county, defined the checks around Wisconsin parcel and NG911 requirements, reviewed samples of every check by hand and tuned the rules until the findings held up. The scripts and this page were written with AI-assisted coding (Claude).</p>
+        <p>Next: an ArcGIS Pro script tool version of the same checks, and parcels I draft myself from recorded legal descriptions with COGO in the Parcel Fabric.</p>
+        <ul class="chips" aria-label="Tools">
+          <li>Python · geopandas · shapely</li><li>ArcGIS REST API</li><li>NG911 / NENA data model</li><li>Esri Local Government model</li><li>Leaflet</li><li>ArcGIS Pro (in progress)</li>
+        </ul>
+        <h3>Data</h3>
+        <ul>
+          <li>Sheboygan County Land Information and Addressing, public ArcGIS REST services: Tax Parcels, Site Address Points, Road Centerlines, Municipal Boundaries. Downloaded October 26, 2026.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between">
+      <a class="back" href="index.html#work">← Back to all work</a>
+      <a class="btn btn-primary" href="index.html#contact">Get in touch</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="scalebar" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><i></i></div>
+      <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
+    </div>
+    <span class="label">NAD83(HARN) / WISCRS Sheboygan · © 2026 James Krauska</span>
+  </div>
+</footer>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+'use strict';
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => Math.round(n).toLocaleString('en-US');
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const dark = () => document.documentElement.dataset.theme === 'dark' || (document.documentElement.dataset.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+const LAYERS = { parcels: 'Parcels', addresses: 'Address points', roads: 'Road centerlines' };
+const SEV = { high: 'High', medium: 'Medium', low: 'Low' };
+
+Promise.all(['summary.json', 'findings.geojson', 'municipalities.geojson', 'examples.json'].map(f => fetch('data/parcel-qa/' + f).then(r => r.json())))
+  .then(([S, F, M, X]) => init(S, F, M, X))
+  .catch(e => { $('loading').textContent = 'Could not load data'; console.error(e); });
+
+function init(S, F, M, X) {
+  const T = S.totals, C = S.counts;
+  const total = Object.values(C).reduce((a, b) => a + b, 0);
+  const passA = 1 - S.flagged_features.addresses / T.addresses, passP = 1 - S.flagged_features.parcels / T.parcels;
+  $('tiles').innerHTML = [
+    [fmt(T.parcels + T.addresses + T.roads), 'Features checked', `${fmt(T.parcels)} parcels, ${fmt(T.addresses)} address points, ${fmt(T.roads)} road segments`],
+    [fmt(total), 'Items to review', 'across 19 checks'],
+    [(passA * 100).toFixed(1) + '%', 'Address points with no findings', 'a very clean addressing layer'],
+    [(passP * 100).toFixed(1) + '%', 'Parcels with no findings', 'right-of-way strips excluded'],
+  ].map(([n, l, c]) => `<div class="tile"><span class="label">${l}</span><span class="num">${n}</span><span class="ctx">${c}</span></div>`).join('');
+
+  // results table
+  const rows = Object.entries(S.checks);
+  $('checkTable').innerHTML = `<thead><tr><th scope="col">Check</th><th scope="col">What it looks for</th><th scope="col">Layer</th><th scope="col">Severity</th><th scope="col" class="num">Found</th><th scope="col" class="num">Per 1,000</th></tr></thead><tbody>${rows.map(([k, v]) => {
+    const n = C[k] || 0, nr = (S.not_run || []).includes(k);
+    return `<tr><td class="code">${k}</td><td>${v.title}<small>${nr ? 'Not run: Sheboygan address points do not store a parcel ID, so A03 (outside every parcel) stands in.' : v.description}</small></td><td>${LAYERS[v.layer]}</td><td>${SEV[v.severity]}</td><td class="num">${nr ? '—' : fmt(n)}</td><td class="num">${nr ? '—' : (n / T[v.layer] * 1000).toFixed(2)}</td></tr>`; }).join('')}</tbody>`;
+
+  // examples
+  $('examples').innerHTML = X.map(e => `<article class="ex"><span class="label">${e.check} · ${S.checks[e.check].title}</span><figure>${e.svg}</figure><h3>${e.title}</h3><p>${e.note}</p><p class="finding">${e.detail}</p></article>`).join('');
+
+  // map
+  const map = L.map('map', { zoomSnap: 0.25, scrollWheelZoom: false, preferCanvas: true });
+  const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { subdomains: 'abcd', maxZoom: 20, attribution: '© OpenStreetMap © CARTO', className: dark() ? 'dark-tiles' : '' }).addTo(map);
+  L.geoJSON(M, { style: { color: css('--ink-2'), weight: 1, opacity: .45, fill: false }, interactive: false }).addTo(map);
+  const on = new Set(Object.keys(S.checks));
+  const markers = [];
+  const layerOf = (c) => S.checks[c].layer;
+  F.features.forEach(f => {
+    const [x, y] = f.geometry.coordinates, p = f.properties;
+    const m = L.circleMarker([y, x], { radius: S.checks[p.c].severity === 'high' ? 5 : 4, weight: 1.2, color: css('--paper'), fillColor: css('--c-' + layerOf(p.c)), fillOpacity: .9 });
+    m.feature = f; m.on('click', () => show(p, m)); markers.push(m);
+  });
+  const group = L.featureGroup(markers).addTo(map);
+  map.fitBounds(group.getBounds(), { padding: [16, 16] });
+  $('loading').remove();
+  let sel = null;
+  function show(p, m) {
+    const c = S.checks[p.c];
+    if (sel) sel.setStyle({ weight: 1.2, color: css('--paper') });
+    sel = m; m.setStyle({ weight: 3, color: css('--ink') }); m.bringToFront();
+    $('detail').innerHTML = `<span class="code">${p.c} · ${LAYERS[c.layer].toUpperCase()} · ${SEV[c.severity].toUpperCase()}</span><h3>${c.title}</h3><p class="what">${p.d}</p><p>${c.description}</p>${p.id ? `<p>Feature ID${p.id.includes('/') ? 's' : ''}: <span class="fid">${p.id}</span></p>` : ''}`;
+  }
+  function refresh() {
+    markers.forEach(m => { const v = on.has(m.feature.properties.c); if (v && !group.hasLayer(m)) group.addLayer(m); if (!v && group.hasLayer(m)) group.removeLayer(m); });
+  }
+  // filters
+  const by = { parcels: [], addresses: [], roads: [] };
+  rows.forEach(([k, v]) => by[v.layer].push(k));
+  $('filters').innerHTML = `<div class="allnone"><button type="button" data-a="all">Show all</button><button type="button" data-a="none">Hide all</button></div>` + Object.entries(by).map(([lay, ks]) =>
+    `<fieldset><legend><i style="background:var(--c-${lay})"></i>${LAYERS[lay]}</legend>${ks.map(k => `<label><input type="checkbox" data-c="${k}" checked><span>${S.checks[k].title}</span><span class="n${C[k] ? '' : ' zero'}">${fmt(C[k] || 0)}</span></label>`).join('')}</fieldset>`).join('');
+  $('filters').querySelectorAll('input').forEach(cb => cb.onchange = () => { cb.checked ? on.add(cb.dataset.c) : on.delete(cb.dataset.c); refresh(); });
+  $('filters').querySelectorAll('.allnone button').forEach(b => b.onclick = () => {
+    const all = b.dataset.a === 'all';
+    $('filters').querySelectorAll('input').forEach(cb => { cb.checked = all; all ? on.add(cb.dataset.c) : on.delete(cb.dataset.c); });
+    refresh();
+  });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    tiles.getContainer().classList.toggle('dark-tiles', dark());
+    markers.forEach(m => m.setStyle({ fillColor: css('--c-' + layerOf(m.feature.properties.c)), color: css('--paper') }));
+  });
+}
+})();
+</script>
+</body>
+</html>

@@ -2,19 +2,87 @@
  "county": "Sheboygan County, Wisconsin",
  "sources": {
   "addresses": "https://gis2.sheboygancounty.com/publicgis1/rest/services/Addressing/AddressPoints/FeatureServer/0",
-  "roads": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/Addressing/Roads/FeatureServer", "layer": "road|centerline"},
-  "parcels": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/TaxParcelCurrent/FeatureServer", "layer": "parcel"},
-  "municipalities": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/BaseMap/MunicipalBoundaries/FeatureServer", "layer": "munic|boundar"},
-  "sections": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/SecTwnRange/FeatureServer", "layer": "sec"},
-  "conveyance": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/ConveyanceDivisions/FeatureServer", "layer": "."},
-  "control_corners": {"service": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/ControlCorners/FeatureServer", "layer": "."}
+  "roads": "https://gis2.sheboygancounty.com/publicgis1/rest/services/Addressing/Roads/FeatureServer/0",
+  "parcels": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/TaxParcels/FeatureServer/0",
+  "municipalities": "https://gis2.sheboygancounty.com/publicgis1/rest/services/BaseMap/MunicipalBoundaries/FeatureServer/0",
+  "sections": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/SecTwnRange/FeatureServer/0",
+  "conveyance": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/ConveyanceDivisions/FeatureServer/0",
+  "surveys": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/SurveyPolygons/FeatureServer/0",
+  "control_corners": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/ControlCorners/FeatureServer/0"
  },
- "inputs": {"parcels": "../raw/parcels.gpkg", "addresses": "../raw/addresses.gpkg", "roads": "../raw/roads.gpkg", "municipalities": "../raw/municipalities.gpkg"},
- "parcel_fields": {"id": "TODO", "required": []},
- "road_fields": {"id": "TODO", "name": "TODO", "municipality": null, "fromleft": "TODO", "toleft": "TODO", "fromright": "TODO", "toright": "TODO"},
- "address_fields": {"id": "siteaddid", "number": "addrnum", "street": "fullname", "full": "fulladdr", "unit": "unitid", "parcel_id": "ParcelID",
-   "road_id": "RdCLID", "municipality": "municipality", "status": "status", "required": ["addrnum", "fullname", "municipality", "esn", "msag"]},
- "muni_fields": {"name": "TODO"},
- "active_status_values": [],
- "far_from_road_m": 400
+ "inputs": {
+  "parcels": "../raw/parcels.gpkg",
+  "addresses": "../raw/addresses.gpkg",
+  "roads": "../raw/roads.gpkg",
+  "municipalities": "../raw/municipalities.gpkg"
+ },
+ "parcel_fields": {
+  "id": "PARCELID",
+  "required": [
+   "PARCELID",
+   "OWNERNME1",
+   "MUNI"
+  ],
+  "nontax_when_blank": [
+   "OWNERNME1",
+   "MUNI"
+  ],
+  "identity_fields": [
+   "OWNERNME1",
+   "SITEADDRESS",
+   "MUNI"
+  ]
+ },
+ "road_fields": {
+  "id": "centerlineid",
+  "name": "fullname",
+  "municipality": "munileft",
+  "fromleft": "fromleft",
+  "toleft": "toleft",
+  "fromright": "fromright",
+  "toright": "toright"
+ },
+ "address_fields": {
+  "id": "siteaddid",
+  "number": "addrnum",
+  "street": "fullname",
+  "full": "fulladdr",
+  "unit": "unitid",
+  "parcel_id": "ParcelID",
+  "road_id": "RdCLID",
+  "municipality": "municipality",
+  "status": "status",
+  "required": [
+   "addrnum",
+   "fullname",
+   "municipality",
+   "esn",
+   "msag"
+  ]
+ },
+ "muni_fields": {
+  "name": "name",
+  "type": "munitype",
+  "label_by_type": {
+   "City": "City of {name}",
+   "Village": "Village of {name}",
+   "Township": "{name}"
+  }
+ },
+ "active_status_values": [
+  "Current"
+ ],
+ "far_from_road_m": 400,
+ "roads_without_ranges_ok": {
+  "roadclass": [
+   "Highway",
+   "Ramp",
+   "Freeway"
+  ],
+  "RdStatus": [
+   "Platted",
+   "Vacated",
+   "Under Construction"
+  ]
+ }
 }

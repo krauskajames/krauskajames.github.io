@@ -85,18 +85,36 @@ def check_parcels(P, cfg, F, public=None):
         F.add("P06", r.geometry.representative_point(), r[pid], "Invalid polygon geometry")
     P = P.copy()
     P.loc[bad, "geometry"] = P.loc[bad, "geometry"].buffer(0)
+    nt_cols = [c for c in f.get("nontax_when_blank", []) if c in P.columns]
+    P["_nontax"] = blank(P[nt_cols[0]]) if nt_cols else False
+    for c in nt_cols[1:]:
+        P["_nontax"] &= blank(P[c])
+    log(f"  non-tax polygons (right-of-way etc.): {int(P['_nontax'].sum()):,}")
+    T = P[~P["_nontax"]]
 
     # P03 duplicate IDs (ignore blanks; those are P04)
-    ids = P[~blank(P[pid])]
+    # pieces of one tax parcel are fine; flag only conflicting attributes or pieces that overlap
+    ids = T[~blank(T[pid])]
+    attr = [c for c in f.get("identity_fields", []) if c in T.columns]
     for v, g in ids.groupby(pid):
-        if len(g) > 1:
-            F.add("P03", g.geometry.iloc[0].representative_point(), v, f"{len(g)} polygons share parcel ID {v}")
+        if len(g) < 2:
+            continue
+        conflict = [c for c in attr if g[c].fillna("").astype(str).str.strip().nunique() > 1]
+        ov = 0.0
+        gs = list(g.geometry)
+        for x in range(len(gs)):
+            for y in range(x + 1, len(gs)):
+                ov += gs[x].intersection(gs[y]).area
+        if conflict:
+            F.add("P03", g.geometry.iloc[0].representative_point(), v, f"{len(g)} polygons share parcel ID {v} but differ in {', '.join(conflict)}")
+        elif ov >= cfg.get("overlap_min_m2", 5.0):
+            F.add("P03", g.geometry.iloc[0].representative_point(), v, f"{len(g)} pieces of parcel {v} overlap each other by {ov:,.0f} m²")
 
     # P04 missing attributes
     for col in f.get("required", []):
         if col not in P.columns:
             continue
-        for i, r in P[blank(P[col])].iterrows():
+        for i, r in T[blank(T[col])].iterrows():
             F.add("P04", r.geometry.representative_point(), r[pid], f"Field '{col}' is empty")
 
     # P01 overlaps via spatial index
@@ -104,6 +122,7 @@ def check_parcels(P, cfg, F, public=None):
     sidx = P.sindex
     geoms = P.geometry.values
     pids = P[pid].values
+    nontax = P["_nontax"].values
     left, right = sidx.query(geoms, predicate="intersects")
     seen = set()
     for a, b in zip(left, right):
@@ -115,7 +134,17 @@ def check_parcels(P, cfg, F, public=None):
             continue
         area = inter.area
         if area >= min_ov:
-            F.add("P01", inter.representative_point(), f"{pids[a]} / {pids[b]}", f"{pids[a]} and {pids[b]} overlap by {area:,.0f} m²")
+            if pids[a] == pids[b]:
+                continue                                    # handled by P03
+            if nontax[a] and nontax[b]:
+                kind = "Two right-of-way polygons"
+            elif nontax[a] or nontax[b]:
+                kind = "Parcel and right-of-way"
+            else:
+                kind = "Parcels"
+            share = area / min(geoms[a].area, geoms[b].area)
+            extra = " (one sits almost entirely inside the other: possible unsplit CSM or condo)" if share > 0.9 else ""
+            F.add("P01", inter.representative_point(), f"{pids[a]} / {pids[b]}", f"{kind} {pids[a]} and {pids[b]} overlap by {area:,.0f} m²{extra}")
 
     # P02 gaps: holes in the dissolved parcel fabric that are small and not public land
     max_gap = cfg.get("gap_max_m2", 500.0)
@@ -135,7 +164,7 @@ def check_parcels(P, cfg, F, public=None):
 
     # P05 slivers: thin polygons (Polsby-Popper compactness and width)
     thin = cfg.get("sliver_width_m", 1.5)
-    for i, r in P.iterrows():
+    for i, r in T.iterrows():
         g = r.geometry
         if g.is_empty or g.area <= 0:
             continue
@@ -157,9 +186,10 @@ def check_roads(R, cfg, F):
     named = R["name_n"] != ""
 
     no_range = named & R[["fromleft_n", "toleft_n", "fromright_n", "toright_n"]].fillna(0).eq(0).all(axis=1)
-    if cfg.get("report_missing_ranges", True):
-        for i, r in R[no_range].iterrows():
-            F.add("R03", r.geometry.interpolate(0.5, normalized=True), r[rid], f"{r[f['name']]} segment has no address range")
+    for col, vals in cfg.get("roads_without_ranges_ok", {}).items():
+        if col in R.columns:
+            no_range &= ~R[col].astype(str).isin(vals)
+    R["_no_range"] = no_range
 
     for side in ("left", "right"):
         a, b = R[f"from{side}_n"], R[f"to{side}_n"]
@@ -167,25 +197,34 @@ def check_roads(R, cfg, F):
         for i, r in R[mixed].iterrows():
             F.add("R01", r.geometry.interpolate(0.5, normalized=True), r[rid], f"{side.title()} range {int(r[f'from{side}_n'])}–{int(r[f'to{side}_n'])} mixes odd and even")
 
-    # R02 overlapping ranges on the same side, same street, same municipality
+    # R02 overlapping ranges: same street and municipality, same parity (odd vs odd, even vs even).
+    # Comparing by parity instead of left/right avoids false alarms where segments were digitized in opposite directions.
     muni = f.get("municipality")
     keys = ["name_n"] + ([muni] if muni else [])
+    parts = []
     for side in ("left", "right"):
-        R["lo"] = R[[f"from{side}_n", f"to{side}_n"]].min(axis=1)
-        R["hi"] = R[[f"from{side}_n", f"to{side}_n"]].max(axis=1)
-        valid = named & (R["lo"] > 0)
-        for _, g in R[valid].groupby(keys):
-            if len(g) < 2:
-                continue
-            g = g.sort_values("lo")
-            rows = list(g.itertuples())
-            for x in range(len(rows) - 1):
-                for y in range(x + 1, len(rows)):
-                    if rows[y].lo > rows[x].hi:
-                        break
-                    if rows[y].lo < rows[x].hi and (rows[x].lo != rows[y].lo or rows[x].hi != rows[y].hi):
-                        F.add("R02", rows[x].geometry.interpolate(0.5, normalized=True), f"{getattr(rows[x], rid)} / {getattr(rows[y], rid)}",
-                              f"{side.title()} ranges {int(rows[x].lo)}–{int(rows[x].hi)} and {int(rows[y].lo)}–{int(rows[y].hi)} overlap")
+        lo = R[[f"from{side}_n", f"to{side}_n"]].min(axis=1)
+        hi = R[[f"from{side}_n", f"to{side}_n"]].max(axis=1)
+        parts.append(pd.DataFrame({"rid": R[rid], "lo": lo, "hi": hi, "par": lo % 2, "side": side, "geometry": R.geometry,
+                                   **{k: R[k] for k in keys}})[named & (lo > 0)])
+    S = pd.concat(parts)
+    seen = set()
+    for _, g in S.groupby(keys + ["par"]):
+        if len(g) < 2:
+            continue
+        rows = list(g.sort_values("lo").itertuples())
+        for x in range(len(rows) - 1):
+            for y in range(x + 1, len(rows)):
+                if rows[y].lo > rows[x].hi:
+                    break
+                if rows[x].rid == rows[y].rid:
+                    continue
+                pair = tuple(sorted([rows[x].rid, rows[y].rid]))
+                if rows[y].lo < rows[x].hi and pair not in seen:
+                    seen.add(pair)
+                    kind = "Odd" if rows[x].par else "Even"
+                    F.add("R02", rows[x].geometry.interpolate(0.5, normalized=True), f"{pair[0]} / {pair[1]}",
+                          f"{kind} ranges {int(rows[x].lo)}–{int(rows[x].hi)} and {int(rows[y].lo)}–{int(rows[y].hi)} overlap")
     return R
 
 
@@ -206,6 +245,8 @@ def check_addresses(A, P, R, M, cfg, F):
     aid = f["id"]
     log(f"address points: {len(A):,}")
     A = A.copy()
+    if aid not in A.columns:
+        A[aid] = A.index.astype(str)
     if f.get("status") and cfg.get("active_status_values"):
         active = A[f["status"]].astype(str).str.strip().isin(cfg["active_status_values"])
         log(f"  active: {active.sum():,}")
@@ -230,10 +271,18 @@ def check_addresses(A, P, R, M, cfg, F):
     # road link checks
     roads = R.set_index(R[rf["id"]].astype(str))
     roads = roads[~roads.index.duplicated()]
+    roads["lo_any"] = roads[["fromleft_n", "toleft_n", "fromright_n", "toright_n"]].replace(0, np.nan).min(axis=1)
+    roads["hi_any"] = roads[["fromleft_n", "toleft_n", "fromright_n", "toright_n"]].max(axis=1)
+    by_name = {k: g for k, g in roads.groupby("name_n")}
     A["num"] = to_int(A[f["number"]])
     A["name_n"] = norm_name(A[f["street"]])
     far = cfg.get("far_from_road_m", 400.0)
-    for i, r in A.iterrows():
+    # one finding per address, not per unit point (an apartment building has many points at one address)
+    ukey = [f["number"], f["street"]] + ([f["municipality"]] if f.get("municipality") else [])
+    A["_npts"] = A.groupby(ukey)[aid].transform("size")
+    U = A.drop_duplicates(ukey)
+    linked = defaultdict(int)
+    for i, r in U.iterrows():
         link = str(r[f["road_id"]]).strip() if f.get("road_id") else ""
         if not link or link in ("None", "nan"):
             continue
@@ -241,6 +290,7 @@ def check_addresses(A, P, R, M, cfg, F):
             F.add("A04", r.geometry, r[aid], f"Road ID {link} not found in centerlines")
             continue
         seg = roads.loc[link]
+        linked[link] += 1
         if r["name_n"] and seg["name_n"] and r["name_n"] != seg["name_n"]:
             F.add("A05", r.geometry, r[aid], f"Point says '{r[f['street']]}', road segment says '{seg[rf['name']]}'")
         dist = seg.geometry.distance(r.geometry)
@@ -256,16 +306,30 @@ def check_addresses(A, P, R, M, cfg, F):
         lo_s, hi_s = sorted([nz(seg[f"from{s}_n"]), nz(seg[f"to{s}_n"])])
         lo_o, hi_o = sorted([nz(seg[f"from{o}_n"]), nz(seg[f"to{o}_n"])])
         if hi_s <= 0 and hi_o <= 0:
-            continue
+            continue                                # reported once per segment as R03 below
         in_s = lo_s <= n <= hi_s
         in_o = lo_o <= n <= hi_o
         if not in_s and not in_o:
-            F.add("A06", r.geometry, r[aid], f"{int(n)} is outside the segment's ranges ({int(lo_s)}–{int(hi_s)} this side, {int(lo_o)}–{int(hi_o)} other side)")
+            hint = ""
+            same = by_name.get(r["name_n"])
+            if same is not None:
+                fit = same[((same.lo_any <= n) & (n <= same.hi_any))]
+                if len(fit):
+                    dists = fit.geometry.distance(r.geometry)
+                    near = dists[dists < 1000]
+                    if len(near):
+                        hint = f"; it fits nearby segment {near.idxmin()} ({near.min():,.0f} m away), so the road link may be wrong"
+            F.add("A06", r.geometry, r[aid], f"{int(n)} is outside the segment's ranges ({int(lo_s)}–{int(hi_s)} this side, {int(lo_o)}–{int(hi_o)} other side){hint}")
         elif hi_s > 0 and (lo_s % 2) != (n % 2) and in_o and (lo_o % 2) == (n % 2) and dist > 3:
             F.add("A07", r.geometry, r[aid], f"{int(n)} is on the {s} side, but the {s} range is {int(lo_s)}–{int(hi_s)}")
 
+    for link, n_addr in linked.items():
+        seg = roads.loc[link]
+        if seg.get("_no_range", False):
+            F.add("R03", seg.geometry.interpolate(0.5, normalized=True), link, f"{seg[rf['name']]} segment has no address range, but {n_addr} address(es) link to it")
+
     # A09 duplicates
-    key = [f["full"]] + ([f["unit"]] if f.get("unit") else [])
+    key = [f["full"]] + ([f["unit"]] if f.get("unit") else []) + ([f["municipality"]] if f.get("municipality") else [])
     dup = A[~blank(A[f["full"]])].copy()
     dup["k"] = dup[key].fillna("").astype(str).apply(lambda x: " ".join(x).upper().strip(), axis=1)
     for k, g in dup.groupby("k"):
@@ -280,8 +344,7 @@ def check_addresses(A, P, R, M, cfg, F):
         alias = {k.upper(): v.upper() for k, v in cfg.get("muni_aliases", {}).items()}
         def canon(x):
             x = re.sub(r"\s+", " ", str(x).upper().strip())
-            x = alias.get(x, x)
-            return re.sub(r"^(CITY|VILLAGE|TOWN) OF ", "", x)
+            return alias.get(x, x)
         for i, r in j.iterrows():
             a, b = r[f["municipality"]], r[mf["name"]]
             if pd.isna(b) or blank(pd.Series([a])).iloc[0]:
@@ -293,11 +356,26 @@ def check_addresses(A, P, R, M, cfg, F):
 
 def run(cfg_path, out):
     cfg = json.load(open(cfg_path))
-    base = os.path.dirname(os.path.abspath(cfg_path))
+    return run_config(cfg, out, os.path.dirname(os.path.abspath(cfg_path)))
+
+
+def run_config(cfg, out, base="."):
+    """Run every check. Input paths may be 'file.gpkg' or 'file.gpkg::layer'."""
     os.makedirs(out, exist_ok=True)
-    rd = lambda k: gpd.read_file(os.path.join(base, cfg["inputs"][k])).to_crs(WORK_CRS) if cfg["inputs"].get(k) else None
+
+    def rd(k):
+        src = cfg["inputs"].get(k)
+        if not src:
+            return None
+        path, _, layer = src.partition("::")
+        g = gpd.read_file(os.path.join(base, path), layer=layer or None)
+        return g.to_crs(WORK_CRS)
     P, A, R, M = rd("parcels"), rd("addresses"), rd("roads"), rd("municipalities")
     public = rd("public_land")
+    mf = cfg.get("muni_fields", {})
+    if M is not None and mf.get("type") and mf.get("label_by_type"):
+        M["muni_label"] = [mf["label_by_type"].get(t, "{name}").format(name=n) for n, t in zip(M[mf["name"]], M[mf["type"]])]
+        cfg["muni_fields"] = dict(mf, name="muni_label")
     F = Findings()
     P = check_parcels(P, cfg, F, public)
     R = check_roads(R, cfg, F)

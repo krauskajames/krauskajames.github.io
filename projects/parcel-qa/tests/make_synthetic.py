@@ -16,6 +16,7 @@ parcels[8]["geometry"] = box(X0 + 160, Y0 + 10, X0 + 197, Y0 + 70)       # N4 le
 parcels[6]["geometry"] = Polygon([(X0+120, Y0+10), (X0+160, Y0+10), (X0+160, Y0+70), (X0+120, Y0+70), (X0+120, Y0+50), (X0+123, Y0+50), (X0+123, Y0+30), (X0+120, Y0+30)])  # N3 notch -> P02
 parcels[10]["PARCELNO"] = "N0"                                           # N5 duplicate ID -> P03
 parcels[11]["OWNER"] = ""                                                # S5 missing owner -> P04
+parcels.append(dict(PARCELNO="OAK1", OWNER="Lee", SITEADDR="10 OAK RD", geometry=box(X0 + 80, Y0 + 310, X0 + 140, Y0 + 370)))
 parcels.append(dict(PARCELNO="SLV", OWNER="County", SITEADDR="", geometry=box(X0 + 240, Y0 + 10, X0 + 240.8, Y0 + 70)))  # P05
 gpd.GeoDataFrame(parcels, crs=3071).to_file(f"{D}/parcels.gpkg")
 roads = [
@@ -37,12 +38,13 @@ ap(6, 104, "MAIN ST", "N0", "R1", 30, 40)                 # A07 even number on o
 ap(7, 101, "MAIN ST", "N0", "R1", 25, 45)                 # A09 duplicate of A0
 ap(8, 102, "MAIN ST", "S1", "R1", 60, -40, muni="Village of Elsewhere")  # A10
 ap(9, "", "MAIN ST", "S2", "R1", 100, -40, esn="")        # A01 missing number + ESN
+ap(11, 10, "OAK RD", "OAK1", "R3", 100, 340)            # links to R3, which has no range -> R03
 ap(10, 106, "MAIN ST", "S3", "R1", 140, -40, status="Retired")  # filtered out
 gpd.GeoDataFrame(pts, crs=3071).to_file(f"{D}/addresses.gpkg")
 gpd.GeoDataFrame([dict(NAME="Town of Test", geometry=box(X0 - 50, Y0 - 500, X0 + 600, Y0 + 500))], crs=3071).to_file(f"{D}/munis.gpkg")
 cfg = dict(county="Synthetic test county",
     inputs=dict(parcels="synthetic/parcels.gpkg", addresses="synthetic/addresses.gpkg", roads="synthetic/roads.gpkg", municipalities="synthetic/munis.gpkg"),
-    parcel_fields=dict(id="PARCELNO", required=["PARCELNO", "OWNER"]),
+    parcel_fields=dict(id="PARCELNO", required=["PARCELNO", "OWNER"], identity_fields=["OWNER", "SITEADDR"]),
     road_fields=dict(id="CLID", name="FULLNAME", municipality="MUNI", fromleft="FROMLEFT", toleft="TOLEFT", fromright="FROMRIGHT", toright="TORIGHT"),
     address_fields=dict(id="SITEADDID", number="ADDRNUM", street="FULLNAME", full="FULLADDR", unit="UNITID", parcel_id="PARCELID", road_id="RDCLID", municipality="MUNICIPALITY", status="STATUS", required=["ADDRNUM", "FULLNAME", "MUNICIPALITY", "ESN", "MSAG"]),
     muni_fields=dict(name="NAME"), active_status_values=["Current"], far_from_road_m=200)

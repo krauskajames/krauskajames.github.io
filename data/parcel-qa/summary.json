@@ -1,0 +1,148 @@
+{
+ "county": "Sheboygan County, Wisconsin",
+ "totals": {
+  "parcels": 63391,
+  "addresses": 61727,
+  "roads": 9841
+ },
+ "checks": {
+  "P01": {
+   "layer": "parcels",
+   "severity": "high",
+   "title": "Overlapping parcels",
+   "description": "Two parcels cover the same ground."
+  },
+  "P02": {
+   "layer": "parcels",
+   "severity": "medium",
+   "title": "Gap between parcels",
+   "description": "A small hole between parcels that is not a road, water or other public land."
+  },
+  "P03": {
+   "layer": "parcels",
+   "severity": "high",
+   "title": "Duplicate parcel ID",
+   "description": "More than one polygon carries the same parcel number."
+  },
+  "P04": {
+   "layer": "parcels",
+   "severity": "medium",
+   "title": "Missing required attribute",
+   "description": "A required field (parcel ID, owner, site address or similar) is empty."
+  },
+  "P05": {
+   "layer": "parcels",
+   "severity": "low",
+   "title": "Sliver parcel",
+   "description": "A very thin polygon, usually left over from editing."
+  },
+  "P06": {
+   "layer": "parcels",
+   "severity": "high",
+   "title": "Invalid geometry",
+   "description": "Self-intersecting or otherwise invalid polygon."
+  },
+  "A01": {
+   "layer": "addresses",
+   "severity": "medium",
+   "title": "Missing required attribute",
+   "description": "An NG911-required field (number, street, municipality, ESN or MSAG community) is empty."
+  },
+  "A02": {
+   "layer": "addresses",
+   "severity": "high",
+   "title": "Outside its parcel",
+   "description": "The point does not fall inside the parcel its ParcelID points to."
+  },
+  "A03": {
+   "layer": "addresses",
+   "severity": "medium",
+   "title": "Outside every parcel",
+   "description": "The point does not fall in any tax parcel."
+  },
+  "A04": {
+   "layer": "addresses",
+   "severity": "high",
+   "title": "Road link broken",
+   "description": "The road centerline ID on the point does not exist."
+  },
+  "A05": {
+   "layer": "addresses",
+   "severity": "high",
+   "title": "Street name mismatch",
+   "description": "The point's street name differs from its linked road segment."
+  },
+  "A06": {
+   "layer": "addresses",
+   "severity": "high",
+   "title": "Number outside road range",
+   "description": "The house number is outside the address range of its linked road segment."
+  },
+  "A07": {
+   "layer": "addresses",
+   "severity": "medium",
+   "title": "Wrong side of the road",
+   "description": "An odd number sits on the even side of the road, or the reverse."
+  },
+  "A08": {
+   "layer": "addresses",
+   "severity": "medium",
+   "title": "Far from its road",
+   "description": "The point is unusually far from its linked road segment."
+  },
+  "A09": {
+   "layer": "addresses",
+   "severity": "high",
+   "title": "Duplicate address",
+   "description": "Two active points share the same full address and unit."
+  },
+  "A10": {
+   "layer": "addresses",
+   "severity": "medium",
+   "title": "Municipality mismatch",
+   "description": "The municipality on the point differs from the municipal boundary it sits in."
+  },
+  "R01": {
+   "layer": "roads",
+   "severity": "medium",
+   "title": "Mixed parity range",
+   "description": "A side of the road range mixes odd and even numbers."
+  },
+  "R02": {
+   "layer": "roads",
+   "severity": "high",
+   "title": "Overlapping ranges",
+   "description": "Two segments of the same street in the same municipality claim overlapping numbers on the same side."
+  },
+  "R03": {
+   "layer": "roads",
+   "severity": "low",
+   "title": "Missing range",
+   "description": "A named road segment has no address range."
+  }
+ },
+ "counts": {
+  "A03": 21,
+  "A05": 28,
+  "A06": 556,
+  "A07": 199,
+  "A08": 47,
+  "A10": 3,
+  "P01": 30,
+  "P02": 92,
+  "P04": 138,
+  "P05": 125,
+  "P06": 5,
+  "R01": 18,
+  "R02": 44,
+  "R03": 15
+ },
+ "flagged_features": {
+  "addresses": 799,
+  "parcels": 296,
+  "roads": 75
+ },
+ "not_run": [
+  "A02"
+ ]
+}
