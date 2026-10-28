@@ -145,10 +145,10 @@ Each idea gets two scores from 1 to 5:
   1. **Blooms:** Sentinel-2 chlorophyll-a (NDCI) on every clear summer day since 2017; east vs. west shore against the wind (does a west wind pile the scum on the cottages' side?); filmstrips; the clearest late-summer Landsat image of each year, 1999–2026; checked against the DNR's sampled chlorophyll.
   2. **Ice:** ice-on and ice-off dates every winter since 2000 from MODIS daily imagery; ice roads and shanty clusters from Sentinel-1 radar and Sentinel-2.
   3. **Trends:** summer surface temperature (Landsat thermal), clarity, bloom intensity and ice days, with Sen's slope and Mann-Kendall tests.
-  4. **Fish and boats:** a winter ice-fishing log (Survey123) of ice thickness, depth and catches; a seasonal habitat map built from it plus depth, reefs, temperature and ice, framed as a model, not "where the fish are"; boats counted on summer NAIP aerial photos (public domain, about every two years), including around Abraham Reef and Long Point.
+  4. **Fish:** a winter ice-fishing log (Survey123) of ice thickness, depth and catches; a seasonal habitat map built from it plus depth, reefs, temperature and ice, framed as a model, not "where the fish are"; checked against the DNR's fish survey and creel data where it's public. Boat and shanty counts were considered and dropped: they measure where people fish, not where fish are.
 - **Why:** Earth Engine, remote sensing and field data collection are missing from the portfolio, and the DNR, county land and water departments and environmental consultants ask for them. It pairs with the Winnebago County profile, and the personal story makes it memorable.
 - **Have:** The open-source Earth Engine scripts by Parisa Abbasalizadehrezaei (MIT); the Lake Winnebago script, settings, lab guide and ice-log form (XLSForm) in projects/lake-winnebago-blooms/.
-- **Need:** An Earth Engine account (free, noncommercial); the DNR's chlorophyll samples (WBIC 131100); the story and any cottage photos; this winter's ice log. Optional: Planet imagery (3 m daily) if a university affiliation is available.
+- **Need:** An Earth Engine account (free, noncommercial); the DNR's chlorophyll samples (WBIC 131100); the story and any cottage photos; this winter's ice log.
 - **Not doing:** analysis on Google Maps or Google Earth imagery (its terms don't allow extracting data from it). Browse it for ideas, then work from NAIP, Sentinel and Landsat.
 - **Next step:** Chapter 1 (LAB_GUIDE.md) and publish the ice-log form before ice-up.
 

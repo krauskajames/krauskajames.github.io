@@ -9,7 +9,7 @@ One page about Lake Winnebago through the seasons, from the summers at Great Unc
 | 1. Blooms | Summer algae: daily chlorophyll, east vs. west shore with the wind, filmstrips, the cottage Augusts | Sentinel-2, Landsat, ERA5-Land, DNR samples | **This guide** |
 | 2. Ice | Ice-on and ice-off dates every winter since 2000; ice roads and shanty clusters | MODIS daily, Sentinel-1 radar, Sentinel-2 | Guide comes next |
 | 3. Trends | Summer surface temperature, clarity, bloom intensity and ice days, with trend tests | Landsat thermal, Sentinel-2, MODIS | After chapter 2 |
-| 4. Fish and boats | Your ice log, a seasonal habitat map, and boats counted on summer aerial photos | Your log, NAIP aerials, DNR bathymetry | Ice log this winter |
+| 4. Fish | Your ice log and a seasonal habitat model, checked against DNR fish surveys | Your log, DNR bathymetry and surveys, chapters 1–3 | Ice log this winter |
 
 The ice log for chapter 4 has to happen this winter, so it's set up now. See **Winter: the ice log** near the end.
 
