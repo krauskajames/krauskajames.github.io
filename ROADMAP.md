@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: October 24, 2026
+Last updated: October 28, 2026
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -47,6 +47,8 @@ Each idea gets two scores from 1 to 5:
 | The Wellness Spa in Experience and About | ✅ | Soft-skills story: listening to clients, Client Testimonial Award |
 | Outside work section with Camino placeholder | ✅ | Finisterre photo; StoryMap still to build |
 | Header stays above animated cards while scrolling | ✅ | |
+| Winnebago County Community Profile page and prism-map card | ✅ | ArcGIS Online dashboard still in progress (item 1) |
+| Parcel and NG911 QA toolkit page and scan-line card | ✅ | COGO drafting still to do (item 4) |
 
 ---
 
@@ -54,30 +56,32 @@ Each idea gets two scores from 1 to 5:
 
 | Rank | Item | E | F | Score | Status |
 |---|---|---|---|---|---|
-| 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | 🔜 |
+| 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | 🔧 |
 | 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔜 |
 | 3 | Employer quotes and references | 4 | 5 | 4.4 | 🔜 |
-| 4 | Parcel and NG911 data QA toolkit | 5 | 3 | 4.2 | 💡 |
+| 4 | Parcel and NG911 data QA toolkit | 5 | 3 | 4.2 | 🔧 |
 | 5 | Geodatabase and SQL project | 5 | 3 | 4.2 | 💡 |
 | 6 | Utility mapping from as-built drawings | 5 | 3 | 4.2 | 💡 |
 | 7 | Dark Skies of Wisconsin poster (WLIA map contest) | 4 | 4 | 4.0 | 💡 |
 | 8 | Esri Academy advanced course project | 4 | 4 | 4.0 | 💡 |
-| 9 | Monroe County 1965 vs. 2010 swipe map | 3 | 5 | 3.8 | 🔜 |
-| 10 | Ice Age Trail plants StoryMap | 3 | 5 | 3.8 | 🔜 |
-| 11 | Headshot and "Outside work" polish | 3 | 5 | 3.8 | 🔜 |
-| 12 | LiDAR terrain and feature extraction | 4 | 3 | 3.6 | 💡 |
-| 13 | Solar suitability map | 4 | 3 | 3.6 | 💡 |
-| 14 | Mountain lion corridors, redone in Python | 4 | 3 | 3.6 | 💡 |
-| 15 | Camino Francés StoryMap | 3 | 4 | 3.4 | 🔧 |
-| 16 | Still maps and posters gallery | 3 | 4 | 3.4 | 💡 |
-| 17 | Fall color change from satellite imagery (ESA SNAP) | 3 | 3 | 3.0 | 💡 |
-| 18 | Migratory bird movements map | 3 | 3 | 3.0 | 💡 |
-| 19 | Wall Tracer "try it" demo (the code console idea) | 3 | 2 | 2.6 | 💡 |
-| 20 | Drone footage and Gaussian splatting | 3 | 2 | 2.6 | 💡 |
-| 21 | Fabled Atlas: low-poly downtown Stevens Point | 3 | 2 | 2.6 | 💡 |
-| 22 | ArchiCAD-style site plans and renders | 2 | 3 | 2.4 | 💡 |
-| 23 | Rapa Nui 3D map with tiny moai | 2 | 2 | 2.0 | 💡 |
-
+| 9 | Lake Winnebago algae blooms (Earth Engine) | 4 | 4 | 4.0 | 🔜 |
+| 10 | Monroe County 1965 vs. 2010 swipe map | 3 | 5 | 3.8 | 🔜 |
+| 11 | Ice Age Trail plants StoryMap | 3 | 5 | 3.8 | 🔜 |
+| 12 | Headshot and "Outside work" polish | 3 | 5 | 3.8 | 🔜 |
+| 13 | Earth Engine water-resources short course | 3 | 5 | 3.8 | 🔜 |
+| 14 | LiDAR terrain and feature extraction | 4 | 3 | 3.6 | 💡 |
+| 15 | Solar suitability map | 4 | 3 | 3.6 | 💡 |
+| 16 | Mountain lion corridors, redone in Python | 4 | 3 | 3.6 | 💡 |
+| 17 | Horicon Marsh open water since 1985 (Earth Engine, Random Forest) | 4 | 3 | 3.6 | 💡 |
+| 18 | Camino Francés StoryMap | 3 | 4 | 3.4 | 🔧 |
+| 19 | Still maps and posters gallery | 3 | 4 | 3.4 | 💡 |
+| 20 | Fall color change from satellite imagery (ESA SNAP) | 3 | 3 | 3.0 | 💡 |
+| 21 | Migratory bird movements map | 3 | 3 | 3.0 | 💡 |
+| 22 | Wall Tracer "try it" demo (the code console idea) | 3 | 2 | 2.6 | 💡 |
+| 23 | Drone footage and Gaussian splatting | 3 | 2 | 2.6 | 💡 |
+| 24 | Fabled Atlas: low-poly downtown Stevens Point | 3 | 2 | 2.6 | 💡 |
+| 25 | ArchiCAD-style site plans and renders | 2 | 3 | 2.4 | 💡 |
+| 26 | Rapa Nui 3D map with tiny moai | 2 | 2 | 2.0 | 💡 |
 ---
 
 ## Tier 1: do these first
@@ -87,7 +91,8 @@ Each idea gets two scores from 1 to 5:
 - **Why:** Winnebago County's GIS Specialist posting sits in Planning and Zoning. Showing up with a profile of their own county is the "I researched you" move hiring managers remember.
 - **Have:** Spreadsheets, extrapolation models and both memos on the USB drive (Spring 2025 / GEOG 330).
 - **Need:** Current ACS and BEA tables for Winnebago; dashboard (ArcGIS Dashboards or a hand-built page).
-- **Next step:** Pull Winnebago's tables and rebuild the memo's charts.
+- **Status:** 🔧 The page is live (winnebago.html) with the board memo and the prism-map homepage card. The ArcGIS Online dashboard is half built; ArcGIS Online wasn't loading.
+- **Next step:** Finish the dashboard (indicators, list, charts, selector targets), then send the link so it can go on the page.
 
 ### 2. Field Season 2025 page (Restoring Lands, Donges Bay Gorge) · E5 F4 · 4.6
 - **What:** A page linked from the Restoring Lands entry: the Trimble selfie on the Lake Michigan beach, Field Maps invasive-species screenshots for six preserves, a Donges Bay Gorge section (trail, white pine over the lake, beach, the old stone bridge and pool house), and a map of where every field photo was taken.
@@ -106,7 +111,8 @@ Each idea gets two scores from 1 to 5:
 - **What:** The parcel data pipeline: draft 3 to 5 parcels from recorded legal descriptions with COGO, then an ArcPy script tool that checks a county's parcels and address points for gaps, overlaps, missing fields and address points off their road centerline, with an error map.
 - **Why:** Parcels, legal descriptions, NG911 and scripting appear in four of the six postings analyzed. This closes the biggest gap.
 - **Need:** ArcGIS Pro (Personal Use license), Esri Parcel Fabric labs (Splitting and Dividing Parcels), a PLSS primer, public parcel and address data for one county.
-- **Next step:** Do the two Parcel Fabric labs.
+- **Status:** 🔧 Live for Sheboygan County (parcel-qa.html): 19 checks, 1,321 items to review, a scan-line homepage card, and a Pro script tool. The splitting lab is done (Oct 26).
+- **Next step:** COGO-draft four parcels and test the script tool, following YOUR_PART.md.
 
 ### 5. Geodatabase and SQL project · E5 F3 · 4.2
 - **What:** Design a small enterprise-style geodatabase (domains, subtypes, relationships, versioning notes) and load it into PostGIS, then answer real questions with SQL: parcels within 500 feet of a road, address points with no parcel, duplicate records.
@@ -134,43 +140,61 @@ Each idea gets two scores from 1 to 5:
 - **Why:** Adds a credential and a polished piece at the same time.
 - **Next step:** Pick one course that feeds another item (for example Experience Builder for item 1, Python for item 4).
 
-### 9. Monroe County 1965 vs. 2010 swipe map · E3 F5 · 3.8
+### 9. Lake Winnebago algae blooms (Earth Engine) · E4 F4 · 4.0
+- **What:** A page on the blue-green algae blooms on Lake Winnebago, opened by the family story of the August weeks at Great Uncle Bob's and Uncle Tom's cottages on the east shore. Sentinel-2 chlorophyll-a (NDCI) on every clear summer day since 2017; east vs. west shore compared against the wind (does a west wind pile the scum on the cottages' side?); filmstrips of one summer; the clearest late-summer Landsat image of each year back to 1984; checked against the DNR's sampled chlorophyll.
+- **Why:** Earth Engine and remote sensing are missing from the portfolio, and the DNR, county land and water departments and environmental consultants ask for them. It pairs with the Winnebago County profile, and the personal story makes it memorable.
+- **Have:** The open-source Earth Engine scripts by Parisa Abbasalizadehrezaei (MIT); the Lake Winnebago add-on script, settings and lab guide in projects/lake-winnebago-blooms/.
+- **Need:** An Earth Engine account (free, noncommercial); the DNR's chlorophyll samples for Lake Winnebago (WBIC 131100); the story and any cottage photos.
+- **Next step:** Work through LAB_GUIDE.md.
+
+### 10. Monroe County 1965 vs. 2010 swipe map · E3 F5 · 3.8
 - **What:** Drag-to-compare slider between the 1965 aerial photo and 2010 imagery from Remote Sensing 1, Lab 2, with your digitized land-cover change.
 - **Why:** Quick, very visual, shows historical imagery and change detection.
 - **Have:** BIB-3FF-248-1965.jpg, Monroe 2010 3FF-248.jpg and the finished map (USB, Fall 2024 / Remote Sensing 1).
 
-### 10. Ice Age Trail plants StoryMap · E3 F5 · 3.8
+### 11. Ice Age Trail plants StoryMap · E3 F5 · 3.8
 - **What:** Link or rebuild your GEOG 343 StoryMap of edible and allergenic plants along the Ice Age Trail.
 - **Why:** Proof of ArcGIS StoryMaps; fits under Outside work next to the Camino.
 - **Have:** Photos and legends on the USB (Spring 2025 / GEOG 343 / Storymaps).
 - **Next step:** Check whether it is still published on ArcGIS Online.
 
-### 11. Headshot and "Outside work" polish · E3 F5 · 3.8
+### 12. Headshot and "Outside work" polish · E3 F5 · 3.8
 - **What:** Studio headshot in About (download the unwatermarked file from the photographer; crop above the shirt logo), one short "Outside work" line (stargazing, gluten-free baking, the Camino), optional dog-on-head photo for personality.
 - **Why:** Makes the site feel like a person; hiring managers want to picture you as a coworker.
 
-### 12. LiDAR terrain and feature extraction · E4 F3 · 3.6
-- **What:** From Wisconsin county LiDAR: bare-earth DEM, hillshade, canopy height and extracted building footprints for one town, with an accuracy check against existing footprints.
-- **Why:** LiDAR and feature extraction show up in surveying and engineering-firm postings. The same data feeds items 13 and 21.
-- **Need:** County LiDAR point cloud (WisconsinView or the county); ArcGIS Pro or PDAL/Python.
-- **Tip:** Build items 12 and 13 together on the same town to save time.
+### 13. Earth Engine water-resources short course · E3 F5 · 3.8
+- **What:** Six short, commented Earth Engine lessons (github.com/RisaRezaei/gee-water-resources-course): data import, water frequency, Landsat epochs, Random Forest soil-moisture downscaling, water-area time series, Sen's slope and Mann-Kendall trends.
+- **Why:** The fastest way to learn Earth Engine before items 9 and 17. Lessons 1, 2 and 5 are the warm-up in the Lake Winnebago lab guide; lesson 3 sets up Horicon Marsh.
+- **Next step:** Lessons 1, 2 and 5 (about 2 hours).
 
-### 13. Solar suitability map · E4 F3 · 3.6
+### 14. LiDAR terrain and feature extraction · E4 F3 · 3.6
+- **What:** From Wisconsin county LiDAR: bare-earth DEM, hillshade, canopy height and extracted building footprints for one town, with an accuracy check against existing footprints.
+- **Why:** LiDAR and feature extraction show up in surveying and engineering-firm postings. The same data feeds items 15 and 24.
+- **Need:** County LiDAR point cloud (WisconsinView or the county); ArcGIS Pro or PDAL/Python.
+- **Tip:** Build items 14 and 15 together on the same town to save time.
+
+### 15. Solar suitability map · E4 F3 · 3.6
 - **What:** Rooftop solar potential for a Wisconsin town from a LiDAR surface model: solar radiation, slope, aspect and shading, ranked by building.
 - **Why:** A planning and sustainability analysis cities actually commission; shows raster analysis beyond defaults.
-- **Need:** Item 12's surface model and footprints.
+- **Need:** Item 14's surface model and footprints.
 
-### 14. Mountain lion corridors, redone in Python · E4 F3 · 3.6
+### 16. Mountain lion corridors, redone in Python · E4 F3 · 3.6
 - **What:** Rebuild the GEOG 343 cartographic model (suitability surface, cost distance, least-cost corridors) as a documented Python notebook with a clean final map.
 - **Why:** Spatial analysis plus scripting in one piece.
 - **Have:** The full ArcGIS Pro project and rasters on the USB (Spring 2025 / GEOG 343 / Lab01 Cougars, 575 MB).
 
-### 15. Camino Francés StoryMap · E3 F4 · 3.4
+### 17. Horicon Marsh open water since 1985 (Earth Engine, Random Forest) · E4 F3 · 3.6
+- **What:** Map open water in Horicon Marsh every five years from 1985 with a Random Forest on eight Landsat water indices (github.com/RisaRezaei/gee-wetland-water-rf), with hold-out accuracy and kappa, your own drawn water and land samples, and the area series set against the marsh's water-level history.
+- **Why:** Wetland mapping, classification and accuracy assessment are core skills for DNR and conservation jobs, and it builds on the MaxEnt pollinator work. Horicon is the largest freshwater cattail marsh in the U.S. and an hour from Sheboygan.
+- **Need:** Item 9 done first (same Earth Engine setup); drawn training samples, because the marsh's open water is shallow and full of vegetation.
+- **Next step:** Course lesson 3, then run the script on Horicon with the default JRC labels as a first look.
+
+### 18. Camino Francés StoryMap · E3 F4 · 3.4
 - **What:** Route, daily stages, photos and an elevation profile of the spring 2026 walk, built from the photos' GPS locations.
 - **Status:** 🔧 Placeholder card is live.
 - **Need:** Original phone photos exported with location data.
 
-### 16. Still maps and posters gallery · E3 F4 · 3.4
+### 19. Still maps and posters gallery · E3 F4 · 3.4
 - **What:** A gallery page of finished static maps: lab maps worth showing (Monroe County change map, Wisconsin cities population map), the Dark Skies poster, any WLIA contest entry.
 - **Why:** Shows cartographic care at a glance.
 
@@ -178,35 +202,35 @@ Each idea gets two scores from 1 to 5:
 
 ## Tier 3: showpieces and passion projects
 
-### 17. Fall color change from satellite imagery (ESA SNAP) · E3 F3 · 3.0
+### 20. Fall color change from satellite imagery (ESA SNAP) · E3 F3 · 3.0
 - **What:** Track Wisconsin's fall color from north to south with Sentinel-2 imagery processed in ESA SNAP (vegetation index change between dates), as an animated map.
 - **Why:** Shows non-Esri remote sensing software; very shareable. This covers both the SNAP and the changing-tree-color ideas.
 - **Need:** SNAP (free), Sentinel-2 scenes from the Copernicus browser, a few cloud-free dates.
 
-### 18. Migratory bird movements map · E3 F3 · 3.0
+### 21. Migratory bird movements map · E3 F3 · 3.0
 - **What:** Animated map of one species moving through Wisconsin by week, from eBird Status and Trends data. A natural tie-in: Forest Beach Migratory Preserve, which you mapped at Restoring Lands.
 - **Why:** Conservation employers (WDNR, land trusts) and great visual appeal.
 - **Need:** eBird data access request.
 
-### 19. Wall Tracer "try it" demo · E3 F2 · 2.6
+### 22. Wall Tracer "try it" demo · E3 F2 · 2.6
 - **What:** Run the wall-detection tool in the browser on the sample clinic plan: the useful version of the code console idea.
 - **Status:** Wall Tracer itself still needs work before it can be shown as working.
 
-### 20. Drone footage and Gaussian splatting · E3 F2 · 2.6
+### 23. Drone footage and Gaussian splatting · E3 F2 · 2.6
 - **What:** Turn drone footage of a building into a 3D Gaussian splat that visitors can orbit in the browser.
 - **Why:** UAS and photogrammetry skills; very eye-catching.
 - **Need:** Footage of a building that is not a client project, or your boss's written OK; a splatting tool and a web viewer.
 
-### 21. Fabled Atlas: low-poly downtown Stevens Point · E3 F2 · 2.6
+### 24. Fabled Atlas: low-poly downtown Stevens Point · E3 F2 · 2.6
 - **What:** An interactive, cute low-poly tourist map of downtown Stevens Point from LiDAR, building footprints and business listings.
 - **Why:** Shows 3D, LiDAR and footprint skills with a lot of personality; a first city for the Fabled Atlas idea.
-- **Need:** Item 12's footprints and terrain; a 3D web library (three.js).
+- **Need:** Item 14's footprints and terrain; a 3D web library (three.js).
 
-### 22. ArchiCAD-style site plans and renders · E2 F3 · 2.4
+### 25. ArchiCAD-style site plans and renders · E2 F3 · 2.4
 - **What:** Architectural site plans and building renders like the ones PX Design currently outsources.
 - **Why:** Bigger payoff at your current job than for GIS applications. Show only fictional or personal sites.
 
-### 23. Rapa Nui 3D map with tiny moai · E2 F2 · 2.0
+### 26. Rapa Nui 3D map with tiny moai · E2 F2 · 2.0
 - **What:** A pannable 3D Easter Island from your existing Rapa Nui DEM (QGIS and Blender project), with tiny moai models and extracted building footprints, styled like topographic map art.
 - **Why:** Pure showpiece. Great conversation starter; least tied to job postings.
 - **Have:** RapaNuiDEM folder with the QGIS project and Blender file (Downloads\QGIS Tutorials).
