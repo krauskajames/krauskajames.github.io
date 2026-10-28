@@ -1,4 +1,21 @@
-# Lake Winnebago algae blooms: lab guide
+# Lake Winnebago from space, 1999–2026: lab guide
+
+## The whole project
+
+One page about Lake Winnebago through the seasons, from the summers at Great Uncle Bob's cottage in Pipe to ice fishing with your cousins. Each chapter goes live on its own as it's finished.
+
+| Chapter | What | Data | Status |
+|---|---|---|---|
+| 1. Blooms | Summer algae: daily chlorophyll, east vs. west shore with the wind, filmstrips, the cottage Augusts | Sentinel-2, Landsat, ERA5-Land, DNR samples | **This guide** |
+| 2. Ice | Ice-on and ice-off dates every winter since 2000; ice roads and shanty clusters | MODIS daily, Sentinel-1 radar, Sentinel-2 | Guide comes next |
+| 3. Trends | Summer surface temperature, clarity, bloom intensity and ice days, with trend tests | Landsat thermal, Sentinel-2, MODIS | After chapter 2 |
+| 4. Fish and boats | Your ice log, a seasonal habitat map, and boats counted on summer aerial photos | Your log, NAIP aerials, DNR bathymetry | Ice log this winter |
+
+The ice log for chapter 4 has to happen this winter, so it's set up now. See **Winter: the ice log** near the end.
+
+---
+
+## Chapter 1: blooms
 
 **Goal:** a portfolio page about the blooms on Lake Winnebago, made with Google Earth Engine and Sentinel-2 and Landsat imagery, and opened by your own story of the August weeks at the family cottages on the east shore.
 
@@ -25,6 +42,7 @@
 | `monitor_config_winnebago.js` | Lake Winnebago settings to paste into the original chlorophyll script (step 2) |
 | `winnebago_blooms.js` | The daily script I wrote for this lab: clear days, shores, wind, filmstrips, old Landsat summers (steps 3–5) |
 | `lake_winnebago_outline.geojson` | The lake shoreline used in both scripts, from Census TIGER water areas |
+| `winnebago_ice_log.xlsx` | The ice-fishing log form (XLSForm) for Survey123 Connect or KoboToolbox |
 
 ---
 
@@ -177,6 +195,35 @@ Put these in `Documents\Claude outputs\LakeWinnebago\` or attach them in chat:
 - [ ] Screenshots of the monthly chart, the wind chart and the map
 - [ ] The DNR data downloads (step 6)
 - [ ] Your story, plus any photos (step 7)
+
+---
+
+## Winter: the ice log
+
+Every hole you and your cousins drill is a field measurement: ice thickness at a known place and date, plus what was biting. One winter of that is real field data collected with GIS tools. It's also the ground truth for chapter 2 and the fish data for chapter 4.
+
+**The form** (`winnebago_ice_log.xlsx`) asks for:
+- The date and time, and the hole's GPS point.
+- Who fished, by first name.
+- Total ice and clear ice thickness, snow depth, and ice conditions.
+- Water depth and bottom type.
+- How you fished (tip-up, jigging or spearing), the shelter, and the target species.
+- Each fish caught: species, length, kept or released.
+- A photo and notes.
+
+**Set it up (pick one):**
+
+1. **ArcGIS Survey123** (best for the resume). Install **Survey123 Connect**, sign in with your ArcGIS Online account, choose **New Survey → File**, pick `winnebago_ice_log.xlsx`, and **Publish**. Then install the Survey123 app on your phone and on your cousins' phones. Results land in a hosted feature layer, so they're ready to map.
+2. **KoboToolbox** (free, no ArcGIS needed). Make an account at kobotoolbox.org, **New → Upload an XLSForm**, deploy, and collect with the KoboCollect app.
+
+**In the field:**
+- Fill in one record per hole, standing at the hole so the GPS point is right.
+- Measure ice with a tape hooked under the bottom edge of the hole.
+- Records save offline and send when you're back in signal.
+- Stay safe first: the form is not an ice-safety check, and the clubs' ice reports come first.
+- If you spear a sturgeon, register it as the DNR requires. The log is extra, not a substitute.
+
+**Privacy:** the page will only show the log zoomed out, for example "ice thickness by week" and "catches by depth", not your exact spots.
 
 ---
 

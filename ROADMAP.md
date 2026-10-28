@@ -64,7 +64,7 @@ Each idea gets two scores from 1 to 5:
 | 6 | Utility mapping from as-built drawings | 5 | 3 | 4.2 | 💡 |
 | 7 | Dark Skies of Wisconsin poster (WLIA map contest) | 4 | 4 | 4.0 | 💡 |
 | 8 | Esri Academy advanced course project | 4 | 4 | 4.0 | 💡 |
-| 9 | Lake Winnebago algae blooms (Earth Engine) | 4 | 4 | 4.0 | 🔜 |
+| 9 | Lake Winnebago from space, 1999–2026 (Earth Engine) | 4 | 4 | 4.0 | 🔜 |
 | 10 | Monroe County 1965 vs. 2010 swipe map | 3 | 5 | 3.8 | 🔜 |
 | 11 | Ice Age Trail plants StoryMap | 3 | 5 | 3.8 | 🔜 |
 | 12 | Headshot and "Outside work" polish | 3 | 5 | 3.8 | 🔜 |
@@ -140,12 +140,17 @@ Each idea gets two scores from 1 to 5:
 - **Why:** Adds a credential and a polished piece at the same time.
 - **Next step:** Pick one course that feeds another item (for example Experience Builder for item 1, Python for item 4).
 
-### 9. Lake Winnebago algae blooms (Earth Engine) · E4 F4 · 4.0
-- **What:** A page on the blue-green algae blooms on Lake Winnebago, opened by the family story of the August weeks at Great Uncle Bob's and Uncle Tom's cottages on the east shore. Sentinel-2 chlorophyll-a (NDCI) on every clear summer day since 2017; east vs. west shore compared against the wind (does a west wind pile the scum on the cottages' side?); filmstrips of one summer; the clearest late-summer Landsat image of each year back to 1984; checked against the DNR's sampled chlorophyll.
-- **Why:** Earth Engine and remote sensing are missing from the portfolio, and the DNR, county land and water departments and environmental consultants ask for them. It pairs with the Winnebago County profile, and the personal story makes it memorable.
-- **Have:** The open-source Earth Engine scripts by Parisa Abbasalizadehrezaei (MIT); the Lake Winnebago add-on script, settings and lab guide in projects/lake-winnebago-blooms/.
-- **Need:** An Earth Engine account (free, noncommercial); the DNR's chlorophyll samples for Lake Winnebago (WBIC 131100); the story and any cottage photos.
-- **Next step:** Work through LAB_GUIDE.md.
+### 9. Lake Winnebago from space, 1999–2026 (Earth Engine) · E4 F4 · 4.0
+- **What:** One page about Lake Winnebago through the seasons, opened by the family story: summers at Great Uncle Bob's cottage in Pipe and Uncle Tom's in Taycheedah (the page names Pipe only), and ice fishing with cousins. Built in chapters that each go live on their own:
+  1. **Blooms:** Sentinel-2 chlorophyll-a (NDCI) on every clear summer day since 2017; east vs. west shore against the wind (does a west wind pile the scum on the cottages' side?); filmstrips; the clearest late-summer Landsat image of each year, 1999–2026; checked against the DNR's sampled chlorophyll.
+  2. **Ice:** ice-on and ice-off dates every winter since 2000 from MODIS daily imagery; ice roads and shanty clusters from Sentinel-1 radar and Sentinel-2.
+  3. **Trends:** summer surface temperature (Landsat thermal), clarity, bloom intensity and ice days, with Sen's slope and Mann-Kendall tests.
+  4. **Fish and boats:** a winter ice-fishing log (Survey123) of ice thickness, depth and catches; a seasonal habitat map built from it plus depth, reefs, temperature and ice, framed as a model, not "where the fish are"; boats counted on summer NAIP aerial photos (public domain, about every two years), including around Abraham's Reef and Long Point.
+- **Why:** Earth Engine, remote sensing and field data collection are missing from the portfolio, and the DNR, county land and water departments and environmental consultants ask for them. It pairs with the Winnebago County profile, and the personal story makes it memorable.
+- **Have:** The open-source Earth Engine scripts by Parisa Abbasalizadehrezaei (MIT); the Lake Winnebago script, settings, lab guide and ice-log form (XLSForm) in projects/lake-winnebago-blooms/.
+- **Need:** An Earth Engine account (free, noncommercial); the DNR's chlorophyll samples (WBIC 131100); the story and any cottage photos; this winter's ice log. Optional: Planet imagery (3 m daily) if a university affiliation is available.
+- **Not doing:** analysis on Google Maps or Google Earth imagery (its terms don't allow extracting data from it). Browse it for ideas, then work from NAIP, Sentinel and Landsat.
+- **Next step:** Chapter 1 (LAB_GUIDE.md) and publish the ice-log form before ice-up.
 
 ### 10. Monroe County 1965 vs. 2010 swipe map · E3 F5 · 3.8
 - **What:** Drag-to-compare slider between the 1965 aerial photo and 2010 imagery from Remote Sensing 1, Lab 2, with your digitized land-cover change.
