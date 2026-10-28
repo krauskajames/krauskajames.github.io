@@ -31,11 +31,11 @@ var CONFIG = {
 
   shoreKm: 2,                     // width of the nearshore strips
   splitLon: -88.415,              // east/west split, roughly the middle of the lake
-  stripLats: [43.84, 44.15],      // leave out the Fond du Lac and Neenah ends
+  stripLats: [43.80, 44.15],      // Taycheedah to below Neenah; leaves out the Neenah end
 
   galleryYear: 2025,              // Part B
   galleryMonths: [7, 8],
-  cottageYears: [1990, 2016],     // Part C (edit to the years of your story)
+  cottageYears: [1999, 2026],     // Part C: the cottage years (Pipe, then Taycheedah)
 
   driveFolder: 'earthengine',
   filePrefix: 'winnebago'

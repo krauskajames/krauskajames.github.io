@@ -128,7 +128,7 @@ If a filmstrip is empty, that summer had few clear days. Lower `0.8` in the `gal
 
 Part C finds the clearest Landsat image of the lake from late July through August, for every year in `cottageYears`, back to 1984. It strings them into one filmstrip, one summer per frame.
 
-1. Set `cottageYears` to the years of your story, for example `[1995, 2016]`. The script prints which date each frame comes from.
+1. `cottageYears` is already set to `[1999, 2026]`. The script prints which date each frame comes from. 2012 will be missing (Landsat 5 had stopped and Landsat 8 hadn't launched yet).
 2. Run it and save the GIF from the **Download link**.
 3. Look for the summers you remember. If the year a bloom stopped you swimming has a clear image within a week of your trip, that one image could carry the page.
 4. Write down any frame where you can see the bloom, with its date.
