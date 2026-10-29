@@ -85,6 +85,7 @@ Each idea gets two scores from 1 to 5:
 | 27 | Wall Tracer "try it" demo (the code console idea) | 3 | 2 | 2.6 | 💡 |
 | 28 | Fabled Atlas: low-poly downtown Stevens Point | 3 | 2 | 2.6 | 💡 |
 | 29 | Rapa Nui 3D map with tiny moai | 2 | 2 | 2.0 | 💡 |
+
 ---
 
 ## Tier 1: do these first
@@ -200,7 +201,7 @@ Each idea gets two scores from 1 to 5:
 - **What:** From Wisconsin county LiDAR: bare-earth DEM, hillshade, canopy height and extracted building footprints for one town, with an accuracy check against existing footprints.
 - **Why:** LiDAR and feature extraction show up in surveying and engineering-firm postings. The same data feeds items 18 and 28.
 - **Need:** County LiDAR point cloud (WisconsinView or the county); ArcGIS Pro or PDAL/Python.
-- **Tip:** Build items 18 and 17 together on the same town to save time.
+- **Tip:** Build items 17 and 18 together on the same town to save time.
 
 ### 18. Solar suitability map · E4 F3 · 3.6
 - **What:** Rooftop solar potential for a Wisconsin town from a LiDAR surface model: solar radiation, slope, aspect and shading, ranked by building.
