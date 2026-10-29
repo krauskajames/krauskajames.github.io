@@ -65,25 +65,26 @@ Each idea gets two scores from 1 to 5:
 | 7 | Dark Skies of Wisconsin poster (WLIA map contest) | 4 | 4 | 4.0 | 💡 |
 | 8 | Esri Academy advanced course project | 4 | 4 | 4.0 | 💡 |
 | 9 | Lake Winnebago from space, 1999–2026 (Earth Engine) | 4 | 4 | 4.0 | 🔜 |
-| 10 | Monroe County 1965 vs. 2010 swipe map | 3 | 5 | 3.8 | 🔜 |
-| 11 | Ice Age Trail plants StoryMap | 3 | 5 | 3.8 | 🔜 |
-| 12 | Headshot and "Outside work" polish | 3 | 5 | 3.8 | 🔜 |
-| 13 | Earth Engine water-resources short course | 3 | 5 | 3.8 | 🔜 |
-| 14 | LiDAR terrain and feature extraction | 4 | 3 | 3.6 | 💡 |
-| 15 | Solar suitability map | 4 | 3 | 3.6 | 💡 |
-| 16 | Mountain lion corridors, redone in Python | 4 | 3 | 3.6 | 💡 |
-| 17 | Horicon Marsh open water since 1985 (Earth Engine, Random Forest) | 4 | 3 | 3.6 | 💡 |
-| 18 | Camino Francés StoryMap | 3 | 4 | 3.4 | 🔧 |
-| 19 | Still maps and posters gallery | 3 | 4 | 3.4 | 💡 |
-| 20 | Fall color change from satellite imagery (ESA SNAP) | 3 | 3 | 3.0 | 💡 |
-| 21 | Migratory bird movements map | 3 | 3 | 3.0 | 💡 |
-| 22 | Atlas of the round worlds (Robinson maps of every planetary-mass body) | 3 | 3 | 3.0 | 💡 |
-| 23 | Solar system to scale across Wisconsin and beyond | 2 | 4 | 2.8 | 💡 |
-| 24 | Wall Tracer "try it" demo (the code console idea) | 3 | 2 | 2.6 | 💡 |
-| 25 | Drone footage and Gaussian splatting | 3 | 2 | 2.6 | 💡 |
-| 26 | Fabled Atlas: low-poly downtown Stevens Point | 3 | 2 | 2.6 | 💡 |
-| 27 | ArchiCAD-style site plans and renders | 2 | 3 | 2.4 | 💡 |
-| 28 | Rapa Nui 3D map with tiny moai | 2 | 2 | 2.0 | 💡 |
+| 10 | 3D watershed analysis: the streams that feed Lake Winnebago at Pipe | 4 | 4 | 4.0 | 🔜 |
+| 11 | Monroe County 1965 vs. 2010 swipe map | 3 | 5 | 3.8 | 🔜 |
+| 12 | Ice Age Trail plants StoryMap | 3 | 5 | 3.8 | 🔜 |
+| 13 | Headshot and "Outside work" polish | 3 | 5 | 3.8 | 🔜 |
+| 14 | Earth Engine water-resources short course | 3 | 5 | 3.8 | 🔜 |
+| 15 | LiDAR terrain and feature extraction | 4 | 3 | 3.6 | 💡 |
+| 16 | Solar suitability map | 4 | 3 | 3.6 | 💡 |
+| 17 | Mountain lion corridors, redone in Python | 4 | 3 | 3.6 | 💡 |
+| 18 | Horicon Marsh open water since 1985 (Earth Engine, Random Forest) | 4 | 3 | 3.6 | 💡 |
+| 19 | Camino Francés StoryMap | 3 | 4 | 3.4 | 🔧 |
+| 20 | Still maps and posters gallery | 3 | 4 | 3.4 | 💡 |
+| 21 | Fall color change from satellite imagery (ESA SNAP) | 3 | 3 | 3.0 | 💡 |
+| 22 | Migratory bird movements map | 3 | 3 | 3.0 | 💡 |
+| 23 | Atlas of the round worlds (Robinson maps of every planetary-mass body) | 3 | 3 | 3.0 | 💡 |
+| 24 | Solar system to scale across Wisconsin and beyond | 2 | 4 | 2.8 | 💡 |
+| 25 | Wall Tracer "try it" demo (the code console idea) | 3 | 2 | 2.6 | 💡 |
+| 26 | Drone footage and Gaussian splatting | 3 | 2 | 2.6 | 💡 |
+| 27 | Fabled Atlas: low-poly downtown Stevens Point | 3 | 2 | 2.6 | 💡 |
+| 28 | ArchiCAD-style site plans and renders | 2 | 3 | 2.4 | 💡 |
+| 29 | Rapa Nui 3D map with tiny moai | 2 | 2 | 2.0 | 💡 |
 ---
 
 ## Tier 1: do these first
@@ -154,54 +155,61 @@ Each idea gets two scores from 1 to 5:
 - **Not doing:** analysis on Google Maps or Google Earth imagery (its terms don't allow extracting data from it). Browse it for ideas, then work from NAIP, Sentinel and Landsat.
 - **Next step:** Chapter 1 (LAB_GUIDE.md) and publish the ice-log form before ice-up.
 
-### 10. Monroe County 1965 vs. 2010 swipe map · E3 F5 · 3.8
+### 10. 3D watershed analysis: the streams that feed Lake Winnebago at Pipe · E4 F4 · 4.0
+- **What:** Delineate the watershed of the creek that enters Lake Winnebago near Pipe (the cottage shore) from county LiDAR: fill sinks, flow direction, flow accumulation, snap a pour point at the creek mouth, then trace the watershed and its stream network. Show it in 3D: terrain with vertical exaggeration, the watershed boundary as a ridge line, streams thickening downhill, land cover draped on top (how much of what drains to the cottage shore is farm field), and an animation of "rain" flowing downhill to the lake. Check the boundary against the USGS Watershed Boundary Dataset (HUC-12).
+- **Why:** Hydrology is a core skill for DNR, county land and water conservation, stormwater and engineering-firm jobs. It also gives the Lake Winnebago project (item 9) its cause: where the phosphorus behind the blooms comes from.
+- **Have:** Pro's Hydrology toolset (Spatial Analyst) or the free WhiteboxTools/pysheds; WISCLAND 2.0 land cover from the pollinator project.
+- **Need:** Fond du Lac and Calumet county LiDAR DEMs (WisconsinView or USGS 3DEP, 1 m); the creek and pour point picked on the map; a 3D web viewer (three.js or deck.gl) or an ArcGIS Pro scene exported as a video.
+- **Next step:** Pick the creek: find which stream enters the lake nearest Pipe, then download its DEM tiles.
+
+### 11. Monroe County 1965 vs. 2010 swipe map · E3 F5 · 3.8
 - **What:** Drag-to-compare slider between the 1965 aerial photo and 2010 imagery from Remote Sensing 1, Lab 2, with your digitized land-cover change.
 - **Why:** Quick, very visual, shows historical imagery and change detection.
 - **Have:** BIB-3FF-248-1965.jpg, Monroe 2010 3FF-248.jpg and the finished map (USB, Fall 2024 / Remote Sensing 1).
 
-### 11. Ice Age Trail plants StoryMap · E3 F5 · 3.8
+### 12. Ice Age Trail plants StoryMap · E3 F5 · 3.8
 - **What:** Link or rebuild your GEOG 343 StoryMap of edible and allergenic plants along the Ice Age Trail.
 - **Why:** Proof of ArcGIS StoryMaps; fits under Outside work next to the Camino.
 - **Have:** Photos and legends on the USB (Spring 2025 / GEOG 343 / Storymaps).
 - **Next step:** Check whether it is still published on ArcGIS Online.
 
-### 12. Headshot and "Outside work" polish · E3 F5 · 3.8
+### 13. Headshot and "Outside work" polish · E3 F5 · 3.8
 - **What:** Studio headshot in About (download the unwatermarked file from the photographer; crop above the shirt logo), one short "Outside work" line (stargazing, gluten-free baking, the Camino), optional dog-on-head photo for personality.
 - **Why:** Makes the site feel like a person; hiring managers want to picture you as a coworker.
 
-### 13. Earth Engine water-resources short course · E3 F5 · 3.8
+### 14. Earth Engine water-resources short course · E3 F5 · 3.8
 - **What:** Six short, commented Earth Engine lessons (github.com/RisaRezaei/gee-water-resources-course): data import, water frequency, Landsat epochs, Random Forest soil-moisture downscaling, water-area time series, Sen's slope and Mann-Kendall trends.
-- **Why:** The fastest way to learn Earth Engine before items 9 and 17. Lessons 1, 2 and 5 are the warm-up in the Lake Winnebago lab guide; lesson 3 sets up Horicon Marsh.
+- **Why:** The fastest way to learn Earth Engine before items 9 and 18. Lessons 1, 2 and 5 are the warm-up in the Lake Winnebago lab guide; lesson 3 sets up Horicon Marsh.
 - **Next step:** Lessons 1, 2 and 5 (about 2 hours).
 
-### 14. LiDAR terrain and feature extraction · E4 F3 · 3.6
+### 15. LiDAR terrain and feature extraction · E4 F3 · 3.6
 - **What:** From Wisconsin county LiDAR: bare-earth DEM, hillshade, canopy height and extracted building footprints for one town, with an accuracy check against existing footprints.
-- **Why:** LiDAR and feature extraction show up in surveying and engineering-firm postings. The same data feeds items 15 and 26.
+- **Why:** LiDAR and feature extraction show up in surveying and engineering-firm postings. The same data feeds items 16 and 27.
 - **Need:** County LiDAR point cloud (WisconsinView or the county); ArcGIS Pro or PDAL/Python.
-- **Tip:** Build items 14 and 15 together on the same town to save time.
+- **Tip:** Build items 16 and 15 together on the same town to save time.
 
-### 15. Solar suitability map · E4 F3 · 3.6
+### 16. Solar suitability map · E4 F3 · 3.6
 - **What:** Rooftop solar potential for a Wisconsin town from a LiDAR surface model: solar radiation, slope, aspect and shading, ranked by building.
 - **Why:** A planning and sustainability analysis cities actually commission; shows raster analysis beyond defaults.
-- **Need:** Item 14's surface model and footprints.
+- **Need:** Item 15's surface model and footprints.
 
-### 16. Mountain lion corridors, redone in Python · E4 F3 · 3.6
+### 17. Mountain lion corridors, redone in Python · E4 F3 · 3.6
 - **What:** Rebuild the GEOG 343 cartographic model (suitability surface, cost distance, least-cost corridors) as a documented Python notebook with a clean final map.
 - **Why:** Spatial analysis plus scripting in one piece.
 - **Have:** The full ArcGIS Pro project and rasters on the USB (Spring 2025 / GEOG 343 / Lab01 Cougars, 575 MB).
 
-### 17. Horicon Marsh open water since 1985 (Earth Engine, Random Forest) · E4 F3 · 3.6
+### 18. Horicon Marsh open water since 1985 (Earth Engine, Random Forest) · E4 F3 · 3.6
 - **What:** Map open water in Horicon Marsh every five years from 1985 with a Random Forest on eight Landsat water indices (github.com/RisaRezaei/gee-wetland-water-rf), with hold-out accuracy and kappa, your own drawn water and land samples, and the area series set against the marsh's water-level history.
 - **Why:** Wetland mapping, classification and accuracy assessment are core skills for DNR and conservation jobs, and it builds on the MaxEnt pollinator work. Horicon is the largest freshwater cattail marsh in the U.S. and an hour from Sheboygan.
 - **Need:** Item 9 done first (same Earth Engine setup); drawn training samples, because the marsh's open water is shallow and full of vegetation.
 - **Next step:** Course lesson 3, then run the script on Horicon with the default JRC labels as a first look.
 
-### 18. Camino Francés StoryMap · E3 F4 · 3.4
+### 19. Camino Francés StoryMap · E3 F4 · 3.4
 - **What:** Route, daily stages, photos and an elevation profile of the spring 2026 walk, built from the photos' GPS locations.
 - **Status:** 🔧 Placeholder card is live.
 - **Need:** Original phone photos exported with location data.
 
-### 19. Still maps and posters gallery · E3 F4 · 3.4
+### 20. Still maps and posters gallery · E3 F4 · 3.4
 - **What:** A gallery page of finished static maps: lab maps worth showing (Monroe County change map, Wisconsin cities population map), the Dark Skies poster, any WLIA contest entry.
 - **Why:** Shows cartographic care at a glance.
 
@@ -209,17 +217,17 @@ Each idea gets two scores from 1 to 5:
 
 ## Tier 3: showpieces and passion projects
 
-### 20. Fall color change from satellite imagery (ESA SNAP) · E3 F3 · 3.0
+### 21. Fall color change from satellite imagery (ESA SNAP) · E3 F3 · 3.0
 - **What:** Track Wisconsin's fall color from north to south with Sentinel-2 imagery processed in ESA SNAP (vegetation index change between dates), as an animated map.
 - **Why:** Shows non-Esri remote sensing software; very shareable. This covers both the SNAP and the changing-tree-color ideas.
 - **Need:** SNAP (free), Sentinel-2 scenes from the Copernicus browser, a few cloud-free dates.
 
-### 21. Migratory bird movements map · E3 F3 · 3.0
+### 22. Migratory bird movements map · E3 F3 · 3.0
 - **What:** Animated map of one species moving through Wisconsin by week, from eBird Status and Trends data. A natural tie-in: Forest Beach Migratory Preserve, which you mapped at Restoring Lands.
 - **Why:** Conservation employers (WDNR, land trusts) and great visual appeal.
 - **Need:** eBird data access request.
 
-### 22. Atlas of the round worlds · E3 F3 · 3.0
+### 23. Atlas of the round worlds · E3 F3 · 3.0
 - **What:** An interactive web map, and a print poster for the WLIA map contest, showing a Robinson-projection map of every large, round world with a solid surface, side by side at true relative size (with an equal-size toggle). Includes Mercury, Venus (Magellan radar), Earth, the Moon, Mars, Vesta, Ceres, the Galilean moons, Titan, Saturn's mid-sized moons (Mimas, Enceladus, Tethys, Dione, Rhea, Iapetus), the five big Uranian moons, Triton, Pluto and Charon. Areas no spacecraft imaged are left black: the northern halves of the Uranian moons and much of Triton (Voyager 2 saw only the sunlit south), and Pluto's and Charon's far sides at low resolution. Bodies never mapped (Eris, Haumea, Makemake, Gonggong, Quaoar, Sedna, Orcus) are black, at their known size and shape. Haumea is drawn as its stretched ellipsoid, with the reported dark red spot marked as tentative.
 - **Why:** Map projections, reprojecting global rasters (GDAL), planetary coordinate systems and cartographic design in one striking poster. Also a candidate WLIA map contest entry.
 - **Which bodies:** large enough to be round or nearly round. Vesta, Mimas and Iapetus are in, with a footnote that they aren't strictly in hydrostatic equilibrium. Small irregular bodies (Arrokoth, comet 67P/Churyumov-Gerasimenko, Phobos, Hyperion and the like) are out.
@@ -227,32 +235,33 @@ Each idea gets two scores from 1 to 5:
 - **Need:** USGS Astrogeology and NASA PDS global mosaics (public domain); WLIA contest rules (size limits, number of entries allowed).
 - **Next step:** List the bodies and find one global mosaic for each.
 
-### 23. Solar system to scale across Wisconsin and beyond · E2 F4 · 2.8
+### 24. Solar system to scale across Wisconsin and beyond · E2 F4 · 2.8
 - **What:** The astronomy presentation, rebuilt as an interactive map, plus a print poster for the WLIA map contest. The Sun is the water tower by UW-Milwaukee at Washington County in West Bend. Every planet, dwarf planet and Sedna sits at its real position on one chosen date, laid out by direction and distance from West Bend. Pluto is about orange-sized, at Wisconsin Dells. Zooming out goes from a map of Wisconsin to a 3D globe for Sedna's orbit, the Hills cloud, and the Oort cloud reaching about to the Moon.
 - **Interactive:** toggle each body's orbit on and off (Sedna's would stretch to its far end, about 3,400 km out at this scale), pick the date, and click a body for its true size and distance next to the scaled ones.
 - **Why:** Geodesic distances and bearings, coordinate transformations, ephemeris data and a scrollable story. A good conversation starter that ties to Starcast and the stargazing hobby.
 - **Need:** The original presentation, for its scale and landmarks; positions for the date from JPL Horizons; a 3D globe library for the outer zoom levels.
 - **Next step:** Find the presentation's scale and confirm the landmarks.
 
-### 24. Wall Tracer "try it" demo · E3 F2 · 2.6
+### 25. Wall Tracer "try it" demo · E3 F2 · 2.6
 - **What:** Run the wall-detection tool in the browser on the sample clinic plan: the useful version of the code console idea.
 - **Status:** Wall Tracer itself still needs work before it can be shown as working.
 
-### 25. Drone footage and Gaussian splatting · E3 F2 · 2.6
+### 26. Drone footage and Gaussian splatting · E3 F2 · 2.6
 - **What:** Turn drone footage of a building into a 3D Gaussian splat that visitors can orbit in the browser.
 - **Why:** UAS and photogrammetry skills; very eye-catching.
 - **Need:** Footage of a building that is not a client project, or your boss's written OK; a splatting tool and a web viewer.
 
-### 26. Fabled Atlas: low-poly downtown Stevens Point · E3 F2 · 2.6
+### 27. Fabled Atlas: low-poly downtown Stevens Point · E3 F2 · 2.6
 - **What:** An interactive, cute low-poly tourist map of downtown Stevens Point from LiDAR, building footprints and business listings.
 - **Why:** Shows 3D, LiDAR and footprint skills with a lot of personality; a first city for the Fabled Atlas idea.
-- **Need:** Item 14's footprints and terrain; a 3D web library (three.js).
+- **Need:** Item 15's footprints and terrain; a 3D web library (three.js).
+- **Inspiration:** isometric.nyc: 3D city geometry rendered straight-on (orthographic), restyled tile by tile with a fine-tuned AI image model, and shown in a deep-zoom viewer (OpenSeadragon). The same recipe could style a Wisconsin town from open LiDAR and building footprints.
 
-### 27. ArchiCAD-style site plans and renders · E2 F3 · 2.4
+### 28. ArchiCAD-style site plans and renders · E2 F3 · 2.4
 - **What:** Architectural site plans and building renders like the ones PX Design currently outsources.
 - **Why:** Bigger payoff at your current job than for GIS applications. Show only fictional or personal sites.
 
-### 28. Rapa Nui 3D map with tiny moai · E2 F2 · 2.0
+### 29. Rapa Nui 3D map with tiny moai · E2 F2 · 2.0
 - **What:** A pannable 3D Easter Island from your existing Rapa Nui DEM (QGIS and Blender project), with tiny moai models and extracted building footprints, styled like topographic map art.
 - **Why:** Pure showpiece. Great conversation starter; least tied to job postings.
 - **Have:** RapaNuiDEM folder with the QGIS project and Blender file (Downloads\QGIS Tutorials).
