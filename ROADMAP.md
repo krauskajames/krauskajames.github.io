@@ -68,23 +68,26 @@ Each idea gets two scores from 1 to 5:
 | 10 | 3D watershed analysis: the streams that feed Lake Winnebago at Pipe | 4 | 4 | 4.0 | 🔜 |
 | 11 | Drone capture and Gaussian splats of buildings | 4 | 4 | 4.0 | 🔧 |
 | 12 | Site plans from drone surveys and county GIS | 4 | 4 | 4.0 | 🔜 |
-| 13 | Monroe County 1965 vs. 2010 swipe map | 3 | 5 | 3.8 | 🔜 |
-| 14 | Ice Age Trail plants StoryMap | 3 | 5 | 3.8 | 🔜 |
-| 15 | Headshot and "Outside work" polish | 3 | 5 | 3.8 | 🔜 |
-| 16 | Earth Engine water-resources short course | 3 | 5 | 3.8 | 🔜 |
-| 17 | LiDAR terrain and feature extraction | 4 | 3 | 3.6 | 💡 |
-| 18 | Solar suitability map | 4 | 3 | 3.6 | 💡 |
-| 19 | Mountain lion corridors, redone in Python | 4 | 3 | 3.6 | 💡 |
-| 20 | Horicon Marsh open water since 1985 (Earth Engine, Random Forest) | 4 | 3 | 3.6 | 💡 |
-| 21 | Camino Francés StoryMap | 3 | 4 | 3.4 | 🔧 |
-| 22 | Still maps and posters gallery | 3 | 4 | 3.4 | 💡 |
-| 23 | Fall color change from satellite imagery (ESA SNAP) | 3 | 3 | 3.0 | 💡 |
-| 24 | Migratory bird movements map | 3 | 3 | 3.0 | 💡 |
-| 25 | Atlas of the round worlds (Robinson maps of every planetary-mass body) | 3 | 3 | 3.0 | 💡 |
-| 26 | Solar system to scale across Wisconsin and beyond | 2 | 4 | 2.8 | 💡 |
-| 27 | Wall Tracer "try it" demo (the code console idea) | 3 | 2 | 2.6 | 💡 |
-| 28 | Fabled Atlas: low-poly downtown Stevens Point | 3 | 2 | 2.6 | 💡 |
-| 29 | Rapa Nui 3D map with tiny moai | 2 | 2 | 2.0 | 💡 |
+| 13 | Deep learning feature extraction (Image Analyst) | 4 | 4 | 4.0 | 💡 |
+| 14 | Network Analyst project: fire and EMS coverage in Sheboygan County | 4 | 4 | 4.0 | 💡 |
+| 15 | Monroe County 1965 vs. 2010 swipe map | 3 | 5 | 3.8 | 🔜 |
+| 16 | Ice Age Trail plants StoryMap | 3 | 5 | 3.8 | 🔜 |
+| 17 | Headshot and "Outside work" polish | 3 | 5 | 3.8 | 🔜 |
+| 18 | Earth Engine water-resources short course | 3 | 5 | 3.8 | 🔜 |
+| 19 | LiDAR terrain and feature extraction | 4 | 3 | 3.6 | 💡 |
+| 20 | Solar suitability map | 4 | 3 | 3.6 | 💡 |
+| 21 | Mountain lion corridors, redone in Python | 4 | 3 | 3.6 | 💡 |
+| 22 | Horicon Marsh open water since 1985 (Earth Engine, Random Forest) | 4 | 3 | 3.6 | 💡 |
+| 23 | Camino Francés StoryMap | 3 | 4 | 3.4 | 🔧 |
+| 24 | Still maps and posters gallery | 3 | 4 | 3.4 | 💡 |
+| 25 | Fall color change from satellite imagery (ESA SNAP) | 3 | 3 | 3.0 | 💡 |
+| 26 | Migratory bird movements map | 3 | 3 | 3.0 | 💡 |
+| 27 | Atlas of the round worlds (Robinson maps of every planetary-mass body) | 3 | 3 | 3.0 | 💡 |
+| 28 | Well-water nitrate surface (Geostatistical Analyst) | 3 | 3 | 3.0 | 💡 |
+| 29 | Solar system to scale across Wisconsin and beyond | 2 | 4 | 2.8 | 💡 |
+| 30 | Wall Tracer "try it" demo (the code console idea) | 3 | 2 | 2.6 | 💡 |
+| 31 | Fabled Atlas: low-poly downtown Stevens Point | 3 | 2 | 2.6 | 💡 |
+| 32 | Rapa Nui 3D map with tiny moai | 2 | 2 | 2.0 | 💡 |
 
 ---
 
@@ -117,6 +120,7 @@ Each idea gets two scores from 1 to 5:
 - **Need:** ArcGIS Pro (Personal Use license), Esri Parcel Fabric labs (Splitting and Dividing Parcels), a PLSS primer, public parcel and address data for one county.
 - **Status:** 🔧 Live for Sheboygan County (parcel-qa.html): 19 checks, 1,321 items to review, a scan-line homepage card, and a Pro script tool. The splitting lab is done (Oct 26).
 - **Next step:** COGO-draft four parcels and test the script tool, following YOUR_PART.md.
+- **Add later (Data Reviewer):** rebuild a few of the 19 checks as Data Reviewer rules in Pro (attribute and topology checks that run automatically as data is edited). It shows the Esri-native way counties enforce data quality, next to the Python version.
 
 ### 5. Geodatabase and SQL project · E5 F3 · 4.2
 - **What:** Design a small enterprise-style geodatabase (domains, subtypes, relationships, versioning notes) and load it into PostGIS, then answer real questions with SQL: parcels within 500 feet of a road, address points with no parcel, duplicate records.
@@ -175,56 +179,69 @@ Each idea gets two scores from 1 to 5:
 - **What:** Site plans built in ArcGIS Pro: a drone orthomosaic and surface model made with Pro's ortho mapping (needs the Advanced license, which James has) from timed drone photos, contours, the county parcel lines, setbacks buffered from zoning, utilities and footprints; exported to CAD/SketchUp for the building model and renders.
 - **Why:** James no longer does floor plans at PX Design; he and his boss want him to take over the site plans the business now outsources. Site planning, drone mapping and parcel/zoning work are also everyday GIS tasks for counties, cities and engineering firms.
 - **Need:** A practice site that isn't a client's (for the portfolio); Esri's "Create drone imagery products with ortho mapping" tutorial; the drone flown in timed-photo mode (video frames carry no GPS tags, which ortho mapping needs).
+- **Pro skills it builds:** ortho mapping (orthomosaic, DSM, DTM); contours, slope and cut/fill volumes (3D Analyst, Spatial Analyst); a sun-shadow study of a proposed building (Sun Shadow Volume); setback buffers from parcel lines; CAD/SketchUp export. Package the repeated steps as a ModelBuilder model or Python toolbox so each new site plan starts from one tool.
 - **Next step:** Do the ortho mapping tutorial, then a practice site plan of a public site.
 
-### 13. Monroe County 1965 vs. 2010 swipe map · E3 F5 · 3.8
+### 13. Deep learning feature extraction (Image Analyst) · E4 F4 · 4.0
+- **What:** Use Esri's pretrained deep learning models in Pro (Image Analyst) to detect building footprints and trees from NAIP aerials or a drone orthomosaic for one Wisconsin town, then measure accuracy against the county's footprints (precision, recall, F1).
+- **Why:** "Used deep learning for feature extraction" stands out on GIS resumes, and the same skill speeds up site-plan context at PX Design.
+- **Need:** ArcGIS Pro Advanced with Image Analyst (have); Esri's pretrained models from ArcGIS Living Atlas; NAIP for the town; a graphics card for inference (RTX 2000 Ada, 8 GB).
+- **Next step:** Run the building footprint model on one NAIP tile and compare with the county footprints.
+
+### 14. Network Analyst project: fire and EMS coverage in Sheboygan County · E4 F4 · 4.0
+- **What:** Drive-time service areas (4, 8 and 12 minutes) from Sheboygan County's fire and EMS stations, the addresses outside each band, and where a new station would cover the most of them (location-allocation). Reuses the county's road centerlines and address points from the Parcel QA project.
+- **Why:** Network Analyst backs 911, public safety, utility and transit jobs; James already holds the Esri routing and closest-facility certificates, and this turns them into a real project. It pairs with the NG911 side of item 4.
+- **Need:** Network Analyst (have); a network dataset built from the county road centerlines (speed limits or road class for travel times); station locations.
+- **Next step:** Build the network dataset from the county roads.
+
+### 15. Monroe County 1965 vs. 2010 swipe map · E3 F5 · 3.8
 - **What:** Drag-to-compare slider between the 1965 aerial photo and 2010 imagery from Remote Sensing 1, Lab 2, with your digitized land-cover change.
 - **Why:** Quick, very visual, shows historical imagery and change detection.
 - **Have:** BIB-3FF-248-1965.jpg, Monroe 2010 3FF-248.jpg and the finished map (USB, Fall 2024 / Remote Sensing 1).
 
-### 14. Ice Age Trail plants StoryMap · E3 F5 · 3.8
+### 16. Ice Age Trail plants StoryMap · E3 F5 · 3.8
 - **What:** Link or rebuild your GEOG 343 StoryMap of edible and allergenic plants along the Ice Age Trail.
 - **Why:** Proof of ArcGIS StoryMaps; fits under Outside work next to the Camino.
 - **Have:** Photos and legends on the USB (Spring 2025 / GEOG 343 / Storymaps).
 - **Next step:** Check whether it is still published on ArcGIS Online.
 
-### 15. Headshot and "Outside work" polish · E3 F5 · 3.8
+### 17. Headshot and "Outside work" polish · E3 F5 · 3.8
 - **What:** Studio headshot in About (download the unwatermarked file from the photographer; crop above the shirt logo), one short "Outside work" line (stargazing, gluten-free baking, the Camino), optional dog-on-head photo for personality.
 - **Why:** Makes the site feel like a person; hiring managers want to picture you as a coworker.
 
-### 16. Earth Engine water-resources short course · E3 F5 · 3.8
+### 18. Earth Engine water-resources short course · E3 F5 · 3.8
 - **What:** Six short, commented Earth Engine lessons (github.com/RisaRezaei/gee-water-resources-course): data import, water frequency, Landsat epochs, Random Forest soil-moisture downscaling, water-area time series, Sen's slope and Mann-Kendall trends.
-- **Why:** The fastest way to learn Earth Engine before items 9 and 20. Lessons 1, 2 and 5 are the warm-up in the Lake Winnebago lab guide; lesson 3 sets up Horicon Marsh.
+- **Why:** The fastest way to learn Earth Engine before items 9 and 22. Lessons 1, 2 and 5 are the warm-up in the Lake Winnebago lab guide; lesson 3 sets up Horicon Marsh.
 - **Next step:** Lessons 1, 2 and 5 (about 2 hours).
 
-### 17. LiDAR terrain and feature extraction · E4 F3 · 3.6
+### 19. LiDAR terrain and feature extraction · E4 F3 · 3.6
 - **What:** From Wisconsin county LiDAR: bare-earth DEM, hillshade, canopy height and extracted building footprints for one town, with an accuracy check against existing footprints.
-- **Why:** LiDAR and feature extraction show up in surveying and engineering-firm postings. The same data feeds items 18 and 28.
-- **Need:** County LiDAR point cloud (WisconsinView or the county); ArcGIS Pro or PDAL/Python.
-- **Tip:** Build items 17 and 18 together on the same town to save time.
+- **Why:** LiDAR and feature extraction show up in surveying and engineering-firm postings. The same data feeds items 20 and 31.
+- **Need:** County LiDAR point cloud (WisconsinView or the county); ArcGIS Pro 3D Analyst: Classify LAS Building, then LAS Building Multipatch for roof forms; Extract LAS for site clips.
+- **Tip:** Build items 19 and 20 together on the same town to save time.
 
-### 18. Solar suitability map · E4 F3 · 3.6
+### 20. Solar suitability map · E4 F3 · 3.6
 - **What:** Rooftop solar potential for a Wisconsin town from a LiDAR surface model: solar radiation, slope, aspect and shading, ranked by building.
 - **Why:** A planning and sustainability analysis cities actually commission; shows raster analysis beyond defaults.
-- **Need:** Item 17's surface model and footprints.
+- **Need:** Item 19's surface model and footprints.
 
-### 19. Mountain lion corridors, redone in Python · E4 F3 · 3.6
+### 21. Mountain lion corridors, redone in Python · E4 F3 · 3.6
 - **What:** Rebuild the GEOG 343 cartographic model (suitability surface, cost distance, least-cost corridors) as a documented Python notebook with a clean final map.
 - **Why:** Spatial analysis plus scripting in one piece.
 - **Have:** The full ArcGIS Pro project and rasters on the USB (Spring 2025 / GEOG 343 / Lab01 Cougars, 575 MB).
 
-### 20. Horicon Marsh open water since 1985 (Earth Engine, Random Forest) · E4 F3 · 3.6
+### 22. Horicon Marsh open water since 1985 (Earth Engine, Random Forest) · E4 F3 · 3.6
 - **What:** Map open water in Horicon Marsh every five years from 1985 with a Random Forest on eight Landsat water indices (github.com/RisaRezaei/gee-wetland-water-rf), with hold-out accuracy and kappa, your own drawn water and land samples, and the area series set against the marsh's water-level history.
 - **Why:** Wetland mapping, classification and accuracy assessment are core skills for DNR and conservation jobs, and it builds on the MaxEnt pollinator work. Horicon is the largest freshwater cattail marsh in the U.S. and an hour from Sheboygan.
 - **Need:** Item 9 done first (same Earth Engine setup); drawn training samples, because the marsh's open water is shallow and full of vegetation.
 - **Next step:** Course lesson 3, then run the script on Horicon with the default JRC labels as a first look.
 
-### 21. Camino Francés StoryMap · E3 F4 · 3.4
+### 23. Camino Francés StoryMap · E3 F4 · 3.4
 - **What:** Route, daily stages, photos and an elevation profile of the spring 2026 walk, built from the photos' GPS locations.
 - **Status:** 🔧 Placeholder card is live.
 - **Need:** Original phone photos exported with location data.
 
-### 22. Still maps and posters gallery · E3 F4 · 3.4
+### 24. Still maps and posters gallery · E3 F4 · 3.4
 - **What:** A gallery page of finished static maps: lab maps worth showing (Monroe County change map, Wisconsin cities population map), the Dark Skies poster, any WLIA contest entry.
 - **Why:** Shows cartographic care at a glance.
 
@@ -232,17 +249,17 @@ Each idea gets two scores from 1 to 5:
 
 ## Tier 3: showpieces and passion projects
 
-### 23. Fall color change from satellite imagery (ESA SNAP) · E3 F3 · 3.0
+### 25. Fall color change from satellite imagery (ESA SNAP) · E3 F3 · 3.0
 - **What:** Track Wisconsin's fall color from north to south with Sentinel-2 imagery processed in ESA SNAP (vegetation index change between dates), as an animated map.
 - **Why:** Shows non-Esri remote sensing software; very shareable. This covers both the SNAP and the changing-tree-color ideas.
 - **Need:** SNAP (free), Sentinel-2 scenes from the Copernicus browser, a few cloud-free dates.
 
-### 24. Migratory bird movements map · E3 F3 · 3.0
+### 26. Migratory bird movements map · E3 F3 · 3.0
 - **What:** Animated map of one species moving through Wisconsin by week, from eBird Status and Trends data. A natural tie-in: Forest Beach Migratory Preserve, which you mapped at Restoring Lands.
 - **Why:** Conservation employers (WDNR, land trusts) and great visual appeal.
 - **Need:** eBird data access request.
 
-### 25. Atlas of the round worlds · E3 F3 · 3.0
+### 27. Atlas of the round worlds · E3 F3 · 3.0
 - **What:** An interactive web map, and a print poster for the WLIA map contest, showing a Robinson-projection map of every large, round world with a solid surface, side by side at true relative size (with an equal-size toggle). Includes Mercury, Venus (Magellan radar), Earth, the Moon, Mars, Vesta, Ceres, the Galilean moons, Titan, Saturn's mid-sized moons (Mimas, Enceladus, Tethys, Dione, Rhea, Iapetus), the five big Uranian moons, Triton, Pluto and Charon. Areas no spacecraft imaged are left black: the northern halves of the Uranian moons and much of Triton (Voyager 2 saw only the sunlit south), and Pluto's and Charon's far sides at low resolution. Bodies never mapped (Eris, Haumea, Makemake, Gonggong, Quaoar, Sedna, Orcus) are black, at their known size and shape. Haumea is drawn as its stretched ellipsoid, with the reported dark red spot marked as tentative.
 - **Why:** Map projections, reprojecting global rasters (GDAL), planetary coordinate systems and cartographic design in one striking poster. Also a candidate WLIA map contest entry.
 - **Which bodies:** large enough to be round or nearly round. Vesta, Mimas and Iapetus are in, with a footnote that they aren't strictly in hydrostatic equilibrium. Small irregular bodies (Arrokoth, comet 67P/Churyumov-Gerasimenko, Phobos, Hyperion and the like) are out.
@@ -250,27 +267,35 @@ Each idea gets two scores from 1 to 5:
 - **Need:** USGS Astrogeology and NASA PDS global mosaics (public domain); WLIA contest rules (size limits, number of entries allowed).
 - **Next step:** List the bodies and find one global mosaic for each.
 
-### 26. Solar system to scale across Wisconsin and beyond · E2 F4 · 2.8
+### 28. Well-water nitrate surface (Geostatistical Analyst) · E3 F3 · 3.0
+- **What:** Interpolate private-well nitrate across a Wisconsin county with kriging in Geostatistical Analyst, with cross-validation error, and compare it with land cover (row crops) and soils.
+- **Why:** Interpolation with honest error estimates is a classic GIS analyst skill (groundwater, soils, air quality), and Wisconsin well nitrate is a live public-health topic. UW-Stevens Point's Center for Watershed Science keeps the statewide well-water data.
+- **Need:** Well test data (UWSP Wisconsin Well Water Quality Viewer or the DNR); Geostatistical Analyst (have).
+- **Next step:** Check what well data can be downloaded for one county.
+
+### 29. Solar system to scale across Wisconsin and beyond · E2 F4 · 2.8
 - **What:** The astronomy presentation, rebuilt as an interactive map, plus a print poster for the WLIA map contest. The Sun is the water tower by UW-Milwaukee at Washington County in West Bend. Every planet, dwarf planet and Sedna sits at its real position on one chosen date, laid out by direction and distance from West Bend. Pluto is about orange-sized, at Wisconsin Dells. Zooming out goes from a map of Wisconsin to a 3D globe for Sedna's orbit, the Hills cloud, and the Oort cloud reaching about to the Moon.
 - **Interactive:** toggle each body's orbit on and off (Sedna's would stretch to its far end, about 3,400 km out at this scale), pick the date, and click a body for its true size and distance next to the scaled ones.
 - **Why:** Geodesic distances and bearings, coordinate transformations, ephemeris data and a scrollable story. A good conversation starter that ties to Starcast and the stargazing hobby.
 - **Need:** The original presentation, for its scale and landmarks; positions for the date from JPL Horizons; a 3D globe library for the outer zoom levels.
 - **Next step:** Find the presentation's scale and confirm the landmarks.
 
-### 27. Wall Tracer "try it" demo · E3 F2 · 2.6
+### 30. Wall Tracer "try it" demo · E3 F2 · 2.6
 - **What:** Run the wall-detection tool in the browser on the sample clinic plan: the useful version of the code console idea.
 - **Status:** Wall Tracer itself still needs work before it can be shown as working.
 
-### 28. Fabled Atlas: low-poly downtown Stevens Point · E3 F2 · 2.6
+### 31. Fabled Atlas: low-poly downtown Stevens Point · E3 F2 · 2.6
 - **What:** An interactive, cute low-poly tourist map of downtown Stevens Point from LiDAR, building footprints and business listings.
 - **Why:** Shows 3D, LiDAR and footprint skills with a lot of personality; a first city for the Fabled Atlas idea.
-- **Need:** Item 17's footprints and terrain; a 3D web library (three.js).
+- **Need:** Item 19's footprints and terrain; a 3D web library (three.js).
 - **Inspiration:** isometric.nyc: 3D city geometry rendered straight-on (orthographic), restyled tile by tile with a fine-tuned AI image model, and shown in a deep-zoom viewer (OpenSeadragon). The same recipe could style a Wisconsin town from open LiDAR and building footprints.
 
-### 29. Rapa Nui 3D map with tiny moai · E2 F2 · 2.0
+### 32. Rapa Nui 3D map with tiny moai · E2 F2 · 2.0
 - **What:** A pannable 3D Easter Island from your existing Rapa Nui DEM (QGIS and Blender project), with tiny moai models and extracted building footprints, styled like topographic map art.
 - **Why:** Pure showpiece. Great conversation starter; least tied to job postings.
 - **Have:** RapaNuiDEM folder with the QGIS project and Blender file (Downloads\QGIS Tutorials).
+
+---
 
 ---
 
