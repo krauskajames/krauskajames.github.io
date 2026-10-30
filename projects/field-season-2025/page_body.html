@@ -68,6 +68,27 @@
 .finds .shot img { aspect-ratio: 3 / 4; }
 .finds h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0.9rem 0 0.35rem; }
 .finds p { margin: 0; color: var(--ink-2); font-size: 0.9375rem; }
+.fall-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 1.5rem; align-items: start; }
+@media (max-width: 900px) { .fall-grid { grid-template-columns: minmax(0, 1fr); } }
+#photomap { height: 520px; border: 1px solid var(--rule); background: var(--paper-2); }
+@media (max-width: 640px) { #photomap { height: 380px; } }
+.leaflet-container { font: 400 0.8125rem/1.4 var(--body); background: var(--paper-2); }
+.leaflet-control-attribution { background: color-mix(in srgb, var(--paper) 85%, transparent) !important; color: var(--ink-2) !important; }
+.leaflet-control-attribution a { color: var(--ink-2) !important; }
+.leaflet-bar a { background: var(--paper) !important; color: var(--ink) !important; border-color: var(--rule) !important; }
+.site-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.site-tabs button { font: 500 0.8125rem/1 var(--mono); letter-spacing: .04em; padding: 0.55rem 0.75rem; border: 1px solid var(--rule); background: var(--paper); color: var(--ink-2); border-radius: 2px; cursor: pointer; }
+.site-tabs button[aria-pressed="true"] { border-color: var(--forest); color: var(--forest); }
+.viewer { margin: 0; }
+.viewer img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--rule); background: var(--paper-2); cursor: zoom-in; }
+.viewer figcaption { font-size: 0.875rem; color: var(--ink-2); padding: 0.7rem 0.1rem 0; line-height: 1.5; }
+.viewer .meta { font: 500 0.75rem/1.4 var(--mono); letter-spacing: .04em; color: var(--ink-2); text-transform: uppercase; display: block; margin-bottom: 0.2rem; }
+.strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 0.5rem; margin-top: 1rem; }
+.strip button { padding: 0; border: 2px solid transparent; background: none; cursor: pointer; aspect-ratio: 1; overflow: hidden; border-radius: 2px; }
+.strip button img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.strip button[aria-current="true"] { border-color: var(--forest); }
+.photo-pin { width: 22px; height: 22px; border-radius: 50%; background: var(--forest); color: var(--on-forest); border: 2px solid var(--paper); font: 600 11px/18px var(--mono); text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.35); }
+.photo-pin.on { background: var(--olive); transform: scale(1.25); }
 .lightbox { position: fixed; inset: 0; background: rgba(10, 14, 11, .92); display: none; align-items: center; justify-content: center; padding: 3vw; z-index: 50; cursor: zoom-out; }
 .lightbox.open { display: flex; }
 .lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; }
@@ -189,6 +210,33 @@
     </div>
   </section>
 
+
+  <section id="fall">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Fall field days</span>
+        <div>
+          <h2>Donges Bay Gorge and Schoof's Preserve</h2>
+          <p>Two October days with the Trimble: Donges Bay Gorge on the Lake Michigan bluffs in Mequon (October 22), then Schoof's Preserve and the Zinn Preserve's Beck Lake near Holy Hill (October 29). Every photo is placed where my phone's GPS recorded it. Click a pin or a thumbnail.</p>
+        </div>
+      </div>
+      <div class="fall-grid">
+        <div>
+          <div class="site-tabs" role="group" aria-label="Choose a preserve">
+            <button type="button" data-site="donges" aria-pressed="true">Donges Bay Gorge</button>
+            <button type="button" data-site="schoof" aria-pressed="false">Schoof's &amp; Zinn</button>
+          </div>
+          <div id="photomap" role="region" aria-label="Map of where each fall photo was taken"></div>
+          <p class="map-note" style="font-size:0.8125rem;color:var(--ink-2);margin:0.6rem 0 0">Locations from the photos' own GPS tags (phone GPS, typically within 10–50 m). Basemap: Esri World Imagery.</p>
+        </div>
+        <div>
+          <figure class="viewer"><img id="fv-img" alt=""><figcaption><span class="meta" id="fv-meta"></span><span id="fv-cap"></span></figcaption></figure>
+          <div class="strip" id="strip"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section>
     <div class="wrap cs-body">
       <span class="label">Skills</span>
@@ -216,6 +264,42 @@
   document.querySelectorAll('.gallery .shot img, .finds .shot img').forEach(im => im.addEventListener('click', () => { li.src = im.src; li.alt = im.alt; lb.classList.add('open'); }));
   lb.addEventListener('click', () => lb.classList.remove('open'));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+  const P = [{"id": "9363", "site": "donges", "cap": "A white pine leaning out over Lake Michigan from the bluff.", "lat": 43.20401, "lon": -87.89916, "acc": 10.234260731319555, "date": "2025-10-22", "src": "media/field-season-2025/fall/9363.webp"}, {"id": "9378", "site": "donges", "cap": "The bluff edge above the beach.", "lat": 43.2035, "lon": -87.89812, "acc": 20.24217280672641, "date": "2025-10-22", "src": "media/field-season-2025/fall/9378.webp"}, {"id": "9377", "site": "donges", "cap": "The trail down the side of the gorge.", "lat": 43.20331, "lon": -87.89813, "acc": 8.406387592823815, "date": "2025-10-22", "src": "media/field-season-2025/fall/9377.webp"}, {"id": "9381", "site": "donges", "cap": "Sumac turning red in the ravine.", "lat": 43.20665, "lon": -87.90105, "acc": 23.531980006120577, "date": "2025-10-22", "src": "media/field-season-2025/fall/9381.webp"}, {"id": "9373", "site": "donges", "cap": "The beach at the mouth of the gorge.", "lat": 43.20264, "lon": -87.89772, "acc": 51.28702640642939, "date": "2025-10-22", "src": "media/field-season-2025/fall/9373.webp"}, {"id": "9374", "site": "donges", "cap": "Driftwood and a pool where the creek meets the lake.", "lat": 43.20264, "lon": -87.89767, "acc": 14.0, "date": "2025-10-22", "src": "media/field-season-2025/fall/9374.webp"}, {"id": "9390", "site": "donges", "cap": "Back on the beach with the Trimble.", "lat": 43.20547, "lon": -87.89708, "acc": 14.0, "date": "2025-10-22", "src": "media/field-season-2025/fall/9390.webp"}, {"id": "9382", "site": "donges", "cap": "The old stone pool house in the woods.", "lat": 43.2062, "lon": -87.89889, "acc": 18.109737248840805, "date": "2025-10-22", "src": "media/field-season-2025/fall/9382.webp"}, {"id": "9384", "site": "donges", "cap": "An upturned root plate from a fallen tree.", "lat": 43.20645, "lon": -87.89956, "acc": 34.99841787797884, "date": "2025-10-22", "src": "media/field-season-2025/fall/9384.webp"}, {"id": "9419", "site": "zinn", "cap": "Beck Lake, at the Zinn Preserve.", "lat": 43.22387, "lon": -88.36386, "acc": null, "date": "2025-10-29", "src": "media/field-season-2025/fall/9419.webp"}, {"id": "9421", "site": "zinn", "cap": "A boardwalk through tamarack and cattails, Zinn Preserve.", "lat": 43.21829, "lon": -88.35673, "acc": 5.840818713450292, "date": "2025-10-29", "src": "media/field-season-2025/fall/9421.webp"}, {"id": "9428", "site": "schoof", "cap": "Open woods at Schoof's Preserve.", "lat": 43.25516, "lon": -88.31307, "acc": 143.4346405228758, "date": "2025-10-29", "src": "media/field-season-2025/fall/9428.webp"}, {"id": "9426", "site": "schoof", "cap": "Field day at Schoof's Preserve.", "lat": 43.25633, "lon": -88.3067, "acc": null, "date": "2025-10-29", "src": "media/field-season-2025/fall/9426.webp"}];
+  const SITES = { donges: 'Donges Bay Gorge', zinn: 'Zinn Preserve', schoof: "Schoof's Preserve" };
+  const map = L.map('photomap', { scrollWheelZoom: false, attributionControl: true });
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Esri, Maxar, Earthstar Geographics' }).addTo(map);
+  const img = document.getElementById('fv-img'), meta = document.getElementById('fv-meta'), cap = document.getElementById('fv-cap'), strip = document.getElementById('strip');
+  const markers = P.map((p, i) => {
+    const m = L.marker([p.lat, p.lon], { icon: L.divIcon({ className: '', html: '<div class="photo-pin">' + (i + 1) + '</div>', iconSize: [22, 22], iconAnchor: [11, 11] }), title: p.cap, keyboard: true }).addTo(map);
+    m.on('click', () => show(i));
+    return m;
+  });
+  P.forEach((p, i) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', (i + 1) + '. ' + p.cap); b.innerHTML = '<img src="' + p.src + '" alt="" loading="lazy">'; b.onclick = () => show(i, true); strip.appendChild(b); });
+  let cur = -1;
+  function show(i, pan) {
+    const p = P[i];
+    img.src = p.src; img.alt = p.cap; cap.textContent = p.cap;
+    const d = new Date(p.date + 'T12:00:00');
+    meta.textContent = (i + 1) + ' · ' + SITES[p.site] + ' · ' + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    markers.forEach((m, j) => { const el = m.getElement(); if (el) el.firstChild.classList.toggle('on', j === i); });
+    [...strip.children].forEach((b, j) => b.setAttribute('aria-current', j === i ? 'true' : 'false'));
+    const site = p.site === 'donges' ? 'donges' : 'schoof';
+    if (pan || cur === -1 || (P[cur] && (P[cur].site === 'donges') !== (p.site === 'donges'))) focus(site, i);
+    cur = i;
+  }
+  function focus(site, i) {
+    document.querySelectorAll('.site-tabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.site === site ? 'true' : 'false'));
+    const pts = P.filter(p => site === 'donges' ? p.site === 'donges' : p.site !== 'donges').map(p => [p.lat, p.lon]);
+    map.fitBounds(L.latLngBounds(pts).pad(0.25), { maxZoom: 17 });
+  }
+  document.querySelectorAll('.site-tabs button').forEach(b => b.onclick = () => { const i = P.findIndex(p => b.dataset.site === 'donges' ? p.site === 'donges' : p.site !== 'donges'); show(i, true); });
+  img.addEventListener('click', () => { const lb = document.getElementById('lb'); lb.querySelector('img').src = img.src; lb.classList.add('open'); });
+  show(0, true);
 })();
 </script>
 </body>
