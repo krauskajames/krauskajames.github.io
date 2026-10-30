@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Field Season 2025 – James Krauska</title>
-<meta name="description" content="Mapping invasive plants and re-shooting photo-monitoring points across a Wisconsin land trust's preserves with a Trimble GPS and ArcGIS Field Maps.">
+<meta name="description" content="Mapping invasive plants, trails and photo-monitoring points across a Wisconsin land trust's preserves with a Trimble GPS and ArcGIS Field Maps.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -862,6 +862,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .viewer { margin: 0; }
 .viewer img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--rule); background: var(--paper-2); cursor: zoom-in; }
 .viewer figcaption { font-size: 0.875rem; color: var(--ink-2); padding: 0.7rem 0.1rem 0; line-height: 1.5; }
+.viewer .task { display: block; margin-top: 0.35rem; font-size: 0.8125rem; color: var(--ink-2); }
+.viewer .task::before { content: "That day: "; font-weight: 600; color: var(--ink); }
 .viewer .meta { font: 500 0.75rem/1.4 var(--mono); letter-spacing: .04em; color: var(--ink-2); text-transform: uppercase; display: block; margin-bottom: 0.2rem; }
 .strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 0.5rem; margin-top: 1rem; }
 .strip button { padding: 0; border: 2px solid transparent; background: none; cursor: pointer; aspect-ratio: 1; overflow: hidden; border-radius: 2px; }
@@ -896,7 +898,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <span class="label">Restoring Lands land trust · July–November 2025</span>
       </div>
       <h1>Field Season 2025: Mapping Invasives Across a Land Trust's Preserves</h1>
-      <p class="lede">A summer and fall with a range-pole Trimble GPS and ArcGIS Field Maps, mapping invasive plants and re-shooting photo-monitoring points across preserves in Washington, Ozaukee and Milwaukee counties, for a grant-funded invasive species removal program.</p>
+      <p class="lede">A summer and fall with a range-pole Trimble GPS and ArcGIS Field Maps, mapping invasive plants, trails and photo-monitoring points across 13 preserves in Washington, Ozaukee and Milwaukee counties for a land trust's grant-funded invasive species removal program.</p>
     </div>
   </div>
 
@@ -925,11 +927,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <span class="label">The job</span>
       <div class="prose">
         <p>The land trust had just won a large grant to remove non-woody invasive plants from its preserves, and it needed to know where they were. Each morning I picked up a work phone running <strong>ArcGIS Field Maps</strong> and a <strong>Trimble GPS on a range pole</strong> (about 4-inch accuracy), and spent the day on foot.</p>
-        <p>I had two jobs. The first was mapping populations of white sweet clover, teasel, Canada thistle, crown vetch, bird's-foot trefoil, wild parsnip and the rest of the list into the trust's 2025 Invasives web map. The second was returning to photo-monitoring points first shot in 2020 and re-taking them, so the trust could see how its old farm fields were changing.</p>
+        <p>In summer I mapped the <strong>non-woody invasives</strong> the grant targeted: white sweet clover, teasel, Canada thistle, crown vetch, bird's-foot trefoil, wild parsnip and spotted knapweed, into the trust's 2025 Invasives web map. In fall the work switched to <strong>woody invasives</strong> (buckthorn, autumn olive, honeysuckle, multiflora rose, Japanese barberry, black locust, Siberian elm) plus <strong>trail data</strong>. All season I also returned to photo-monitoring points first shot in 2020 and re-took them, so the trust could see how its old farm fields were changing.</p>
         <p>Thanks to GPS, Field Maps and plant identification from my UW-Stevens Point labs and plant walks, I was trusted to map on my own from the first day, without the planned shadowing period. Some days I worked alone; others I walked with the stewardship crew and mapped what they were removing.</p>
         <h3>Points or polygons?</h3>
         <div class="rule-box"><span class="label">The rule I mapped by</span><p>A patch about 6 feet across or smaller is a <strong>point</strong>. Anything bigger is a <strong>polygon</strong>, recorded live by walking its edge with the GPS.</p></div>
         <p>The two people using these maps wanted different things. The grant-writing side wanted detailed polygons, because precise acreage wins funding. The field stewards wanted fast points, just enough to find a patch again next season. Polygons take far longer to walk, so I settled on a balance: polygons where the size mattered for treatment and reporting, points everywhere else. It's the same question every field data collection plan has to answer: what does each user of the data actually need?</p>
+        <p>I didn't always get it right the first time. One September day at Forest Beach I worked zoomed in too far and logged dozens of points along what was really one continuous thicket of autumn olive and honeysuckle. My log for that day reads "too many points, need to rework into polygons," and I went back and did.</p>
       </div>
     </div>
   </section>
@@ -994,23 +997,23 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <section id="fall">
     <div class="wrap">
       <div class="section-head">
-        <span class="label">Fall field days</span>
+        <span class="label">The season, mapped</span>
         <div>
-          <h2>Donges Bay Gorge and Schoof's Preserve</h2>
-          <p>Two October days with the Trimble: Donges Bay Gorge on the Lake Michigan bluffs in Mequon (October 22), then Schoof's Preserve and the Zinn Preserve's Beck Lake near Holy Hill (October 29). Every photo is placed where my phone's GPS recorded it. Click a pin or a thumbnail.</p>
+          <h2>From August to November, photo by photo</h2>
+          <p>Photos from my working days, each placed where my phone's GPS recorded it, with what I was doing that day from my internship log. Click a pin or a thumbnail.</p>
         </div>
       </div>
       <div class="fall-grid">
         <div>
-          <div class="site-tabs" role="group" aria-label="Choose a preserve">
-            <button type="button" data-site="donges" aria-pressed="true">Donges Bay Gorge</button>
-            <button type="button" data-site="schoof" aria-pressed="false">Schoof's &amp; Zinn</button>
+          <div class="site-tabs" role="group" aria-label="Choose an area">
+            <button type="button" data-site="lake" aria-pressed="true">Lake Michigan shore</button>
+            <button type="button" data-site="inland" aria-pressed="false">Washington County</button>
           </div>
           <div id="photomap" role="region" aria-label="Map of where each fall photo was taken"></div>
           <p class="map-note" style="font-size:0.8125rem;color:var(--ink-2);margin:0.6rem 0 0">Locations from the photos' own GPS tags (phone GPS, typically within 10–50 m). Basemap: Esri World Imagery.</p>
         </div>
         <div>
-          <figure class="viewer"><img id="fv-img" alt=""><figcaption><span class="meta" id="fv-meta"></span><span id="fv-cap"></span></figcaption></figure>
+          <figure class="viewer"><img id="fv-img" alt=""><figcaption><span class="meta" id="fv-meta"></span><span id="fv-cap"></span><span class="task" id="fv-task"></span></figcaption></figure>
           <div class="strip" id="strip"></div>
         </div>
       </div>
@@ -1049,8 +1052,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
-  const P = [{"id": "9363", "site": "donges", "cap": "A white pine leaning out over Lake Michigan from the bluff.", "lat": 43.20401, "lon": -87.89916, "acc": 10.234260731319555, "date": "2025-10-22", "src": "media/field-season-2025/fall/9363.webp"}, {"id": "9378", "site": "donges", "cap": "The bluff edge above the beach.", "lat": 43.2035, "lon": -87.89812, "acc": 20.24217280672641, "date": "2025-10-22", "src": "media/field-season-2025/fall/9378.webp"}, {"id": "9377", "site": "donges", "cap": "The trail down the side of the gorge.", "lat": 43.20331, "lon": -87.89813, "acc": 8.406387592823815, "date": "2025-10-22", "src": "media/field-season-2025/fall/9377.webp"}, {"id": "9381", "site": "donges", "cap": "Sumac turning red in the ravine.", "lat": 43.20665, "lon": -87.90105, "acc": 23.531980006120577, "date": "2025-10-22", "src": "media/field-season-2025/fall/9381.webp"}, {"id": "9373", "site": "donges", "cap": "The beach at the mouth of the gorge.", "lat": 43.20264, "lon": -87.89772, "acc": 51.28702640642939, "date": "2025-10-22", "src": "media/field-season-2025/fall/9373.webp"}, {"id": "9374", "site": "donges", "cap": "Driftwood and a pool where the creek meets the lake.", "lat": 43.20264, "lon": -87.89767, "acc": 14.0, "date": "2025-10-22", "src": "media/field-season-2025/fall/9374.webp"}, {"id": "9390", "site": "donges", "cap": "Back on the beach with the Trimble.", "lat": 43.20547, "lon": -87.89708, "acc": 14.0, "date": "2025-10-22", "src": "media/field-season-2025/fall/9390.webp"}, {"id": "9382", "site": "donges", "cap": "The old stone pool house in the woods.", "lat": 43.2062, "lon": -87.89889, "acc": 18.109737248840805, "date": "2025-10-22", "src": "media/field-season-2025/fall/9382.webp"}, {"id": "9384", "site": "donges", "cap": "An upturned root plate from a fallen tree.", "lat": 43.20645, "lon": -87.89956, "acc": 34.99841787797884, "date": "2025-10-22", "src": "media/field-season-2025/fall/9384.webp"}, {"id": "9419", "site": "zinn", "cap": "Beck Lake, at the Zinn Preserve.", "lat": 43.22387, "lon": -88.36386, "acc": null, "date": "2025-10-29", "src": "media/field-season-2025/fall/9419.webp"}, {"id": "9421", "site": "zinn", "cap": "A boardwalk through tamarack and cattails, Zinn Preserve.", "lat": 43.21829, "lon": -88.35673, "acc": 5.840818713450292, "date": "2025-10-29", "src": "media/field-season-2025/fall/9421.webp"}, {"id": "9428", "site": "schoof", "cap": "Open woods at Schoof's Preserve.", "lat": 43.25516, "lon": -88.31307, "acc": 143.4346405228758, "date": "2025-10-29", "src": "media/field-season-2025/fall/9428.webp"}, {"id": "9426", "site": "schoof", "cap": "Field day at Schoof's Preserve.", "lat": 43.25633, "lon": -88.3067, "acc": null, "date": "2025-10-29", "src": "media/field-season-2025/fall/9426.webp"}];
-  const SITES = { donges: 'Donges Bay Gorge', zinn: 'Zinn Preserve', schoof: "Schoof's Preserve" };
+  const P = [{"id": "8444", "site": "Fellenz Woods", "cap": "Royal catchfly and coneflowers in the Fellenz Woods prairie.", "lat": 43.416, "lon": -88.11415, "date": "2025-08-05", "src": "media/field-season-2025/fall/8444.webp", "task": "Mapping white sweet clover; transects with the Land Restoration School", "area": "inland"}, {"id": "8452", "site": "Making Allies Farm", "cap": "A 6 a.m. start on the way to Making Allies Farm.", "lat": 43.40492, "lon": -88.16146, "date": "2025-08-06", "src": "media/field-season-2025/fall/8452.webp", "task": "Teasel and purple loosestrife; photo points across the whole preserve", "area": "inland"}, {"id": "8476", "site": "Forest Beach Migratory Preserve", "cap": "A wooded lane at Forest Beach.", "lat": 43.4565, "lon": -87.81355, "date": "2025-08-12", "src": "media/field-season-2025/fall/8476.webp", "task": "Photo points; Canada thistle and white sweet clover", "area": "lake"}, {"id": "8478", "site": "Forest Beach Migratory Preserve", "cap": "The old golf-cart path through Forest Beach.", "lat": 43.45858, "lon": -87.81264, "date": "2025-08-12", "src": "media/field-season-2025/fall/8478.webp", "task": "Photo points; Canada thistle and white sweet clover", "area": "lake"}, {"id": "8820", "site": "Decorah Woods", "cap": "Prairie and wetland at Decorah Woods.", "lat": 43.41637, "lon": -88.12023, "date": "2025-09-09", "src": "media/field-season-2025/fall/8820.webp", "task": "Searching for purple loosestrife (none found), then on to woody invasives", "area": "inland"}, {"id": "8821", "site": "Decorah Woods", "cap": "Bug net and range pole: September fieldwork.", "lat": 43.41636, "lon": -88.12022, "date": "2025-09-09", "src": "media/field-season-2025/fall/8821.webp", "task": "Searching for purple loosestrife (none found), then on to woody invasives", "area": "inland"}, {"id": "8923", "site": "Forest Beach Migratory Preserve", "cap": "Suited up with the Trimble at Forest Beach.", "lat": 43.45809, "lon": -87.81526, "date": "2025-09-24", "src": "media/field-season-2025/fall/8923.webp", "task": "Autumn olive, honeysuckle, multiflora rose and buckthorn", "area": "lake"}, {"id": "1923", "site": "Forest Beach Migratory Preserve", "cap": "A pond on the old golf course at Forest Beach.", "lat": 43.46027, "lon": -87.81598, "date": "2025-09-30", "src": "media/field-season-2025/fall/1923.webp", "task": "Woody invasives, garlic mustard and photo points", "area": "lake"}, {"id": "1925", "site": "Forest Beach Migratory Preserve", "cap": "The view from a bird blind at Forest Beach.", "lat": 43.45976, "lon": -87.81583, "date": "2025-09-30", "src": "media/field-season-2025/fall/1925.webp", "task": "Woody invasives, garlic mustard and photo points", "area": "lake"}, {"id": "9355", "site": "Kurtz Woods State Natural Area", "cap": "Open hardwoods at Kurtz Woods.", "lat": 43.36244, "lon": -87.95193, "date": "2025-10-21", "src": "media/field-season-2025/fall/9355.webp", "task": "Buckthorn, autumn olive, honeysuckle, barberry, garlic mustard and black locust", "area": "lake"}, {"id": "9359", "site": "Kurtz Woods State Natural Area", "cap": "Hen of the woods at the base of an oak, Kurtz Woods.", "lat": 43.36239, "lon": -87.95192, "date": "2025-10-21", "src": "media/field-season-2025/fall/9359.webp", "task": "Buckthorn, autumn olive, honeysuckle, barberry, garlic mustard and black locust", "area": "lake"}, {"id": "9363", "site": "Donges Bay Gorge", "cap": "A white pine leaning out over Lake Michigan from the bluff.", "lat": 43.20401, "lon": -87.89916, "date": "2025-10-22", "w": 1400, "h": 1050, "src": "media/field-season-2025/fall/9363.webp", "task": "Buckthorn, autumn olive, honeysuckle, black locust and photo points", "area": "lake"}, {"id": "9373", "site": "Donges Bay Gorge", "cap": "The beach at the mouth of the gorge.", "lat": 43.20264, "lon": -87.89772, "date": "2025-10-22", "w": 1400, "h": 1050, "src": "media/field-season-2025/fall/9373.webp", "task": "Buckthorn, autumn olive, honeysuckle, black locust and photo points", "area": "lake"}, {"id": "9374", "site": "Donges Bay Gorge", "cap": "Driftwood and a pool where the creek meets the lake.", "lat": 43.20264, "lon": -87.89767, "date": "2025-10-22", "w": 1400, "h": 1050, "src": "media/field-season-2025/fall/9374.webp", "task": "Buckthorn, autumn olive, honeysuckle, black locust and photo points", "area": "lake"}, {"id": "9377", "site": "Donges Bay Gorge", "cap": "The trail down the side of the gorge.", "lat": 43.20331, "lon": -87.89813, "date": "2025-10-22", "w": 1050, "h": 1400, "src": "media/field-season-2025/fall/9377.webp", "task": "Buckthorn, autumn olive, honeysuckle, black locust and photo points", "area": "lake"}, {"id": "9378", "site": "Donges Bay Gorge", "cap": "The bluff edge above the beach.", "lat": 43.2035, "lon": -87.89812, "date": "2025-10-22", "w": 1400, "h": 1050, "src": "media/field-season-2025/fall/9378.webp", "task": "Buckthorn, autumn olive, honeysuckle, black locust and photo points", "area": "lake"}, {"id": "9381", "site": "Donges Bay Gorge", "cap": "Sumac turning red in the ravine.", "lat": 43.20665, "lon": -87.90105, "date": "2025-10-22", "w": 1400, "h": 1050, "src": "media/field-season-2025/fall/9381.webp", "task": "Buckthorn, autumn olive, honeysuckle, black locust and photo points", "area": "lake"}, {"id": "9382", "site": "Donges Bay Gorge", "cap": "The old stone pool house in the woods.", "lat": 43.2062, "lon": -87.89889, "date": "2025-10-22", "w": 1400, "h": 1050, "src": "media/field-season-2025/fall/9382.webp", "task": "Buckthorn, autumn olive, honeysuckle, black locust and photo points", "area": "lake"}, {"id": "9384", "site": "Donges Bay Gorge", "cap": "An upturned root plate from a fallen tree.", "lat": 43.20645, "lon": -87.89956, "date": "2025-10-22", "w": 1400, "h": 1050, "src": "media/field-season-2025/fall/9384.webp", "task": "Buckthorn, autumn olive, honeysuckle, black locust and photo points", "area": "lake"}, {"id": "9390", "site": "Donges Bay Gorge", "cap": "Back on the beach with the Trimble.", "lat": 43.20547, "lon": -87.89708, "date": "2025-10-22", "w": 1400, "h": 1050, "src": "media/field-season-2025/fall/9390.webp", "task": "Buckthorn, autumn olive, honeysuckle, black locust and photo points", "area": "lake"}, {"id": "9405", "site": "Washington County preserves", "cap": "A nest in bare October branches.", "lat": 43.46124, "lon": -88.05272, "date": "2025-10-28", "src": "media/field-season-2025/fall/9405.webp", "task": "Photo points and trail data", "area": "inland"}, {"id": "9407", "site": "Washington County preserves", "cap": "Range pole at a creek crossing.", "lat": 43.46119, "lon": -88.05248, "date": "2025-10-28", "src": "media/field-season-2025/fall/9407.webp", "task": "Photo points and trail data", "area": "inland"}, {"id": "9408", "site": "Washington County preserves", "cap": "The creek, from the crossing.", "lat": 43.46119, "lon": -88.05249, "date": "2025-10-28", "src": "media/field-season-2025/fall/9408.webp", "task": "Photo points and trail data", "area": "inland"}, {"id": "9419", "site": "Zinn Preserve", "cap": "Beck Lake, at the Zinn Preserve.", "lat": 43.22387, "lon": -88.36386, "date": "2025-10-29", "w": 1400, "h": 788, "src": "media/field-season-2025/fall/9419.webp", "task": "Trails and photo points", "area": "inland"}, {"id": "9421", "site": "Zinn Preserve", "cap": "A boardwalk through tamarack and cattails, Zinn Preserve.", "lat": 43.21829, "lon": -88.35673, "date": "2025-10-29", "w": 1400, "h": 1050, "src": "media/field-season-2025/fall/9421.webp", "task": "Trails and photo points", "area": "inland"}, {"id": "9426", "site": "Schoof's Preserve", "cap": "Field day at Schoof's Preserve.", "lat": 43.25633, "lon": -88.3067, "date": "2025-10-29", "w": 787, "h": 1400, "src": "media/field-season-2025/fall/9426.webp", "task": "Trails and photo points", "area": "inland"}, {"id": "9428", "site": "Schoof's Preserve", "cap": "Open woods at Schoof's Preserve.", "lat": 43.25516, "lon": -88.31307, "date": "2025-10-29", "w": 1400, "h": 1050, "src": "media/field-season-2025/fall/9428.webp", "task": "Trails and photo points", "area": "inland"}, {"id": "9450", "site": "Fairy Chasm", "cap": "The Lake Michigan shore below Fairy Chasm.", "lat": 43.19729, "lon": -87.89616, "date": "2025-11-04", "src": "media/field-season-2025/fall/9450.webp", "task": "Trails, photo points, barberry, buckthorn and black locust", "area": "lake"}];
   const map = L.map('photomap', { scrollWheelZoom: false, attributionControl: true });
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Esri, Maxar, Earthstar Geographics' }).addTo(map);
   const img = document.getElementById('fv-img'), meta = document.getElementById('fv-meta'), cap = document.getElementById('fv-cap'), strip = document.getElementById('strip');
@@ -1063,23 +1065,22 @@ svg.leaflet-image-layer.leaflet-interactive path {
   let cur = -1;
   function show(i, pan) {
     const p = P[i];
-    img.src = p.src; img.alt = p.cap; cap.textContent = p.cap;
+    img.src = p.src; img.alt = p.cap; cap.textContent = p.cap; document.getElementById('fv-task').textContent = p.task + '.';
     const d = new Date(p.date + 'T12:00:00');
-    meta.textContent = (i + 1) + ' · ' + SITES[p.site] + ' · ' + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    meta.textContent = (i + 1) + ' · ' + p.site + ' · ' + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
     markers.forEach((m, j) => { const el = m.getElement(); if (el) el.firstChild.classList.toggle('on', j === i); });
     [...strip.children].forEach((b, j) => b.setAttribute('aria-current', j === i ? 'true' : 'false'));
-    const site = p.site === 'donges' ? 'donges' : 'schoof';
-    if (pan || cur === -1 || (P[cur] && (P[cur].site === 'donges') !== (p.site === 'donges'))) focus(site, i);
+    if (pan || cur === -1 || (P[cur] && P[cur].area !== p.area)) focus(p.area);
     cur = i;
   }
   function focus(site, i) {
     document.querySelectorAll('.site-tabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.site === site ? 'true' : 'false'));
-    const pts = P.filter(p => site === 'donges' ? p.site === 'donges' : p.site !== 'donges').map(p => [p.lat, p.lon]);
-    map.fitBounds(L.latLngBounds(pts).pad(0.25), { maxZoom: 17 });
+    const pts = P.filter(p => p.area === site).map(p => [p.lat, p.lon]);
+    map.fitBounds(L.latLngBounds(pts).pad(0.15), { maxZoom: 16 });
   }
-  document.querySelectorAll('.site-tabs button').forEach(b => b.onclick = () => { const i = P.findIndex(p => b.dataset.site === 'donges' ? p.site === 'donges' : p.site !== 'donges'); show(i, true); });
+  document.querySelectorAll('.site-tabs button').forEach(b => b.onclick = () => { const i = P.findIndex(p => p.area === b.dataset.site); show(i, true); });
   img.addEventListener('click', () => { const lb = document.getElementById('lb'); lb.querySelector('img').src = img.src; lb.classList.add('open'); });
-  show(0, true);
+  show(P.findIndex(p => p.area === 'lake'), true);
 })();
 </script>
 </body>

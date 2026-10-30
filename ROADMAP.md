@@ -109,7 +109,8 @@ Each idea gets two scores from 1 to 5:
 - **Need:** Permission from Ryan Wallin to show the screenshots; original photos exported with location data; skip photos of the high school interns.
 - **Status:** 🔧 Live (field-season-2025.html, linked from the Restoring Lands entry). Permission received Oct 30, 2026 for photos and screenshots, not the feature layers. Built from the GEOG 480 report and the nine Field Maps screenshots: Trimble beach photo, points-vs-polygons rule, map gallery, 2020/2025 Spirit Lake photo-point slider, field finds.
 - **Added Oct 30:** preserve names on every screenshot; a fall field days section (Donges Bay Gorge, Oct 22; Schoof's Preserve and the Zinn Preserve's Beck Lake, Oct 29) with 13 photos placed on a map from their GPS tags.
-- **Next step:** Optional: a short note on what the October days were for.
+- **Added Oct 30 (later):** the photo map now covers the whole season, August 5 to November 4 (28 photos at 10 preserves), each with that day's task from the summer and fall internship logs; the fall switch to woody invasives and trail data; the "too many points" lesson from the log.
+- **Next step:** Optional "Plants I identified" strip from the close-ups, once James confirms the species.
 
 ### 3. Employer quotes and references · E4 F5 · 4.4
 - **What:** Two or three short quotes from people who worked with you, shown in About or Experience: The Wellness Spa owner or manager, Restoring Lands supervisor, and your boss at PX Design if he is comfortable being quoted without project details.
