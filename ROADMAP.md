@@ -49,6 +49,7 @@ Each idea gets two scores from 1 to 5:
 | Header stays above animated cards while scrolling | ✅ | |
 | Winnebago County Community Profile page and prism-map card | ✅ | ArcGIS Online dashboard still in progress (item 1) |
 | Parcel and NG911 QA toolkit page and scan-line card | ✅ | COGO drafting still to do (item 4) |
+| Field Season 2025 page (Restoring Lands) | ✅ | Donges Bay photos and preserve names still to add (item 2) |
 
 ---
 
@@ -57,7 +58,7 @@ Each idea gets two scores from 1 to 5:
 | Rank | Item | E | F | Score | Status |
 |---|---|---|---|---|---|
 | 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | 🔧 |
-| 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔜 |
+| 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔧 |
 | 3 | Employer quotes and references | 4 | 5 | 4.4 | 🔜 |
 | 4 | Parcel and NG911 data QA toolkit | 5 | 3 | 4.2 | 🔧 |
 | 5 | Geodatabase and SQL project | 5 | 3 | 4.2 | 💡 |
@@ -106,7 +107,8 @@ Each idea gets two scores from 1 to 5:
 - **Why:** The only hands-on field GIS job on the resume. Trimble experience is a minimum requirement for the Historical Society job.
 - **Have:** 9 Field Maps screenshots (Pictures\OWLT INTERNSHIP), summer photos, fall internship report, the four Donges Bay photos.
 - **Need:** Permission from Ryan Wallin to show the screenshots; original photos exported with location data; skip photos of the high school interns.
-- **Next step:** Email Ryan; private draft of the page meanwhile.
+- **Status:** 🔧 Live (field-season-2025.html, linked from the Restoring Lands entry). Permission received Oct 30, 2026 for photos and screenshots, not the feature layers. Built from the GEOG 480 report and the nine Field Maps screenshots: Trimble beach photo, points-vs-polygons rule, map gallery, 2020/2025 Spirit Lake photo-point slider, field finds.
+- **Next step:** Add the Donges Bay Gorge photos (trail, white pine, beach, stone bridge, pool house); confirm preserve names for the unnamed screenshots; a map of photo locations if originals with GPS tags turn up.
 
 ### 3. Employer quotes and references · E4 F5 · 4.4
 - **What:** Two or three short quotes from people who worked with you, shown in About or Experience: The Wellness Spa owner or manager, Restoring Lands supervisor, and your boss at PX Design if he is comfortable being quoted without project details.

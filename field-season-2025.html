@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Field Season 2025 – James Krauska</title>
+<meta name="description" content="Mapping invasive plants and re-shooting photo-monitoring points across a Wisconsin land trust's preserves with a Trimble GPS and ArcGIS Field Maps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: museum-catalog single column — generous margins, a topographic hero plate,
+   project "plates" with a map-collar metadata strip, quiet hairlines, one forest-green accent. */
+:root {
+  --paper: #f1f2ec;      /* green-grey paper */
+  --paper-2: #e6e9dd;    /* plate ground */
+  --ink: #1b241d;        /* forest black */
+  --ink-2: #4c5a4f;      /* secondary text */
+  --forest: #2e4a34;     /* primary accent */
+  --olive: #6d7a3a;      /* secondary accent */
+  --rule: #c7ccbb;       /* hairlines */
+  --contour: rgba(46, 74, 52, 0.22);
+  --contour-strong: rgba(109, 122, 58, 0.55);
+  --on-forest: #f1f2ec;
+
+  --display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 4vw, 3rem);
+  --step-4: clamp(2.75rem, 7vw, 5rem);
+  --measure: 62ch;
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+    --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+    --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+    --on-forest: #121813; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+  --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+  --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+  --on-forest: #121813; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+html { scroll-padding-top: 5rem; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 var(--step-0)/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: inherit; text-decoration-color: var(--olive); text-underline-offset: 0.2em; }
+a:hover { color: var(--forest); }
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; border-radius: 2px; }
+
+.wrap {
+  max-width: var(--wrap); margin-inline: auto;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 480px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.label {
+  font: 500 var(--step--1)/1.4 var(--mono);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; flex-wrap: wrap; }
+.wordmark { font: 600 1.5rem/1 var(--display); letter-spacing: 0.01em; text-decoration: none; }
+.wordmark span { color: var(--olive); font-style: italic; font-weight: 500; }
+.nav { display: flex; gap: clamp(1rem, 3vw, 2.25rem); font: 500 0.9375rem/1 var(--body); }
+.nav a { text-decoration: none; padding-block: 0.25rem; border-bottom: 1px solid transparent; }
+.nav a:hover { border-bottom-color: var(--olive); }
+
+/* Hero */
+.hero { position: relative; border-bottom: 1px solid var(--rule); overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .wrap { position: relative; padding-block: clamp(4rem, 10vw, 7.5rem) clamp(3rem, 7vw, 5rem); display: grid; gap: 1.75rem; }
+.hero h1 {
+  font: 500 var(--step-4)/1.02 var(--display); letter-spacing: -0.01em;
+  max-width: 14ch; margin: 0; text-wrap: balance;
+}
+.hero h1 em { color: var(--forest); font-style: italic; }
+.hero p.lede { font-size: var(--step-1); line-height: 1.55; max-width: 48ch; margin: 0; color: var(--ink-2); }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 500 0.9375rem/1 var(--body); text-decoration: none;
+  padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px;
+  transition: background-color .2s ease, color .2s ease;
+}
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+
+/* Sections */
+section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(--rule); }
+.section-head { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; align-items: baseline; margin-bottom: 3rem; }
+.section-head h2 { font: 500 var(--step-3)/1.1 var(--display); margin: 0; text-wrap: balance; }
+.section-head p { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
+@media (max-width: 760px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+
+/* Project plates */
+.plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 2.5rem; }
+@media (max-width: 760px) { .plates { grid-template-columns: minmax(0, 1fr); } }
+.plate { display: grid; gap: 1rem; min-width: 0; }
+.plate figure { margin: 0; background: var(--paper-2); border: 1px solid var(--rule); aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
+.plate figure svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate figure video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.plate .collar { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.6rem; }
+.status { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.55rem; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
+.status.live { color: var(--forest); }
+.status.planned { color: var(--olive); }
+.plate h3 { font: 600 var(--step-2)/1.15 var(--display); margin: 0; text-wrap: balance; }
+.plate p { margin: 0; color: var(--ink-2); max-width: var(--measure); }
+.plate dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.35rem 1.25rem; margin: 0.25rem 0 0; font-size: 0.9375rem; }
+.plate dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.plate dd { margin: 0; }
+
+/* svg strokes */
+.s-ink { stroke: var(--ink); } .s-forest { stroke: var(--forest); } .s-olive { stroke: var(--olive); } .s-rule { stroke: var(--rule); }
+.f-forest { fill: var(--forest); } .f-olive { fill: var(--olive); } .f-paper { fill: var(--paper); } .f-ink { fill: var(--ink); }
+.f-tint { fill: var(--olive); fill-opacity: .14; }
+.svg-label { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .06em; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; }
+@media (max-width: 760px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+.about-grid .prose p { margin: 0 0 1.1rem; max-width: var(--measure); }
+.about-grid .prose p:first-child { font: 500 var(--step-2)/1.35 var(--display); color: var(--ink); }
+.facts { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.facts div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1rem; padding-block: 0.85rem; border-bottom: 1px solid var(--rule); }
+.facts dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.facts dd { margin: 0; }
+
+/* Experience */
+.roles { display: grid; gap: 0; border-top: 1px solid var(--ink); }
+.role { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 0.5rem 3rem; padding-block: 1.75rem; border-bottom: 1px solid var(--rule); }
+@media (max-width: 760px) { .role { grid-template-columns: minmax(0, 1fr); } }
+.role h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0; }
+.role .org { color: var(--forest); font-weight: 500; }
+.role ul { margin: 0.75rem 0 0; padding-left: 1.1rem; color: var(--ink-2); max-width: var(--measure); }
+.role li + li { margin-top: 0.4rem; }
+
+/* Toolkit */
+.toolkit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+@media (max-width: 860px) { .toolkit { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .toolkit { grid-template-columns: minmax(0, 1fr); } }
+.toolkit h3 { font: 600 var(--step-1)/1.2 var(--display); margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.toolkit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; color: var(--ink-2); }
+
+/* Contact */
+.contact { display: grid; gap: 1.5rem; }
+.contact h2 { font: 500 var(--step-4)/1.05 var(--display); margin: 0; max-width: 16ch; text-wrap: balance; }
+.contact-row { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; }
+.email { font: 500 var(--step-1)/1.4 var(--mono); user-select: all; word-break: break-all; }
+.copy { font: 500 0.875rem/1 var(--body); background: none; color: var(--forest); border: 1px solid var(--forest); padding: 0.6rem 0.9rem; border-radius: 2px; cursor: pointer; }
+.copy:hover { background: var(--paper-2); }
+.phone { font: 500 var(--step-1)/1.4 var(--mono); text-decoration: none; white-space: nowrap; }
+
+/* Footer: map collar */
+footer { padding-block: 2.5rem 3rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: end; }
+.scalebar { display: grid; gap: 0.35rem; }
+.scalebar .bar { display: flex; width: 12rem; max-width: 100%; height: 6px; border: 1px solid var(--ink); }
+.scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
+.scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>/* Leaflet 1.9.4 (BSD-2-Clause) */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;
+	}
+.leaflet-tile::selection {
+	background: transparent;
+}
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+.leaflet-container .leaflet-overlay-pane svg {
+	max-width: none !important;
+	max-height: none !important;
+	}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;
+	}
+.leaflet-container img.leaflet-tile {
+	mix-blend-mode: plus-lighter;
+}
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	touch-action: none;
+	touch-action: pinch-zoom;
+}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;
+	}
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+.leaflet-pane         { z-index: 400; }
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane   { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; 
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+}
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;
+	}
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted; 
+	pointer-events: auto;
+	}
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: url(images/layers.png);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(images/layers-2x.png);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+.leaflet-default-icon-path { 
+	background-image: url(images/marker-icon.png);
+	}
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+	margin: -10px auto 0;
+	pointer-events: auto;
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-interactive {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+@media print {
+	.leaflet-control {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		}
+	}
+</style>
+</head>
+<body>
+<style>
+.cs-hero .wrap { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 1.5rem; }
+.cs-hero h1 { font: 500 var(--step-4)/1.02 var(--display); margin: 0; letter-spacing: -0.01em; max-width: 18ch; text-wrap: balance; }
+.cs-hero .lede { font-size: var(--step-1); line-height: 1.55; max-width: 60ch; margin: 0; color: var(--ink-2); }
+.back { font: 500 0.875rem/1 var(--body); text-decoration: none; color: var(--forest); }
+.back:hover { text-decoration: underline; }
+.compare { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.9375rem; }
+.compare th, .compare td { text-align: left; padding: 0.65rem 1rem 0.65rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.compare thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
+.compare .num { text-align: right; padding-right: 0; padding-left: 1rem; }
+.compare .code { font: 500 0.8125rem/1.5 var(--mono); color: var(--ink-2); white-space: nowrap; }
+.compare td small { display: block; color: var(--ink-2); font-size: 0.8125rem; margin-top: 0.15rem; }
+.table-scroll { overflow-x: auto; }
+.cs-body { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; }
+@media (max-width: 760px) { .cs-body { grid-template-columns: minmax(0, 1fr); } }
+.cs-body .prose { max-width: var(--measure); }
+.cs-body .prose p { margin: 0 0 1.1rem; }
+.cs-body .prose h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 1.75rem 0 0.5rem; }
+.cs-body .prose ul, .cs-body .prose ol { margin: 0 0 1.1rem; padding-left: 1.2rem; }
+.cs-body .prose li + li { margin-top: 0.45rem; }
+.cs-body .prose strong { font-weight: 600; color: var(--ink); }
+.steps { counter-reset: s; list-style: none; padding: 0 !important; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); margin: 0 !important; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; }
+.chips li { margin: 0 !important; font: 500 0.8125rem/1 var(--mono); padding: 0.5rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink-2); }
+
+
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+@media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tile { padding: 1.25rem 1.25rem 1.4rem 0; border-bottom: 1px solid var(--rule); display: grid; gap: 0.35rem; align-content: start; }
+.tile + .tile { padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+@media (max-width: 900px) { .tile:nth-child(odd) { padding-left: 0; border-left: 0; } }
+.tile .num { font: 500 var(--step-3)/1 var(--display); font-variant-numeric: tabular-nums; }
+.tile .ctx { font-size: 0.875rem; color: var(--ink-2); }
+
+
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; font: 500 0.9375rem/1 var(--body); text-decoration: none; padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px; }
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.cs-body { margin-bottom: 0; }
+.hero-photo { margin: 0; border: 1px solid var(--rule); background: var(--paper-2); }
+.hero-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; max-height: 78vh; }
+.hero-photo figcaption, .shot figcaption, .pair figcaption { font-size: 0.875rem; color: var(--ink-2); padding: 0.7rem 0.1rem 0; line-height: 1.5; }
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+@media (max-width: 900px) { .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
+.shot { margin: 0; min-width: 0; }
+.shot img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--rule); background: var(--paper-2); cursor: zoom-in; }
+.shot b { font-weight: 600; color: var(--ink); }
+.rule-box { border-left: 3px solid var(--olive); padding: 0.9rem 1.2rem; background: var(--paper-2); margin: 0 0 1.4rem; max-width: var(--measure); }
+.rule-box .label { display: block; margin-bottom: 0.35rem; }
+.rule-box p { margin: 0 !important; }
+.compare-slider { position: relative; border: 1px solid var(--rule); overflow: hidden; aspect-ratio: 828 / 612; max-width: 980px; background: var(--paper-2); user-select: none; touch-action: pan-y; }
+.compare-slider img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.compare-slider .after { clip-path: inset(0 0 0 var(--pos, 50%)); }
+.compare-slider .handle { position: absolute; top: 0; bottom: 0; left: var(--pos, 50%); width: 2px; background: var(--paper); box-shadow: 0 0 0 1px rgba(0,0,0,.25); pointer-events: none; }
+.compare-slider .handle::after { content: "◀ ▶"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font: 600 0.7rem/1 var(--mono); letter-spacing: .1em; padding: 0.55rem 0.6rem; background: var(--paper); color: var(--ink); border-radius: 2px; white-space: nowrap; }
+.compare-slider .tag { position: absolute; top: 0.75rem; font: 500 0.75rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; background: color-mix(in srgb, var(--paper) 88%, transparent); color: var(--ink); padding: 0.4rem 0.55rem; }
+.compare-slider .tag.l { left: 0.75rem; } .compare-slider .tag.r { right: 0.75rem; }
+.compare-slider input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+.pair { margin: 0; }
+.finds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+@media (max-width: 900px) { .finds { grid-template-columns: minmax(0, 1fr); } }
+.finds .shot img { aspect-ratio: 3 / 4; }
+.finds h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0.9rem 0 0.35rem; }
+.finds p { margin: 0; color: var(--ink-2); font-size: 0.9375rem; }
+.lightbox { position: fixed; inset: 0; background: rgba(10, 14, 11, .92); display: none; align-items: center; justify-content: center; padding: 3vw; z-index: 50; cursor: zoom-out; }
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; }
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="cs-hero">
+    <div class="wrap">
+      <a class="back" href="index.html#experience">← Experience</a>
+      <div class="meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
+        <span class="label">Field GIS internship</span>
+        <span class="label">Trimble GPS · ArcGIS Field Maps</span>
+        <span class="label">Restoring Lands land trust · July–November 2025</span>
+      </div>
+      <h1>Field Season 2025: Mapping Invasives Across a Land Trust's Preserves</h1>
+      <p class="lede">A summer and fall with a range-pole Trimble GPS and ArcGIS Field Maps, mapping invasive plants and re-shooting photo-monitoring points across preserves in Washington, Ozaukee and Milwaukee counties, for a grant-funded invasive species removal program.</p>
+    </div>
+  </div>
+
+  <section style="padding-block: 0 clamp(3rem, 7vw, 5rem)">
+    <div class="wrap">
+      <div class="tiles">
+        <div class="tile"><span class="label">Preserves mapped</span><span class="num">13</span><span class="ctx">in a network of 40+ preserves and 7,000+ acres</span></div>
+        <div class="tile"><span class="label">Field hours</span><span class="num">~190</span><span class="ctx">logged, mostly working alone</span></div>
+        <div class="tile"><span class="label">Invasive species</span><span class="num">15+</span><span class="ctx">identified and mapped</span></div>
+        <div class="tile"><span class="label">GPS accuracy</span><span class="num">4 in.</span><span class="ctx">vs. about 30 ft for the 2020 photo points</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <figure class="hero-photo">
+        <img src="media/field-season-2025/beach-trimble.webp" alt="James smiling on a Lake Michigan beach with the Trimble GPS range pole planted in the sand behind him">
+        <figcaption>The office for the summer: the beach access at Forest Beach Migratory Preserve, with the range-pole Trimble planted in the sand behind me.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">The job</span>
+      <div class="prose">
+        <p>The land trust had just won a large grant to remove non-woody invasive plants from its preserves, and it needed to know where they were. Each morning I picked up a work phone running <strong>ArcGIS Field Maps</strong> and a <strong>Trimble GPS on a range pole</strong> (about 4-inch accuracy), and spent the day on foot.</p>
+        <p>I had two jobs. The first was mapping populations of white sweet clover, teasel, Canada thistle, crown vetch, bird's-foot trefoil, wild parsnip and the rest of the list into the trust's 2025 Invasives web map. The second was returning to photo-monitoring points first shot in 2020 and re-taking them, so the trust could see how its old farm fields were changing.</p>
+        <p>Thanks to GPS, Field Maps and plant identification from my UW-Stevens Point labs and plant walks, I was trusted to map on my own from the first day, without the planned shadowing period. Some days I worked alone; others I walked with the stewardship crew and mapped what they were removing.</p>
+        <h3>Points or polygons?</h3>
+        <div class="rule-box"><span class="label">The rule I mapped by</span><p>A patch about 6 feet across or smaller is a <strong>point</strong>. Anything bigger is a <strong>polygon</strong>, recorded live by walking its edge with the GPS.</p></div>
+        <p>The two people using these maps wanted different things. The grant-writing side wanted detailed polygons, because precise acreage wins funding. The field stewards wanted fast points, just enough to find a patch again next season. Polygons take far longer to walk, so I settled on a balance: polygons where the size mattered for treatment and reporting, points everywhere else. It's the same question every field data collection plan has to answer: what does each user of the data actually need?</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">The maps</span>
+        <div>
+          <h2>Preserve by preserve</h2>
+          <p>Screenshots from the trust's Field Maps web maps. Diamonds and dots are smaller patches; shaded areas are stands walked as polygons. Click any map to enlarge it.</p>
+        </div>
+      </div>
+      <div class="gallery"><figure class="shot"><img src="media/field-season-2025/invasivesforest.webp" alt="Field Maps screenshot of Forest Beach Migratory Preserve with invasive species points and polygons" loading="lazy"><figcaption><b>Forest Beach Migratory Preserve</b>, a former golf course on Lake Michigan. The big stands are Canada thistle, walked as polygons; smaller patches are points.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/invasivesfellenz.webp" alt="Field Maps screenshot of Fellenz Woods with invasive species points" loading="lazy"><figcaption><b>Fellenz Woods</b>, along the Milwaukee River by West Bend. Scattered points show what was left of the white sweet clover that once covered the prairie.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/invasivesdonges.webp" alt="Field Maps screenshot of Donges Bay Gorge with invasive species polygons" loading="lazy"><figcaption><b>Donges Bay Gorge</b>, a wooded ravine running down to Lake Michigan.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/invasivesfairy.webp" alt="Field Maps screenshot of a lakeshore preserve with invasive species points and polygons" loading="lazy"><figcaption>A Lake Michigan bluff preserve, with dense patches mapped along the ravine and shore.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/invasiveskurtz.webp" alt="Field Maps screenshot of a wooded preserve with invasive species points" loading="lazy"><figcaption>A wooded preserve in Ozaukee County, mostly points under the canopy.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/invasiveskc.webp" alt="Field Maps screenshot of a river preserve with invasive species points" loading="lazy"><figcaption>A Milwaukee River preserve, mapped edge to edge.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/preservemap.webp" alt="Preserve Map screenshot with management areas, trails and monitoring points" loading="lazy"><figcaption>The trust's <b>Preserve Map</b> around Fellenz Woods: management areas, trails and the photo-monitoring points I re-shot.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/preservemapfairy.webp" alt="Preserve Map screenshot of a lakeshore preserve" loading="lazy"><figcaption>The Preserve Map on the lakeshore: trails and monitoring points.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/preservemapholy.webp" alt="Preserve Map screenshot of an inland preserve" loading="lazy"><figcaption>The Preserve Map on an inland preserve.</figcaption></figure></div>
+      <p class="label" style="margin-top:1.5rem;color:var(--ink-2)">Shared with permission of the land trust. The underlying data belongs to the trust and isn't published here.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Photo points</span>
+        <div>
+          <h2>Five years of change at Spirit Lake</h2>
+          <p>Drag across the photo. Left: the stewardship team's 2020 photo, looking south. Right: mine from the same spot in 2025.</p>
+        </div>
+      </div>
+      <figure class="pair">
+        <div class="compare-slider" id="cmp" style="--pos:50%">
+          <img src="media/field-season-2025/spirit-lake-2020.webp" alt="Spirit Lake photo point in 2020, looking south across a goldenrod field toward a leaning tree">
+          <img class="after" src="media/field-season-2025/spirit-lake-2025.webp" alt="The same Spirit Lake photo point in 2025; the leaning tree has died and later prairie species have filled in">
+          <span class="tag l">2020</span><span class="tag r">2025</span>
+          <div class="handle"></div>
+          <input type="range" min="0" max="100" value="50" aria-label="Compare the 2020 and 2025 photos">
+        </div>
+        <figcaption>In five years the tree leaning over the field died, and early-succession goldenrod gave way to later prairie species like bee balm.</figcaption>
+      </figure>
+      <div class="cs-body" style="margin-top:2.5rem">
+        <span class="label">The hard part</span>
+        <div class="prose">
+          <p>This was harder than the invasives mapping. The 2020 points were collected with a GPS accurate to about 30 feet, against my 4 inches, so the recorded spot was never quite where the photo was taken. The old photos were also shot in June and mine in August, and succession had moved fast: fields that were open in 2020 were closing in with buckthorn and ash saplings, and some points couldn't be reached at all. I found each spot by matching the skyline, tree lines and landmarks in the old photos rather than trusting the coordinates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">From the field</span>
+        <div><h2>Things I found</h2></div>
+      </div>
+      <div class="finds">
+        <div><figure class="shot"><img src="media/field-season-2025/royal-catchfly.webp" alt="Bright red royal catchfly flowers in a prairie" loading="lazy"><figcaption>Royal catchfly at Fellenz Woods, July 30.</figcaption></figure><h3>A rare wildflower</h3><p>Royal catchfly, tucked into a forgotten corner of the Fellenz Woods prairie. It's sensitive to the prescribed fires used to maintain prairie, so it's rare on the preserves.</p></div>
+        <div><figure class="shot"><img src="media/field-season-2025/making-allies-teasel.webp" alt="A mowed farm lane lined with tall teasel and trees" loading="lazy"><figcaption>The driveway at Making Allies Farm.</figcaption></figure><h3>A driveway full of teasel</h3><p>At Making Allies Farm, teasel had taken over the entrance, and the old house site had nearly every species on the list. I mapped the whole farm in one day, including a tangle of overlapping polygons where species grew mixed together.</p></div>
+        <div><figure class="shot"><img src="media/field-season-2025/fellenz-app.webp" alt="Phone screenshot of the Fellenz Woods map in ArcGIS Field Maps" loading="lazy"><figcaption>Fellenz Woods in Field Maps on the work phone.</figcaption></figure><h3>A prairie that came back</h3><p>The 160-acre Fellenz Woods prairie was once almost all white sweet clover. By the time I mapped it, only scattered red dots were left, and students from the Land Restoration School helped pull the last of them.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Skills</span>
+      <div>
+        <ul class="chips">
+          <li>Trimble GPS (range pole)</li><li>ArcGIS Field Maps</li><li>ArcGIS Online web maps</li><li>Invasive plant ID</li><li>Field data collection plans</li><li>Photo-point monitoring</li><li>Data QA during desktop review</li><li>Working independently</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="label">Restoring Lands: A Wisconsin Land Trust · Field season 2025 · © 2026 James Krauska</span>
+  </div>
+</footer>
+<div class="lightbox" id="lb" role="dialog" aria-label="Enlarged map"><img alt=""></div>
+<script>
+(function () {
+  const cmp = document.getElementById('cmp');
+  const r = cmp.querySelector('input');
+  r.addEventListener('input', () => cmp.style.setProperty('--pos', r.value + '%'));
+  const lb = document.getElementById('lb'), li = lb.querySelector('img');
+  document.querySelectorAll('.gallery .shot img, .finds .shot img').forEach(im => im.addEventListener('click', () => { li.src = im.src; li.alt = im.alt; lb.classList.add('open'); }));
+  lb.addEventListener('click', () => lb.classList.remove('open'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>

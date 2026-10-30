@@ -1,0 +1,222 @@
+<style>
+.cs-hero .wrap { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 1.5rem; }
+.cs-hero h1 { font: 500 var(--step-4)/1.02 var(--display); margin: 0; letter-spacing: -0.01em; max-width: 18ch; text-wrap: balance; }
+.cs-hero .lede { font-size: var(--step-1); line-height: 1.55; max-width: 60ch; margin: 0; color: var(--ink-2); }
+.back { font: 500 0.875rem/1 var(--body); text-decoration: none; color: var(--forest); }
+.back:hover { text-decoration: underline; }
+.compare { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.9375rem; }
+.compare th, .compare td { text-align: left; padding: 0.65rem 1rem 0.65rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.compare thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
+.compare .num { text-align: right; padding-right: 0; padding-left: 1rem; }
+.compare .code { font: 500 0.8125rem/1.5 var(--mono); color: var(--ink-2); white-space: nowrap; }
+.compare td small { display: block; color: var(--ink-2); font-size: 0.8125rem; margin-top: 0.15rem; }
+.table-scroll { overflow-x: auto; }
+.cs-body { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; }
+@media (max-width: 760px) { .cs-body { grid-template-columns: minmax(0, 1fr); } }
+.cs-body .prose { max-width: var(--measure); }
+.cs-body .prose p { margin: 0 0 1.1rem; }
+.cs-body .prose h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 1.75rem 0 0.5rem; }
+.cs-body .prose ul, .cs-body .prose ol { margin: 0 0 1.1rem; padding-left: 1.2rem; }
+.cs-body .prose li + li { margin-top: 0.45rem; }
+.cs-body .prose strong { font-weight: 600; color: var(--ink); }
+.steps { counter-reset: s; list-style: none; padding: 0 !important; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); margin: 0 !important; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; }
+.chips li { margin: 0 !important; font: 500 0.8125rem/1 var(--mono); padding: 0.5rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink-2); }
+
+
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+@media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tile { padding: 1.25rem 1.25rem 1.4rem 0; border-bottom: 1px solid var(--rule); display: grid; gap: 0.35rem; align-content: start; }
+.tile + .tile { padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+@media (max-width: 900px) { .tile:nth-child(odd) { padding-left: 0; border-left: 0; } }
+.tile .num { font: 500 var(--step-3)/1 var(--display); font-variant-numeric: tabular-nums; }
+.tile .ctx { font-size: 0.875rem; color: var(--ink-2); }
+
+
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; font: 500 0.9375rem/1 var(--body); text-decoration: none; padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px; }
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.cs-body { margin-bottom: 0; }
+.hero-photo { margin: 0; border: 1px solid var(--rule); background: var(--paper-2); }
+.hero-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; max-height: 78vh; }
+.hero-photo figcaption, .shot figcaption, .pair figcaption { font-size: 0.875rem; color: var(--ink-2); padding: 0.7rem 0.1rem 0; line-height: 1.5; }
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+@media (max-width: 900px) { .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
+.shot { margin: 0; min-width: 0; }
+.shot img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--rule); background: var(--paper-2); cursor: zoom-in; }
+.shot b { font-weight: 600; color: var(--ink); }
+.rule-box { border-left: 3px solid var(--olive); padding: 0.9rem 1.2rem; background: var(--paper-2); margin: 0 0 1.4rem; max-width: var(--measure); }
+.rule-box .label { display: block; margin-bottom: 0.35rem; }
+.rule-box p { margin: 0 !important; }
+.compare-slider { position: relative; border: 1px solid var(--rule); overflow: hidden; aspect-ratio: 828 / 612; max-width: 980px; background: var(--paper-2); user-select: none; touch-action: pan-y; }
+.compare-slider img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.compare-slider .after { clip-path: inset(0 0 0 var(--pos, 50%)); }
+.compare-slider .handle { position: absolute; top: 0; bottom: 0; left: var(--pos, 50%); width: 2px; background: var(--paper); box-shadow: 0 0 0 1px rgba(0,0,0,.25); pointer-events: none; }
+.compare-slider .handle::after { content: "◀ ▶"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font: 600 0.7rem/1 var(--mono); letter-spacing: .1em; padding: 0.55rem 0.6rem; background: var(--paper); color: var(--ink); border-radius: 2px; white-space: nowrap; }
+.compare-slider .tag { position: absolute; top: 0.75rem; font: 500 0.75rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; background: color-mix(in srgb, var(--paper) 88%, transparent); color: var(--ink); padding: 0.4rem 0.55rem; }
+.compare-slider .tag.l { left: 0.75rem; } .compare-slider .tag.r { right: 0.75rem; }
+.compare-slider input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+.pair { margin: 0; }
+.finds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+@media (max-width: 900px) { .finds { grid-template-columns: minmax(0, 1fr); } }
+.finds .shot img { aspect-ratio: 3 / 4; }
+.finds h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0.9rem 0 0.35rem; }
+.finds p { margin: 0; color: var(--ink-2); font-size: 0.9375rem; }
+.lightbox { position: fixed; inset: 0; background: rgba(10, 14, 11, .92); display: none; align-items: center; justify-content: center; padding: 3vw; z-index: 50; cursor: zoom-out; }
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; }
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="cs-hero">
+    <div class="wrap">
+      <a class="back" href="index.html#experience">← Experience</a>
+      <div class="meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
+        <span class="label">Field GIS internship</span>
+        <span class="label">Trimble GPS · ArcGIS Field Maps</span>
+        <span class="label">Restoring Lands land trust · July–November 2025</span>
+      </div>
+      <h1>Field Season 2025: Mapping Invasives Across a Land Trust's Preserves</h1>
+      <p class="lede">A summer and fall with a range-pole Trimble GPS and ArcGIS Field Maps, mapping invasive plants and re-shooting photo-monitoring points across preserves in Washington, Ozaukee and Milwaukee counties, for a grant-funded invasive species removal program.</p>
+    </div>
+  </div>
+
+  <section style="padding-block: 0 clamp(3rem, 7vw, 5rem)">
+    <div class="wrap">
+      <div class="tiles">
+        <div class="tile"><span class="label">Preserves mapped</span><span class="num">13</span><span class="ctx">in a network of 40+ preserves and 7,000+ acres</span></div>
+        <div class="tile"><span class="label">Field hours</span><span class="num">~190</span><span class="ctx">logged, mostly working alone</span></div>
+        <div class="tile"><span class="label">Invasive species</span><span class="num">15+</span><span class="ctx">identified and mapped</span></div>
+        <div class="tile"><span class="label">GPS accuracy</span><span class="num">4 in.</span><span class="ctx">vs. about 30 ft for the 2020 photo points</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <figure class="hero-photo">
+        <img src="media/field-season-2025/beach-trimble.webp" alt="James smiling on a Lake Michigan beach with the Trimble GPS range pole planted in the sand behind him">
+        <figcaption>The office for the summer: the beach access at Forest Beach Migratory Preserve, with the range-pole Trimble planted in the sand behind me.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">The job</span>
+      <div class="prose">
+        <p>The land trust had just won a large grant to remove non-woody invasive plants from its preserves, and it needed to know where they were. Each morning I picked up a work phone running <strong>ArcGIS Field Maps</strong> and a <strong>Trimble GPS on a range pole</strong> (about 4-inch accuracy), and spent the day on foot.</p>
+        <p>I had two jobs. The first was mapping populations of white sweet clover, teasel, Canada thistle, crown vetch, bird's-foot trefoil, wild parsnip and the rest of the list into the trust's 2025 Invasives web map. The second was returning to photo-monitoring points first shot in 2020 and re-taking them, so the trust could see how its old farm fields were changing.</p>
+        <p>Thanks to GPS, Field Maps and plant identification from my UW-Stevens Point labs and plant walks, I was trusted to map on my own from the first day, without the planned shadowing period. Some days I worked alone; others I walked with the stewardship crew and mapped what they were removing.</p>
+        <h3>Points or polygons?</h3>
+        <div class="rule-box"><span class="label">The rule I mapped by</span><p>A patch about 6 feet across or smaller is a <strong>point</strong>. Anything bigger is a <strong>polygon</strong>, recorded live by walking its edge with the GPS.</p></div>
+        <p>The two people using these maps wanted different things. The grant-writing side wanted detailed polygons, because precise acreage wins funding. The field stewards wanted fast points, just enough to find a patch again next season. Polygons take far longer to walk, so I settled on a balance: polygons where the size mattered for treatment and reporting, points everywhere else. It's the same question every field data collection plan has to answer: what does each user of the data actually need?</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">The maps</span>
+        <div>
+          <h2>Preserve by preserve</h2>
+          <p>Screenshots from the trust's Field Maps web maps. Diamonds and dots are smaller patches; shaded areas are stands walked as polygons. Click any map to enlarge it.</p>
+        </div>
+      </div>
+      <div class="gallery"><figure class="shot"><img src="media/field-season-2025/invasivesforest.webp" alt="Field Maps screenshot of Forest Beach Migratory Preserve with invasive species points and polygons" loading="lazy"><figcaption><b>Forest Beach Migratory Preserve</b>, a former golf course on Lake Michigan. The big stands are Canada thistle, walked as polygons; smaller patches are points.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/invasivesfellenz.webp" alt="Field Maps screenshot of Fellenz Woods with invasive species points" loading="lazy"><figcaption><b>Fellenz Woods</b>, along the Milwaukee River by West Bend. Scattered points show what was left of the white sweet clover that once covered the prairie.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/invasivesdonges.webp" alt="Field Maps screenshot of Donges Bay Gorge with invasive species polygons" loading="lazy"><figcaption><b>Donges Bay Gorge</b>, a wooded ravine running down to Lake Michigan.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/invasivesfairy.webp" alt="Field Maps screenshot of a lakeshore preserve with invasive species points and polygons" loading="lazy"><figcaption>A Lake Michigan bluff preserve, with dense patches mapped along the ravine and shore.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/invasiveskurtz.webp" alt="Field Maps screenshot of a wooded preserve with invasive species points" loading="lazy"><figcaption>A wooded preserve in Ozaukee County, mostly points under the canopy.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/invasiveskc.webp" alt="Field Maps screenshot of a river preserve with invasive species points" loading="lazy"><figcaption>A Milwaukee River preserve, mapped edge to edge.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/preservemap.webp" alt="Preserve Map screenshot with management areas, trails and monitoring points" loading="lazy"><figcaption>The trust's <b>Preserve Map</b> around Fellenz Woods: management areas, trails and the photo-monitoring points I re-shot.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/preservemapfairy.webp" alt="Preserve Map screenshot of a lakeshore preserve" loading="lazy"><figcaption>The Preserve Map on the lakeshore: trails and monitoring points.</figcaption></figure><figure class="shot"><img src="media/field-season-2025/preservemapholy.webp" alt="Preserve Map screenshot of an inland preserve" loading="lazy"><figcaption>The Preserve Map on an inland preserve.</figcaption></figure></div>
+      <p class="label" style="margin-top:1.5rem;color:var(--ink-2)">Shared with permission of the land trust. The underlying data belongs to the trust and isn't published here.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Photo points</span>
+        <div>
+          <h2>Five years of change at Spirit Lake</h2>
+          <p>Drag across the photo. Left: the stewardship team's 2020 photo, looking south. Right: mine from the same spot in 2025.</p>
+        </div>
+      </div>
+      <figure class="pair">
+        <div class="compare-slider" id="cmp" style="--pos:50%">
+          <img src="media/field-season-2025/spirit-lake-2020.webp" alt="Spirit Lake photo point in 2020, looking south across a goldenrod field toward a leaning tree">
+          <img class="after" src="media/field-season-2025/spirit-lake-2025.webp" alt="The same Spirit Lake photo point in 2025; the leaning tree has died and later prairie species have filled in">
+          <span class="tag l">2020</span><span class="tag r">2025</span>
+          <div class="handle"></div>
+          <input type="range" min="0" max="100" value="50" aria-label="Compare the 2020 and 2025 photos">
+        </div>
+        <figcaption>In five years the tree leaning over the field died, and early-succession goldenrod gave way to later prairie species like bee balm.</figcaption>
+      </figure>
+      <div class="cs-body" style="margin-top:2.5rem">
+        <span class="label">The hard part</span>
+        <div class="prose">
+          <p>This was harder than the invasives mapping. The 2020 points were collected with a GPS accurate to about 30 feet, against my 4 inches, so the recorded spot was never quite where the photo was taken. The old photos were also shot in June and mine in August, and succession had moved fast: fields that were open in 2020 were closing in with buckthorn and ash saplings, and some points couldn't be reached at all. I found each spot by matching the skyline, tree lines and landmarks in the old photos rather than trusting the coordinates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">From the field</span>
+        <div><h2>Things I found</h2></div>
+      </div>
+      <div class="finds">
+        <div><figure class="shot"><img src="media/field-season-2025/royal-catchfly.webp" alt="Bright red royal catchfly flowers in a prairie" loading="lazy"><figcaption>Royal catchfly at Fellenz Woods, July 30.</figcaption></figure><h3>A rare wildflower</h3><p>Royal catchfly, tucked into a forgotten corner of the Fellenz Woods prairie. It's sensitive to the prescribed fires used to maintain prairie, so it's rare on the preserves.</p></div>
+        <div><figure class="shot"><img src="media/field-season-2025/making-allies-teasel.webp" alt="A mowed farm lane lined with tall teasel and trees" loading="lazy"><figcaption>The driveway at Making Allies Farm.</figcaption></figure><h3>A driveway full of teasel</h3><p>At Making Allies Farm, teasel had taken over the entrance, and the old house site had nearly every species on the list. I mapped the whole farm in one day, including a tangle of overlapping polygons where species grew mixed together.</p></div>
+        <div><figure class="shot"><img src="media/field-season-2025/fellenz-app.webp" alt="Phone screenshot of the Fellenz Woods map in ArcGIS Field Maps" loading="lazy"><figcaption>Fellenz Woods in Field Maps on the work phone.</figcaption></figure><h3>A prairie that came back</h3><p>The 160-acre Fellenz Woods prairie was once almost all white sweet clover. By the time I mapped it, only scattered red dots were left, and students from the Land Restoration School helped pull the last of them.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Skills</span>
+      <div>
+        <ul class="chips">
+          <li>Trimble GPS (range pole)</li><li>ArcGIS Field Maps</li><li>ArcGIS Online web maps</li><li>Invasive plant ID</li><li>Field data collection plans</li><li>Photo-point monitoring</li><li>Data QA during desktop review</li><li>Working independently</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="label">Restoring Lands: A Wisconsin Land Trust · Field season 2025 · © 2026 James Krauska</span>
+  </div>
+</footer>
+<div class="lightbox" id="lb" role="dialog" aria-label="Enlarged map"><img alt=""></div>
+<script>
+(function () {
+  const cmp = document.getElementById('cmp');
+  const r = cmp.querySelector('input');
+  r.addEventListener('input', () => cmp.style.setProperty('--pos', r.value + '%'));
+  const lb = document.getElementById('lb'), li = lb.querySelector('img');
+  document.querySelectorAll('.gallery .shot img, .finds .shot img').forEach(im => im.addEventListener('click', () => { li.src = im.src; li.alt = im.alt; lb.classList.add('open'); }));
+  lb.addEventListener('click', () => lb.classList.remove('open'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>
