@@ -1,8 +1,7 @@
 /* Parcel QA homepage card, in three beats:
-   1. Draft: pull back from the block and draw Sheboygan County from its boundary calls, leg by leg
-      (west line, north line, the Lake Michigan shore, south line back to the point of beginning),
-      then the town lines and names.
-   2. Place: mark one block and zoom down into it, 70 km to 550 m.
+   1. Draft: zoom in and draw one parcel from its legal description, course by course (COGO traverse),
+      with the call read out in a caption bar, then close on the point of beginning.
+   2. Place: zoom back out so the drafted parcel sits among the county's real parcels.
    3. Check: a scan line sweeps the block and the real QA findings light up, with a running count.
    Plays on hover (mouse) or once when scrolled into view (touch). Static with reduced motion. */
 (function () {
@@ -11,16 +10,20 @@
   if (!fig) return;
   const svg = fig.querySelector('svg');
   const scan = svg.querySelector('.scan');
-  const cty = svg.querySelector('.cty');
-  const legs = Array.from(cty.querySelectorAll('.leg'));
-  const munis = cty.querySelector('.munis');
+  const trav = svg.querySelector('.trav');
+  const courses = Array.from(trav.querySelectorAll('.tc')).map(g => {
+    const path = g.querySelector('path');
+    const m = path.getAttribute('d').match(/M([\d.-]+),([\d.-]+)L([\d.-]+),([\d.-]+)/).slice(1).map(Number);
+    return { g, path, dd: g.querySelector('.dd'), dist: +g.dataset.dist, call: g.dataset.call, x: m[0], y: m[1] };
+  });
+  const narrow = trav.querySelector('.narrow');
   const finds = Array.from(svg.querySelectorAll('.f')).map(el => ({ el, x: +el.dataset.x, n: +(el.dataset.n || 0) }));
   const label = fig.querySelector('.pq-label');
   const cap = fig.querySelector('.pq-cap');
   const rest = label.textContent;
   const done = label.dataset.done;
   const FULL = [0, 0, 1000, 600];
-  const COUNTY = cty.dataset.county.split(' ').map(Number);
+  const ZOOM = trav.dataset.zoom.split(' ').map(Number);
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (reduceMotion) return;
@@ -28,16 +31,7 @@
   let run = 0;
   const ease = k => (k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2);
   const setVB = a => svg.setAttribute('viewBox', a.map(v => v.toFixed(2)).join(' '));
-  // Zoom between two views at a steady rate: width moves on a log scale, and the centre moves
-  // in step with the width so the block stays under the eye the whole way down.
-  function zoom(a, b, k) {
-    const w = a[2] * Math.pow(b[2] / a[2], k);
-    const f = (w - a[2]) / (b[2] - a[2]);
-    const cx = a[0] + a[2] / 2 + (b[0] + b[2] / 2 - a[0] - a[2] / 2) * f;
-    const cy = a[1] + a[3] / 2 + (b[1] + b[3] / 2 - a[1] - a[3] / 2) * f;
-    const h = w * a[3] / a[2];
-    return [cx - w / 2, cy - h / 2, w, h];
-  }
+  const lerp = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
   function tween(ms, fn, tok) {
     return new Promise(res => {
       let t0 = 0;
@@ -59,9 +53,8 @@
 
   function reset() {
     fig.classList.remove('drafting', 'placed', 'scanning', 'swept');
-    cty.classList.remove('closed', 'towns', 'marked');
-    legs.forEach(l => { l.style.strokeDashoffset = 1; });
-    munis.style.strokeDashoffset = 1;
+    trav.classList.remove('closed');
+    courses.forEach(c => { c.g.classList.remove('on', 'done'); c.path.style.strokeDashoffset = 1; c.dd.textContent = c.dist.toFixed(2); });
     finds.forEach(f => f.el.classList.remove('on'));
     scan.removeAttribute('transform');
     setVB(FULL);
@@ -73,29 +66,28 @@
     const tok = ++run;
     reset();
     fig.classList.add('drafting');
-    cap.textContent = 'Sheboygan County, from its boundary description';
-    if (!await tween(1500, k => setVB(zoom(FULL, COUNTY, ease(k))), tok)) return;
+    cap.textContent = 'Beginning at the point of beginning (POB)';
+    if (!await tween(1000, k => setVB(lerp(FULL, ZOOM, ease(k))), tok)) return;
 
-    cap.textContent = 'Beginning at the southwest corner of the county (POB)';
-    if (!await wait(700, tok)) return;
-    for (const l of legs) {                          // 1. draft, leg by leg
-      cap.textContent = l.dataset.call;
-      const ms = l.dataset.call.includes('shore') ? 1500 : 950;
-      if (!await tween(ms, k => { l.style.strokeDashoffset = 1 - ease(k); }, tok)) return;
-      if (!await wait(250, tok)) return;
+    for (const c of courses) {                       // 1. draft, course by course
+      cap.textContent = c.call;
+      narrow.setAttribute('transform', `translate(${c.x},${c.y})`);
+      c.g.classList.add('on');
+      if (!await tween(800, k => {
+        const e = ease(k);
+        c.path.style.strokeDashoffset = 1 - e;
+        c.dd.textContent = (c.dist * e).toFixed(2);
+      }, tok)) return;
+      c.g.classList.add('done');
+      if (!await wait(200, tok)) return;
     }
-    cty.classList.add('closed');
-    cap.textContent = 'Closed. Then the 15 towns inside it';
-    cty.classList.add('towns');
-    if (!await tween(1100, k => { munis.style.strokeDashoffset = 1 - ease(k); }, tok)) return;
-    if (!await wait(900, tok)) return;
+    cap.textContent = trav.dataset.close;
+    trav.classList.add('closed');
+    if (!await wait(1400, tok)) return;
 
-    cty.classList.add('marked');                     // 2. find one block and zoom down to it
-    cap.textContent = 'One block in the City of Sheboygan Falls, 550 m across';
-    if (!await wait(1000, tok)) return;
+    fig.classList.remove('drafting');                // 2. place it among the county's parcels
     fig.classList.add('placed');
-    if (!await tween(1700, k => setVB(zoom(COUNTY, FULL, ease(k))), tok)) return;
-    fig.classList.remove('drafting');
+    if (!await tween(1000, k => setVB(lerp(ZOOM, FULL, ease(k))), tok)) return;
 
     fig.classList.add('scanning', 'swept');          // 3. check the block
     let found = 0;

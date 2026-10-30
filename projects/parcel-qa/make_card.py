@@ -117,21 +117,16 @@ if len(a05):
 
 finds.sort(key=lambda t: t[0])
 
-# ---- Sheboygan County, drawn like a traverse: the county line course by course (bearings and
-# distances in WISCRS Sheboygan ftUS), the Lake Michigan shore as one meander call, then the town
-# and municipal lines, then a zoom down to this block for the QA sweep.
-from shapely.geometry import Polygon, Point as SPoint
-from shapely.ops import unary_union, substring
-from shapely.geometry import LineString as SLine
-Mu = gpd.read_file("raw/municipalities.gpkg")            # EPSG:8158, US survey feet
-cty = unary_union(Mu.geometry).buffer(50).buffer(-50)
-cty = Polygon(max(getattr(cty, "geoms", [cty]), key=lambda p: p.area).exterior)
-if cty.exterior.is_ccw:
-    cty = Polygon(list(cty.exterior.coords)[::-1])          # clockwise, like a traverse
+# ---- COGO traverse of one parcel (stand-in: courses computed from the county's parcel geometry,
+# to be replaced by James's own COGO draft). Bearings and distances in WISCRS Sheboygan (ftUS).
+TRAV_PID = "59282903950"
+N = gpd.read_file("raw/parcels.gpkg")              # native EPSG:8158, US survey feet
+tg = N[N[pid] == TRAV_PID].geometry.iloc[0]
+tg = tg.geoms[0] if tg.geom_type == "MultiPolygon" else tg
+ring = list(tg.simplify(0.5).exterior.coords)
+to3071 = gpd.GeoSeries(gpd.points_from_xy([c[0] for c in ring], [c[1] for c in ring]), crs=N.crs).to_crs(3071)
+pts = [(sx(p.x), sy(p.y)) for p in to3071]
 
-def to_svg(geom):
-    g3071 = gpd.GeoSeries([geom], crs=Mu.crs).to_crs(3071).iloc[0]
-    return g3071
 
 def qbearing(az):
     az %= 360
@@ -139,81 +134,53 @@ def qbearing(az):
     elif az <= 180: ns, ew, a = "S", "E", 180 - az
     elif az <= 270: ns, ew, a = "S", "W", az - 180
     else: ns, ew, a = "N", "W", 360 - az
-    t = round(a * 60)
-    return f"{ns} {t // 60}°{t % 60:02d}′ {ew}"
+    t = round(a * 3600)
+    return f"{ns} {t // 3600}°{t % 3600 // 60:02d}′{t % 60:02d}″ {ew}", t / 3600 * (1 if (ns, ew) in (("N", "E"), ("S", "W")) else -1)
 
-simple = cty.simplify(3000)
-sc = list(simple.exterior.coords)[:-1]
-# corners: SW = min(x+y), NW = min(x-y), NE = max(x+y), SE = max(x-y)
-SWc = min(sc, key=lambda c: c[0] + c[1]); NWc = min(sc, key=lambda c: c[0] - c[1])
-NEc = max(sc, key=lambda c: c[0] + c[1]); SEc = max(sc, key=lambda c: c[0] - c[1])
-def nearest_idx(ring, c):
-    return min(range(len(ring)), key=lambda i: (ring[i][0] - c[0]) ** 2 + (ring[i][1] - c[1]) ** 2)
-full = list(cty.simplify(350).exterior.coords)[:-1]
-i_sw, i_nw, i_ne, i_se = (nearest_idx(full, c) for c in (SWc, NWc, NEc, SEc))
-def ring_slice(i, j):
-    return full[i:j + 1] if j >= i else full[i:] + full[:j + 1]
-legs = []                                                  # (call text, coords in 8158)
-for a_, b_, label in ((i_sw, i_nw, None), (i_nw, i_ne, None)):
-    seg = ring_slice(a_, b_)
-    p, q = seg[0], seg[-1]
-    az = math.degrees(math.atan2(q[0] - p[0], q[1] - p[1])); dist = math.hypot(q[0] - p[0], q[1] - p[1])
-    legs.append((f"Thence {qbearing(az)}, {dist:,.0f} ft ({dist / 5280:.1f} mi)", seg))
-shore = ring_slice(i_ne, i_se)
-shore_len = SLine(shore).length
-legs.append((f"Thence along the shore of Lake Michigan, about {shore_len / 5280:.0f} mi", shore))
-seg = ring_slice(i_se, i_sw)
-p, q = seg[0], seg[-1]
-az = math.degrees(math.atan2(q[0] - p[0], q[1] - p[1])); dist = math.hypot(q[0] - p[0], q[1] - p[1])
-legs.append((f"Thence {qbearing(az)}, {dist:,.0f} ft ({dist / 5280:.1f} mi), to the point of beginning", seg))
 
-def rel(pts):
-    pts = [(round(sx(x)), round(sy(y))) for x, y in pts]
-    out = f"M{pts[0][0]},{pts[0][1]}l"; px, py = pts[0]; parts = []
-    for x, y in pts[1:]:
-        if (x, y) != (px, py): parts.append(f"{x - px},{y - py}"); px, py = x, y
-    return out + " ".join(parts)
-def leg_d(coords):
-    ls = to_svg(SLine(coords))
-    return rel(list(ls.coords))
-legs_svg = "".join(f'<path class="leg" pathLength="1" data-call="{c}" d="{leg_d(co)}"/>' for c, co in legs)
+courses, ex, ey, perim = [], 0.0, 0.0, 0.0
+for i, ((x1, y1), (x2, y2)) in enumerate(zip(ring, ring[1:])):
+    az = math.degrees(math.atan2(x2 - x1, y2 - y1)) % 360
+    dist = round(math.hypot(x2 - x1, y2 - y1), 2)
+    text, _ = qbearing(az)
+    t = round((az % 90 if True else az) * 3600)      # rounded azimuth to the second, for closure
+    azr = math.radians(round(az * 3600) / 3600)
+    ex += dist * math.sin(azr); ey += dist * math.cos(azr); perim += dist
+    courses.append((text, dist))
+mis = math.hypot(ex, ey)
+closure = (f"misclosure {mis:.2f} ft · 1:{round(perim / mis, -2):,.0f}" if mis >= 0.005
+           else "misclosure under 0.01 ft")
 
-# municipal lines inside the county (towns, cities, villages), drawn after the outline closes
-Md = Mu.dissolve(by="name").reset_index()
-from shapely.ops import linemerge
-inner = unary_union([g.simplify(300).boundary for g in Md.geometry]).difference(cty.exterior.buffer(600))
-inner = linemerge(inner) if inner.geom_type == "MultiLineString" else inner
-inner = unary_union([l.simplify(500) for l in getattr(inner, "geoms", [inner]) if l.length > 2500])
-inner3071 = to_svg(inner)
-def lines_d(geom):
-    out = []
-    for g in getattr(geom, "geoms", [geom]):
-        if g.geom_type == "LineString" and g.length > 0:
-            out.append(rel(list(g.coords)))
-    return "".join(out)
-inner_d = lines_d(inner3071)
-towns = Md[Md.munitype == "Township"]
-labels = []
-for r in towns.itertuples():
-    b = r.geometry.bounds; pt = to_svg(SPoint((b[0] + b[2]) / 2, (b[1] + b[3]) / 2))
-    labels.append(f'<text x="{sx(pt.x):.0f}" y="{sy(pt.y):.0f}">{r.name.replace("Town of ", "").upper().replace("SHEBOYGAN FALLS", "SHEB. FALLS")}</text>')
-pob = to_svg(SPoint(full[i_sw]))
-cb = to_svg(cty).bounds
-cw = (cb[2] - cb[0]) / WM * W; chh = (cb[3] - cb[1]) / HM * H
-vw = max(cw * 1.2, chh * 1.5 * 5 / 3); vh = vw * 0.6
-ccx, ccy = sx((cb[0] + cb[2]) / 2), sy((cb[1] + cb[3]) / 2)
-county_vb = f"{ccx - vw / 2:.0f} {ccy - vh * 0.54:.0f} {vw:.0f} {vh:.0f}"
-here = to_svg(SPoint(0, 0)) if False else None
-blk = (500, 300)                                            # this block's center in card units
-trav = (f'<g class="cty" data-county="{county_vb}">'
-        f'<path class="cfill" d="{leg_d(full + [full[0]])}Z"/>'
-        f'<path class="munis" pathLength="1" d="{inner_d}"/>'
-        f'<g class="tlab" font-size="{vw / 66:.0f}">{"".join(labels)}</g>'
-        f'{legs_svg}'
-        f'<circle class="pob" cx="{sx(pob.x):.0f}" cy="{sy(pob.y):.0f}" r="{vw / 160:.0f}"/>'
-        f'<rect class="here" x="{blk[0] - vw / 70:.0f}" y="{blk[1] - vw / 70:.0f}" width="{vw / 35:.0f}" height="{vw / 35:.0f}"/>'
-        f'</g>')
-print("county legs", [c for c, _ in legs], "view", county_vb)
+tr = []
+for i, ((text, dist), (a, b)) in enumerate(zip(courses, zip(pts, pts[1:]))):
+    (x1, y1), (x2, y2) = a, b
+    L = math.hypot(x2 - x1, y2 - y1)
+    ang = math.degrees(math.atan2(y2 - y1, x2 - x1))
+    flip = ang > 90 or ang < -90
+    rot = ang + 180 if flip else ang
+    mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+    # put the label outside the parcel: offset to the left of travel for a clockwise ring
+    cxp = sum(p[0] for p in pts[:-1]) / (len(pts) - 1); cyp = sum(p[1] for p in pts[:-1]) / (len(pts) - 1)
+    nx, ny = -(y2 - y1) / L, (x2 - x1) / L
+    if (mx + nx - cxp) ** 2 + (my + ny - cyp) ** 2 < (mx - cxp) ** 2 + (my - cyp) ** 2:
+        nx, ny = -nx, -ny
+    off = 9
+    lx, ly = mx + nx * off, my + ny * off
+    tr.append(f'<g class="tc" data-call="Thence {text}, {dist:.2f} ft" data-dist="{dist:.2f}">'
+              f'<path d="M{x1:.2f},{y1:.2f}L{x2:.2f},{y2:.2f}" pathLength="1"/>' +
+              (f'<text transform="translate({lx:.2f},{ly:.2f}) rotate({rot:.1f})" dy="0.35em">{text}</text>' if L > 80 else "") +
+              f'<text class="dt" transform="translate({mx - nx * off:.2f},{my - ny * off:.2f}) rotate({rot:.1f})" dy="0.35em"><tspan class="dd">{dist:.2f}</tspan> ft</text></g>')
+xs = [p[0] for p in pts]; ys = [p[1] for p in pts]
+zw = max(max(xs) - min(xs), (max(ys) - min(ys)) * 5 / 3) * 1.55
+zcx, zcy = (max(xs) + min(xs)) / 2, (max(ys) + min(ys)) / 2
+zoom = f"{zcx - zw / 2:.1f} {zcy - zw * 0.285:.1f} {zw:.1f} {zw * 0.6:.1f}"   # sits a little high, clear of the caption bar
+poly = "M" + "L".join(f"{x:.2f},{y:.2f}" for x, y in pts) + "Z"
+trav = (f'<g class="trav" data-zoom="{zoom}" data-close="Closes on the point of beginning · {closure}">'
+        f'<path class="tfill" d="{poly}"/>{"".join(tr)}'
+        f'<circle class="pob" cx="{pts[0][0]:.2f}" cy="{pts[0][1]:.2f}" r="3"/>'
+        f'<text class="pobt" x="{pts[0][0]:.2f}" y="{pts[0][1]:.2f}" dx="6" dy="-6">POB</text>'
+        f'<g class="narrow"><path d="M0,-14L4,0L0,-3L-4,0Z"/><text y="-17" text-anchor="middle">N</text></g></g>')
+print("traverse", courses, closure, "zoom", zoom)
 svg = (f'<svg viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">'
        f'<path class="pl" d="{parcel_d}"/><path class="rd" d="{road_d}"/><g class="ad">{dots}</g>'
        f'<g class="finds">{"".join(s for _, s in finds)}</g>{trav}'
