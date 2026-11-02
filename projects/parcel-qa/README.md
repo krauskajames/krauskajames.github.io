@@ -63,6 +63,8 @@ Planned layout:
 - `sql/10_checks/*.sql`: the P, A and R checks as views
 - `sql/20_report.sql`: the summary table, matching `qa_summary.csv` so the SQL and Python results can be compared
 - Notes on porting the queries to SQL Server spatial
+- `report/parcel_qa_report.qmd`: a Quarto report built from the database views (Python vs. SQL counts,
+  findings map, examples, how to rerun), rendered to HTML for the project page and to PDF
 
 Not built yet.
 
