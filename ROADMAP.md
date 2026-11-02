@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: October 29, 2026
+Last updated: November 2, 2026
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -60,8 +60,8 @@ Each idea gets two scores from 1 to 5:
 | 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | 🔧 |
 | 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔧 |
 | 3 | Employer quotes and references | 4 | 5 | 4.4 | 🔜 |
-| 4 | Parcel and NG911 data QA toolkit | 5 | 3 | 4.2 | 🔧 |
-| 5 | Geodatabase and SQL project | 5 | 3 | 4.2 | 💡 |
+| 4 | Parcel and NG911 data QA toolkit (with PostGIS) | 5 | 3 | 4.2 | 🔧 |
+| 5 | ~~Geodatabase and SQL project~~ (merged into item 4) | | | | ➡️ |
 | 6 | Utility mapping from as-built drawings | 5 | 3 | 4.2 | 💡 |
 | 7 | Dark Skies of Wisconsin poster (WLIA map contest) | 4 | 4 | 4.0 | 💡 |
 | 8 | Esri Academy advanced course project | 4 | 4 | 4.0 | 💡 |
@@ -118,19 +118,18 @@ Each idea gets two scores from 1 to 5:
 - **Need:** Ask for a LinkedIn recommendation or a two-sentence quote; get permission to use their name and title.
 - **Next step:** Message The Wellness Spa contact this week.
 
-### 4. Parcel and NG911 data QA toolkit · E5 F3 · 4.2
-- **What:** The parcel data pipeline: draft 3 to 5 parcels from recorded legal descriptions with COGO, then an ArcPy script tool that checks a county's parcels and address points for gaps, overlaps, missing fields and address points off their road centerline, with an error map.
-- **Why:** Parcels, legal descriptions, NG911 and scripting appear in four of the six postings analyzed. This closes the biggest gap.
-- **Need:** ArcGIS Pro (Personal Use license), Esri Parcel Fabric labs (Splitting and Dividing Parcels), a PLSS primer, public parcel and address data for one county.
-- **Status:** 🔧 Live for Sheboygan County (parcel-qa.html): 19 checks, 1,321 items to review, a scan-line homepage card, and a Pro script tool. The splitting lab is done (Oct 26).
-- **Next step:** COGO-draft four parcels and test the script tool, following YOUR_PART.md.
-- **Add later (Data Reviewer):** rebuild a few of the 19 checks as Data Reviewer rules in Pro (attribute and topology checks that run automatically as data is edited). It shows the Esri-native way counties enforce data quality, next to the Python version.
+### 4. Parcel and NG911 data QA toolkit, with a PostGIS database · E5 F3 · 4.2
+- **What:** The parcel data pipeline, in three parts:
+  1. **COGO drafting:** draft 3 to 5 parcels from recorded legal descriptions in ArcGIS Pro.
+  2. **QA toolkit:** a Python/ArcPy script tool that checks a county's parcels, address points and road centerlines for gaps, overlaps, missing fields, NG911 addressing errors and address points off their road, with an error map.
+  3. **PostGIS database (absorbed item 5):** load the Sheboygan parcels, address points and road centerlines into PostgreSQL/PostGIS with a designed schema (keys, constraints, lookup tables standing in for domains, spatial indexes). Rewrite the core checks as spatial SQL (`ST_Within`, `ST_Intersects`, `ST_DWithin`, self-joins for duplicates and overlaps) and save them as views, so the QA report is one query per check. Connect the database to ArcGIS Pro and QGIS. Publish the schema diagram and the SQL on the project page and GitHub, with a note that the same queries port to SQL Server spatial (`geometry`/`geography`).
+- **Why:** Parcels, legal descriptions, NG911 and scripting appear in four of the six postings analyzed. This closes the biggest gap. Winnebago asks for "knowledge of enterprise GIS database management systems" and R&M asks for SQL; doing the SQL on the same county data turns one project into a full data-management story (draft → check in Python → check in SQL). PostGIS is the spatial SQL most postings mean; SQL Server/SSMS experience goes on the resume alongside it, since many Wisconsin county enterprise geodatabases run on SQL Server.
+- **Need:** ArcGIS Pro (Personal Use license), Esri Parcel Fabric labs (Splitting and Dividing Parcels), a PLSS primer, public parcel and address data for one county, PostgreSQL with PostGIS (free; installed with the Stack Builder on Windows). SSMS is already installed for the SQL Server note.
+- **Status:** 🔧 Live for Sheboygan County (parcel-qa.html): 19 checks, 1,321 items to review, a scan-line homepage card, and a Pro script tool. The splitting lab is done (Oct 26); the dividing lab is done (Oct 28). PostGIS part not started.
+- **Next step:** COGO-draft four parcels and test the script tool, following YOUR_PART.md. In parallel: install PostgreSQL + PostGIS and sketch the schema for the parcel, address and road tables.
 
-### 5. Geodatabase and SQL project · E5 F3 · 4.2
-- **What:** Design a small enterprise-style geodatabase (domains, subtypes, relationships, versioning notes) and load it into PostGIS, then answer real questions with SQL: parcels within 500 feet of a road, address points with no parcel, duplicate records.
-- **Why:** Winnebago asks for "knowledge of enterprise GIS database management systems"; R&M asks for SQL. Pairs naturally with item 4 (same county data).
-- **Need:** PostgreSQL with PostGIS (free), or a file geodatabase plus SQLite/GeoPackage as a lighter start.
-- **Next step:** Sketch the schema for the parcel and address data from item 4.
+### 5. Geodatabase and SQL project → merged into item 4
+Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs on the same Sheboygan County data. Number kept so other item references stay the same.
 
 ### 6. Utility mapping from as-built drawings · E5 F3 · 4.2
 - **What:** Digitize a sample water or sewer system from as-built style drawings into a utility network (mains, valves, hydrants, manholes with attributes and connectivity), then run a trace: "which customers lose water if this valve closes?"

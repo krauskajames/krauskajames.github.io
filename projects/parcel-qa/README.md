@@ -51,4 +51,19 @@ environment (instructions at the top of the file).
 | R02 | Roads | Overlapping ranges on one street (same parity) |
 | R03 | Roads | Segment with linked addresses but no range |
 
+## Planned: PostGIS version
+
+The same county data loaded into PostgreSQL/PostGIS, with the core checks rewritten as spatial SQL views
+(one view per check code, so `SELECT * FROM qa.a03_outside_parcels` gives that check's findings).
+Planned layout:
+
+- `sql/01_schema.sql`: `parcels`, `address_points`, `road_centerlines` with primary keys, NOT NULL and CHECK
+  constraints, lookup tables in place of geodatabase domains, and GiST spatial indexes
+- `load_postgis.py`: loads the downloaded layers into the schema (geopandas → `to_postgis`)
+- `sql/10_checks/*.sql`: the P, A and R checks as views
+- `sql/20_report.sql`: the summary table, matching `qa_summary.csv` so the SQL and Python results can be compared
+- Notes on porting the queries to SQL Server spatial
+
+Not built yet.
+
 Findings are items to review, not confirmed errors. Not an official county product.
