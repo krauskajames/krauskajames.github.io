@@ -163,10 +163,10 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       <div style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
         <span class="label">3D capture</span>
         <span class="label">Drone photogrammetry · Gaussian splatting</span>
-        <span class="label">Milwaukee · 2026</span>
+        <span class="label">Milwaukee · October 2026</span>
       </div>
       <h1>North Point Water Tower, <em>in the round</em></h1>
-      <p class="lede">An interactive 3D model of Milwaukee's North Point Water Tower, built from drone video. Turn it, zoom in on the lantern, and look at the stonework from any side.</p>
+      <p class="lede">An interactive 3D model of Milwaukee's North Point Water Tower, built from seven minutes of drone video and a few ground photos. Turn it, zoom in on the lantern, and look at the stonework from any side.</p>
     </div>
   </div>
 
@@ -210,18 +210,19 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       <span class="label">How it was made</span>
       <div class="prose">
         <ol class="steps">
-          <li><span><b>Fly.</b> Drone video in orbits around the tower with exposure locked, so every frame shares the same brightness.</span></li>
-          <li><span><b>Check the logs.</b> Read the drone's per-frame flight logs (.SRT) to confirm the orbits close and the heights differ before processing anything.</span></li>
-          <li><span><b>Extract frames.</b> Pull a few hundred stills from the video with ffmpeg, scaled to 1920 px, and drop blurry ones.</span></li>
-          <li><span><b>Solve the cameras.</b> COLMAP matches features between frames and works out where the camera was for each one, producing a sparse point cloud.</span></li>
-          <li><span><b>Train the splat.</b> A Gaussian splatting trainer fits the blobs to the frames from those camera positions.</span></li>
-          <li><span><b>Clean and publish.</b> Crop the scene and remove floaters in SuperSplat, export a compressed file, and render it here with Spark.</span></li>
+          <li><span><b>Fly.</b> Five drone clips at three heights around the tower on October 29, 2026, all with exposure locked at 1/800 s so every frame shares the same brightness. Then 26 handheld photos from the ground for the doorway and lower walls.</span></li>
+          <li><span><b>Check the logs.</b> Read the drone's per-frame flight logs (.SRT) to confirm the passes close around the tower and sit at different heights before processing anything.</span></li>
+          <li><span><b>Extract frames.</b> Pull 578 stills from the video with ffmpeg and drop blurry ones.</span></li>
+          <li><span><b>Solve the cameras.</b> COLMAP matches features across all 604 images and works out where each was taken, with separate lens models for the drone and the handheld camera.</span></li>
+          <li><span><b>Train the splat.</b> Brush fits millions of Gaussians to the images from those camera positions.</span></li>
+          <li><span><b>Clean and publish.</b> Crop away the neighbourhood and floaters in SuperSplat, leaving 90,814 Gaussians on the tower, then compress it from 458 MB to 5.3 MB and render it here with Spark.</span></li>
         </ol>
         <h3>Problems worth solving</h3>
         <ul>
           <li><strong>Ghost copies.</strong> Repetitive features like rows of identical windows can fool the camera solve into placing a second, smaller copy of a building. Stricter registration thresholds and matching settings fixed it.</li>
           <li><strong>Coverage, not frame count, decides quality.</strong> Several orbits at different heights beat one long pass. I now check the flight logs before processing to catch gaps early.</li>
-          <li><strong>Web delivery.</strong> The raw splat is hundreds of megabytes. The compressed version loads in seconds and runs on a phone.</li>
+          <li><strong>Mixing cameras.</strong> Ground photos fill in what a drone sees poorly, but only if COLMAP treats them as a second camera with its own lens. One shared lens model bends the reconstruction.</li>
+          <li><strong>Web delivery.</strong> The trained splat was 458 MB. Cropping and compression brought it to 5.3 MB, small enough to load in seconds on a phone.</li>
         </ul>
       </div>
     </div>
@@ -233,7 +234,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       <div class="prose">
         <p>I planned and flew the capture, ran the processing pipeline, cleaned the model, and built this viewer page.</p>
         <ul class="chips" aria-label="Tools">
-          <li>DJI drone</li><li>ffmpeg</li><li>COLMAP</li><li>Gaussian splatting</li><li>SuperSplat</li><li>three.js</li><li>Spark</li>
+          <li>DJI drone</li><li>ffmpeg</li><li>COLMAP</li><li>Brush</li><li>SuperSplat</li><li>splat-transform</li><li>three.js</li><li>Spark</li>
         </ul>
       </div>
     </div>
@@ -331,7 +332,7 @@ async function start() {
   const size = box.getSize(new THREE.Vector3()), center = box.getCenter(new THREE.Vector3());
   const fitH = size.y / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
   const fitW = Math.max(size.x, size.z) / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / Math.max(camera.aspect, 0.4);
-  const dist = Math.max(fitH, fitW) * 1.25 + Math.max(size.x, size.z) / 2;
+  const dist = Math.max(fitH, fitW) * 1.1 + Math.max(size.x, size.z) / 2;
   const el = THREE.MathUtils.degToRad(VIEW_ELEV);
   home = { target: center.clone(), pos: center.clone().add(new THREE.Vector3(0, Math.sin(el), Math.cos(el)).multiplyScalar(dist)) };
   camera.near = dist / 500; camera.far = dist * 20; camera.updateProjectionMatrix();
