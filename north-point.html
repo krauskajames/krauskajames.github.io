@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>North Point Water Tower in 3D – James Krauska</title>
+<meta name="description" content="An interactive 3D Gaussian splat of Milwaukee's North Point Water Tower, built from drone video with COLMAP and a splat trainer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Shared site tokens (same as the other case-study pages) */
+:root {
+  --paper: #f1f2ec; --paper-2: #e6e9dd; --ink: #1b241d; --ink-2: #4c5a4f;
+  --forest: #2e4a34; --olive: #6d7a3a; --rule: #c7ccbb; --on-forest: #f1f2ec;
+  --display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --step--1: 0.8125rem; --step-0: 1rem; --step-1: 1.25rem; --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 4vw, 3rem); --step-4: clamp(2.75rem, 7vw, 5rem);
+  --measure: 62ch; --wrap: 72rem;
+  /* the viewer is always a dark display case, in both themes */
+  --case-1: #0e1410; --case-2: #1d2a20; --case-ink: #e5e9de; --case-ink-2: #a9b4a5; --case-rule: #34423a; --case-accent: #bcc77f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+    --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31; --on-forest: #121813; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+  --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31; --on-forest: #121813; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 5rem; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 var(--step-0)/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+img, svg { max-width: 100%; }
+[hidden] { display: none !important; }
+a { color: inherit; text-decoration-color: var(--olive); text-underline-offset: 0.2em; }
+a:hover { color: var(--forest); }
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; border-radius: 2px; }
+.wrap { max-width: var(--wrap); margin-inline: auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
+@media (max-width: 480px) { .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); } }
+.label { font: 500 var(--step--1)/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--rule); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; flex-wrap: wrap; }
+.wordmark { font: 600 1.5rem/1 var(--display); letter-spacing: 0.01em; text-decoration: none; }
+.wordmark span { color: var(--olive); font-style: italic; font-weight: 500; }
+.nav { display: flex; gap: clamp(1rem, 3vw, 2.25rem); font: 500 0.9375rem/1 var(--body); }
+.nav a { text-decoration: none; padding-block: 0.25rem; border-bottom: 1px solid transparent; }
+.nav a:hover { border-bottom-color: var(--olive); }
+
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; font: 500 0.9375rem/1 var(--body); text-decoration: none; padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px; transition: background-color .2s ease, color .2s ease; }
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(--rule); }
+.section-head { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; align-items: baseline; margin-bottom: 3rem; }
+.section-head h2 { font: 500 var(--step-3)/1.1 var(--display); margin: 0; text-wrap: balance; }
+@media (max-width: 760px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+
+.cs-hero .wrap { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 1.5rem; }
+.cs-hero h1 { font: 500 var(--step-4)/1.02 var(--display); margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+.cs-hero h1 em { color: var(--forest); font-style: italic; }
+.cs-hero .lede { font-size: var(--step-1); line-height: 1.55; max-width: 52ch; margin: 0; color: var(--ink-2); }
+.back { font: 500 0.875rem/1 var(--body); text-decoration: none; color: var(--forest); }
+.back:hover { text-decoration: underline; }
+
+.cs-body { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; }
+@media (max-width: 760px) { .cs-body { grid-template-columns: minmax(0, 1fr); } }
+.cs-body .prose { max-width: var(--measure); }
+.cs-body .prose p { margin: 0 0 1.1rem; }
+.cs-body .prose h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 1.75rem 0 0.5rem; }
+.cs-body .prose ul { margin: 0 0 1.1rem; padding-left: 1.2rem; }
+.cs-body .prose li + li { margin-top: 0.45rem; }
+.cs-body .prose strong { font-weight: 600; color: var(--ink); }
+.steps { counter-reset: s; list-style: none; padding: 0 !important; margin: 0 0 1.1rem; display: grid; border-top: 1px solid var(--rule); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); margin: 0 !important; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
+.steps b { font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; }
+.chips li { margin: 0 !important; font: 500 0.8125rem/1 var(--mono); padding: 0.5rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink-2); }
+
+/* ---- Splat viewer: a dark display case ---- */
+.viewer-wrap { padding-block: 0 clamp(3rem, 7vw, 5rem); border-bottom: 1px solid var(--rule); }
+.viewer {
+  position: relative; margin: 0; overflow: hidden; border-radius: 2px;
+  height: min(78vh, 760px); min-height: 420px;
+  background: radial-gradient(120% 90% at 50% 15%, var(--case-2), var(--case-1) 70%);
+  border: 1px solid var(--case-rule); color: var(--case-ink);
+  touch-action: none; user-select: none; -webkit-user-select: none;
+}
+@media (max-width: 640px) { .viewer { height: 72vh; min-height: 380px; } }
+.viewer canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; outline: none; cursor: grab; }
+.viewer canvas:active { cursor: grabbing; }
+.viewer:fullscreen { height: 100%; border: 0; border-radius: 0; }
+
+.v-label { position: absolute; left: 1rem; top: 1rem; font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--case-ink-2); pointer-events: none; }
+.v-tools { position: absolute; right: 0.75rem; top: 0.75rem; display: flex; gap: 0.4rem; }
+.v-tools button {
+  font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--case-ink); background: color-mix(in srgb, var(--case-1) 70%, transparent);
+  border: 1px solid var(--case-rule); border-radius: 2px; padding: 0.55rem 0.7rem; cursor: pointer; backdrop-filter: blur(4px);
+}
+.v-tools button:hover { border-color: var(--case-accent); }
+.v-tools button[aria-pressed="true"] { color: var(--case-1); background: var(--case-accent); border-color: var(--case-accent); }
+@media (max-width: 480px) { .v-tools .opt { display: none; } }
+
+.v-hint { position: absolute; left: 50%; bottom: 1.1rem; transform: translateX(-50%); font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--case-ink-2); background: color-mix(in srgb, var(--case-1) 75%, transparent); border: 1px solid var(--case-rule); padding: 0.45rem 0.8rem; border-radius: 2px; white-space: nowrap; pointer-events: none; transition: opacity .6s ease; }
+.v-hint.gone { opacity: 0; }
+.v-hint .touch { display: none; }
+@media (hover: none) { .v-hint .mouse { display: none; } .v-hint .touch { display: inline; } }
+
+.v-status { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 0.9rem; text-align: center; padding: 1.5rem; transition: opacity .5s ease; }
+.v-status.done { opacity: 0; pointer-events: none; }
+.v-status p { margin: 0; font: 500 0.8125rem/1.5 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--case-ink-2); max-width: 36ch; }
+.v-bar { width: min(16rem, 60vw); height: 2px; background: var(--case-rule); overflow: hidden; }
+.v-bar i { display: block; height: 100%; width: 0; background: var(--case-accent); transition: width .2s linear; }
+.v-status.error p { color: var(--case-ink); text-transform: none; letter-spacing: 0; font-family: var(--body); font-size: 0.9375rem; }
+
+.viewer-note { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; margin-top: 0.75rem; }
+
+footer { padding-block: 2.5rem 3rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: end; }
+.scalebar { display: grid; gap: 0.35rem; }
+.scalebar .bar { display: flex; width: 12rem; max-width: 100%; height: 6px; border: 1px solid var(--ink); }
+.scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
+.scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three-0.181.0/three.module.min.js",
+    "three/addons/": "./vendor/three-0.181.0/addons/",
+    "@sparkjsdev/spark": "./vendor/spark-2.3.1/spark.module.min.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="cs-hero">
+    <div class="wrap">
+      <a class="back" href="index.html#work">← All work</a>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
+        <span class="label">3D capture</span>
+        <span class="label">Drone photogrammetry · Gaussian splatting</span>
+        <span class="label">Milwaukee · 2026</span>
+      </div>
+      <h1>North Point Water Tower, <em>in the round</em></h1>
+      <p class="lede">An interactive 3D model of Milwaukee's North Point Water Tower, built from drone video. Turn it, zoom in on the lantern, and look at the stonework from any side.</p>
+    </div>
+  </div>
+
+  <div class="viewer-wrap">
+    <div class="wrap">
+      <figure class="viewer" id="viewer" aria-label="Interactive 3D model of the North Point Water Tower. Drag to orbit, scroll or pinch to zoom.">
+        <span class="v-label" aria-hidden="true">North Point Water Tower · Gaussian splat</span>
+        <div class="v-tools">
+          <button type="button" id="v-spin" aria-pressed="true" title="Turn the model slowly">Auto-rotate</button>
+          <button type="button" id="v-reset" title="Back to the starting view">Reset</button>
+          <button type="button" id="v-full" class="opt" title="Full screen" hidden>Full screen</button>
+        </div>
+        <div class="v-status" id="v-status" role="status">
+          <div class="v-bar" aria-hidden="true"><i id="v-bar"></i></div>
+          <p id="v-msg">Loading 3D model…</p>
+        </div>
+        <div class="v-hint" id="v-hint" aria-hidden="true">
+          <span class="mouse">Drag to orbit · scroll to zoom · right-drag to pan</span>
+          <span class="touch">Drag to orbit · pinch to zoom · two fingers to pan</span>
+        </div>
+      </figure>
+      <div class="viewer-note">
+        <span class="label">Rendered live in your browser with three.js and Spark</span>
+        <span class="label" id="v-size"></span>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">What it is</span>
+      <div class="prose">
+        <p>A Gaussian splat stores a scene as millions of tiny, soft, coloured blobs instead of a mesh of triangles. Together they reproduce what the camera saw, including fine detail like carved stone, slate roofs and the copper lantern, that a traditional photogrammetry mesh tends to smooth over.</p>
+        <p>I'm building this workflow at PX Design, where drone splats of client buildings will sit alongside site plans so building managers can inspect a property from their desk.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">How it was made</span>
+      <div class="prose">
+        <ol class="steps">
+          <li><span><b>Fly.</b> Drone video in orbits around the tower with exposure locked, so every frame shares the same brightness.</span></li>
+          <li><span><b>Check the logs.</b> Read the drone's per-frame flight logs (.SRT) to confirm the orbits close and the heights differ before processing anything.</span></li>
+          <li><span><b>Extract frames.</b> Pull a few hundred stills from the video with ffmpeg, scaled to 1920 px, and drop blurry ones.</span></li>
+          <li><span><b>Solve the cameras.</b> COLMAP matches features between frames and works out where the camera was for each one, producing a sparse point cloud.</span></li>
+          <li><span><b>Train the splat.</b> A Gaussian splatting trainer fits the blobs to the frames from those camera positions.</span></li>
+          <li><span><b>Clean and publish.</b> Crop the scene and remove floaters in SuperSplat, export a compressed file, and render it here with Spark.</span></li>
+        </ol>
+        <h3>Problems worth solving</h3>
+        <ul>
+          <li><strong>Ghost copies.</strong> Repetitive features like rows of identical windows can fool the camera solve into placing a second, smaller copy of a building. Stricter registration thresholds and matching settings fixed it.</li>
+          <li><strong>Coverage, not frame count, decides quality.</strong> Several orbits at different heights beat one long pass. I now check the flight logs before processing to catch gaps early.</li>
+          <li><strong>Web delivery.</strong> The raw splat is hundreds of megabytes. The compressed version loads in seconds and runs on a phone.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">My role</span>
+      <div class="prose">
+        <p>I planned and flew the capture, ran the processing pipeline, cleaned the model, and built this viewer page.</p>
+        <ul class="chips" aria-label="Tools">
+          <li>DJI drone</li><li>ffmpeg</li><li>COLMAP</li><li>Gaussian splatting</li><li>SuperSplat</li><li>three.js</li><li>Spark</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between">
+      <a class="back" href="index.html#work">← Back to all work</a>
+      <a class="btn btn-primary" href="index.html#contact">Get in touch</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="scalebar" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><i></i></div>
+      <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
+    </div>
+    <span class="label">NAD83 / Wisconsin Transverse Mercator · © 2026 James Krauska</span>
+  </div>
+</footer>
+
+<script type="module">
+// ---- Settings for this model -------------------------------------------
+const SPLAT_URL  = 'media/north-point/north-point.compressed.ply';
+// Most trained splats come out upside down (camera convention, y down).
+// Rotate 180° about X to stand them up; set false if this model is already upright.
+const FLIP_X     = true;
+const SPIN_SPEED = 0.6;   // auto-rotate speed (three.js units, ~ degrees/s × 6)
+const VIEW_ELEV  = 12;    // starting camera elevation above the horizon, degrees
+// -------------------------------------------------------------------------
+
+const $ = id => document.getElementById(id);
+const fig = $('viewer'), statusEl = $('v-status'), msg = $('v-msg'), bar = $('v-bar'), hint = $('v-hint');
+const spinBtn = $('v-spin'), resetBtn = $('v-reset'), fullBtn = $('v-full');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function fail(text) {
+  statusEl.classList.add('error'); statusEl.classList.remove('done');
+  bar.parentElement.hidden = true; msg.textContent = text; hint.hidden = true;
+}
+
+function hasWebGL2() {
+  try { return !!document.createElement('canvas').getContext('webgl2'); } catch (e) { return false; }
+}
+
+async function start() {
+  if (!hasWebGL2()) { fail('This 3D model needs WebGL 2, which this browser or device does not support. Try a recent version of Chrome, Edge, Firefox or Safari.'); return; }
+
+  let THREE, OrbitControls, SparkRenderer, SplatMesh;
+  try {
+    THREE = await import('three');
+    ({ OrbitControls } = await import('three/addons/controls/OrbitControls.js'));
+    ({ SparkRenderer, SplatMesh } = await import('@sparkjsdev/spark'));
+  } catch (e) { console.error(e); fail('The 3D viewer could not start. Please reload the page.'); return; }
+
+  const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x000000, 0);
+  fig.prepend(renderer.domElement);
+  renderer.domElement.setAttribute('aria-hidden', 'true');
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(40, 1, 0.05, 2000);
+  scene.add(new SparkRenderer({ renderer }));
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.dampingFactor = 0.08;
+  controls.autoRotate = !reduced; controls.autoRotateSpeed = SPIN_SPEED;
+  spinBtn.setAttribute('aria-pressed', String(controls.autoRotate));
+
+  function resize() {
+    const w = fig.clientWidth, h = fig.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(fig); resize();
+
+  // Load the splat
+  let home = null;
+  const splat = new SplatMesh({
+    url: SPLAT_URL,
+    onProgress: ev => { if (ev.lengthComputable && ev.total) bar.style.width = (100 * ev.loaded / ev.total).toFixed(1) + '%'; },
+  });
+  if (FLIP_X) splat.quaternion.set(1, 0, 0, 0);
+  scene.add(splat);
+
+  try { await splat.initialized; }
+  catch (e) { console.error(e); fail('The 3D model could not be loaded. Please check your connection and reload the page.'); return; }
+
+  // Frame the model: centre on its bounding box, back off far enough to fit it.
+  splat.updateMatrixWorld(true);
+  const box = splat.getBoundingBox(true).clone().applyMatrix4(splat.matrixWorld);
+  const size = box.getSize(new THREE.Vector3()), center = box.getCenter(new THREE.Vector3());
+  const fitH = size.y / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const fitW = Math.max(size.x, size.z) / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / Math.max(camera.aspect, 0.4);
+  const dist = Math.max(fitH, fitW) * 1.25 + Math.max(size.x, size.z) / 2;
+  const el = THREE.MathUtils.degToRad(VIEW_ELEV);
+  home = { target: center.clone(), pos: center.clone().add(new THREE.Vector3(0, Math.sin(el), Math.cos(el)).multiplyScalar(dist)) };
+  camera.near = dist / 500; camera.far = dist * 20; camera.updateProjectionMatrix();
+  controls.minDistance = dist * 0.08; controls.maxDistance = dist * 3;
+  function goHome() { controls.target.copy(home.target); camera.position.copy(home.pos); controls.update(); }
+  goHome();
+
+  statusEl.classList.add('done');
+  try {
+    const head = await fetch(SPLAT_URL, { method: 'HEAD' });
+    const bytes = +head.headers.get('content-length');
+    if (bytes) $('v-size').textContent = `${(bytes / 1048576).toFixed(1)} MB compressed`;
+  } catch (e) { /* size label is optional */ }
+
+  // Hint fades after the first interaction
+  let hinted = false;
+  controls.addEventListener('start', () => {
+    if (!hinted) { hinted = true; hint.classList.add('gone'); }
+    if (controls.autoRotate) { controls.autoRotate = false; spinBtn.setAttribute('aria-pressed', 'false'); }
+  });
+
+  spinBtn.addEventListener('click', () => { controls.autoRotate = !controls.autoRotate; spinBtn.setAttribute('aria-pressed', String(controls.autoRotate)); });
+  resetBtn.addEventListener('click', goHome);
+  if (fig.requestFullscreen) {
+    fullBtn.hidden = false;
+    fullBtn.addEventListener('click', () => document.fullscreenElement ? document.exitFullscreen() : fig.requestFullscreen());
+  }
+
+  // Only render while the viewer is on screen
+  let visible = true;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0 }).observe(fig);
+  renderer.setAnimationLoop(() => { if (!visible) return; controls.update(); renderer.render(scene, camera); });
+}
+
+// Start loading when the viewer is about to scroll into view
+new IntersectionObserver((entries, obs) => {
+  if (entries.some(e => e.isIntersecting)) { obs.disconnect(); start(); }
+}, { rootMargin: '300px' }).observe(fig);
+</script>
+</body>
+</html>

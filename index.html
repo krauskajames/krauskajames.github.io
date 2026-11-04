@@ -327,7 +327,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       <div class="section-head">
         <span class="label">Selected work</span>
         <div>
-          <h2>Six projects across automation, web mapping, land records, ecology, planning and cartography</h2>
+          <h2>Seven projects across automation, web mapping, 3D capture, land records, ecology, planning and cartography</h2>
           <p>Each project lists its data, tools and status. Projects marked “Coming 2027” are being built this winter.</p>
         </div>
       </div>
@@ -368,6 +368,21 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
             <dt>Tools</dt><dd>JavaScript, D3, Python, GitHub Actions, PostGIS</dd>
           </dl>
           <a class="case-link" href="starcast.html">Read the case study →</a>
+        </article>
+
+        <!-- North Point Water Tower splat -->
+        <article class="plate">
+          <figure>
+            <img src="media/north-point/card.webp" alt="3D Gaussian splat of Milwaukee's North Point Water Tower, built from drone video" width="1200" height="720" loading="lazy">
+          </figure>
+          <div class="collar"><span class="label">3D capture · Drone · Web viewer</span><span class="status live">Live</span></div>
+          <h3><a href="north-point.html">North Point Water Tower in 3D</a></h3>
+          <p>An interactive Gaussian splat of Milwaukee's North Point Water Tower, built from drone video and viewable from any angle in the browser. The same workflow I'm building at PX Design for client buildings: flight logs checked for coverage, frames extracted, cameras solved in COLMAP, splat trained, cleaned and compressed for the web.</p>
+          <dl>
+            <dt>Data</dt><dd>DJI drone video and flight logs</dd>
+            <dt>Tools</dt><dd>ffmpeg, COLMAP, Gaussian splatting, SuperSplat, three.js, Spark</dd>
+          </dl>
+          <a class="case-link" href="north-point.html">Explore the model →</a>
         </article>
 
         <!-- Parcel & NG911 -->
