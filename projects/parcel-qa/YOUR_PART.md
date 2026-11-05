@@ -102,7 +102,7 @@ Written for **ArcGIS Pro 3.7.3** after drafting Parcel 1 on Nov 5, 2026. These a
 - **Nearest tie sheets:** [62140000](https://gis2.sheboygancounty.com/Tiesheets/62140000.pdf) is the **SE corner of Sec 14** (N 212,155.595, E 190,451.843). [62142000](https://gis2.sheboygancounty.com/Tiesheets/62142000.pdf) should be the E¼ corner, and your POC sits on the east line about halfway between those two. [62140020](https://gis2.sheboygancounty.com/Tiesheets/62140020.pdf) is also nearby.
 - **How to place the POC:** for practice, snap to the county parcel's northeast corner. To do it properly, traverse north from the SE corner along the section line about 1,320 ft, or split the line between the SE and E¼ corners in half (that's how sixteenth corners are set).
 - **Answer key:** misclosure **0.12 ft** (about 1:10,300), area **1.59 ac** (tax roll 1.60).
-- **Your result (Nov 5, 2026, Pro 3.7.3):** ✅ misclosure **S32°44'33"W, 0.12 ft**, ratio **1:10,346**, calculated area **69,281.6 sq ft (1.59 ac)**. Matches the key. Built into the fabric (Tax polygon 69,281.3 sq ft) after fixing a 0.12 ft gap at the start corner.
+- **Your result (Nov 5, 2026, Pro 3.7.3):** ✅ misclosure **S32°44'33"W, 0.12 ft**, ratio **1:10,346**, calculated area **69,281.6 sq ft (1.59 ac)**. Matches the key. Built into the fabric (Tax polygon 69,281.3 sq ft) on Nov 5.
 
 ### Parcel 2: Town of Lima, courses along a road centerline (5 courses)
 
