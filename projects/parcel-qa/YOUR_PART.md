@@ -141,6 +141,15 @@ Written for **ArcGIS Pro 3.7.3** after drafting Parcel 1 on Nov 5, 2026. These a
 
 ---
 
+### Parcel 5 (bonus): Town of Lyndon, the most complex draftable parcel in the county (18 courses + a tie)
+
+- **How it was picked (Nov 5, 2026):** all 63,391 Sheboygan tax parcels were downloaded and every `TAXDSCRP` was parsed for bearings and distances. 600 straight-line descriptions closed within 1 ft and matched their mapped area within 10%; this one had the most courses, plus two notches and a 7.56 ft jog. (The parcels with the most vertices countywide follow rivers and shorelines, and their descriptions have no bearings, so they can't be drafted.)
+- **Parcel ID:** 59010122221 · T14N R21E Sec 9 · 38.4 acres · N4143 County Road E
+- **Description (as stored, cut off at the field's 500-character limit, so it ends "TO B"):** *PRT W1/2 SE1/4,SEC 9,COM S89 DEG 30'56"E 50'FROM CEN SD SEC,TH CONT S89 DEG 30'56"E 1283.98',S0 DEG 13'54"W 1161',N89 DEG 34'48"W 931.48',S0 DEG 06'51"W 1002.50',N89 DEG 34'48"W 352.84'TO E R/W CTH E,N0 DEG 3'25"E 275.28',N2 DEG 55'10"E 100.12',N00 DEG 03'25"E 300',N05 DEG 39'13"W 62.79', S89 DEG 53'09"E 218.82',N0 DEG 06'51"E 330',N89 DEG 53' 09"W 213.66',N05 DEG 46'05"E 7.56',N0 DEG 03'25"E 247.59' S82 DEG 33'09"E 385.74',N0 DEG 6'51"E 250',N82 DEG 33'09"W 385.99',TH N0 DEG 3'25" E 592.03'TO B*
+- **Reading it:** commence at the **center of Section 9** (tie sheet [41092020](https://gis2.sheboygancounty.com/Tiesheets/41092020.pdf), N 157,004.78, E 145,440.35), go 50 ft east to the POB (a tie line, not a boundary), then "CONT" (continue on the same bearing) around 18 courses. Courses 10–12 and 15–17 cut two notches into the west side; course 13 is a 7.56 ft jog. The county's NW parcel corner sits exactly 50.0 ft east of the control point.
+- **Courses:** tie S 89°30'56" E 50.00, then S 89°30'56" E 1283.98 · S 0°13'54" W 1161.00 · N 89°34'48" W 931.48 · S 0°06'51" W 1002.50 · N 89°34'48" W 352.84 · N 0°03'25" E 275.28 · N 2°55'10" E 100.12 · N 0°03'25" E 300.00 · N 5°39'13" W 62.79 · S 89°53'09" E 218.82 · N 0°06'51" E 330.00 · N 89°53'09" W 213.66 · N 5°46'05" E 7.56 · N 0°03'25" E 247.59 · S 82°33'09" E 385.74 · N 0°06'51" E 250.00 · N 82°33'09" W 385.99 · N 0°03'25" E 592.03
+- **Answer key:** misclosure **0.11 ft** over 8,101 ft (about 1:77,000), area **1,674,583 sq ft (38.44 ac)**, tax roll 38.4.
+
 ## 4. Test the ParcelQA script tool in Pro
 
 The files are in `Documents\Claude outputs\ParcelQA`: `ParcelQA.pyt` and `parcel_qa.py` (keep them in the same folder).
