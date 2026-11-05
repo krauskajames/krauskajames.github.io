@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 5, 2026
+Last updated: November 5, 2026 (remote sensing skill gaps added)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -186,6 +186,7 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Why:** James no longer does floor plans at PX Design; he and his boss want him to take over the site plans the business now outsources. Site planning, drone mapping and parcel/zoning work are also everyday GIS tasks for counties, cities and engineering firms.
 - **Need:** A practice site that isn't a client's (for the portfolio); Esri's "Create drone imagery products with ortho mapping" tutorial; the drone flown in timed-photo mode (video frames carry no GPS tags, which ortho mapping needs).
 - **Pro skills it builds:** ortho mapping (orthomosaic, DSM, DTM); contours, slope and cut/fill volumes (3D Analyst, Spatial Analyst); a sun-shadow study of a proposed building (Sun Shadow Volume); setback buffers from parcel lines; CAD/SketchUp export. Package the repeated steps as a ModelBuilder model or Python toolbox so each new site plan starts from one tool.
+- **Stretch:** Process the same flight in WebODM (free, open-source) or a Metashape trial and compare the orthomosaics, so the resume can name more than one photogrammetry package.
 - **Next step:** Do the ortho mapping tutorial, then a practice site plan of a public site.
 
 ### 13. Deep learning feature extraction (Image Analyst) · E4 F4 · 4.0
@@ -224,6 +225,7 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **What:** From Wisconsin county LiDAR: bare-earth DEM, hillshade, canopy height and extracted building footprints for one town, with an accuracy check against existing footprints.
 - **Why:** LiDAR and feature extraction show up in surveying and engineering-firm postings. The same data feeds items 20 and 32.
 - **Need:** County LiDAR point cloud (WisconsinView or the county); ArcGIS Pro 3D Analyst: Classify LAS Building, then LAS Building Multipatch for roof forms; Extract LAS for site clips.
+- **Point cloud skills:** Classify the raw points before extracting anything: Classify LAS Ground and Classify LAS By Height in Pro (and optionally LAStools), with a quick check of the misclassified points. "Point cloud classification" is its own keyword in surveying and remote sensing postings.
 - **Tip:** Build items 19 and 20 together on the same town to save time.
 
 ### 20. Solar suitability map · E4 F3 · 3.6
@@ -233,13 +235,14 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 
 ### 21. Mountain lion corridors, redone in Python · E4 F3 · 3.6
 - **What:** Rebuild the GEOG 343 cartographic model (suitability surface, cost distance, least-cost corridors) as a documented Python notebook with a clean final map.
-- **Why:** Spatial analysis plus scripting in one piece.
+- **Why:** Spatial analysis plus scripting in one piece. Use rasterio, GDAL and geopandas (open-source) alongside ArcPy, so the notebook shows the Python geospatial libraries that postings name.
 - **Have:** The full ArcGIS Pro project and rasters on the USB (Spring 2025 / GEOG 343 / Lab01 Cougars, 575 MB).
 
 ### 22. Horicon Marsh open water since 1985 (Earth Engine, Random Forest) · E4 F3 · 3.6
 - **What:** Map open water in Horicon Marsh every five years from 1985 with a Random Forest on eight Landsat water indices (github.com/RisaRezaei/gee-wetland-water-rf), with hold-out accuracy and kappa, your own drawn water and land samples, and the area series set against the marsh's water-level history.
 - **Why:** Wetland mapping, classification and accuracy assessment are core skills for DNR and conservation jobs, and it builds on the MaxEnt pollinator work. Horicon is the largest freshwater cattail marsh in the U.S. and an hour from Sheboygan.
 - **Need:** Item 9 done first (same Earth Engine setup); drawn training samples, because the marsh's open water is shallow and full of vegetation.
+- **Stretch (OBIA):** Classify one year a second way, object-based: segment the image (Segment Mean Shift in Pro, or SNIC in Earth Engine), classify the segments, and compare accuracy with the pixel-based Random Forest.
 - **Next step:** Course lesson 3, then run the script on Horicon with the default JRC labels as a first look.
 
 ### 23. Milwaukee: a divided city, 1940–2020 (StoryMap) · E4 F3 · 3.6
@@ -265,7 +268,7 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 ## Tier 3: showpieces and passion projects
 
 ### 26. Fall color change from satellite imagery (ESA SNAP) · E3 F3 · 3.0
-- **What:** Track Wisconsin's fall color from north to south with Sentinel-2 imagery processed in ESA SNAP (vegetation index change between dates), as an animated map.
+- **What:** Track Wisconsin's fall color from north to south with Sentinel-2 imagery processed in ESA SNAP (NDVI change between dates), as an animated map.
 - **Why:** Shows non-Esri remote sensing software; very shareable. This covers both the SNAP and the changing-tree-color ideas.
 - **Need:** SNAP (free), Sentinel-2 scenes from the Copernicus browser, a few cloud-free dates.
 
@@ -316,6 +319,29 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 
 ---
 
+## Remote sensing skill gaps
+
+Skills that remote sensing and imagery postings ask for but that aren't on the resume yet. Each one is tied to a roadmap item, so it can go on the resume honestly once that item is done.
+
+| Skill | Covered by | Status |
+|---|---|---|
+| FAA Part 107 remote pilot certificate | New: earn it (see below) | 💡 |
+| Google Earth Engine | Items 18, 9, 22 | 🔜 |
+| Sentinel-2 imagery | Items 9, 26 | 🔜 |
+| Spectral indices (NDVI, NDWI, NDCI) | Items 9 (NDCI), 22 (water indices), 26 (NDVI) | 🔜 |
+| Machine-learning classification (Random Forest) | Items 18, 22 | 💡 |
+| Deep learning image classification | Item 13 | 💡 |
+| Object-based image analysis (OBIA) | Item 22 (stretch: segmentation comparison) | 💡 |
+| SAR (radar) imagery | Item 9, chapter 2 (Sentinel-1 ice roads) | 💡 |
+| ESA SNAP / non-Esri remote sensing software | Item 26 (ENVI only if a free license turns up) | 💡 |
+| Drone photogrammetry software (Pro ortho mapping, WebODM or Metashape) | Items 11, 12 | 🔧 |
+| Point cloud classification (ArcGIS LAS tools, LAStools) | Item 19 | 💡 |
+| Python raster and vector libraries (rasterio, GDAL, geopandas) | Item 21; ArcPy in item 4 | 💡 |
+
+**FAA Part 107.** Many drone and remote sensing postings require it, and right now the drone at PX Design is flown under the boss's license. Study with the FAA's free materials, take the knowledge test at an approved testing center (fee was about $175; check the current price), then add it to the resume and LinkedIn. It also lets James fly the site plan (item 12) and splat (item 11) captures himself.
+
+---
+
 ## Housekeeping
 
 | Item | Status | Notes |
@@ -323,3 +349,4 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 | Decide on repo privacy (GitHub Pro, or confirm a public repo is fine with your boss) | 💡 | The old video and earlier "PX Duct Designer" wording remain in the repo history |
 | Keep the resume and Work Experience Repository in sync with the site | 🔧 | Wellness Spa and DuctBuilder updates done |
 | Interview prep tracker (GIS_Candidate_Standout_Tracker.xlsx) | 🔧 | In Documents\Claude outputs |
+| Separate remote sensing version of the resume | 💡 | Pull from the Work Experience Repository's "remote sensing keywords" section; add skills from the table above as items finish |
