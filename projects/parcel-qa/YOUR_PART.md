@@ -87,6 +87,8 @@ Written for **ArcGIS Pro 3.7.3** after drafting Parcel 1 on Nov 5, 2026. These a
 **E. Build:** close the Traverse pane, then Parcel Record Workflows → Construct → **Build ▾ → Build Active**. It's one click; there's nothing to click on the map afterward.
 - **Nothing happened?** Click **Show Only Active**. If your lines disappear, they aren't in the active record: select one line, then the **≡** next to the record box → **Activate Record Of Selected Feature**, and build again.
 - **Confirm it built:** turn on **Points** (corner points appear) or open the **Tax** attribute table and look for the new polygon. The new outline sits exactly on the lines, so it's easy to miss.
+- **Nothing built, but the lines are in the record?** The loop may not be closed. Click **Create Seeds**: a seed only appears inside a closed loop. No seed means a gap at a corner; snap the loose end onto the start point (Edit Vertices) or adjust the traverse, then build.
+- **Fill in the parcel's attributes** in the Tax table: **Name** = the parcel ID, **Stated Area** = the tax roll acreage, **Stated Area Unit** = Acre. Calculated Area is filled in for you (square feet).
 - **Area:** read **Shape_Area** in the **Tax** attribute table (square feet; divide by 43,560 for acres). The Records table's area is the record's extent, not the parcel's.
 
 **F. Save** (Parcel Record Workflows → Save, far left).
@@ -100,7 +102,7 @@ Written for **ArcGIS Pro 3.7.3** after drafting Parcel 1 on Nov 5, 2026. These a
 - **Nearest tie sheets:** [62140000](https://gis2.sheboygancounty.com/Tiesheets/62140000.pdf) is the **SE corner of Sec 14** (N 212,155.595, E 190,451.843). [62142000](https://gis2.sheboygancounty.com/Tiesheets/62142000.pdf) should be the E¼ corner, and your POC sits on the east line about halfway between those two. [62140020](https://gis2.sheboygancounty.com/Tiesheets/62140020.pdf) is also nearby.
 - **How to place the POC:** for practice, snap to the county parcel's northeast corner. To do it properly, traverse north from the SE corner along the section line about 1,320 ft, or split the line between the SE and E¼ corners in half (that's how sixteenth corners are set).
 - **Answer key:** misclosure **0.12 ft** (about 1:10,300), area **1.59 ac** (tax roll 1.60).
-- **Your result (Nov 5, 2026, Pro 3.7.3):** ✅ misclosure **S32°44'33"W, 0.12 ft**, ratio **1:10,346**, calculated area **69,281.6 sq ft (1.59 ac)**. Matches the key.
+- **Your result (Nov 5, 2026, Pro 3.7.3):** ✅ misclosure **S32°44'33"W, 0.12 ft**, ratio **1:10,346**, calculated area **69,281.6 sq ft (1.59 ac)**. Matches the key. Built into the fabric (Tax polygon 69,281.3 sq ft) after fixing a 0.12 ft gap at the start corner.
 
 ### Parcel 2: Town of Lima, courses along a road centerline (5 courses)
 
