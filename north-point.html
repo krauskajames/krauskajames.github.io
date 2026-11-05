@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>North Point Water Tower in 3D – James Krauska</title>
-<meta name="description" content="An interactive 3D Gaussian splat of Milwaukee's North Point Water Tower, built from drone video with COLMAP and a splat trainer.">
+<title>Drone 3D Captures – James Krauska</title>
+<meta name="description" content="Interactive 3D Gaussian splats of Milwaukee's North Point Water Tower and St. Mary's Hospital campus, built from drone video with COLMAP and Brush.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -130,6 +130,24 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 .scalebar .bar { display: flex; width: 12rem; max-width: 100%; height: 6px; border: 1px solid var(--ink); }
 .scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
 .scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
+/* model switcher */
+.models { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 0.75rem; border: 1px solid var(--rule); border-radius: 2px; width: fit-content; max-width: 100%; }
+.models button { font: 500 0.8125rem/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); background: none; border: 0; padding: 0.7rem 1rem; cursor: pointer; }
+.models button + button { border-left: 1px solid var(--rule); }
+.models button:hover { color: var(--forest); background: var(--paper-2); }
+.models button[aria-pressed="true"] { color: var(--on-forest); background: var(--forest); }
+.v-caption { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
+@media (max-width: 640px) {
+  .models { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .models button { font-size: 0.75rem; padding: 0.7rem 0.5rem; }
+  .v-label { display: none; }
+}
+/* capture comparison table */
+.compare { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; margin: 0 0 1.1rem; }
+.compare th, .compare td { text-align: left; padding: 0.75rem 1rem 0.75rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.compare thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
+.compare tbody th { font-weight: 500; color: var(--ink-2); white-space: nowrap; }
+.table-scroll { overflow-x: auto; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 <script type="importmap">
@@ -165,15 +183,19 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         <span class="label">Drone photogrammetry · Gaussian splatting</span>
         <span class="label">Milwaukee · October 2026</span>
       </div>
-      <h1>North Point Water Tower, <em>in the round</em></h1>
-      <p class="lede">An interactive 3D model of Milwaukee's North Point Water Tower, built from seven minutes of drone video and a few ground photos. Turn it, zoom in on the lantern, and look at the stonework from any side.</p>
+      <h1>Milwaukee from the air, <em>in the round</em></h1>
+      <p class="lede">Two interactive 3D models built from drone video: a single landmark, the North Point Water Tower, and a whole city block, the St. Mary's Hospital campus. Turn them, zoom in, and look from any side.</p>
     </div>
   </div>
 
   <div class="viewer-wrap">
     <div class="wrap">
-      <figure class="viewer" id="viewer" aria-label="Interactive 3D model of the North Point Water Tower. Drag to orbit, scroll or pinch to zoom.">
-        <span class="v-label" aria-hidden="true">North Point Water Tower · Gaussian splat</span>
+      <div class="models" role="group" aria-label="Choose a model">
+        <button type="button" data-model="north-point" aria-pressed="true">North Point Water Tower</button>
+        <button type="button" data-model="st-marys" aria-pressed="false">St. Mary's Hospital</button>
+      </div>
+      <figure class="viewer" id="viewer" aria-label="Interactive 3D model. Drag to orbit, scroll or pinch to zoom.">
+        <span class="v-label" id="v-label" aria-hidden="true">North Point Water Tower · Gaussian splat</span>
         <div class="v-tools">
           <button type="button" id="v-spin" aria-pressed="true" title="Turn the model slowly">Auto-rotate</button>
           <button type="button" id="v-reset" title="Back to the starting view">Reset</button>
@@ -192,6 +214,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         <span class="label">Rendered live in your browser with three.js and Spark</span>
         <span class="label" id="v-size"></span>
       </div>
+      <p class="v-caption" id="v-caption"></p>
     </div>
   </div>
 
@@ -199,7 +222,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
     <div class="wrap cs-body">
       <span class="label">What it is</span>
       <div class="prose">
-        <p>A Gaussian splat stores a scene as millions of tiny, soft, coloured blobs instead of a mesh of triangles. Together they reproduce what the camera saw, including fine detail like carved stone, slate roofs and the copper lantern, that a traditional photogrammetry mesh tends to smooth over.</p>
+        <p>A Gaussian splat stores a scene as millions of tiny, soft, coloured blobs instead of a mesh of triangles. Together they reproduce what the camera saw, including fine detail like carved stone, rooftop equipment and reflections on glass, that a traditional photogrammetry mesh tends to smooth over.</p>
         <p>I'm building this workflow at PX Design, where drone splats of client buildings will sit alongside site plans so building managers can inspect a property from their desk.</p>
       </div>
     </div>
@@ -210,19 +233,31 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       <span class="label">How it was made</span>
       <div class="prose">
         <ol class="steps">
-          <li><span><b>Fly.</b> Five drone clips at three heights around the tower on October 29, 2026, all with exposure locked at 1/800 s so every frame shares the same brightness. Then 26 handheld photos from the ground for the doorway and lower walls.</span></li>
-          <li><span><b>Check the logs.</b> Read the drone's per-frame flight logs (.SRT) to confirm the passes close around the tower and sit at different heights before processing anything.</span></li>
-          <li><span><b>Extract frames.</b> Pull 578 stills from the video with ffmpeg and drop blurry ones.</span></li>
-          <li><span><b>Solve the cameras.</b> COLMAP matches features across all 604 images and works out where each was taken, with separate lens models for the drone and the handheld camera.</span></li>
+          <li><span><b>Fly.</b> Orbits at several heights around each site on October 29, 2026, with exposure locked so every frame shares the same brightness.</span></li>
+          <li><span><b>Check the logs.</b> Read the drone's per-frame flight logs (.SRT) to confirm the passes close around the subject and sit at different heights before processing anything.</span></li>
+          <li><span><b>Extract frames.</b> Pull a few hundred stills from the video with ffmpeg and drop blurry ones.</span></li>
+          <li><span><b>Solve the cameras.</b> COLMAP matches features across every image and works out where each was taken, producing a sparse point cloud. Lens distortion is then removed so the images suit the splat trainer.</span></li>
           <li><span><b>Train the splat.</b> Brush fits millions of Gaussians to the images from those camera positions.</span></li>
-          <li><span><b>Clean and publish.</b> Crop away the neighbourhood and floaters in SuperSplat, leaving 90,814 Gaussians on the tower, then compress it from 458 MB to 5.3 MB and render it here with Spark.</span></li>
+          <li><span><b>Clean and publish.</b> Crop to the site in SuperSplat, filter out floaters with a short Python script, compress with splat-transform, and render it here with Spark.</span></li>
         </ol>
+        <div class="table-scroll">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">North Point Water Tower</th><th scope="col">St. Mary's Hospital</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Flights</th><td>5 clips at 3 heights</td><td>3 orbits at 3 heights + an overhead pass</td></tr>
+              <tr><th scope="row">Images</th><td>578 drone frames + 26 handheld ground photos</td><td>427 drone frames</td></tr>
+              <tr><th scope="row">Gaussians kept</th><td>90,814</td><td>559,596</td></tr>
+              <tr><th scope="row">Web file</th><td>5.3 MB</td><td>13.5 MB</td></tr>
+            </tbody>
+          </table>
+        </div>
         <h3>Problems worth solving</h3>
         <ul>
           <li><strong>Ghost copies.</strong> Repetitive features like rows of identical windows can fool the camera solve into placing a second, smaller copy of a building. Stricter registration thresholds and matching settings fixed it.</li>
           <li><strong>Coverage, not frame count, decides quality.</strong> Several orbits at different heights beat one long pass. I now check the flight logs before processing to catch gaps early.</li>
           <li><strong>Mixing cameras.</strong> Ground photos fill in what a drone sees poorly, but only if COLMAP treats them as a second camera with its own lens. One shared lens model bends the reconstruction.</li>
-          <li><strong>Web delivery.</strong> The trained splat was 458 MB. Cropping and compression brought it to 5.3 MB, small enough to load in seconds on a phone.</li>
+          <li><strong>Floaters and fringe.</strong> Stray Gaussians in the sky and large faint ones along the crop edge show up as haze. A short filter on height, size and opacity removed about a thousand of them from the hospital model without touching the buildings.</li>
+          <li><strong>Web delivery.</strong> The tower's trained splat was 458 MB. Cropping and compression brought the two models to 5.3 MB and 13.5 MB, small enough to load in seconds on a phone.</li>
         </ul>
       </div>
     </div>
@@ -232,7 +267,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
     <div class="wrap cs-body">
       <span class="label">My role</span>
       <div class="prose">
-        <p>I planned and flew the capture, ran the processing pipeline, cleaned the model, and built this viewer page.</p>
+        <p>I planned and flew both captures, ran the processing pipeline, cleaned the models, and built this viewer page.</p>
         <ul class="chips" aria-label="Tools">
           <li>DJI drone</li><li>ffmpeg</li><li>COLMAP</li><li>Brush</li><li>SuperSplat</li><li>splat-transform</li><li>three.js</li><li>Spark</li>
         </ul>
@@ -259,31 +294,53 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 </footer>
 
 <script type="module">
-// ---- Settings for this model -------------------------------------------
-const SPLAT_URL  = 'media/north-point/north-point.compressed.ply';
-// Most trained splats come out upside down (camera convention, y down).
-// Rotate 180° about X to stand them up; set false if this model is already upright.
-const FLIP_X     = true;
-const SPIN_SPEED = 0.6;   // auto-rotate speed (three.js units, ~ degrees/s × 6)
-const VIEW_ELEV  = 12;    // starting camera elevation above the horizon, degrees
-// -------------------------------------------------------------------------
+// ---- Models ---------------------------------------------------------------
+// flip: most trained splats come out upside down (camera convention, y down).
+// view: optional fixed starting camera (target, distance, azimuth, elevation in degrees);
+//       without it the camera frames the model's bounding box.
+const MODELS = {
+  'north-point': {
+    url: 'media/north-point/north-point.compressed.ply', flip: true, elev: 12,
+    label: 'North Point Water Tower · Gaussian splat',
+    caption: 'North Point Water Tower on Milwaukee\'s East Side. Zoom in on the lantern and the carved stone around the doorway.',
+  },
+  'st-marys': {
+    url: 'media/north-point/st-marys.compressed.ply', flip: true,
+    view: { target: [0.4, 0.05, -0.85], dist: 8.6, az: 335, el: 28 },
+    label: 'St. Mary\'s Hospital campus · Gaussian splat',
+    caption: 'St. Mary\'s Hospital campus on Milwaukee\'s East Side: the main entrance, the curved glass tower, the helipad and the round tower. Best viewed from drone height; the street level was not flown.',
+  },
+};
+const SPIN_SPEED = 0.6;
+// ---------------------------------------------------------------------------
 
 const $ = id => document.getElementById(id);
 const fig = $('viewer'), statusEl = $('v-status'), msg = $('v-msg'), bar = $('v-bar'), hint = $('v-hint');
 const spinBtn = $('v-spin'), resetBtn = $('v-reset'), fullBtn = $('v-full');
+const tabs = [...document.querySelectorAll('.models button')];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function fail(text) {
   statusEl.classList.add('error'); statusEl.classList.remove('done');
   bar.parentElement.hidden = true; msg.textContent = text; hint.hidden = true;
 }
-
 function hasWebGL2() {
   try { return !!document.createElement('canvas').getContext('webgl2'); } catch (e) { return false; }
 }
+function initialModel() {
+  const h = location.hash.slice(1);
+  return MODELS[h] ? h : 'north-point';
+}
+function markTab(key) {
+  tabs.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.model === key)));
+  const m = MODELS[key];
+  $('v-label').textContent = m.label;
+  $('v-caption').textContent = m.caption;
+}
+markTab(initialModel());
 
 async function start() {
-  if (!hasWebGL2()) { fail('This 3D model needs WebGL 2, which this browser or device does not support. Try a recent version of Chrome, Edge, Firefox or Safari.'); return; }
+  if (!hasWebGL2()) { fail('These 3D models need WebGL 2, which this browser or device does not support. Try a recent version of Chrome, Edge, Firefox or Safari.'); return; }
 
   let THREE, OrbitControls, SparkRenderer, SplatMesh;
   try {
@@ -292,82 +349,113 @@ async function start() {
     ({ SparkRenderer, SplatMesh } = await import('@sparkjsdev/spark'));
   } catch (e) { console.error(e); fail('The 3D viewer could not start. Please reload the page.'); return; }
 
-  const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-  renderer.setClearColor(0x000000, 0);
-  fig.prepend(renderer.domElement);
-  renderer.domElement.setAttribute('aria-hidden', 'true');
+  let spin = !reduced, hinted = false, active = null, mountId = 0;
+  spinBtn.setAttribute('aria-pressed', String(spin));
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(40, 1, 0.05, 2000);
-  scene.add(new SparkRenderer({ renderer }));
+  // Each model gets a fresh renderer, scene and camera; switching tears the old one down.
+  async function mount(key) {
+    const m = MODELS[key], id = ++mountId;
+    if (active) { active.destroy(); active = null; }
+    markTab(key);
+    statusEl.classList.remove('done', 'error'); bar.parentElement.hidden = false; bar.style.width = '0';
+    msg.textContent = 'Loading 3D model…'; $('v-size').textContent = '';
 
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true; controls.dampingFactor = 0.08;
-  controls.autoRotate = !reduced; controls.autoRotateSpeed = SPIN_SPEED;
-  spinBtn.setAttribute('aria-pressed', String(controls.autoRotate));
+    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    renderer.setClearColor(0x000000, 0);
+    fig.prepend(renderer.domElement);
+    renderer.domElement.setAttribute('aria-hidden', 'true');
 
-  function resize() {
-    const w = fig.clientWidth, h = fig.clientHeight;
-    if (!w || !h) return;
-    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.05, 2000);
+    scene.add(new SparkRenderer({ renderer }));
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true; controls.dampingFactor = 0.08;
+    controls.autoRotate = spin; controls.autoRotateSpeed = SPIN_SPEED;
+    controls.addEventListener('start', () => {
+      if (!hinted) { hinted = true; hint.classList.add('gone'); }
+      if (controls.autoRotate) { spin = controls.autoRotate = false; spinBtn.setAttribute('aria-pressed', 'false'); }
+    });
+
+    const resize = () => {
+      const w = fig.clientWidth, h = fig.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    };
+    const ro = new ResizeObserver(resize); ro.observe(fig); resize();
+
+    let visible = true, home = null;
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0 }); io.observe(fig);
+    renderer.setAnimationLoop(() => { if (!visible) return; controls.update(); renderer.render(scene, camera); });
+
+    const view = {
+      controls,
+      goHome() { if (!home) return; controls.target.copy(home.target); camera.position.copy(home.pos); controls.update(); },
+      destroy() {
+        renderer.setAnimationLoop(null); ro.disconnect(); io.disconnect(); controls.dispose();
+        scene.traverse(o => o.dispose?.()); renderer.dispose(); renderer.forceContextLoss?.(); renderer.domElement.remove();
+      },
+    };
+    active = view;
+
+    const splat = new SplatMesh({
+      url: m.url,
+      onProgress: ev => { if (id === mountId && ev.lengthComputable && ev.total) bar.style.width = (100 * ev.loaded / ev.total).toFixed(1) + '%'; },
+    });
+    if (m.flip) splat.quaternion.set(1, 0, 0, 0);
+    scene.add(splat);
+    try { await splat.initialized; }
+    catch (e) { console.error(e); if (id === mountId) fail('The 3D model could not be loaded. Please check your connection and reload the page.'); return; }
+    if (id !== mountId) return;   // a newer choice replaced this one
+
+    splat.updateMatrixWorld(true);
+    const box = splat.getBoundingBox(true).clone().applyMatrix4(splat.matrixWorld);
+    const size = box.getSize(new THREE.Vector3());
+    let target, dist, az, el;
+    if (m.view) {
+      target = new THREE.Vector3(...m.view.target); dist = m.view.dist;
+      az = THREE.MathUtils.degToRad(m.view.az); el = THREE.MathUtils.degToRad(m.view.el);
+      if (camera.aspect < 1) dist *= 1 + (1 - camera.aspect) * 0.9;   // back off on narrow phone screens
+    } else {
+      target = box.getCenter(new THREE.Vector3());
+      const t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+      const fitH = size.y / 2 / t, fitW = Math.max(size.x, size.z) / 2 / t / Math.max(camera.aspect, 0.4);
+      dist = Math.max(fitH, fitW) * 1.1 + Math.max(size.x, size.z) / 2;
+      az = 0; el = THREE.MathUtils.degToRad(m.elev ?? 15);
+    }
+    const dir = new THREE.Vector3(Math.cos(el) * Math.sin(az), Math.sin(el), Math.cos(el) * Math.cos(az));
+    home = { target, pos: target.clone().addScaledVector(dir, dist) };
+    camera.near = dist / 500; camera.far = dist * 20; camera.updateProjectionMatrix();
+    controls.minDistance = dist * 0.08; controls.maxDistance = dist * 3;
+    view.goHome();
+    statusEl.classList.add('done');
+
+    try {
+      const head = await fetch(m.url, { method: 'HEAD' });
+      const bytes = +head.headers.get('content-length');
+      if (bytes && id === mountId) $('v-size').textContent = `${(bytes / 1048576).toFixed(1)} MB compressed`;
+    } catch (e) { /* size label is optional */ }
   }
-  new ResizeObserver(resize).observe(fig); resize();
 
-  // Load the splat
-  let home = null;
-  const splat = new SplatMesh({
-    url: SPLAT_URL,
-    onProgress: ev => { if (ev.lengthComputable && ev.total) bar.style.width = (100 * ev.loaded / ev.total).toFixed(1) + '%'; },
+  tabs.forEach(b => b.addEventListener('click', () => {
+    if (b.getAttribute('aria-pressed') === 'true' && active) return;
+    history.replaceState(null, '', '#' + b.dataset.model);
+    mount(b.dataset.model);
+  }));
+  spinBtn.addEventListener('click', () => {
+    spin = !spin; spinBtn.setAttribute('aria-pressed', String(spin));
+    if (active) active.controls.autoRotate = spin;
   });
-  if (FLIP_X) splat.quaternion.set(1, 0, 0, 0);
-  scene.add(splat);
-
-  try { await splat.initialized; }
-  catch (e) { console.error(e); fail('The 3D model could not be loaded. Please check your connection and reload the page.'); return; }
-
-  // Frame the model: centre on its bounding box, back off far enough to fit it.
-  splat.updateMatrixWorld(true);
-  const box = splat.getBoundingBox(true).clone().applyMatrix4(splat.matrixWorld);
-  const size = box.getSize(new THREE.Vector3()), center = box.getCenter(new THREE.Vector3());
-  const fitH = size.y / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-  const fitW = Math.max(size.x, size.z) / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / Math.max(camera.aspect, 0.4);
-  const dist = Math.max(fitH, fitW) * 1.1 + Math.max(size.x, size.z) / 2;
-  const el = THREE.MathUtils.degToRad(VIEW_ELEV);
-  home = { target: center.clone(), pos: center.clone().add(new THREE.Vector3(0, Math.sin(el), Math.cos(el)).multiplyScalar(dist)) };
-  camera.near = dist / 500; camera.far = dist * 20; camera.updateProjectionMatrix();
-  controls.minDistance = dist * 0.08; controls.maxDistance = dist * 3;
-  function goHome() { controls.target.copy(home.target); camera.position.copy(home.pos); controls.update(); }
-  goHome();
-
-  statusEl.classList.add('done');
-  try {
-    const head = await fetch(SPLAT_URL, { method: 'HEAD' });
-    const bytes = +head.headers.get('content-length');
-    if (bytes) $('v-size').textContent = `${(bytes / 1048576).toFixed(1)} MB compressed`;
-  } catch (e) { /* size label is optional */ }
-
-  // Hint fades after the first interaction
-  let hinted = false;
-  controls.addEventListener('start', () => {
-    if (!hinted) { hinted = true; hint.classList.add('gone'); }
-    if (controls.autoRotate) { controls.autoRotate = false; spinBtn.setAttribute('aria-pressed', 'false'); }
-  });
-
-  spinBtn.addEventListener('click', () => { controls.autoRotate = !controls.autoRotate; spinBtn.setAttribute('aria-pressed', String(controls.autoRotate)); });
-  resetBtn.addEventListener('click', goHome);
+  resetBtn.addEventListener('click', () => active?.goHome());
   if (fig.requestFullscreen) {
     fullBtn.hidden = false;
     fullBtn.addEventListener('click', () => document.fullscreenElement ? document.exitFullscreen() : fig.requestFullscreen());
   }
 
-  // Only render while the viewer is on screen
-  let visible = true;
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0 }).observe(fig);
-  renderer.setAnimationLoop(() => { if (!visible) return; controls.update(); renderer.render(scene, camera); });
+  mount(initialModel());
 }
 
-// Start loading when the viewer is about to scroll into view
 new IntersectionObserver((entries, obs) => {
   if (entries.some(e => e.isIntersecting)) { obs.disconnect(); start(); }
 }, { rootMargin: '300px' }).observe(fig);
