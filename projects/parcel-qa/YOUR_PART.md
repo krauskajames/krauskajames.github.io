@@ -59,14 +59,37 @@ The descriptions come from Sheboygan's tax roll (the `TAXDSCRP` field). They get
 2. **Find the point of commencement.** Each description starts from a PLSS corner. Each parcel lists the nearest monumented corners and their **tie sheets**: the county surveyor's record for that monument, with its county coordinates (North/East, in US feet, the same system as your map), a sketch, and the ties a surveyor uses to find it in the field. Open the tie sheet, note the coordinates, and check that you're looking at the right corner on the map.
    - The tie sheet number is the county key: town code, section, then corner. From the two I read, `…0000` is the SE corner and `…2000` is the E¼ corner (for example 62140000 is the SE corner of Section 14 in Herman).
    - One monument serves several sections. The E¼ corner of Section 10 is the same point as the W¼ corner of Section 11, so its tie sheet may be titled for the neighboring section.
-3. **Open the Traverse pane:** **Edit tab → Traverse** (in a parcel fabric, start a new record first, named after the parcel ID).
-   - Set the start point by snapping to the corner, or type its coordinates.
-   - **Direction format:** quadrant bearing, DMS.
-   - Enter each course as direction plus distance, for example `N89-41-00W` and `485.6`. "Due east" is `N90E` and "due north" is `N0E`.
-4. **Check the closure** at the bottom of the Traverse pane before you finish: misclosure distance and ratio.
-5. **Compare to my answer key** below. Your misclosure and area should match to within rounding.
-6. **Finish** to create the parcel. Then compare it with the county's polygon. Is it in the same place? Same shape? If it's shifted, why: a different starting corner, or a recording error?
+3. **Draft it in the fabric** by following the [Pro 3.7.3 walkthrough](#pro-373-walkthrough) below: create a record named after the parcel ID, enter the courses with the Traverse tool, then Build Active.
+4. **Check the closure** at the bottom of the Traverse pane: misclosure distance, ratio and calculated area.
+5. **Compare to my answer key** in the parcel's section. Your misclosure and area should match to within rounding.
+6. **Compare with the county's polygon.** Is it in the same place? Same shape? If it's shifted, why: a different starting corner, or a recording error?
 7. **Screenshot** your drawn parcel over the county's (hollow outline), with the Traverse pane's closure numbers visible.
+
+### Pro 3.7.3 walkthrough
+
+Written for **ArcGIS Pro 3.7.3** after drafting Parcel 1 on Nov 5, 2026. These are the steps that actually worked, including the snags.
+
+**A. The fabric has to be in the map as a fabric**
+- Add it by dragging **MyCOGO2.gdb → Parcels → ParcelFabric** (the blue fabric icon) from Catalog into the map. Adding its feature classes one by one doesn't count: Pro won't show the **Parcel Record Workflows** tab and **Create Record** stays grey.
+- The fabric layer is a controller: its sublayers (Points, Connection Lines, the Tax group with Tax_Lines, Tax and Historic) can sit anywhere in the drawing order, with only Records nested under ParcelFabric. That's normal.
+
+**B. Units, once per project:** Project → Options → Units. Distance: US Survey Feet. Direction: Quadrant Bearing, Degrees Minutes Seconds.
+
+**C. Create the record:** Parcel Record Workflows → Records → **Create Record**, named after the parcel ID. It becomes the active record (the box at the top left of the map). Only make one per parcel; a second record with the same name causes trouble at the build step.
+
+**D. Traverse:** Parcel Record Workflows → Tools → **Traverse**.
+- **Layer:** the fabric's **Tax_Lines** (not the county layer).
+- **Set Start**, then snap to the point of commencement (zoom in first).
+- Type each direction, Tab, distance, Enter (for example `N89-41-00W`, `485.6`). Pro pre-fills the next row with the last direction; press **Esc** to clear that placeholder after the last course.
+- There is **no Finish button** for a closed traverse in 3.7.3. Each course is written to Tax_Lines as you enter it, and the traverse ends when it closes onto the start point.
+- Screenshot the closure numbers before clicking **New**, because New clears them. (Trace Lines brings them back by clicking the lines in order.)
+
+**E. Build:** close the Traverse pane, then Parcel Record Workflows → Construct → **Build ▾ → Build Active**. It's one click; there's nothing to click on the map afterward.
+- **Nothing happened?** Click **Show Only Active**. If your lines disappear, they aren't in the active record: select one line, then the **≡** next to the record box → **Activate Record Of Selected Feature**, and build again.
+- **Confirm it built:** turn on **Points** (corner points appear) or open the **Tax** attribute table and look for the new polygon. The new outline sits exactly on the lines, so it's easy to miss.
+- **Area:** read **Shape_Area** in the **Tax** attribute table (square feet; divide by 43,560 for acres). The Records table's area is the record's extent, not the parcel's.
+
+**F. Save** (Parcel Record Workflows → Save, far left).
 
 ### Parcel 1: Town of Herman, the warm-up (4 courses)
 
@@ -77,6 +100,7 @@ The descriptions come from Sheboygan's tax roll (the `TAXDSCRP` field). They get
 - **Nearest tie sheets:** [62140000](https://gis2.sheboygancounty.com/Tiesheets/62140000.pdf) is the **SE corner of Sec 14** (N 212,155.595, E 190,451.843). [62142000](https://gis2.sheboygancounty.com/Tiesheets/62142000.pdf) should be the E¼ corner, and your POC sits on the east line about halfway between those two. [62140020](https://gis2.sheboygancounty.com/Tiesheets/62140020.pdf) is also nearby.
 - **How to place the POC:** for practice, snap to the county parcel's northeast corner. To do it properly, traverse north from the SE corner along the section line about 1,320 ft, or split the line between the SE and E¼ corners in half (that's how sixteenth corners are set).
 - **Answer key:** misclosure **0.12 ft** (about 1:10,300), area **1.59 ac** (tax roll 1.60).
+- **Your result (Nov 5, 2026, Pro 3.7.3):** ✅ misclosure **S32°44'33"W, 0.12 ft**, ratio **1:10,346**, calculated area **69,281.6 sq ft (1.59 ac)**. Matches the key.
 
 ### Parcel 2: Town of Lima, courses along a road centerline (5 courses)
 
