@@ -327,64 +327,12 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       <div class="section-head">
         <span class="label">Selected work</span>
         <div>
-          <h2>Seven projects across automation, web mapping, 3D capture, land records, ecology, planning and cartography</h2>
+          <h2>Seven projects across land records, planning, ecology, 3D capture, automation, web mapping and remote sensing</h2>
           <p>Each project lists its data, tools and status. Projects marked “Coming 2027” are being built this winter.</p>
         </div>
       </div>
 
       <div class="plates">
-        <!-- DuctBuilder -->
-        <article class="plate">
-          <figure class="has-video hover-video">
-            <img src="media/ductbuilder-render.webp" alt="3D render of a sample clinic modeled with DuctBuilder: walls, doors, windows, supply ducts, VAV boxes and diffusers" width="1200" height="720" loading="lazy">
-            <video id="pxdemo" muted loop playsinline preload="none" aria-hidden="true">
-              <source src="media/ductbuilder-demo.webm" type="video/webm">
-              <source src="media/ductbuilder-demo.mp4" type="video/mp4">
-            </video>
-          </figure>
-          <div class="collar"><span class="label">SketchUp extension</span><span class="status live">In use</span></div>
-          <h3><a href="ductbuilder.html">DuctBuilder</a></h3>
-          <p>A SketchUp Ruby extension that turns traced centerlines into finished 2D or 3D walls and HVAC ductwork, with doors, windows, diffusers and VAV boxes placed in one click. A complex floor plan with HVAC now takes under 20 minutes instead of more than a week, so one person does the work of five.</p>
-          <dl>
-            <dt>Tools</dt><dd>Ruby, SketchUp API, JSON component library</dd>
-            <dt>Scope</dt><dd>16+ commercial and institutional buildings</dd>
-          </dl>
-          <a class="case-link" href="ductbuilder.html">Read the case study →</a>
-        </article>
-
-        <!-- Starcast -->
-        <article class="plate">
-          <figure class="has-video hover-video">
-            <img src="media/starcast-globe.jpg" alt="The Starcast globe showing worldwide cloud cover" loading="lazy">
-            <video id="scdemo" muted loop playsinline preload="none" aria-hidden="true">
-              <source src="media/starcast-globe.mp4" type="video/mp4">
-            </video>
-          </figure>
-          <div class="collar"><span class="label">Web map · Live data</span><span class="status live">Live</span></div>
-          <h3><a href="starcast.html">Starcast</a></h3>
-          <p>A web map of stargazing conditions for anywhere on Earth: cloud, seeing, transparency, jet stream and aurora forecasts on a turning globe, plus what your own telescope can see tonight. A scheduled pipeline turns NOAA's global forecast into small files every 6 hours.</p>
-          <dl>
-            <dt>Data</dt><dd>NOAA GFS, Open-Meteo, NOAA SWPC, OpenStreetMap</dd>
-            <dt>Tools</dt><dd>JavaScript, D3, Python, GitHub Actions, PostGIS</dd>
-          </dl>
-          <a class="case-link" href="starcast.html">Read the case study →</a>
-        </article>
-
-        <!-- North Point Water Tower splat -->
-        <article class="plate">
-          <figure>
-            <img src="media/north-point/card.webp" alt="3D Gaussian splat of Milwaukee's North Point Water Tower, one of two drone captures" width="1200" height="720" loading="lazy">
-          </figure>
-          <div class="collar"><span class="label">3D capture · Drone · Web viewer</span><span class="status live">Live</span></div>
-          <h3><a href="north-point.html">Drone 3D Captures of Milwaukee</a></h3>
-          <p>Two interactive Gaussian splats built from drone video and viewable from any angle in the browser: the North Point Water Tower and the whole St. Mary's Hospital campus. It's the workflow I'm building at PX Design for client buildings: flight logs checked for coverage, cameras solved in COLMAP, splats trained in Brush, then cleaned and compressed to 5.3 MB and 13.5 MB for the web.</p>
-          <dl>
-            <dt>Data</dt><dd>DJI drone video and flight logs, handheld photos</dd>
-            <dt>Tools</dt><dd>ffmpeg, COLMAP, Brush, SuperSplat, three.js, Spark</dd>
-          </dl>
-          <a class="case-link" href="north-point.html">Explore the models →</a>
-        </article>
-
         <!-- Parcel & NG911 -->
         <article class="plate">
           <figure class="qa-card" id="pqcard" aria-label="Line map of a real block in Sheboygan County: parcel lines, road centerlines and address points. On hover one parcel is drafted from its bearings and distances, course by course, and closes; then a scan line sweeps the block and the QA findings light up: nested lots, sliver parcels, an address linked to the wrong road segment, and a street spelled both Fond Du Lac Ave and Fonddulac Ave.">
@@ -400,6 +348,23 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
             <dt>Tools</dt><dd>Python, geopandas, ArcGIS REST API, Leaflet</dd>
           </dl>
           <a class="case-link" href="parcel-qa.html">Explore the findings →</a>
+        </article>
+
+        <!-- Winnebago County -->
+        <article class="plate">
+          <figure class="prism-card" id="wcard" aria-label="Map of Winnebago County's 22 municipalities shaded by population growth since 2020. On hover the map tilts and each municipality rises or sinks by population change, projected change to 2050, share of residents 65 and older, and median household income.">
+            <img src="media/winnebago-card.webp" alt="" width="1200" height="720" loading="lazy">
+            <canvas aria-hidden="true"></canvas>
+            <span class="pc-label label" aria-hidden="true">Winnebago County · population change since 2020</span>
+          </figure>
+          <div class="collar"><span class="label">Planning analysis · Web map</span><span class="status live">Live</span></div>
+          <h3><a href="winnebago.html">Winnebago County Community Profile</a></h3>
+          <p>An interactive demographic and economic profile of Winnebago County for a county board audience: population change in all 22 municipalities, my extrapolation model tested against the state's projection, an age pyramid, location quotients, shift-share, commuting flows and housing costs, with a one-page board memo.</p>
+          <dl>
+            <dt>Data</dt><dd>Wisconsin DOA, Census ACS and LODES, BEA, TIGERweb</dd>
+            <dt>Tools</dt><dd>Python, Census Data API, Leaflet, ArcGIS Dashboards</dd>
+          </dl>
+          <a class="case-link" href="winnebago.html">Explore the profile →</a>
         </article>
 
         <!-- Pollinator -->
@@ -444,21 +409,56 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
           <a class="case-link" href="pollinator.html">Explore the map →</a>
         </article>
 
-        <!-- Winnebago County -->
+        <!-- North Point Water Tower splat -->
         <article class="plate">
-          <figure class="prism-card" id="wcard" aria-label="Map of Winnebago County's 22 municipalities shaded by population growth since 2020. On hover the map tilts and each municipality rises or sinks by population change, projected change to 2050, share of residents 65 and older, and median household income.">
-            <img src="media/winnebago-card.webp" alt="" width="1200" height="720" loading="lazy">
-            <canvas aria-hidden="true"></canvas>
-            <span class="pc-label label" aria-hidden="true">Winnebago County · population change since 2020</span>
+          <figure>
+            <img src="media/north-point/card.webp" alt="3D Gaussian splat of Milwaukee's North Point Water Tower, one of two drone captures" width="1200" height="720" loading="lazy">
           </figure>
-          <div class="collar"><span class="label">Planning analysis · Web map</span><span class="status live">Live</span></div>
-          <h3><a href="winnebago.html">Winnebago County Community Profile</a></h3>
-          <p>An interactive demographic and economic profile of Winnebago County for a county board audience: population change in all 22 municipalities, my extrapolation model tested against the state's projection, an age pyramid, location quotients, shift-share, commuting flows and housing costs, with a one-page board memo.</p>
+          <div class="collar"><span class="label">3D capture · Drone · Web viewer</span><span class="status live">Live</span></div>
+          <h3><a href="north-point.html">Drone 3D Captures of Milwaukee</a></h3>
+          <p>Two interactive Gaussian splats built from drone video and viewable from any angle in the browser: the North Point Water Tower and the whole St. Mary's Hospital campus. It's the workflow I'm building at PX Design for client buildings: flight logs checked for coverage, cameras solved in COLMAP, splats trained in Brush, then cleaned and compressed to 5.3 MB and 13.5 MB for the web.</p>
           <dl>
-            <dt>Data</dt><dd>Wisconsin DOA, Census ACS and LODES, BEA, TIGERweb</dd>
-            <dt>Tools</dt><dd>Python, Census Data API, Leaflet, ArcGIS Dashboards</dd>
+            <dt>Data</dt><dd>DJI drone video and flight logs, handheld photos</dd>
+            <dt>Tools</dt><dd>ffmpeg, COLMAP, Brush, SuperSplat, three.js, Spark</dd>
           </dl>
-          <a class="case-link" href="winnebago.html">Explore the profile →</a>
+          <a class="case-link" href="north-point.html">Explore the models →</a>
+        </article>
+
+        <!-- DuctBuilder -->
+        <article class="plate">
+          <figure class="has-video hover-video">
+            <img src="media/ductbuilder-render.webp" alt="3D render of a sample clinic modeled with DuctBuilder: walls, doors, windows, supply ducts, VAV boxes and diffusers" width="1200" height="720" loading="lazy">
+            <video id="pxdemo" muted loop playsinline preload="none" aria-hidden="true">
+              <source src="media/ductbuilder-demo.webm" type="video/webm">
+              <source src="media/ductbuilder-demo.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <div class="collar"><span class="label">SketchUp extension</span><span class="status live">In use</span></div>
+          <h3><a href="ductbuilder.html">DuctBuilder</a></h3>
+          <p>A SketchUp Ruby extension that turns traced centerlines into finished 2D or 3D walls and HVAC ductwork, with doors, windows, diffusers and VAV boxes placed in one click. A complex floor plan with HVAC now takes under 20 minutes instead of more than a week, so one person does the work of five.</p>
+          <dl>
+            <dt>Tools</dt><dd>Ruby, SketchUp API, JSON component library</dd>
+            <dt>Scope</dt><dd>16+ commercial and institutional buildings</dd>
+          </dl>
+          <a class="case-link" href="ductbuilder.html">Read the case study →</a>
+        </article>
+
+        <!-- Starcast -->
+        <article class="plate">
+          <figure class="has-video hover-video">
+            <img src="media/starcast-globe.jpg" alt="The Starcast globe showing worldwide cloud cover" loading="lazy">
+            <video id="scdemo" muted loop playsinline preload="none" aria-hidden="true">
+              <source src="media/starcast-globe.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <div class="collar"><span class="label">Web map · Live data</span><span class="status live">Live</span></div>
+          <h3><a href="starcast.html">Starcast</a></h3>
+          <p>A web map of stargazing conditions for anywhere on Earth: cloud, seeing, transparency, jet stream and aurora forecasts on a turning globe, plus what your own telescope can see tonight. A scheduled pipeline turns NOAA's global forecast into small files every 6 hours.</p>
+          <dl>
+            <dt>Data</dt><dd>NOAA GFS, Open-Meteo, NOAA SWPC, OpenStreetMap</dd>
+            <dt>Tools</dt><dd>JavaScript, D3, Python, GitHub Actions, PostGIS</dd>
+          </dl>
+          <a class="case-link" href="starcast.html">Read the case study →</a>
         </article>
 
         <!-- Lake Winnebago -->
