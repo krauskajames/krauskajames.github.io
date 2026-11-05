@@ -113,6 +113,8 @@ Written for **ArcGIS Pro 3.7.3** after drafting Parcel 1 on Nov 5, 2026. These a
 - **Nearest tie sheets:** [42092000](https://gis2.sheboygancounty.com/Tiesheets/42092000.pdf), [42092020](https://gis2.sheboygancounty.com/Tiesheets/42092020.pdf), [42040000](https://gis2.sheboygancounty.com/Tiesheets/42040000.pdf)
 - **Answer key:** closes almost exactly (**0.00 ft**), area **3.65 ac** (tax roll 3.66).
 - **Bonus:** compare your two road courses with the Roads centerline layer. Do they line up?
+- **Your result (Nov 5, 2026, Pro 3.7.3):** ✅ misclosure **0.00 ft** (ratio better than 1:100,000), calculated area **159,015.9 sq ft (3.65 ac)**. Matches the key. **County map vs. the drafted parcel:** POC 0 ft · SW 3.57 ft · road bend 5.46 ft · NW 5.64 ft · NE 9.15 ft. Road: the county's Roads centerline crosses the drafted S47°04'W course instead of following it, so the record's "along centerline," the centerline layer, the basemap road and the county parcel line all sit in different places.
+- **Measuring tip:** in Measure, click your corner once, then double-click the county's corner. One row under Segment = the offset; Path Net Distance is first click to last click, so it's wrong when there are two rows.
 
 ### Parcel 3: Village of Cascade, a jog in the boundary (6 courses)
 
