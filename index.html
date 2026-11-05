@@ -147,6 +147,10 @@ section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(
 .case-link { font: 500 0.9375rem/1 var(--body); color: var(--forest); text-decoration: none; margin-top: 0.25rem; }
 .case-link:hover { text-decoration: underline; }
 .plate h3 a { text-decoration: none; }
+/* Whole card opens its project page (see the script); the title link stays the keyboard target */
+.plate.card-link { cursor: pointer; }
+.plate.card-link:hover h3 a { color: var(--forest); text-decoration: underline; text-decoration-thickness: 1px; }
+.plate.card-link:hover .case-link { text-decoration: underline; }
 /* Pollinator card: triptych at rest; on hover 22 predictor sheets stack into the lupine model */
 /* Parcel QA card: a scan line sweeps a real Sheboygan block and its QA findings light up */
 .qa-card { --pq-line: #9aa58f; --pq-road: #6f7c69; --pq-dot: #4c5a4f; --pq-hit: #b07a2a; --pq-ok: #2f7a4b; --pq-beam: #6d7a3a; }
@@ -411,8 +415,11 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 
         <!-- North Point Water Tower splat -->
         <article class="plate">
-          <figure>
+          <figure class="has-video hover-video">
             <img src="media/north-point/card.webp" alt="3D Gaussian splat of Milwaukee's North Point Water Tower, one of two drone captures" width="1200" height="720" loading="lazy">
+            <video id="npdemo" muted loop playsinline preload="none" aria-hidden="true">
+              <source src="media/north-point/turntable.mp4" type="video/mp4">
+            </video>
           </figure>
           <div class="collar"><span class="label">3D capture · Drone · Web viewer</span><span class="status live">Live</span></div>
           <h3><a href="north-point.html">Drone 3D Captures of Milwaukee</a></h3>
@@ -677,7 +684,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
     document.querySelectorAll('video[autoplay]').forEach(function (vid) { vid.removeAttribute('autoplay'); vid.pause(); vid.controls = true; });
   }
 
-  // Video cards (DuctBuilder, Starcast): still image by default; the video plays while a mouse hovers,
+  // Video cards (DuctBuilder, Starcast, North Point): still image by default; the video plays while a mouse hovers,
   // or while the card is on screen on touch devices. Nothing plays with reduced motion.
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -715,6 +722,23 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       io.observe(lc);
     }
   }
+
+  // Clickable cards: a click anywhere on a project card opens its page, like its title link.
+  // Real links inside still work on their own; Ctrl/Cmd-click or middle-click opens a new tab;
+  // selecting text in a card does not navigate.
+  document.querySelectorAll('#work article.plate').forEach(function (card) {
+    const link = card.querySelector('h3 a[href]') || card.querySelector('a.case-link[href]');
+    if (!link) return;
+    card.classList.add('card-link');
+    const go = function (e, newTab) {
+      if (e.target.closest('a, button, input, select, textarea, video[controls]')) return;
+      const sel = window.getSelection && window.getSelection();
+      if (sel && !sel.isCollapsed && card.contains(sel.anchorNode)) return;
+      if (newTab) window.open(link.href, '_blank', 'noopener'); else window.location.href = link.href;
+    };
+    card.addEventListener('click', function (e) { go(e, e.ctrlKey || e.metaKey || e.shiftKey); });
+    card.addEventListener('auxclick', function (e) { if (e.button === 1) go(e, true); });
+  });
 
   // Copy email
   const btn = document.getElementById('copy');
