@@ -124,6 +124,7 @@ Written for **ArcGIS Pro 3.7.3** after drafting Parcel 1 on Nov 5, 2026. These a
 - **Courses:** S 89°08'58" W 835.44 · S 28°53'33" E 478.49 · N 62°04'46" E 6.55 · N 28°13'00" W 129.48 · N 80°15'00" E 670.59 · N 0°22'33" W 200.61
 - **Nearest tie sheets:** [41200020](https://gis2.sheboygancounty.com/Tiesheets/41200020.pdf), [41202020](https://gis2.sheboygancounty.com/Tiesheets/41202020.pdf), [41200000](https://gis2.sheboygancounty.com/Tiesheets/41200000.pdf)
 - **Answer key:** closes almost exactly (**0.00 ft**), area **4.50 ac** (tax roll 4.50).
+- **Your result (Nov 5, 2026, Pro 3.7.3):** ✅ misclosure **0.00 ft** (better than 1:100,000), calculated area **195,853.8 sq ft (4.50 ac)**. Matches the key. **County map vs. the drafted parcel:** POC 0 ft · SE 1.00 ft · inner corner 3.47 ft · NW 4.02 ft. The county map has the 6 ft strip too, shifted slightly west and ending about 3.5 ft short of the drafted tip.
 
 ### Parcel 4: Town of Lyndon, a description that doesn't close (6 courses)
 
