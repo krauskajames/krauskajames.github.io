@@ -2,18 +2,17 @@
 
 -- +1 if the point is left of the line's direction at its nearest point, -1 if right
 -- (measured 1 m either side of the nearest point; multi-part lines use their nearest part)
--- SET search_path: PostgreSQL 17+ runs CREATE/REFRESH MATERIALIZED VIEW with a locked-down search path, so a
--- function that calls PostGIS has to name where PostGIS lives (schema public)
-CREATE FUNCTION qa.side_of_line(line geometry, pt geometry) RETURNS integer LANGUAGE sql IMMUTABLE PARALLEL SAFE
-SET search_path = public, pg_temp AS $$
+-- PostGIS calls are written public.ST_…: PostgreSQL 17+ builds materialized views with a locked-down search
+-- path, and naming the schema (instead of SET search_path) keeps the function inlinable, which is much faster
+CREATE FUNCTION qa.side_of_line(line geometry, pt geometry) RETURNS integer LANGUAGE sql IMMUTABLE PARALLEL SAFE AS $$
   WITH part AS (
-    SELECT g FROM (SELECT (ST_Dump(ST_LineMerge(line))).geom AS g) d ORDER BY ST_Distance(g, pt) LIMIT 1
+    SELECT g FROM (SELECT (public.ST_Dump(public.ST_LineMerge(line))).geom AS g) d ORDER BY public.ST_Distance(g, pt) LIMIT 1
   ), ab AS (
-    SELECT ST_LineInterpolatePoint(g, greatest(0, ST_LineLocatePoint(g, pt) - 1.0 / ST_Length(g))) AS a,
-           ST_LineInterpolatePoint(g, least(1, ST_LineLocatePoint(g, pt) + 1.0 / ST_Length(g))) AS b
-    FROM part WHERE ST_Length(g) > 0
+    SELECT public.ST_LineInterpolatePoint(g, greatest(0, public.ST_LineLocatePoint(g, pt) - 1.0 / public.ST_Length(g))) AS a,
+           public.ST_LineInterpolatePoint(g, least(1, public.ST_LineLocatePoint(g, pt) + 1.0 / public.ST_Length(g))) AS b
+    FROM part WHERE public.ST_Length(g) > 0
   )
-  SELECT CASE WHEN (ST_X(b) - ST_X(a)) * (ST_Y(pt) - ST_Y(a)) - (ST_Y(b) - ST_Y(a)) * (ST_X(pt) - ST_X(a)) > 0
+  SELECT CASE WHEN (public.ST_X(b) - public.ST_X(a)) * (public.ST_Y(pt) - public.ST_Y(a)) - (public.ST_Y(b) - public.ST_Y(a)) * (public.ST_X(pt) - public.ST_X(a)) > 0
               THEN 1 ELSE -1 END
   FROM ab
 $$;
