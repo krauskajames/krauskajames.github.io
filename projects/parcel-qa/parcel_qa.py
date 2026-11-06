@@ -258,11 +258,14 @@ def check_addresses(A, P, R, M, cfg, F):
                 F.add("A01", r.geometry, r[aid], f"Field '{col}' is empty")
 
     # A02 / A03 parcel containment
-    hit = gpd.sjoin(A[[aid, f["parcel_id"], "geometry"]], P[[pf["id"], "geometry"]], how="left", predicate="within")
+    # the address layer's own parcel ID field is optional (the ArcGIS Pro tool doesn't ask for it):
+    # without it, A03 (not in any parcel) still runs and A02 (claims a different parcel) is skipped
+    apid = f.get("parcel_id") if f.get("parcel_id") in A.columns else None
+    hit = gpd.sjoin(A[[aid, "geometry"] + ([apid] if apid else [])], P[[pf["id"], "geometry"]], how="left", predicate="within")
     inside_any = hit.groupby(level=0)[pf["id"]].apply(lambda s: set(s.dropna().astype(str)))
     for i, r in A.iterrows():
         inside = inside_any.get(i, set())
-        claimed = str(r[f["parcel_id"]]).strip() if not blank(pd.Series([r[f["parcel_id"]]])).iloc[0] else ""
+        claimed = str(r[apid]).strip() if apid and not blank(pd.Series([r[apid]])).iloc[0] else ""
         if not inside:
             F.add("A03", r.geometry, r[aid], "Point is not inside any tax parcel" + (f" (claims parcel {claimed})" if claimed else ""))
         elif claimed and claimed not in inside:
