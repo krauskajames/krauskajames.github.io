@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 5, 2026 (remote sensing skill gaps added)
+Last updated: November 6, 2026 (IAT Trail Designer added as item 34)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -80,6 +80,7 @@ Each idea gets two scores from 1 to 5:
 | 21 | Mountain lion corridors, redone in Python | 4 | 3 | 3.6 | 💡 |
 | 22 | Horicon Marsh open water since 1985 (Earth Engine, Random Forest) | 4 | 3 | 3.6 | 💡 |
 | 23 | Milwaukee: a divided city, 1940–2020 (StoryMap) | 4 | 3 | 3.6 | 💡 |
+| 34 | IAT Trail Designer: soil- and slope-aware trail routing | 4 | 3 | 3.6 | 💡 |
 | 24 | Camino Francés StoryMap | 3 | 4 | 3.4 | 🔧 |
 | 25 | Still maps and posters gallery | 3 | 4 | 3.4 | 💡 |
 | 26 | Fall color change from satellite imagery (ESA SNAP) | 3 | 3 | 3.0 | 💡 |
@@ -253,6 +254,17 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Need:** NHGIS tract tables and boundaries (1940–2020); Longitudinal Tract Database or NHGIS crosswalks to put old tracts on 2020 boundaries; ACS 5-year for today; Mapping Inequality HOLC layers; IPUMS full-count records if going before 1940 (wards or enumeration districts instead of tracts).
 - **Not including:** crime data.
 - **Next step:** Pull NHGIS race and nativity tables for Milwaukee County, 1940 and 2020, and map both on one ramp to test the idea.
+
+### 34. IAT Trail Designer: soil- and slope-aware trail routing · E4 F3 · 3.6
+*Numbered 34 so the other items keep their numbers; it ranks with the other 3.6 items.*
+- **What:** A tool that proposes sustainable footpath routes through a parcel for Ice Age Trail layout, built with Ella (IAT trail designer). The user marks the start, the end polygon and the points of interest the trail should reach; the tool routes between them, segment by segment, and suggests trail structures along the result. A second mode reroutes an existing trail: pick two points on the trail line (or box the eroded stretch), route a new segment between them, splice it in, and write it to a **proposed reroute** layer, not the official one (IATA's layout policy requires team sign-off).
+- **The core idea (what's new):** direction-aware cost, not plain slope cost. Each step's running grade is checked against the sideslope it crosses (the half rule: trail grade ≤ half the sideslope), and the maximum grade allowed in each cell comes from the soil (SSURGO erodibility K factor, drainage class, hydrologic group, hydric soils). Sandy glacial soils get a lower limit. Routes are also scored for grade reversals and the 10% average-grade guideline.
+- **Structure suggestions (checkbox rules):** stream crossings → bridge or culvert; hydric or poorly drained soil → boardwalk, turnpike or puncheon; concentrated flow crossing the line (flow accumulation) → grade dip; over-grade sections on weak soil → steps or gravel tread; benches and signs at viewpoints and junctions. (Ask Ella what she means by "gargoyles.")
+- **Existing tools checked (Nov 6):** UNB TRAIL (least-cost path, ArcGIS 10-era, aimed at vehicles), USGS TRAILS (regional route connections, with sustainable routing and switchback hints), TopoTrail QGIS plugin (DEM suitability, no soils), and many slope-only least-cost-path student projects. None combine half-rule routing, soil-based grade limits, structure prescriptions and reroutes of an existing line.
+- **Why:** Raster and network analysis, Python (rasterio, GDAL, geopandas, a custom graph router), soils data and a real user with a real problem. It builds on the mountain lion corridor work (item 21) and is a strong WLIA 2027 talk or poster story.
+- **Have:** ArcGIS Pro Advanced with Spatial Analyst; the cougar corridor least-cost model (item 21) as a starting point.
+- **Need:** One real parcel Ella has already flagged (its flagged line is the answer key); Wisconsin 1 m LiDAR (WisconsinView or USGS 3DEP); gSSURGO soils; WI DNR wetlands and 24K hydrography; the parcel boundary; the IAT handbook's design specs (NPS, 2021) so the rules match what the Alliance builds; the IATA's trail layer (WI DNR open data).
+- **Next step:** Talk through Ella's layout workflow and get one finished parcel, then build a Python prototype of the half-rule router and compare its route with her flagged line.
 
 ### 24. Camino Francés StoryMap · E3 F4 · 3.4
 - **What:** Route, daily stages, photos and an elevation profile of the spring 2026 walk, built from the photos' GPS locations.
