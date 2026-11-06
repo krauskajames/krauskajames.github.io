@@ -961,6 +961,22 @@ svg.leaflet-image-layer.leaflet-interactive path {
   </section>
 
   <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">In ArcGIS Pro</span>
+        <div>
+          <h2>The same checks as a Pro toolbox</h2>
+          <p>The checks also run as a Python toolbox inside ArcGIS Pro 3.7.3, on whatever is selected in the map. Run on the Town of Lima (2,076 parcels, 1,026 address points, 345 road segments), it found 65 items in 11 seconds. The 11 addresses ringed in red are both far from their linked road and outside its number range: a sign they point to the wrong road segment, not that the house number is wrong.</p>
+        </div>
+      </div>
+      <figure style="margin:0">
+        <img src="media/parcel-qa/lima-findings-pro.webp" width="2200" height="1700" loading="lazy" alt="Map of the Town of Lima with 65 QA findings colored by type, clustered in Hingham, Gibbsville and Ourtown, with an inset of Hingham." style="width:100%;height:auto;border:1px solid var(--rule)">
+        <figcaption class="map-note">Layout made in ArcGIS Pro 3.7.3. Data: Sheboygan County GIS. Basemap: Esri World Light Gray Canvas.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
     <div class="wrap cs-body">
       <span class="label">Method</span>
       <div class="prose">
