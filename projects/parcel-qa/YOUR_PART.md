@@ -158,10 +158,13 @@ Written for **ArcGIS Pro 3.7.3** after drafting Parcel 1 on Nov 5, 2026. These a
 
 The files are in `Documents\Claude outputs\ParcelQA`: `ParcelQA.pyt` and `parcel_qa.py` (keep them in the same folder).
 
-1. **Give Pro's Python the geopandas package** (one time):
-   - Pro → **Settings → Package Manager**. Click the gear next to *Active Environment* → **Clone** `arcgispro-py3` (name it `arcgispro-py3-qa`), then **Activate** the clone and restart Pro.
-   - Start menu → **ArcGIS → Python Command Prompt**, then run:
-     `conda install -c conda-forge geopandas pyogrio`
+1. **Give Pro's Python the geopandas package** (one time; written for ArcGIS Pro 3.7.3). Pro's default environment (`arcgispro-py3`) is read-only, so you clone it:
+   - Close Pro. Start menu → **ArcGIS → Python Command Prompt**, then run one line at a time:
+     - `conda create --clone arcgispro-py3 --name arcgispro-py3-qa --pinned` (a few minutes, a few GB; if `--pinned` errors, run it without)
+     - `activate arcgispro-py3-qa`
+     - `conda install geopandas pyogrio` (Pro's own channels). If conda can't solve it, use `pip install geopandas pyogrio` instead. Avoid `-c conda-forge`: it can swap out libraries arcpy depends on.
+     - Test: `python -c "import arcpy, geopandas, pyogrio; print(geopandas.__version__)"`
+     - `proswap arcgispro-py3-qa` (or Pro → **Settings → Package Manager → Active Environment**), then start Pro.
 2. **Add the toolbox:** Catalog pane → Toolboxes → right-click → **Add Toolbox** → `ParcelQA.pyt`.
 3. **Make it fast for the first run:** select a small area (one town, for example Town of Lima, by selecting parcels, address points and roads inside it), so the tool only processes the selection.
 4. **Run "Run Parcel and NG911 QA"** and fill in the fields:

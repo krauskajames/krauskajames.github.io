@@ -4,8 +4,11 @@
 Add it in Pro: Catalog pane > Toolboxes > Add Toolbox > ParcelQA.pyt.
 The checks themselves live in parcel_qa.py (same folder). They need geopandas; ArcGIS Pro's default
 Python environment does not include it, so once:
-    Pro > Settings > Package Manager > Environment Manager > clone arcgispro-py3 > activate the clone
-    then in "Python Command Prompt":  conda install -c conda-forge geopandas pyogrio
+    in "Python Command Prompt" (Pro closed):
+        conda create --clone arcgispro-py3 --name arcgispro-py3-qa --pinned
+        activate arcgispro-py3-qa
+        conda install geopandas pyogrio        (fallback: pip install geopandas pyogrio)
+        proswap arcgispro-py3-qa
 The tool exports your inputs to a temporary GeoPackage, runs the checks and adds the findings to the map.
 """
 import json, os, sys, tempfile
