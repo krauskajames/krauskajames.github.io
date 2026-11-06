@@ -4,13 +4,15 @@ The QA checks, the Sheboygan data download and the web page are done. Your part 
 
 **Total time:** about 6–10 hours, spread over a week or two.
 
+**Status (Nov 6, 2026):** all five tasks done. Next for the project: the PostGIS schema, loader and SQL views, then the Quarto report (see README.md and ROADMAP.md item 4).
+
 | # | Task | Time | Done |
 |---|---|---|---|
-| 1 | Finish the Esri parcel fabric labs | 2–3 h | ☐ |
-| 2 | Set up a Pro project with Sheboygan's data | 30 min | ☐ |
-| 3 | Draft 4 parcels from their legal descriptions (COGO) | 2–4 h | ☐ |
-| 4 | Test the ParcelQA script tool in Pro | 30–60 min | ☐ |
-| 5 | Send me screenshots and numbers | 15 min | ☐ |
+| 1 | Finish the Esri parcel fabric labs | 2–3 h | ✅ Splitting Oct 26, Dividing Oct 28 |
+| 2 | Set up a Pro project with Sheboygan's data | 30 min | ✅ |
+| 3 | Draft 4 parcels from their legal descriptions (COGO) | 2–4 h | ✅ Five drafted (Nov 5–6, Pro 3.7.3), including the bonus Parcel 5 |
+| 4 | Test the ParcelQA script tool in Pro | 30–60 min | ✅ Town of Lima, 65 findings (Nov 6) |
+| 5 | Send me screenshots and numbers | 15 min | ✅ On parcel-qa.html ("Drafting from the record", Nov 6) |
 
 ---
 
