@@ -51,21 +51,12 @@ environment (instructions at the top of the file).
 | R02 | Roads | Overlapping ranges on one street (same parity) |
 | R03 | Roads | Segment with linked addresses but no range |
 
-## Planned: PostGIS version
+## PostGIS version
 
-The same county data loaded into PostgreSQL/PostGIS, with the core checks rewritten as spatial SQL views
-(one view per check code, so `SELECT * FROM qa.a03_outside_parcels` gives that check's findings).
-Planned layout:
+The same checks as spatial SQL views in PostgreSQL/PostGIS: see [`postgis/`](postgis/README.md). On the
+whole county, SQL and Python return the same 1,323 findings on the same features.
 
-- `sql/01_schema.sql`: `parcels`, `address_points`, `road_centerlines` with primary keys, NOT NULL and CHECK
-  constraints, lookup tables in place of geodatabase domains, and GiST spatial indexes
-- `load_postgis.py`: loads the downloaded layers into the schema (geopandas → `to_postgis`)
-- `sql/10_checks/*.sql`: the P, A and R checks as views
-- `sql/20_report.sql`: the summary table, matching `qa_summary.csv` so the SQL and Python results can be compared
-- Notes on porting the queries to SQL Server spatial
-- `report/parcel_qa_report.qmd`: a Quarto report built from the database views (Python vs. SQL counts,
-  findings map, examples, how to rerun), rendered to HTML for the project page and to PDF
-
-**Status (Nov 6, 2026):** not built yet, but the setup is installed and verified: PostgreSQL 18.6 (service running), PostGIS 3.6.2, Quarto 1.11.9 using the `arcgispro-py3-qa` environment (Python 3.13.13, Jupyter 5.8.1) through `QUARTO_PYTHON`, and sqlalchemy 2.0.43, psycopg2-binary 2.9.13 and geoalchemy2 0.21.0 in that environment. Next: `sql/01_schema.sql`.
+Planned next: `report/parcel_qa_report.qmd`, a Quarto report built from the database views (Python vs. SQL
+counts, findings map, examples, how to rerun), rendered to HTML for the project page and to PDF.
 
 Findings are items to review, not confirmed errors. Not an official county product.

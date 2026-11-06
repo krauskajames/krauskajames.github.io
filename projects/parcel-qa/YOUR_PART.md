@@ -178,6 +178,24 @@ The files are in `Documents\Claude outputs\ParcelQA`: `ParcelQA.pyt` and `parcel
 
 ---
 
+## 4b. Run the checks in PostGIS (written for PostgreSQL 18.6, PostGIS 3.6.2, ArcGIS Pro 3.7.3)
+
+Put the `postgis` folder, `config` folder and `fetch_arcgis.py` next to `parcel_qa.py` in `Documents\Claude outputs\ParcelQA`. Then, in the **Python Command Prompt**:
+
+```
+activate arcgispro-py3-qa
+cd "%USERPROFILE%\OneDrive\Documents\Claude outputs\ParcelQA"
+python postgis\load_postgis.py config\sheboygan.json
+python parcel_qa.py config\sheboygan.json out
+python postgis\load_postgis.py config\sheboygan.json --skip-load --compare out\qa_summary.csv
+```
+
+1. The first line downloads the county layers into `ParcelQA\raw` (a few minutes), loads them into a new database `parcel_qa`, and runs every check as SQL. It asks for the postgres password.
+2. The second runs the Python version on the same files (about 2 minutes).
+3. The third prints both counts side by side. Every row should say `yes`, 1,323 in total (or close, if the county edited its data since Nov 6).
+4. **Connect Pro:** Insert → Connections → **New Database Connection** → PostgreSQL, Instance `localhost`, Database authentication, `postgres` + password, Database `parcel_qa`. In Catalog, open the connection and drag **parcel_qa.qa.findings** into a map. If Pro asks for a unique ID, pick `fid`; the spatial reference is 3071.
+5. Screenshot the side-by-side table and the findings in Pro.
+
 ## 5. Send me
 
 - Four screenshots (your parcel over the county's, with the closure numbers visible).
