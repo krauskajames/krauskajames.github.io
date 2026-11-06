@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 6, 2026 (IAT Trail Designer added as item 34)
+Last updated: November 6, 2026 (IAT Trail Designer expanded; IAT Parcel Picker and Eddie's Parcel Picker added as items 35 and 36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -83,6 +83,8 @@ Each idea gets two scores from 1 to 5:
 | 34 | IAT Trail Designer: soil- and slope-aware trail routing | 4 | 3 | 3.6 | 💡 |
 | 24 | Camino Francés StoryMap | 3 | 4 | 3.4 | 🔧 |
 | 25 | Still maps and posters gallery | 3 | 4 | 3.4 | 💡 |
+| 35 | IAT Parcel Picker: land-protection suitability and for-sale alerts | 4 | 2 | 3.2 | 💡 |
+| 36 | Eddie's Parcel Picker: a new lot for a relocated house | 3 | 3 | 3.0 | 💡 |
 | 26 | Fall color change from satellite imagery (ESA SNAP) | 3 | 3 | 3.0 | 💡 |
 | 27 | Migratory bird movements map | 3 | 3 | 3.0 | 💡 |
 | 28 | Atlas of the round worlds (Robinson maps of every planetary-mass body) | 3 | 3 | 3.0 | 💡 |
@@ -257,14 +259,21 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 
 ### 34. IAT Trail Designer: soil- and slope-aware trail routing · E4 F3 · 3.6
 *Numbered 34 so the other items keep their numbers; it ranks with the other 3.6 items.*
-- **What:** A tool that proposes sustainable footpath routes through a parcel for Ice Age Trail layout, built with Ella (IAT trail designer). The user marks the start, the end polygon and the points of interest the trail should reach; the tool routes between them, segment by segment, and suggests trail structures along the result. A second mode reroutes an existing trail: pick two points on the trail line (or box the eroded stretch), route a new segment between them, splice it in, and write it to a **proposed reroute** layer, not the official one (IATA's layout policy requires team sign-off).
-- **The core idea (what's new):** direction-aware cost, not plain slope cost. Each step's running grade is checked against the sideslope it crosses (the half rule: trail grade ≤ half the sideslope), and the maximum grade allowed in each cell comes from the soil (SSURGO erodibility K factor, drainage class, hydrologic group, hydric soils). Sandy glacial soils get a lower limit. Routes are also scored for grade reversals and the 10% average-grade guideline.
-- **Structure suggestions (checkbox rules):** stream crossings → bridge or culvert; hydric or poorly drained soil → boardwalk, turnpike or puncheon; concentrated flow crossing the line (flow accumulation) → grade dip; over-grade sections on weak soil → steps or gravel tread; benches and signs at viewpoints and junctions. (Ask Ella what she means by "gargoyles.")
-- **Existing tools checked (Nov 6):** UNB TRAIL (least-cost path, ArcGIS 10-era, aimed at vehicles), USGS TRAILS (regional route connections, with sustainable routing and switchback hints), TopoTrail QGIS plugin (DEM suitability, no soils), and many slope-only least-cost-path student projects. None combine half-rule routing, soil-based grade limits, structure prescriptions and reroutes of an existing line.
-- **Why:** Raster and network analysis, Python (rasterio, GDAL, geopandas, a custom graph router), soils data and a real user with a real problem. It builds on the mountain lion corridor work (item 21) and is a strong WLIA 2027 talk or poster story.
-- **Have:** ArcGIS Pro Advanced with Spatial Analyst; the cougar corridor least-cost model (item 21) as a starting point.
-- **Need:** One real parcel Ella has already flagged (its flagged line is the answer key); Wisconsin 1 m LiDAR (WisconsinView or USGS 3DEP); gSSURGO soils; WI DNR wetlands and 24K hydrography; the parcel boundary; the IAT handbook's design specs (NPS, 2021) so the rules match what the Alliance builds; the IATA's trail layer (WI DNR open data).
-- **Next step:** Talk through Ella's layout workflow and get one finished parcel, then build a Python prototype of the half-rule router and compare its route with her flagged line.
+- **What:** An ArcGIS Pro tool (the Ice Age Trail Alliance works in Pro) that proposes sustainable footpath routes through a parcel, built with Ella (IAT trail designer). The user marks the start, the end polygon and the points of interest the trail should reach; the tool routes between them segment by segment, offers two or three alternatives, and suggests trail structures along each. A second mode reroutes an existing trail: pick two points on the trail line (or box the eroded stretch), route a new segment between them, splice it in, and write it to a **proposed reroute** layer, not the official one (IATA's layout policy requires team sign-off).
+- **How layout works today:** Ella goes to the site and walks it. The tool doesn't replace that walk; it gives her candidate corridors and control points before she goes, and a line to flag on her phone once she's there.
+- **Design rules are settings, not code:** every threshold lives in a rule profile (a JSON or YAML file picked in the tool), so other trail groups can use it. A profile holds the half-rule ratio, the average and maximum grades for each soil class, tread width, allowed user types, structure triggers and their thresholds, cost weights and switchback limits. Profiles to ship: **Ice Age Trail** (from the NPS IAT handbook, 2021, checked with Ella), a generic hiking profile (USFS), a mountain bike profile (IMBA guidelines) and an accessible-trail profile (USFS accessibility guidelines). Users can copy and edit any profile.
+- **The core idea (what's new):** direction-aware cost, not plain slope cost. Each step's running grade is checked against the sideslope it crosses (the half rule), and the maximum grade allowed in each cell comes from the soil (SSURGO erodibility K factor, drainage class, hydrologic group, hydric soils), so sandy glacial soils get a lower limit. Routes are scored for grade reversals and the average-grade guideline.
+- **Switchbacks:** a plain least-cost path can't double back. The router tracks direction of travel (a graph whose nodes carry heading), so it can turn sharply only where the ground and the profile allow a switchback. Hardest part; prototype it first.
+- **Scenic value (viewshed):** a scenic raster over the parcel. Observer points on a grid (every 20–30 m, eye height about 1.7 m) run against a LiDAR first-return surface, so trees block views the way they do in the field (Viewshed 2 in Pro, which can use the graphics card). Each cell's score weighs what can be seen: water, open ridges and glacial landforms, long distance views, varied land cover (WISCLAND 2.0), and penalties for roads, houses and industrial buildings. The raster does two jobs: it pulls the route toward scenic spots (an attraction term in the cost) and it colors the finished trail by how scenic each stretch is. Caveat: Wisconsin LiDAR is usually flown leaf-off, so a summer setting thickens the canopy from a canopy height model.
+- **Glacial features as points of interest:** suggest eskers, kettles, moraines and drumlins from the Wisconsin Geological and Natural History Survey's glacial maps, plus top viewshed spots, as optional points of interest.
+- **Areas to avoid:** wetlands (WI DNR Wetland Inventory), floodplains, 24K hydrography buffers, large trees from the LiDAR canopy height model, and user-drawn no-go polygons for restricted data (rare species, archaeological sites), which the tool never stores or publishes.
+- **Structure suggestions (checkbox rules, thresholds set in the profile):** stream crossings → bridge or culvert; hydric or poorly drained soil → boardwalk, turnpike or puncheon; concentrated flow crossing the line (flow accumulation) → grade dip; over-grade sections → **gargoyles** (rock steps built from stone found on site) where the soil shows surface stones or shallow bedrock (SSURGO rock fragments, depth to bedrock) or LiDAR shows rough ground, otherwise built steps or a reroute; weak tread → gravel; benches and signs at viewpoints and junctions.
+- **Outputs:** two or three alternatives (least construction, most scenic, shortest); an elevation profile per route with half-rule violations colored; a materials and labor estimate for the suggested structures; GPX and an ArcGIS Field Maps layer for flagging on site, with a short field form whose notes (actual soil, rock, obstacles) feed back into the next run.
+- **Existing tools checked (Nov 6):** UNB TRAIL (least-cost path, ArcGIS 10-era, aimed at vehicles), USGS TRAILS (regional route connections, with sustainable routing and switchback hints), TopoTrail QGIS plugin (DEM suitability, no soils), and many slope-only least-cost-path student projects. None combine half-rule routing, soil-based grade limits, editable rule profiles, scenic viewsheds, structure prescriptions and reroutes of an existing line.
+- **Why:** Raster and network analysis, Python (rasterio, GDAL, geopandas, a custom graph router), soils data, a Pro Python toolbox, and a real user with a real problem. It builds on the mountain lion corridor work (item 21) and is a strong WLIA 2027 talk or poster story.
+- **Have:** ArcGIS Pro Advanced with Spatial Analyst and 3D Analyst; the cougar corridor least-cost model (item 21); Sheboygan County parcels (downloaded for item 4). The Ice Age Trail crosses Sheboygan County in the Northern Kettle Moraine, so it works as a first test area if Ella's parcel is elsewhere; the Wisconsin Statewide Parcel Map covers any other county.
+- **Need:** One parcel Ella has already flagged (its line is the answer key); Wisconsin 1 m LiDAR (WisconsinView or USGS 3DEP) as both bare earth and first return; gSSURGO soils; WI DNR wetlands and 24K hydrography; WGNHS glacial maps; the IAT handbook's design specs; the IATA's trail layer (WI DNR open data); the Pro version Ella and the Alliance run. A friendly check-in with the Alliance's GIS coordinator before it's used on real projects.
+- **Next step:** Get Ella's finished parcel; build a Python prototype of the half-rule router with heading-aware switchbacks and compare its route with her flagged line; then the rule profile format.
 
 ### 24. Camino Francés StoryMap · E3 F4 · 3.4
 - **What:** Route, daily stages, photos and an elevation profile of the spring 2026 walk, built from the photos' GPS locations.
@@ -278,6 +287,23 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 ---
 
 ## Tier 3: showpieces and passion projects
+
+### 35. IAT Parcel Picker: land-protection suitability and for-sale alerts · E4 F2 · 3.2
+*Numbered 35 so the other items keep their numbers; it ranks just below item 25.*
+- **What:** A map and app for Ice Age Trail land protection. Step 1: a suitability surface for where the trail should go, along the planned corridor between existing segments, built from glacial landform value (WGNHS maps), the scenic viewshed raster from item 34, soils and slope, gap length to the nearest existing segment and existing public land. Step 2: score every parcel in the corridor for how much it adds (gap closed, landform and scenic value) and how purchasable it is (size, owner type, assessed value per acre, existing easements, how many owners a route would need). Step 3: watch for those parcels to be listed for sale and alert the Alliance.
+- **Alerts (the hard part):** MLS data needs a broker feed, and scraping Zillow-style sites breaks their terms. Options to check: saved-search emails from land listing sites parsed into the app; county tax-delinquent and foreclosure lists; changes in the statewide parcel layer's owner field (a sale shows up after the fact); a partnership with a broker who can share an IDX feed. Pick the legal source first, then build the alert (a scheduled script, email or Teams message).
+- **Why:** Multi-criteria suitability, parcel and land-records analysis, automation, and a direct match for land trust, DNR and county land-records jobs.
+- **Shares:** the suitability, viewshed and parcel scoring engine with items 34 and 36.
+- **Need:** The planned IAT corridor (the NPS/IATA corridor plan); Wisconsin Statewide Parcel Map; WGNHS glacial maps; an agreed listing source; a conversation with the Alliance about how they prioritize land today.
+- **Next step:** Ask Ella how the Alliance picks parcels now and whether a corridor plan layer can be shared.
+
+### 36. Eddie's Parcel Picker: a new lot for a relocated house · E3 F3 · 3.0
+*Numbered 36 so the other items keep their numbers. A family project with a real deadline, so it may jump the queue.*
+- **What:** The Parcel Picker engine pointed at one family's very specific list of needs: find lots where a house that is being physically moved can go. Multi-criteria scoring of parcels (size, zoning that allows a relocated house, soils and slope for a foundation and septic, flood zone, distance to the places that matter) plus a moving-route check: can the house actually get there? Network Analyst over the road network with the house's height, width and weight as limits (overhead lines, bridges and their weight limits, road width, sharp turns, tree canopy), giving the move distance and the trouble spots for the mover's permit. Listing alerts as in item 35.
+- **Why:** Multi-criteria suitability and Network Analyst routing with real constraints (oversize-load routing is everyday DOT and utility work), on a problem with a real answer. It builds the Parcel Picker engine on a small scale before the bigger IAT version.
+- **Privacy:** the repo and site are public, so no address, names or the family's criteria list go in them. The portfolio version uses a made-up house and town.
+- **Need:** The family's list of needs written out; the house's dimensions and weight; the house mover's limits; parcels and zoning for the search area; road network with bridges (WisDOT) and overhead utility crossings where available.
+- **Next step:** Write the needs list with the family, then turn each need into a map layer or a rule.
 
 ### 26. Fall color change from satellite imagery (ESA SNAP) · E3 F3 · 3.0
 - **What:** Track Wisconsin's fall color from north to south with Sentinel-2 imagery processed in ESA SNAP (NDVI change between dates), as an animated map.
