@@ -139,6 +139,8 @@ Written for **ArcGIS Pro 3.7.3** after drafting Parcel 1 on Nov 5, 2026. These a
   2. Look at which course would fix it. Does one bearing or distance look suspicious next to the county's polygon?
   3. Note the three recorded documents (VOL 385 P 158-59 and others). In a real job you'd pull those deeds from the Register of Deeds, or the survey the description came from, before changing anything.
   4. Decide how you'd handle it in the fabric: hold the record as written and flag it, or adjust (Pro's **compass rule** spreads the error across the courses). Write one or two sentences on your choice. Interviewers love this question.
+- **Your result (Nov 6, 2026, Pro 3.7.3):** misclosure **4.72 ft, 1:559**, matching the key. Compass-adjusted and built; the Tax_Lines keep the record dimensions (511.90 etc.) as COGO attributes while the geometry is adjusted. **County map vs. the drafted parcel:** SW (POC) 0 ft · SE 2.63 ft · NW 4.44 ft · NE 5.55 ft.
+- **What the county did:** its parcel is exactly the outline of two recorded surveys in the **Survey Polygons** layer (`a709`, Miller, prepared for Boeselager; `dl3948`, Curtiss), 428,784 sq ft = the 9.84 ac on the tax roll. That polygon keeps every recorded distance (south 730.07 = 425.47 + 304.60, east 582.58, north 729.74, west 592.53 = 80.63 + 511.90) and lets the bearings rotate 20–30' instead. Three treatments of one error: compass rule (changes everything a little), one-course fix (S 516.62 closes it exactly), county (holds lengths, rotates bearings). The survey PDFs and the deeds (VOL 385 P 158, VOL 404 P 361, VOL 854 P 750) aren't on the public map services; ask the county Planning & Conservation Dept. or the Register of Deeds.
 
 ---
 
