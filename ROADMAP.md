@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 6, 2026 (Parcel QA progress synced: COGO drafting and the Lima toolbox run done, PostGIS and Quarto set up; IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker are items 34–36)
+Last updated: November 6, 2026 (added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -57,9 +57,18 @@ Each idea gets two scores from 1 to 5:
 
 | Rank | Item | E | F | Score | Status |
 |---|---|---|---|---|---|
+| 37 | Zoning hearing notice packet (300 ft mailing list) | 5 | 5 | 5.0 | 🔜 |
 | 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | 🔧 |
 | 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔧 |
+| 38 | Year-over-year parcel change report | 5 | 4 | 4.6 | 💡 |
+| 39 | Addressing a new subdivision | 5 | 4 | 4.6 | 💡 |
+| 40 | Wisconsin statewide parcel submission dry run | 5 | 4 | 4.6 | 💡 |
+| 41 | NENA NG911 schema migration | 5 | 4 | 4.6 | 💡 |
+| 42 | County supervisory district redistricting | 5 | 4 | 4.6 | 💡 |
+| 43 | Public parcel viewer (Experience Builder) | 5 | 4 | 4.6 | 💡 |
+| 44 | Field Maps asset inventory, collected yourself | 5 | 4 | 4.6 | 💡 |
 | 3 | Employer quotes and references | 4 | 5 | 4.4 | 🔜 |
+| 45 | PLSS section map book (Pro Map Series) | 4 | 5 | 4.4 | 💡 |
 | 4 | Parcel and NG911 data QA toolkit (with PostGIS) | 5 | 3 | 4.2 | 🔧 |
 | 5 | ~~Geodatabase and SQL project~~ (merged into item 4) | | | | ➡️ |
 | 6 | Utility mapping from as-built drawings | 5 | 3 | 4.2 | 💡 |
@@ -142,6 +151,64 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Why:** Ruekert & Mielke's GIS Technician posting is municipal utility mapping from as-builts, and reading engineering drawings is already your strength from DuctBuilder.
 - **Need:** A sample as-built (public city plans, or a fictional one like the sample clinic); Esri's utility network training.
 - **Next step:** Find one public set of utility as-builts or draw a fictional one.
+
+### 37–45. Everyday county land-records tasks (added Nov 6)
+*Numbered 37–45 so the other items keep their numbers. All nine score Tier 1: each is a task a county land-records or planning office does every week, and each reuses data or tools already on hand (Sheboygan County parcels, address points and road centerlines from item 4, the PostGIS database, ArcGIS Pro Advanced).*
+
+### 37. Zoning hearing notice packet (300 ft mailing list) · E5 F5 · 5.0
+- **What:** A made-up rezoning in Sheboygan County: select every parcel within 300 ft, remove duplicate owners, and export mailing labels and a notice map. Then package it as a Python or ModelBuilder tool so the next request takes 30 seconds.
+- **Why:** The most common request a planning department sends its GIS tech. Hiring managers recognize it on sight.
+- **Have:** Sheboygan parcels with owner fields (item 4).
+- **Need:** The county's notice distance from its zoning ordinance (300 ft is common in Wisconsin; check Sheboygan's).
+- **Next step:** Pick the "rezoned" parcel and run the buffer selection by hand once before building the tool.
+
+### 38. Year-over-year parcel change report · E5 F4 · 4.6
+- **What:** Two years of the Wisconsin Statewide Parcel Map for Sheboygan County (e.g. V11 and V12), compared in PostGIS: new splits and combinations, owner changes, parcels whose geometry moved, with a change map.
+- **Why:** Shows data maintenance thinking, not only one-off analysis. Reuses the PostGIS database from item 4.
+- **Need:** The previous version of the statewide parcel layer for the county (SCO's parcel archive).
+- **Next step:** Download the earlier version and load it next to the current one in `parcel_qa`.
+
+### 39. Addressing a new subdivision · E5 F4 · 4.6
+- **What:** Take a recorded plat (or a fictional one), add the new road centerline, and assign addresses by the county's addressing grid rules: odd and even sides, spacing, a duplicate road name check. Then run the item 4 NG911 checks on the result.
+- **Why:** Addressing appears in nearly every county posting, and the QA side is already built.
+- **Need:** Sheboygan County's addressing ordinance (grid origin and spacing).
+- **Next step:** Find the ordinance and pick a plat.
+
+### 40. Wisconsin statewide parcel submission dry run · E5 F4 · 4.6
+- **What:** Every Wisconsin county sends its parcels to DOA and the State Cartographer's Office each year in a set schema. Crosswalk the Sheboygan data into that schema, run SCO's validation tool, and document what failed and how it was fixed.
+- **Why:** A Wisconsin hiring manager sees right away that you know their yearly deadline. Could also become a chapter of item 4.
+- **Need:** The current year's submission documentation and validation tool from SCO (check the version before starting).
+- **Next step:** Read the submission documentation and list the required fields.
+
+### 41. NENA NG911 schema migration · E5 F4 · 4.6
+- **What:** Convert the county's address points and road centerlines into the NENA NG9-1-1 GIS Data Model: field mapping, domain values and a validation report.
+- **Why:** Schema migration is a classic technician task, and this builds on item 4 without repeating it.
+- **Need:** The current NENA NG9-1-1 GIS Data Model standard and its template geodatabase; Wisconsin's NG911 GIS requirements.
+- **Next step:** Get the NENA template and draft the field crosswalk table.
+
+### 42. County supervisory district redistricting · E5 F4 · 4.6
+- **What:** Population-balanced county supervisory districts built from 2020 census blocks and wards for one county, with a deviation table and a public-facing map.
+- **Why:** Wisconsin counties redraw supervisory districts from wards after every census; county clerks and GIS staff do it together. A distinctly Wisconsin skill and a good WLIA conversation starter.
+- **Need:** 2020 census blocks with population (P.L. 94-171); the county's wards (LTSB) and current districts.
+- **Next step:** Pick the county and download its wards and block populations.
+
+### 43. Public parcel viewer (Experience Builder) · E5 F4 · 4.6
+- **What:** A county-style land-records web map: search by parcel number or address, an identify panel, a link to the tax bill, a print widget.
+- **Why:** Most counties' public GIS work centers on this app, and it closes the web-app gap from the posting analysis.
+- **Have:** Sheboygan parcels and address points; ArcGIS Online account.
+- **Next step:** Publish the parcels as a hosted layer and start the Experience Builder app.
+
+### 44. Field Maps asset inventory, collected yourself · E5 F4 · 4.6
+- **What:** A Field Maps form for something visible from the road in a nearby town (stop signs, culverts or hydrants), 50–100 points collected with a phone's GPS, attribute domains, QA checks and a small dashboard.
+- **Why:** GPS field collection is an essential function in county postings (e.g. St. Croix County's GIS Technician). This is field work that is entirely your own, beyond the Restoring Lands internship.
+- **Need:** A town and asset type; a public road route to walk or drive.
+- **Next step:** Design the form (fields and domains) before going out.
+
+### 45. PLSS section map book (Pro Map Series) · E4 F5 · 4.4
+- **What:** An index map and one page per section for one township, with parcels, parcel numbers and dimensions, made with ArcGIS Pro's Map Series.
+- **Why:** Looks like a real county plat book, and Map Series is a skill hiring managers look for.
+- **Have:** Sheboygan parcels; PLSS sections (Wisconsin PLSS layer).
+- **Next step:** Pick the township (the Town of Lima, already used in item 4) and set up the index layer.
 
 ---
 
