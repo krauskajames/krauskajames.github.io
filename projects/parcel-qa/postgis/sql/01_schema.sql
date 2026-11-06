@@ -1,6 +1,6 @@
 -- Parcel & NG911 QA: database schema.
 -- Run order: 01_schema.sql -> (load_postgis.py fills src.*) -> 02_core.sql -> 10..12 checks -> 20_report.sql
--- Tested on PostgreSQL 16-18 with PostGIS 3.4-3.6. All geometry is EPSG:3071 (Wisconsin Transverse
+-- Tested on PostgreSQL 16 (PostGIS 3.4) and 18.6 (PostGIS 3.6.2). All geometry is EPSG:3071 (Wisconsin Transverse
 -- Mercator, meters) so distance and area thresholds match the Python toolkit.
 
 CREATE EXTENSION IF NOT EXISTS postgis;

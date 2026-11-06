@@ -2,7 +2,10 @@
 
 -- +1 if the point is left of the line's direction at its nearest point, -1 if right
 -- (measured 1 m either side of the nearest point; multi-part lines use their nearest part)
-CREATE FUNCTION qa.side_of_line(line geometry, pt geometry) RETURNS integer LANGUAGE sql IMMUTABLE PARALLEL SAFE AS $$
+-- SET search_path: PostgreSQL 17+ runs CREATE/REFRESH MATERIALIZED VIEW with a locked-down search path, so a
+-- function that calls PostGIS has to name where PostGIS lives (schema public)
+CREATE FUNCTION qa.side_of_line(line geometry, pt geometry) RETURNS integer LANGUAGE sql IMMUTABLE PARALLEL SAFE
+SET search_path = public, pg_temp AS $$
   WITH part AS (
     SELECT g FROM (SELECT (ST_Dump(ST_LineMerge(line))).geom AS g) d ORDER BY ST_Distance(g, pt) LIMIT 1
   ), ab AS (
