@@ -1,8 +1,9 @@
-/* Parcel QA homepage card, in three beats:
-   1. Draft: zoom in and draw one parcel from its legal description, course by course (COGO traverse),
-      with the call read out in a caption bar, then close on the point of beginning.
-   2. Place: zoom back out so the drafted parcel sits among the county's real parcels.
-   3. Check: a scan line sweeps the block and the real QA findings light up, with a running count.
+/* Parcel QA homepage card, in four beats (the same story as the project page):
+   1. Start: the point of commencement, a PLSS sixteenth corner in the Village of Cascade.
+   2. Draft: James's Parcel 3 drawn from its recorded description, course by course (COGO traverse), with the
+      call read out in a caption bar and a magnifier on the 6.55 ft jog; it closes on the point of beginning.
+   3. Compare: the county's tax parcel is laid over the draft, with the corner offsets measured in ArcGIS Pro.
+   4. Check: zoom out to the block; a scan line sweeps it and the real QA findings light up, with a running count.
    Plays on hover (mouse) or once when scrolled into view (touch). Static with reduced motion. */
 (function () {
   'use strict';
@@ -11,12 +12,13 @@
   const svg = fig.querySelector('svg');
   const scan = svg.querySelector('.scan');
   const trav = svg.querySelector('.trav');
+  const loupePaths = Array.from(trav.querySelectorAll('.lp'));
   const courses = Array.from(trav.querySelectorAll('.tc')).map(g => {
     const path = g.querySelector('path');
     const m = path.getAttribute('d').match(/M([\d.-]+),([\d.-]+)L([\d.-]+),([\d.-]+)/).slice(1).map(Number);
-    return { g, path, dd: g.querySelector('.dd'), dist: +g.dataset.dist, call: g.dataset.call, x: m[0], y: m[1] };
+    return { g, path, i: +g.dataset.i, dd: g.querySelector('.dd'), dist: +g.dataset.dist, call: g.dataset.call,
+             loupe: g.dataset.loupe === '1', lp: loupePaths.filter(p => +p.dataset.i === +g.dataset.i), x: m[0], y: m[1] };
   });
-  const narrow = trav.querySelector('.narrow');
   const finds = Array.from(svg.querySelectorAll('.f')).map(el => ({ el, x: +el.dataset.x, n: +(el.dataset.n || 0) }));
   const label = fig.querySelector('.pq-label');
   const cap = fig.querySelector('.pq-cap');
@@ -29,6 +31,7 @@
   if (reduceMotion) return;
 
   let run = 0;
+  let playing = false, finished = false, back = 0;
   const ease = k => (k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2);
   const setVB = a => svg.setAttribute('viewBox', a.map(v => v.toFixed(2)).join(' '));
   const lerp = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
@@ -52,9 +55,10 @@
   }
 
   function reset() {
-    fig.classList.remove('drafting', 'placed', 'scanning', 'swept');
+    fig.classList.remove('drafting', 'jog', 'compared', 'placed', 'scanning', 'swept');
     trav.classList.remove('closed');
-    courses.forEach(c => { c.g.classList.remove('on', 'done'); c.path.style.strokeDashoffset = 1; c.dd.textContent = c.dist.toFixed(2); });
+    courses.forEach(c => { c.g.classList.remove('on', 'done'); c.path.style.strokeDashoffset = 1; if (c.dd) c.dd.textContent = c.dist.toFixed(2); });
+    loupePaths.forEach(p => { p.style.strokeDashoffset = 1; });
     finds.forEach(f => f.el.classList.remove('on'));
     scan.removeAttribute('transform');
     setVB(FULL);
@@ -63,36 +67,46 @@
   }
 
   async function play() {
+    clearTimeout(back);
+    if (playing || finished) return;                 // a stray mouse exit/re-entry never restarts or snaps the card
+    playing = true;
     const tok = ++run;
     reset();
-    fig.classList.add('drafting');
-    cap.textContent = 'Beginning at the point of beginning (POB)';
-    if (!await tween(1000, k => setVB(lerp(FULL, ZOOM, ease(k))), tok)) return;
+    label.style.opacity = 0;
+    fig.classList.add('drafting');                   // 1. start at the corner
+    cap.textContent = 'Commencing at the NE corner of the SW¼ SE¼, Section 20, T14N R21E';
+    if (!await tween(1100, k => setVB(lerp(FULL, ZOOM, ease(k))), tok)) return;
+    if (!await wait(500, tok)) return;
 
-    for (const c of courses) {                       // 1. draft, course by course
+    for (const c of courses) {                       // 2. draft, course by course
       cap.textContent = c.call;
-      narrow.setAttribute('transform', `translate(${c.x},${c.y})`);
       c.g.classList.add('on');
-      if (!await tween(800, k => {
+      if (c.loupe) { fig.classList.add('jog'); if (!await wait(500, tok)) return; }
+      if (!await tween(c.loupe ? 1500 : 850, k => {
         const e = ease(k);
         c.path.style.strokeDashoffset = 1 - e;
-        c.dd.textContent = (c.dist * e).toFixed(2);
+        c.lp.forEach(p => { p.style.strokeDashoffset = 1 - e; });
+        if (c.dd) c.dd.textContent = (c.dist * e).toFixed(2);
       }, tok)) return;
       c.g.classList.add('done');
-      if (!await wait(200, tok)) return;
+      if (!await wait(c.loupe ? 700 : 200, tok)) return;
+      if (c.i === 3) fig.classList.remove('jog');
     }
     cap.textContent = trav.dataset.close;
     trav.classList.add('closed');
-    if (!await wait(1400, tok)) return;
+    if (!await wait(1500, tok)) return;
 
-    fig.classList.remove('drafting');                // 2. place it among the county's parcels
+    fig.classList.add('compared');                   // 3. lay the county's parcel over the draft
+    cap.textContent = trav.dataset.compare;
+    if (!await wait(2600, tok)) return;
+
+    fig.classList.remove('drafting', 'compared');    // 4. zoom out and check the block
     fig.classList.add('placed');
-    if (!await tween(1000, k => setVB(lerp(ZOOM, FULL, ease(k))), tok)) return;
-
-    fig.classList.add('scanning', 'swept');          // 3. check the block
+    if (!await tween(1100, k => setVB(lerp(ZOOM, FULL, ease(k))), tok)) return;
+    fig.classList.add('scanning', 'swept');
     let found = 0;
     swapLabel('Running 19 checks · 0 found');
-    if (!await tween(3600, k => {
+    if (!await tween(3400, k => {
       const x = -40 + ease(k) * 1080;
       scan.setAttribute('transform', `translate(${x.toFixed(1)},0)`);
       for (const f of finds) if (x >= f.x && !f.el.classList.contains('on')) {
@@ -102,10 +116,24 @@
     }, tok)) return;
     fig.classList.remove('scanning');
     swapLabel(done);
+    playing = false; finished = true;
+    if (!fig.matches(':hover')) settle(2500);
   }
-  function settle() { run++; reset(); }
+  // Once started, the story plays to the end even if the pointer leaves; the card returns to rest
+  // a moment after the pointer is gone, fading out rather than snapping.
+  function settle(delay = 1200) {
+    clearTimeout(back);
+    if (playing) return;
+    back = setTimeout(() => {
+      fig.classList.add('resting');
+      setTimeout(() => { run++; reset(); finished = false; fig.classList.remove('resting'); }, 350);
+    }, typeof delay === 'number' ? delay : 1200);
+  }
 
-  if (finePointer) { fig.addEventListener('mouseenter', play); fig.addEventListener('mouseleave', settle); }
+  if (finePointer) {
+    fig.addEventListener('mouseenter', play);
+    fig.addEventListener('mouseleave', settle);
+  }
   else if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setTimeout(play, 300); io.disconnect(); } }), { threshold: 0.7 });
     io.observe(fig);
