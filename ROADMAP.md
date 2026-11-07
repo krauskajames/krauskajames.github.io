@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 6, 2026 (one community per project; item 37 set in Janesville (Rock County), 400 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 6, 2026 (one community per project; item 37 set in the Village of Belgium (Ozaukee County); earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -33,7 +33,7 @@ Each idea gets two scores from 1 to 5:
 - Unfinished projects are labeled "Coming 2027" or "Coming soon" so the site never claims work that isn't done.
 - Each project gets a card on the home page and, when finished, its own case study page (problem, what was built, result, tools).
 - Restoring Lands screenshots and data go live only with the land trust's permission.
-- **One community per project.** Each project uses a different Wisconsin county or municipality, so the site shows range and every project page doubles as a reference for that place. Taken so far: Sheboygan County (4, 14), Winnebago County and Lake Winnebago (1, 9), Fond du Lac and Calumet counties (10), Monroe County (15), Milwaukee (23), Washington County/West Bend (30), Stevens Point (32), Janesville/Rock County (37). Check this list before picking a place for a new project.
+- **One community per project.** Each project uses a different Wisconsin county or municipality, so the site shows range and every project page doubles as a reference for that place. Taken so far: Sheboygan County (4, 14), Winnebago County and Lake Winnebago (1, 9), Fond du Lac and Calumet counties (10), Monroe County (15), Milwaukee (23), Washington County/West Bend (30), Stevens Point (32), Village of Belgium/Ozaukee County (37). Check this list before picking a place for a new project.
 
 ---
 
@@ -58,7 +58,7 @@ Each idea gets two scores from 1 to 5:
 
 | Rank | Item | E | F | Score | Status |
 |---|---|---|---|---|---|
-| 37 | Zoning hearing notice packet (400 ft mailing list, Janesville) | 5 | 5 | 5.0 | 🔜 |
+| 37 | Zoning hearing notice packet (Village of Belgium) | 5 | 5 | 5.0 | 🔜 |
 | 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | 🔧 |
 | 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔧 |
 | 38 | Year-over-year parcel change report | 5 | 4 | 4.6 | 💡 |
@@ -156,22 +156,22 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 ### 37–45. Everyday county land-records tasks (added Nov 6)
 *Numbered 37–45 so the other items keep their numbers. All nine score Tier 1: each is a task a county land-records or planning office does every week, and each reuses tools already on hand (the item 4 QA scripts, the PostGIS database, ArcGIS Pro Advanced). Under the one-community-per-project rule, items 38–45 each still need their own county (they were first written for Sheboygan); the Wisconsin Statewide Parcel Map covers every county.*
 
-### 37. Zoning hearing notice packet (400 ft mailing list, Janesville) · E5 F5 · 5.0
-- **Where:** City of Janesville, Rock County. Subject parcel: the farm field on the south side, south of Burbank Ave and west of S Oakhill Rd (north of the nursery rows and STH 11). Confirm on the city/county parcel viewer that it sits inside city limits and is one parcel (it may be two or three); if it is in the Town of Janesville or Town of Rock, the town or county rules apply instead.
-- **Scenario:** a made-up petition to rezone the field from its current agricultural or holding district to single-family residential for a subdivision (it is surrounded by neighborhoods on the north and east, so the story is believable).
-- **What:** Do what the city Planning Division's GIS tech does with the petition:
-  1. Buffer the subject parcel by 400 ft and select every parcel that touches the buffer.
-  2. Pull owner names and mailing addresses from the assessment roll fields, then clean the list: one letter per owner (combine people and LLCs with several parcels), standardized addresses, out-of-town and PO box owners flagged.
-  3. Tenant notices: find addresses on parcels adjoining or directly across the street from the subject parcel (address points), and add an "Occupant" letter for each, since Janesville notifies tenants there too.
-  4. Run the 1,000 ft check: list any neighboring municipality (Town of Janesville, Town of Rock) whose clerk must be notified.
-  5. Export the packet: mailing labels (Avery 5160 PDF), the owner and occupant list as CSV, and a one-page notice map (subject parcel, 400 ft buffer, notified parcels, parcel IDs).
-  6. Package steps 1–5 as a Python toolbox (.pyt) with inputs for parcel ID, notice distance and output folder, so the next request takes 30 seconds. Distance is an input, not hard-coded, because it varies by place (Janesville 400 ft, St. Croix County 300 ft, Town of Sheboygan 200 ft).
-- **Rules (Janesville):** written notice by regular mail, at least 10 days before the Plan Commission or City Council hearing, to owners within the rezoned land and within 400 ft of it, addressed by name from the tax assessment roll; tenants adjoining or directly opposite are notified too. State law adds notice to the clerk of any municipality within 1,000 ft. Janesville is rewriting its zoning ordinance (full draft released May 2026), so check whether the notice rules changed before the page goes live.
-- **Why:** The most common request a planning department sends its GIS tech. Hiring managers recognize it on sight.
+### 37. Zoning hearing notice packet (Village of Belgium) · E5 F5 · 5.0
+- **Where:** Village of Belgium, Ozaukee County. Subject parcel: the L-shaped farm field north of North St and west of Elevator Ln, behind Iyla Ave and Lanna Ln. Single-family homes on three sides (some rented), and industry across Elevator Ln (Mirror Image Manufacturing, 220 Elevator Ln) with Lakeside Foods and the rail line nearby. Confirm the parcel ID, owner and current zoning on the Ozaukee County parcel viewer, and whether it is one parcel or several.
+- **Scenario:** a made-up petition, picked once the current zoning is known. Option A: rezone to two-family/multifamily residential for rental housing (owners and renters on North St care). Option B: rezone the east part to industrial so the Elevator Ln businesses can expand (a buffer and conflict story next to R-1). Either way, use a made-up petitioner.
+- **What:** Do what the village's planner or GIS consultant does with the petition:
+  1. Buffer the subject parcel and select every parcel that touches the buffer.
+  2. Pull owner names and mailing addresses, then clean the list: one letter per owner (combine people and LLCs with several parcels), standardized addresses, absentee owners (mailing address differs from the site address, which is how rentals show up) flagged.
+  3. Optional courtesy step: "Occupant" letters for rental homes in the buffer, since owners of rentals often live elsewhere. Not required by the village code as far as checked; label it a courtesy notice.
+  4. Run the 1,000 ft check: list the neighboring town(s) (Town of Belgium) whose clerk must get notice.
+  5. Export the packet: mailing labels (Avery 5160 PDF), the owner list as CSV, and a one-page notice map (subject parcel, buffer, notified parcels, parcel IDs).
+  6. Package steps 1–5 as a Python toolbox (.pyt) with inputs for parcel ID(s), notice distance and output folder, so the next request takes 30 seconds. Distance is an input, not hard-coded, because it varies by place (Belgium 250/300 ft, Janesville 400 ft, Town of Sheboygan 200 ft).
+- **Rules (Belgium, as found Nov 2026):** the zoning chapter (§ 270-107) asks the petitioner for owners' names and addresses within 300 ft of the area to be rezoned; the village's general hearing-notice section defines parties in interest as owners within 250 ft and the clerk of any municipality within 1,000 ft, with a Class 2 published notice. The two distances differ, so the tool should produce the 300 ft petition list and the 250 ft mailing list in one run (a nice detail to point out on the page). Re-check both sections on eCode360 before publishing.
+- **Why:** The most common request a planning department sends its GIS tech. Hiring managers recognize it on sight. Small villages often contract this work out, so it also shows consultant-style work.
 - **Have:** ArcGIS Pro Advanced; the item 4 Python patterns.
-- **Need:** Rock County parcels with owner name and mailing address fields (Wisconsin Statewide Parcel Map: OWNERNME1, OWNERNME2, PSTLADRESS; or Rock County's own download if its mailing fields are more complete); Rock County address points; the city zoning layer (janesvillewi.gov/maps) to get the field's current district; municipal boundaries.
-- **Portfolio page:** zoning-notice.html with the scenario, the raw vs. cleaned owner list, the notice map, a screenshot of the tool dialog, and a link to the code. Use a made-up petitioner, and blur or replace owner names in screenshots.
-- **Next step:** Look up the field on the parcel viewer (parcel ID, owner, current zoning, inside city limits?), download Rock County from the statewide parcel layer, and run the 400 ft selection by hand once before building the tool.
+- **Need:** Ozaukee County parcels with owner name, site address and mailing address fields (Wisconsin Statewide Parcel Map: OWNERNME1, OWNERNME2, PSTLADRESS, SITEADRESS; or Ozaukee County's own download if its mailing fields are more complete); the village zoning map; municipal boundaries.
+- **Portfolio page:** zoning-notice.html with the scenario, the raw vs. cleaned owner list, the notice map, a screenshot of the tool dialog, and a link to the code. Blur or replace owner names in screenshots.
+- **Next step:** Look up the field on the Ozaukee County parcel viewer (parcel ID, owner, current zoning, one parcel or several), pick option A or B, and run the buffer selection by hand once before building the tool.
 
 ### 38. Year-over-year parcel change report · E5 F4 · 4.6
 - **What:** Two years of the Wisconsin Statewide Parcel Map for Sheboygan County (e.g. V11 and V12), compared in PostGIS: new splits and combinations, owner changes, parcels whose geometry moved, with a change map.
