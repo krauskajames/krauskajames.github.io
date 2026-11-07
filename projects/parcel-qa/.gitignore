@@ -1,3 +1,7 @@
-raw/
 out/
-tests/synthetic/
+raw/
+report/*.html
+report/*.pdf
+report/.quarto/
+report/*_files/
+__pycache__/

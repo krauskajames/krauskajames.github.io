@@ -1,0 +1,8 @@
+body { font-family: "Public Sans", "Segoe UI", system-ui, sans-serif; color: #1b241d; background: #f1f2ec; }
+h1, h2, h3, .title { font-family: "Cormorant Garamond", Georgia, serif; color: #2e4a34; font-weight: 600; }
+.subtitle { color: #4c5a4f; }
+a { color: #2e4a34; }
+table { font-size: 0.875rem; }
+th { border-bottom: 1px solid #c7ccbb !important; }
+figcaption { color: #4c5a4f; font-size: 0.875rem; }
+pre { background: #e6e9dd; }

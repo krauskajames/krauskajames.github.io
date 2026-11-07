@@ -1,0 +1,231 @@
+---
+title: "Parcel & NG911 Data QA: Sheboygan County"
+subtitle: "Python and PostGIS run side by side on the same county data"
+author: "James Krauska"
+date: today
+date-format: "MMMM D, YYYY"
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-depth: 2
+    css: report.css
+    fig-format: svg
+  typst:
+    papersize: us-letter
+    margin:
+      x: 0.8in
+      y: 0.8in
+    toc: true
+    fig-format: png
+    fig-dpi: 200
+execute:
+  echo: false
+  warning: false
+jupyter: python3
+---
+
+```{python}
+#| label: setup
+# Connection: PGHOST / PGPORT / PGUSER / PGPASSWORD / PGDATABASE environment variables
+# (defaults: localhost, 5432, postgres, no password, parcel_qa). The Python results are read from
+# PARCELQA_PY_SUMMARY (default ../out/qa_summary.csv, the file parcel_qa.py writes).
+import os, csv, datetime
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
+from IPython.display import Markdown, display
+from sqlalchemy import create_engine
+from sqlalchemy.engine import URL
+
+eng = create_engine(URL.create(
+    "postgresql+psycopg2",
+    username=os.environ.get("PGUSER", "postgres"), password=os.environ.get("PGPASSWORD"),
+    host=os.environ.get("PGHOST", "localhost"), port=int(os.environ.get("PGPORT", 5432)),
+    database=os.environ.get("PGDATABASE", "parcel_qa")))
+q = lambda sql: pd.read_sql(sql, eng)
+
+summary = q("SELECT * FROM qa.summary ORDER BY check_code")
+py_path = os.environ.get("PARCELQA_PY_SUMMARY", "../out/qa_summary.csv")
+py = {r["check"]: int(r["count"]) for r in csv.DictReader(open(py_path))} if os.path.exists(py_path) else None
+totals = q("""SELECT (SELECT count(*) FROM core.parcels) AS parcels,
+                     (SELECT count(*) FROM qa.active_addresses) AS addresses,
+                     (SELECT count(*) FROM core.road_centerlines) AS roads,
+                     (SELECT count(*) FROM qa.findings) AS findings,
+                     (SELECT postgis_lib_version()) AS postgis,
+                     (SELECT split_part(version(), ' ', 2)) AS pg""").iloc[0]
+
+FOREST, OLIVE, INK2, RULE = "#2e4a34", "#6d7a3a", "#4c5a4f", "#c7ccbb"
+SEV = {"high": "#d03b3b", "medium": "#ec835a", "low": "#fab219"}
+plt.rcParams.update({"font.family": ["Public Sans", "Segoe UI", "DejaVu Sans"], "font.size": 9,
+                     "axes.edgecolor": RULE, "axes.labelcolor": INK2, "xtick.color": INK2, "ytick.color": INK2})
+
+def md_table(df, align=None, widths=None):
+    """pandas -> Markdown table without extra packages (renders in HTML and PDF); widths in percent."""
+    cols = list(df.columns)
+    align = align or ["l"] * len(cols)
+    sep = ["---:" if a == "r" else ":---" for a in align]
+    rows = ["| " + " | ".join(cols) + " |", "| " + " | ".join(sep) + " |"]
+    for _, r in df.iterrows():
+        rows.append("| " + " | ".join(str(v).replace("|", "/") for v in r.values) + " |")
+    if widths:
+        rows.append("")
+        rows.append(': {tbl-colwidths="[' + ",".join(map(str, widths)) + ']"}')
+    return Markdown("\n".join(rows))
+
+fmt = lambda n: f"{int(n):,}"
+```
+
+## Summary
+
+```{python}
+#| output: asis
+match = py is not None and all(py.get(c, 0) == n for c, n in zip(summary.check_code, summary["count"]))
+print(f"""The toolkit checks **{fmt(totals.parcels)} tax parcels**, **{fmt(totals.addresses)} active address points** and
+**{fmt(totals.roads)} road centerline segments** from Sheboygan County's public GIS services for 19 kinds of error
+that matter to land records and NG911 call routing. It found **{fmt(totals.findings)} items to review**.
+
+The same 19 checks are written twice: once in Python (GeoPandas) and once as spatial SQL views in PostgreSQL
+{totals.pg} with PostGIS {totals.postgis}. """ + (
+ f"On this run the two versions agree on every check: **{fmt(sum(py.values()))} findings in Python, "
+ f"{fmt(totals.findings)} in SQL**." if match else
+ ("The table below compares the two versions check by check." if py else
+  "The Python results file was not found, so this run shows the SQL results only.")))
+```
+
+## Results by check
+
+```{python}
+t = summary.copy()
+t["Check"] = t.check_code
+t["What it finds"] = t.title
+t["Severity"] = t.severity
+t["SQL"] = t["count"].map(fmt)
+cols = ["Check", "What it finds", "Severity", "SQL"]
+align = ["l", "l", "l", "r"]
+if py is not None:
+    t["Python"] = t.check_code.map(lambda c: fmt(py.get(c, 0)))
+    t["Match"] = ["yes" if py.get(c, 0) == n else "**no**" for c, n in zip(t.check_code, t["count"])]
+    cols += ["Python", "Match"]; align += ["r", "l"]
+t["Per 1,000"] = t.rate_per_1000.map(lambda v: f"{v:.2f}")
+cols += ["Per 1,000"]; align += ["r"]
+widths = [8, 38, 12, 10, 10, 9, 13] if py is not None else [10, 50, 14, 12, 14]
+display(md_table(t[cols], align, widths))
+```
+
+Rates are per 1,000 features of the layer the check looks at (parcels, address points or road segments).
+Checks with zero findings are kept in the table: a clean result is a result.
+
+## Where the findings are
+
+```{python}
+#| label: fig-map
+#| fig-cap: "Every finding, colored by severity. Municipal boundaries in gray."
+#| fig-width: 7
+#| fig-height: 8.4
+f = gpd.read_postgis("SELECT severity, geom FROM qa.findings", eng, geom_col="geom")
+m = gpd.read_postgis("SELECT label, geom FROM core.municipalities", eng, geom_col="geom")
+fig, ax = plt.subplots()
+m.plot(ax=ax, facecolor="#e6e9dd", edgecolor="#9aa38c", linewidth=0.5)
+for sev in ["low", "medium", "high"]:          # high drawn last, on top
+    s = f[f.severity == sev]
+    s.plot(ax=ax, color=SEV[sev], markersize=9, edgecolor="white", linewidth=0.4,
+           label=f"{sev.title()} ({len(s):,})", zorder=3)
+ax.legend(loc="upper left", bbox_to_anchor=(1.0, 1.0), frameon=False, title="Severity", alignment="left")
+ax.set_axis_off(); ax.set_aspect("equal")
+plt.tight_layout(); plt.show()
+```
+
+Findings cluster where addresses and small parcels are dense: the City of Sheboygan, Plymouth, Sheboygan Falls
+and the villages. Rural strings of findings usually follow one road segment whose address range is wrong, which
+shows up as a run of "number outside road range" findings.
+
+```{python}
+#| label: fig-muni
+#| fig-cap: "Municipalities with the most address and road findings per 1,000 address points (at least 500 address points)."
+#| fig-width: 7
+#| fig-height: 3.6
+r = q("""
+WITH a AS (SELECT m.label, count(*) AS addresses
+           FROM qa.active_addresses p JOIN core.municipalities m ON ST_Within(p.geom, m.geom) GROUP BY m.label),
+     f AS (SELECT m.label, count(*) AS findings
+           FROM qa.findings x JOIN core.municipalities m ON ST_Within(x.geom, m.geom)
+           WHERE x.layer IN ('addresses', 'roads') GROUP BY m.label)
+SELECT a.label, a.addresses, coalesce(f.findings, 0) AS findings,
+       round(coalesce(f.findings, 0) * 1000.0 / a.addresses, 1) AS per_1000
+FROM a LEFT JOIN f USING (label) WHERE a.addresses >= 500
+ORDER BY per_1000 DESC LIMIT 10""")
+r = r.iloc[::-1]
+fig, ax = plt.subplots()
+bars = ax.barh(r.label, r.per_1000, color=FOREST, height=0.62)
+for b, v, n in zip(bars, r.per_1000, r.findings):
+    ax.text(b.get_width() + 0.3, b.get_y() + b.get_height() / 2, f"{v:.1f}  ({n} findings)", va="center", color=INK2, fontsize=8)
+ax.spines[["top", "right", "left"]].set_visible(False)
+ax.tick_params(axis="y", length=0); ax.set_xlabel("Findings per 1,000 address points")
+ax.grid(axis="x", color="#e1e0d9", linewidth=0.6); ax.set_axisbelow(True)
+ax.set_xlim(0, r.per_1000.max() * 1.35)
+plt.tight_layout(); plt.show()
+```
+
+Per address, two rural towns stand out. In the Town of Lyndon, 39 address points sit outside their road
+segment's number range and 28 sit unusually far from the segment they are linked to: a handful of segments with
+wrong ranges or wrong links flag whole strings of rural addresses. The Town of Lima shows the same pattern on a
+smaller scale.
+
+## One example of each
+
+```{python}
+ex = q("""SELECT DISTINCT ON (check_code) check_code AS "Check", title AS "Finding", feature_id AS "Feature", detail AS "Detail"
+          FROM qa.findings ORDER BY check_code, feature_id""")
+display(md_table(ex, widths=[8, 24, 22, 46]))
+```
+
+Every finding has a point on the map and a sentence that says what to look at. Three patterns explain most of them:
+
+- **Number outside road range** (the largest group) usually means the road segment's range is too short, or the
+  point is linked to the wrong segment. When a nearby segment of the same street does fit the number, the detail
+  says so.
+- **Gaps and overlaps between parcels** are a few square meters each: digitizing slivers where neighboring
+  parcels were drawn at different times.
+- **Missing attributes** are mostly parcels without an owner or municipality that are not road right-of-way.
+
+## How the database is built
+
+```{python}
+s = q("""SELECT table_schema AS "Schema", table_name AS "Table" FROM information_schema.tables
+          WHERE table_schema IN ('core', 'lkp') AND table_type = 'BASE TABLE' ORDER BY table_schema, table_name""")
+s["Rows"] = [fmt(q(f'SELECT count(*) AS n FROM {a}.{b}').n[0]) for a, b in zip(s.Schema, s.Table)]
+display(md_table(s, ["l", "l", "r"], [20, 50, 30]))
+```
+
+- **`src`** holds the four layers exactly as downloaded, reprojected to Wisconsin Transverse Mercator (EPSG:3071,
+  meters) so distance and area thresholds match the Python version.
+- **`lkp`** holds lookup tables, the database version of geodatabase domains: address status, road class and
+  status (which roads are expected to carry address ranges), municipality types, the check list and the thresholds.
+- **`core`** holds typed, constrained copies: primary keys, foreign keys to the lookups, CHECK constraints on
+  address ranges, typed geometry columns, a repaired geometry next to the original, generated columns for
+  normalized street names, and GiST spatial indexes.
+- **`qa`** holds one materialized view per check, all with the same four columns (`check_code, feature_id,
+  detail, geom`), plus `qa.findings` (every finding as one point layer, used by ArcGIS Pro) and `qa.summary`.
+
+## How to rerun
+
+```text
+activate arcgispro-py3-qa
+cd ParcelQA_postgis
+REM download the layers, load them into PostGIS, run the SQL checks
+python postgis\load_postgis.py config\sheboygan.json
+REM run the Python checks on the same files
+python parcel_qa.py config\sheboygan.json out
+REM build this report (HTML and PDF)
+set PGPASSWORD=<postgres password>
+quarto render report\parcel_qa_report.qmd
+```
+
+When the county updates its data, these steps rebuild every number, table and map in this report.
+
+```{python}
+#| output: asis
+print(f"*Rendered {datetime.date.today():%B %-d, %Y}*" if os.name != "nt" else f"*Rendered {datetime.date.today():%B %#d, %Y}*",
+      f"*from PostgreSQL {totals.pg}, PostGIS {totals.postgis}. Data: Sheboygan County GIS public map services.*")
+```

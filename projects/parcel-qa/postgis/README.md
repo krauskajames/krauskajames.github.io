@@ -31,6 +31,16 @@ python postgis\load_postgis.py config\sheboygan.json --skip-load --compare out\q
 Needs PostgreSQL with PostGIS (tested on 16 + PostGIS 3.4 and 18.6 + 3.6.2) and geopandas, sqlalchemy,
 psycopg2-binary and geoalchemy2. It asks for the postgres password unless `PGPASSWORD` is set.
 
+## The report
+
+`../report/parcel_qa_report.qmd` reads the database (and `out/qa_summary.csv` from the Python run) and
+renders an HTML page and a PDF: SQL vs. Python by check, a findings map, findings per 1,000 addresses by
+municipality, one example of each finding, and the table inventory. With `PGPASSWORD` set:
+
+```
+quarto render report\parcel_qa_report.qmd
+```
+
 ## Porting to SQL Server spatial
 
 The logic carries over; the syntax changes. `geometry::STGeomFromText(…, 3071)` instead of typed
