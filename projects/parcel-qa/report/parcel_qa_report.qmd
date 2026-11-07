@@ -22,6 +22,7 @@ format:
 execute:
   echo: false
   warning: false
+  daemon: false     # fresh Python each render, so a newly set PGPASSWORD is always seen
 jupyter: python3
 ---
 
