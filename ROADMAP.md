@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 6, 2026 (added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 6, 2026 (one community per project; item 37 moved to St. Croix County; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -33,6 +33,7 @@ Each idea gets two scores from 1 to 5:
 - Unfinished projects are labeled "Coming 2027" or "Coming soon" so the site never claims work that isn't done.
 - Each project gets a card on the home page and, when finished, its own case study page (problem, what was built, result, tools).
 - Restoring Lands screenshots and data go live only with the land trust's permission.
+- **One community per project.** Each project uses a different Wisconsin county or municipality, so the site shows range and every project page doubles as a reference for that place. Taken so far: Sheboygan County (4, 14), Winnebago County and Lake Winnebago (1, 9), Fond du Lac and Calumet counties (10), Monroe County (15), Milwaukee (23), Washington County/West Bend (30), Stevens Point (32), St. Croix County (37). Check this list before picking a place for a new project.
 
 ---
 
@@ -153,14 +154,22 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Next step:** Find one public set of utility as-builts or draw a fictional one.
 
 ### 37–45. Everyday county land-records tasks (added Nov 6)
-*Numbered 37–45 so the other items keep their numbers. All nine score Tier 1: each is a task a county land-records or planning office does every week, and each reuses data or tools already on hand (Sheboygan County parcels, address points and road centerlines from item 4, the PostGIS database, ArcGIS Pro Advanced).*
+*Numbered 37–45 so the other items keep their numbers. All nine score Tier 1: each is a task a county land-records or planning office does every week, and each reuses tools already on hand (the item 4 QA scripts, the PostGIS database, ArcGIS Pro Advanced). Under the one-community-per-project rule, items 38–45 each still need their own county (they were first written for Sheboygan); the Wisconsin Statewide Parcel Map covers every county.*
 
 ### 37. Zoning hearing notice packet (300 ft mailing list) · E5 F5 · 5.0
-- **What:** A made-up rezoning in Sheboygan County: select every parcel within 300 ft, remove duplicate owners, and export mailing labels and a notice map. Then package it as a Python or ModelBuilder tool so the next request takes 30 seconds.
+- **Where:** St. Croix County, in a town under county zoning. St. Croix runs general zoning for most of its towns and has a GIS Technician posting on file, so the packet doubles as an "I researched you" piece.
+- **What:** A made-up rezoning petition (for example, a farm parcel going from Ag to R-1). Do what the county's GIS tech does when Community Development hands one over:
+  1. Buffer the subject parcel by the notice distance and select every parcel that touches the buffer.
+  2. Pull owner names and mailing addresses, then clean the list: one letter per owner (combine people and LLCs with several parcels), standardized addresses, out-of-state and PO box owners flagged.
+  3. Run the 1,000 ft check: list any city or village within 1,000 ft and the town clerk who must be notified.
+  4. Export the packet: mailing labels (Avery 5160 PDF), the owner list as CSV, and a one-page notice map (subject parcel, buffer, notified parcels, parcel IDs).
+  5. Package steps 1–4 as a Python toolbox (.pyt) with inputs for parcel ID, notice distance and output folder, so the next request takes 30 seconds. Distance is an input, not hard-coded, because it varies by jurisdiction (Town of Sheboygan 200 ft, Town of Hudson 200 ft, many towns 300 ft, some 500 ft).
+- **Rules (St. Croix County):** the rezoning application says notice goes to all owners within 300 ft of the subject property, the hearing notice is published in the county's official newspaper for 2 successive weeks, and the Community Development Committee holds hearings, usually on the 3rd Thursday. The town must make a recommendation first. State law also requires notice to the clerk of any municipality within 1,000 ft. Confirm against Chapter 15 of the current ordinance (it was being amended in 2025–26).
 - **Why:** The most common request a planning department sends its GIS tech. Hiring managers recognize it on sight.
-- **Have:** Sheboygan parcels with owner fields (item 4).
-- **Need:** The county's notice distance from its zoning ordinance (300 ft is common in Wisconsin; check Sheboygan's).
-- **Next step:** Pick the "rezoned" parcel and run the buffer selection by hand once before building the tool.
+- **Have:** ArcGIS Pro Advanced; the item 4 Python patterns.
+- **Need:** St. Croix County parcels with owner name and mailing address fields (Wisconsin Statewide Parcel Map: OWNERNME1, OWNERNME2, PSTLADRESS; or the county's own parcel download if it has more complete mailing fields); the county zoning layer, to pick a believable parcel; municipal boundaries for the 1,000 ft check.
+- **Portfolio page:** zoning-notice.html with the scenario, the raw vs. cleaned owner list, the notice map, a screenshot of the tool dialog, and a link to the code. Use a made-up petitioner, and show owner names blurred or replaced in screenshots (real names are public record, but there's no need to put them on the site).
+- **Next step:** Download St. Croix County from the statewide parcel layer, pick the subject parcel in a county-zoned town, and run the buffer selection by hand once before building the tool.
 
 ### 38. Year-over-year parcel change report · E5 F4 · 4.6
 - **What:** Two years of the Wisconsin Statewide Parcel Map for Sheboygan County (e.g. V11 and V12), compared in PostGIS: new splits and combinations, owner changes, parcels whose geometry moved, with a change map.
