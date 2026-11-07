@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 6, 2026 (one community per project; item 37 set in the Village of Belgium (Ozaukee County); earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 6, 2026 (one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -33,7 +33,7 @@ Each idea gets two scores from 1 to 5:
 - Unfinished projects are labeled "Coming 2027" or "Coming soon" so the site never claims work that isn't done.
 - Each project gets a card on the home page and, when finished, its own case study page (problem, what was built, result, tools).
 - Restoring Lands screenshots and data go live only with the land trust's permission.
-- **One community per project.** Each project uses a different Wisconsin county or municipality, so the site shows range and every project page doubles as a reference for that place. Taken so far: Sheboygan County (4, 14), Winnebago County and Lake Winnebago (1, 9), Fond du Lac and Calumet counties (10), Monroe County (15), Milwaukee (23), Washington County/West Bend (30), Stevens Point (32), Village of Belgium/Ozaukee County (37). Check this list before picking a place for a new project.
+- **One community per project.** Each project uses a different Wisconsin county or municipality, so the site shows range and every project page doubles as a reference for that place. Taken so far: Sheboygan County (4, 14), Winnebago County and Lake Winnebago (1, 9), Fond du Lac and Calumet counties (10), Monroe County (15), Milwaukee (23), Washington County/West Bend (30), Stevens Point (32), Town of Sheboygan (37; a town-level project, separate from the county-wide item 4). Check this list before picking a place for a new project.
 
 ---
 
@@ -58,7 +58,7 @@ Each idea gets two scores from 1 to 5:
 
 | Rank | Item | E | F | Score | Status |
 |---|---|---|---|---|---|
-| 37 | Zoning hearing notice packet (Village of Belgium) | 5 | 5 | 5.0 | 🔜 |
+| 37 | Zoning hearing notice packet (Town of Sheboygan, 200 ft) | 5 | 5 | 5.0 | 🔜 |
 | 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | 🔧 |
 | 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔧 |
 | 38 | Year-over-year parcel change report | 5 | 4 | 4.6 | 💡 |
@@ -156,22 +156,23 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 ### 37–45. Everyday county land-records tasks (added Nov 6)
 *Numbered 37–45 so the other items keep their numbers. All nine score Tier 1: each is a task a county land-records or planning office does every week, and each reuses tools already on hand (the item 4 QA scripts, the PostGIS database, ArcGIS Pro Advanced). Under the one-community-per-project rule, items 38–45 each still need their own county (they were first written for Sheboygan); the Wisconsin Statewide Parcel Map covers every county.*
 
-### 37. Zoning hearing notice packet (Village of Belgium) · E5 F5 · 5.0
-- **Where:** Village of Belgium, Ozaukee County. Subject parcel: the L-shaped farm field north of North St and west of Elevator Ln, behind Iyla Ave and Lanna Ln. Single-family homes on three sides (some rented), and industry across Elevator Ln (Mirror Image Manufacturing, 220 Elevator Ln) with Lakeside Foods and the rail line nearby. Confirm the parcel ID, owner and current zoning on the Ozaukee County parcel viewer, and whether it is one parcel or several.
-- **Scenario (chosen Nov 6):** option A, rental housing. The field is zoned RD-1 (Single-Family Residence, up to 4.4 units/acre) on the village zoning map, and it appears to be two parcels: the main L-shaped field plus a narrow RD-1 strip along Elevator Ln. Made-up petition: rezone both from RD-1 to RM-1 (Multiple-Family Residence, up to 4 units per building, about 10.9 units/net acre), which fits a transition between the RD-1 homes and the M-2 industry across Elevator Ln. Belgium has no "R-3"; its multifamily districts are RM-1 and RM-2 (up to 8 units per building). Use a made-up petitioner.
-- **What:** Do what the village's planner or GIS consultant does with the petition:
-  1. Buffer the subject parcel and select every parcel that touches the buffer.
-  2. Pull owner names and mailing addresses, then clean the list: one letter per owner (combine people and LLCs with several parcels), standardized addresses, absentee owners (mailing address differs from the site address, which is how rentals show up) flagged.
-  3. Optional courtesy step: "Occupant" letters for rental homes in the buffer, since owners of rentals often live elsewhere. Not required by the village code as far as checked; label it a courtesy notice.
-  4. Run the 1,000 ft check: list the neighboring town(s) (Town of Belgium) whose clerk must get notice.
-  5. Export the packet: mailing labels (Avery 5160 PDF), the owner list as CSV, and a one-page notice map (subject parcel, buffer, notified parcels, parcel IDs).
-  6. Package steps 1–5 as a Python toolbox (.pyt) with inputs for parcel ID(s), notice distance and output folder, so the next request takes 30 seconds. Distance is an input, not hard-coded, because it varies by place (Belgium 250/300 ft, Janesville 400 ft, Town of Sheboygan 200 ft).
-- **Rules (Belgium, as found Nov 2026):** the zoning chapter (§ 270-107) asks the petitioner for owners' names and addresses within 300 ft of the area to be rezoned; the village's general hearing-notice section defines parties in interest as owners within 250 ft and the clerk of any municipality within 1,000 ft, with a Class 2 published notice. The two distances differ, so the tool should produce the 300 ft petition list and the 250 ft mailing list in one run (a nice detail to point out on the page). Re-check both sections on eCode360 before publishing.
-- **Why:** The most common request a planning department sends its GIS tech. Hiring managers recognize it on sight. Small villages often contract this work out, so it also shows consultant-style work.
-- **Have:** ArcGIS Pro Advanced; the item 4 Python patterns.
-- **Need:** Ozaukee County parcels with owner name, site address and mailing address fields (Wisconsin Statewide Parcel Map: OWNERNME1, OWNERNME2, PSTLADRESS, SITEADRESS; or Ozaukee County's own download if its mailing fields are more complete); the village zoning map; municipal boundaries.
+### 37. Zoning hearing notice packet (Town of Sheboygan, 200 ft) · E5 F5 · 5.0
+- **Where:** Town of Sheboygan, Sheboygan County. Subject parcel: the farm field on the south side of Playbird Rd, east of N 40th St, between Larry's Distributing (industrial) on the west and the apartment buildings on the east, with the Wild Meadow Dr / Green Meadow Dr subdivision to the southeast and woods/wetland along the south edge. Confirm on the Sheboygan County parcel viewer: parcel ID, owner, current town zoning district, that it is in the Town (not the City of Sheboygan), and whether it is one parcel.
+- **Scenario:** a made-up petition, set once the current district is known. Working idea: rezone the field to the Town's multifamily district for apartments that extend the ones next door, which puts renters, subdivision homeowners and an industrial neighbor all on the mailing list. Use the Town's own district codes (Article IV of Ch. 335) and a made-up petitioner.
+- **What:** Do what the Town's planner or GIS consultant does with the petition:
+  1. Buffer the subject parcel by 200 ft and select every parcel that touches the buffer.
+  2. Pull owner names and mailing addresses, then clean the list: one letter per owner (combine people and LLCs with several parcels), standardized addresses, absentee owners flagged (this is how the rental buildings show up).
+  3. Optional courtesy step: "Occupant" letters for the apartment units (from address points), labeled as courtesy notices since the Town code does not require tenant notice as far as checked.
+  4. Run the 1,000 ft check: list any municipality within 1,000 ft whose clerk must get notice at least 10 days before the hearing (the City of Sheboygan is the one to test).
+  5. Overlay check: flag whether the parcel touches Sheboygan County shoreland/wetland zoning (the wooded strip on the south edge). County shoreland zoning applies in unincorporated towns, so a real rezoning there would also involve the county.
+  6. Export the packet: the 200 ft owner list in petition form, mailing labels (Avery 5160 PDF), the list as CSV, and a one-page notice map at 1 in = 100 ft (the scale the Town's petition plot plan calls for) showing the subject parcel, buffer, adjacent districts and existing uses.
+  7. Package steps 1–6 as a Python toolbox (.pyt) with inputs for parcel ID(s), notice distance and output folder, so the next request takes 30 seconds. Distance is an input, not hard-coded (Town of Sheboygan 200 ft, Village of Belgium 250/300 ft, Janesville 400 ft, St. Croix County 300 ft).
+- **Rules (Town of Sheboygan, Ch. 335 Art. XII, as found Nov 2026):** petitions filed with the Town Clerk include a 1 in = 100 ft plot plan with adjacent districts and existing uses within 200 ft, and owners' names and addresses within 200 ft; the Plan Commission holds the hearing after a Class 2 notice, then the Town Board decides; the clerk of any municipality within 1,000 ft gets written notice at least 10 days ahead. Re-check the current code and the Town's fee schedule before publishing.
+- **Why:** The most common request a planning department sends its GIS tech. Hiring managers recognize it on sight, and it stays in the county James most wants to work in.
+- **Have:** Sheboygan County parcels, address points and road centerlines (item 4); ArcGIS Pro Advanced; the item 4 Python patterns.
+- **Need:** the Town of Sheboygan zoning map; Sheboygan County shoreland/wetland zoning layer; municipal boundaries.
 - **Portfolio page:** zoning-notice.html with the scenario, the raw vs. cleaned owner list, the notice map, a screenshot of the tool dialog, and a link to the code. Blur or replace owner names in screenshots.
-- **Next step:** Look up the field on the Ozaukee County parcel viewer (parcel ID, owner, current zoning, one parcel or several), pick option A or B, and run the buffer selection by hand once before building the tool.
+- **Next step:** Look up the field (parcel ID, owner, current district), pick the target district, and run the 200 ft selection by hand once before building the tool.
 
 ### 38. Year-over-year parcel change report · E5 F4 · 4.6
 - **What:** Two years of the Wisconsin Statewide Parcel Map for Sheboygan County (e.g. V11 and V12), compared in PostGIS: new splits and combinations, owner changes, parcels whose geometry moved, with a change map.
