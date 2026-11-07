@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 6, 2026 (one community per project; item 37 moved to St. Croix County; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 6, 2026 (one community per project; item 37 set in Janesville (Rock County), 400 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -33,7 +33,7 @@ Each idea gets two scores from 1 to 5:
 - Unfinished projects are labeled "Coming 2027" or "Coming soon" so the site never claims work that isn't done.
 - Each project gets a card on the home page and, when finished, its own case study page (problem, what was built, result, tools).
 - Restoring Lands screenshots and data go live only with the land trust's permission.
-- **One community per project.** Each project uses a different Wisconsin county or municipality, so the site shows range and every project page doubles as a reference for that place. Taken so far: Sheboygan County (4, 14), Winnebago County and Lake Winnebago (1, 9), Fond du Lac and Calumet counties (10), Monroe County (15), Milwaukee (23), Washington County/West Bend (30), Stevens Point (32), St. Croix County (37). Check this list before picking a place for a new project.
+- **One community per project.** Each project uses a different Wisconsin county or municipality, so the site shows range and every project page doubles as a reference for that place. Taken so far: Sheboygan County (4, 14), Winnebago County and Lake Winnebago (1, 9), Fond du Lac and Calumet counties (10), Monroe County (15), Milwaukee (23), Washington County/West Bend (30), Stevens Point (32), Janesville/Rock County (37). Check this list before picking a place for a new project.
 
 ---
 
@@ -58,7 +58,7 @@ Each idea gets two scores from 1 to 5:
 
 | Rank | Item | E | F | Score | Status |
 |---|---|---|---|---|---|
-| 37 | Zoning hearing notice packet (300 ft mailing list) | 5 | 5 | 5.0 | 🔜 |
+| 37 | Zoning hearing notice packet (400 ft mailing list, Janesville) | 5 | 5 | 5.0 | 🔜 |
 | 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | 🔧 |
 | 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔧 |
 | 38 | Year-over-year parcel change report | 5 | 4 | 4.6 | 💡 |
@@ -156,20 +156,22 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 ### 37–45. Everyday county land-records tasks (added Nov 6)
 *Numbered 37–45 so the other items keep their numbers. All nine score Tier 1: each is a task a county land-records or planning office does every week, and each reuses tools already on hand (the item 4 QA scripts, the PostGIS database, ArcGIS Pro Advanced). Under the one-community-per-project rule, items 38–45 each still need their own county (they were first written for Sheboygan); the Wisconsin Statewide Parcel Map covers every county.*
 
-### 37. Zoning hearing notice packet (300 ft mailing list) · E5 F5 · 5.0
-- **Where:** St. Croix County, in a town under county zoning. St. Croix runs general zoning for most of its towns and has a GIS Technician posting on file, so the packet doubles as an "I researched you" piece.
-- **What:** A made-up rezoning petition (for example, a farm parcel going from Ag to R-1). Do what the county's GIS tech does when Community Development hands one over:
-  1. Buffer the subject parcel by the notice distance and select every parcel that touches the buffer.
-  2. Pull owner names and mailing addresses, then clean the list: one letter per owner (combine people and LLCs with several parcels), standardized addresses, out-of-state and PO box owners flagged.
-  3. Run the 1,000 ft check: list any city or village within 1,000 ft and the town clerk who must be notified.
-  4. Export the packet: mailing labels (Avery 5160 PDF), the owner list as CSV, and a one-page notice map (subject parcel, buffer, notified parcels, parcel IDs).
-  5. Package steps 1–4 as a Python toolbox (.pyt) with inputs for parcel ID, notice distance and output folder, so the next request takes 30 seconds. Distance is an input, not hard-coded, because it varies by jurisdiction (Town of Sheboygan 200 ft, Town of Hudson 200 ft, many towns 300 ft, some 500 ft).
-- **Rules (St. Croix County):** the rezoning application says notice goes to all owners within 300 ft of the subject property, the hearing notice is published in the county's official newspaper for 2 successive weeks, and the Community Development Committee holds hearings, usually on the 3rd Thursday. The town must make a recommendation first. State law also requires notice to the clerk of any municipality within 1,000 ft. Confirm against Chapter 15 of the current ordinance (it was being amended in 2025–26).
+### 37. Zoning hearing notice packet (400 ft mailing list, Janesville) · E5 F5 · 5.0
+- **Where:** City of Janesville, Rock County. Subject parcel: the farm field on the south side, south of Burbank Ave and west of S Oakhill Rd (north of the nursery rows and STH 11). Confirm on the city/county parcel viewer that it sits inside city limits and is one parcel (it may be two or three); if it is in the Town of Janesville or Town of Rock, the town or county rules apply instead.
+- **Scenario:** a made-up petition to rezone the field from its current agricultural or holding district to single-family residential for a subdivision (it is surrounded by neighborhoods on the north and east, so the story is believable).
+- **What:** Do what the city Planning Division's GIS tech does with the petition:
+  1. Buffer the subject parcel by 400 ft and select every parcel that touches the buffer.
+  2. Pull owner names and mailing addresses from the assessment roll fields, then clean the list: one letter per owner (combine people and LLCs with several parcels), standardized addresses, out-of-town and PO box owners flagged.
+  3. Tenant notices: find addresses on parcels adjoining or directly across the street from the subject parcel (address points), and add an "Occupant" letter for each, since Janesville notifies tenants there too.
+  4. Run the 1,000 ft check: list any neighboring municipality (Town of Janesville, Town of Rock) whose clerk must be notified.
+  5. Export the packet: mailing labels (Avery 5160 PDF), the owner and occupant list as CSV, and a one-page notice map (subject parcel, 400 ft buffer, notified parcels, parcel IDs).
+  6. Package steps 1–5 as a Python toolbox (.pyt) with inputs for parcel ID, notice distance and output folder, so the next request takes 30 seconds. Distance is an input, not hard-coded, because it varies by place (Janesville 400 ft, St. Croix County 300 ft, Town of Sheboygan 200 ft).
+- **Rules (Janesville):** written notice by regular mail, at least 10 days before the Plan Commission or City Council hearing, to owners within the rezoned land and within 400 ft of it, addressed by name from the tax assessment roll; tenants adjoining or directly opposite are notified too. State law adds notice to the clerk of any municipality within 1,000 ft. Janesville is rewriting its zoning ordinance (full draft released May 2026), so check whether the notice rules changed before the page goes live.
 - **Why:** The most common request a planning department sends its GIS tech. Hiring managers recognize it on sight.
 - **Have:** ArcGIS Pro Advanced; the item 4 Python patterns.
-- **Need:** St. Croix County parcels with owner name and mailing address fields (Wisconsin Statewide Parcel Map: OWNERNME1, OWNERNME2, PSTLADRESS; or the county's own parcel download if it has more complete mailing fields); the county zoning layer, to pick a believable parcel; municipal boundaries for the 1,000 ft check.
-- **Portfolio page:** zoning-notice.html with the scenario, the raw vs. cleaned owner list, the notice map, a screenshot of the tool dialog, and a link to the code. Use a made-up petitioner, and show owner names blurred or replaced in screenshots (real names are public record, but there's no need to put them on the site).
-- **Next step:** Download St. Croix County from the statewide parcel layer, pick the subject parcel in a county-zoned town, and run the buffer selection by hand once before building the tool.
+- **Need:** Rock County parcels with owner name and mailing address fields (Wisconsin Statewide Parcel Map: OWNERNME1, OWNERNME2, PSTLADRESS; or Rock County's own download if its mailing fields are more complete); Rock County address points; the city zoning layer (janesvillewi.gov/maps) to get the field's current district; municipal boundaries.
+- **Portfolio page:** zoning-notice.html with the scenario, the raw vs. cleaned owner list, the notice map, a screenshot of the tool dialog, and a link to the code. Use a made-up petitioner, and blur or replace owner names in screenshots.
+- **Next step:** Look up the field on the parcel viewer (parcel ID, owner, current zoning, inside city limits?), download Rock County from the statewide parcel layer, and run the 400 ft selection by hand once before building the tool.
 
 ### 38. Year-over-year parcel change report · E5 F4 · 4.6
 - **What:** Two years of the Wisconsin Statewide Parcel Map for Sheboygan County (e.g. V11 and V12), compared in PostGIS: new splits and combinations, owner changes, parcels whose geometry moved, with a change map.
