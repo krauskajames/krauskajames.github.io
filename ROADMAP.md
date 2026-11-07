@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 6, 2026 (one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 7, 2026 (new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -58,35 +58,36 @@ Each idea gets two scores from 1 to 5:
 
 | Rank | Item | E | F | Score | Status |
 |---|---|---|---|---|---|
-| 37 | Zoning hearing notice packet (Town of Sheboygan, 200 ft) | 5 | 5 | 5.0 | 🔜 |
+| 46 | **Playbird Rd: from farm field to neighborhood** (umbrella for the parcel chapters) | 5 | 3 | 4.2 | 🔜 |
+| 37 | Zoning hearing notice packet (Town of Sheboygan, 200 ft) (ch. 2 of 46) | 5 | 5 | 5.0 | 🔜 |
 | 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | 🔧 |
 | 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔧 |
-| 38 | Year-over-year parcel change report | 5 | 4 | 4.6 | 💡 |
-| 39 | Addressing a new subdivision | 5 | 4 | 4.6 | 💡 |
-| 40 | Wisconsin statewide parcel submission dry run | 5 | 4 | 4.6 | 💡 |
-| 41 | NENA NG911 schema migration | 5 | 4 | 4.6 | 💡 |
-| 42 | County supervisory district redistricting | 5 | 4 | 4.6 | 💡 |
-| 43 | Public parcel viewer (Experience Builder) | 5 | 4 | 4.6 | 💡 |
-| 44 | Field Maps asset inventory, collected yourself | 5 | 4 | 4.6 | 💡 |
+| 38 | Year-over-year parcel change report (ch. 6 of 46) | 5 | 4 | 4.6 | 💡 |
+| 39 | Addressing a new subdivision (ch. 5 of 46) | 5 | 4 | 4.6 | 💡 |
+| 40 | Wisconsin statewide parcel submission dry run (ch. 6 of 46) | 5 | 4 | 4.6 | 💡 |
+| 41 | NENA NG911 schema migration (ch. 5 of 46) | 5 | 4 | 4.6 | 💡 |
+| 42 | County supervisory district redistricting (ch. 7 of 46) | 5 | 4 | 4.6 | 💡 |
+| 43 | Public parcel viewer (Experience Builder) (ch. 8 of 46) | 5 | 4 | 4.6 | 💡 |
+| 44 | Field Maps asset inventory, collected yourself (ch. 8 of 46) | 5 | 4 | 4.6 | 💡 |
 | 3 | Employer quotes and references | 4 | 5 | 4.4 | 🔜 |
-| 45 | PLSS section map book (Pro Map Series) | 4 | 5 | 4.4 | 💡 |
+| 45 | PLSS section map book (Pro Map Series) (ch. 6 of 46) | 4 | 5 | 4.4 | 💡 |
 | 4 | Parcel and NG911 data QA toolkit (with PostGIS) | 5 | 3 | 4.2 | 🔧 |
 | 5 | ~~Geodatabase and SQL project~~ (merged into item 4) | | | | ➡️ |
-| 6 | Utility mapping from as-built drawings | 5 | 3 | 4.2 | 💡 |
+| 6 | Utility mapping from as-built drawings (ch. 1 of 46) | 5 | 3 | 4.2 | 💡 |
 | 7 | Dark Skies of Wisconsin poster (WLIA map contest) | 4 | 4 | 4.0 | 💡 |
 | 8 | Esri Academy advanced course project | 4 | 4 | 4.0 | 💡 |
 | 9 | Lake Winnebago from space, 1999–2026 (Earth Engine) | 4 | 4 | 4.0 | 🔜 |
 | 10 | 3D watershed analysis: the streams that feed Lake Winnebago at Pipe | 4 | 4 | 4.0 | 🔜 |
 | 11 | Drone capture and Gaussian splats of buildings | 4 | 4 | 4.0 | 🔧 |
-| 12 | Site plans from drone surveys and county GIS | 4 | 4 | 4.0 | 🔜 |
+| 12 | Site plans from drone surveys and county GIS (ch. 4 of 46) | 4 | 4 | 4.0 | 🔜 |
 | 13 | Deep learning feature extraction (Image Analyst) | 4 | 4 | 4.0 | 💡 |
-| 14 | Network Analyst project: fire and EMS coverage in Sheboygan County | 4 | 4 | 4.0 | 💡 |
+| 14 | Network Analyst project: fire and EMS coverage in Sheboygan County (ch. 7 of 46) | 4 | 4 | 4.0 | 💡 |
 | 15 | Monroe County 1965 vs. 2010 swipe map | 3 | 5 | 3.8 | 🔜 |
 | 16 | Ice Age Trail plants StoryMap | 3 | 5 | 3.8 | 🔜 |
 | 17 | Headshot and "Outside work" polish | 3 | 5 | 3.8 | 🔜 |
 | 18 | Earth Engine water-resources short course | 3 | 5 | 3.8 | 🔜 |
-| 19 | LiDAR terrain and feature extraction | 4 | 3 | 3.6 | 💡 |
-| 20 | Solar suitability map | 4 | 3 | 3.6 | 💡 |
+| 19 | LiDAR terrain and feature extraction (ch. 1 of 46) | 4 | 3 | 3.6 | 💡 |
+| 20 | Solar suitability map (ch. 4 of 46) | 4 | 3 | 3.6 | 💡 |
 | 21 | Mountain lion corridors, redone in Python | 4 | 3 | 3.6 | 💡 |
 | 22 | Horicon Marsh open water since 1985 (Earth Engine, Random Forest) | 4 | 3 | 3.6 | 💡 |
 | 23 | Milwaukee: a divided city, 1940–2020 (StoryMap) | 4 | 3 | 3.6 | 💡 |
@@ -148,17 +149,37 @@ Each idea gets two scores from 1 to 5:
 Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs on the same Sheboygan County data. Number kept so other item references stay the same.
 
 ### 6. Utility mapping from as-built drawings · E5 F3 · 4.2
+- **Part of item 46, chapter 1.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** Digitize a sample water or sewer system from as-built style drawings into a utility network (mains, valves, hydrants, manholes with attributes and connectivity), then run a trace: "which customers lose water if this valve closes?"
 - **Why:** Ruekert & Mielke's GIS Technician posting is municipal utility mapping from as-builts, and reading engineering drawings is already your strength from DuctBuilder.
 - **Need:** A sample as-built (public city plans, or a fictional one like the sample clinic); Esri's utility network training.
 - **Next step:** Find one public set of utility as-builts or draw a fictional one.
 
+### 46. Playbird Rd: from farm field to neighborhood · E5 F3 · 4.2
+*Added Nov 7, 2026. One made-up development on one real parcel, followed through every county and town office a GIS tech supports. Each chapter is a finished piece on its own and goes live on one project page (playbird.html) as it is done, so the page is never half-built. The existing item numbers stay as the chapters so nothing else breaks.*
+- **Site:** Town of Sheboygan, parcel 59024341550 (I-1, south side of Playbird Rd, east of N 40th St). Real parcels, roads, zoning and rules; made-up developer, petition, plat and buildings. Every chapter labels which is which.
+- **Chapters:**
+  0. **Why this site:** a developer's site screen of Town and nearby parcels (size, zoning, sewer and water, road access), using the Parcel Picker engine planned for items 35–36.
+  1. **Site analysis:** soils, slope and LiDAR terrain (item 19), floodplain and wetland check, nearby sewer and water mains (item 6), the comprehensive plan's future land use map.
+  2. **Rezoning, I-1 → PUD:** the zoning hearing notice packet and toolbox (item 37), plus the petition and a staff-report-style map.
+  3. **Land division:** a preliminary plat (lots, new streets, outlots for the pond and trail) drafted with COGO and the parcel fabric (item 4's drafting methods and the Esri splitting/dividing labs), checked against Town and county land division rules.
+  4. **Site plan and 3D:** site plan with setbacks, building massing and rooftop solar (items 12 and 20).
+  5. **Addresses and roads:** new street names checked against the county list, address points by the grid rules, NG911 checks and the NENA schema (items 39, 4 and 41).
+  6. **Into the county's books:** the new parcels in the fabric, a before/after change report (item 38), the statewide submission crosswalk for them (item 40) and the PLSS section map page (item 45).
+  7. **Services:** fire/EMS drive times to the new streets (item 14) and the new residents added to the wards (item 42).
+  8. **Public face:** the new lots in a public parcel viewer (item 43), and a Field Maps inventory of the new hydrants, signs and inlets (item 44, collected on similar real streets nearby).
+- **Not included:** item 4 stays its own county-wide project (the story borrows its tools); the IAT projects (34, 35) stay separate.
+- **Why:** shows how the pieces connect: planning, land records, addressing, 911 and the assessor all touch one development. Very few portfolios show the whole chain, and it gives one strong story for WLIA 2027.
+- **Order:** chapter 2 first (item 37 is ready to start), then 3 and 5 (they reuse item 4), then 1, 6, 8, 4, 7, 0.
+- **Next step:** item 37's hand run in Pro (200 ft selection on parcel 59024341550).
+
 ### 37–45. Everyday county land-records tasks (added Nov 6)
 *Numbered 37–45 so the other items keep their numbers. All nine score Tier 1: each is a task a county land-records or planning office does every week, and each reuses tools already on hand (the item 4 QA scripts, the PostGIS database, ArcGIS Pro Advanced). Under the one-community-per-project rule, items 38–45 each still need their own county (they were first written for Sheboygan); the Wisconsin Statewide Parcel Map covers every county.*
 
 ### 37. Zoning hearing notice packet (Town of Sheboygan, 200 ft) · E5 F5 · 5.0
+- **Part of item 46, chapter 2.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **Where:** Town of Sheboygan, Sheboygan County. Subject parcel: the farm field on the south side of Playbird Rd, east of N 40th St, between Larry's Distributing (industrial) on the west and the apartment buildings on the east, with the Wild Meadow Dr / Green Meadow Dr subdivision to the southeast and woods along the south edge. Parcel ID **59024341550**, zoned **I-1 Light Industrial** (Town of Sheboygan zoning layer, last updated 6/24/2025; no overlay district). Neighbors: I-1 to the north across Playbird Rd and to the west, B-2 (General Business) further west, R-4 apartments to the east, R-4 lots to the south past the woods, and R-1 homes to the southeast. The woods on the south edge are not wetland/shoreland zoned.
-- **Scenario (chosen Nov 6):** a made-up petition to rezone the parcel from I-1 Light Industrial to R-4 Multiple-Family and Office, extending the apartments next door. It is a believable request (R-4 already borders it on two sides) with a real conflict: the I-1 businesses on Playbird Rd would be notified that housing is coming next to their truck traffic. The mailing list mixes industrial owners, apartment owners (absentee, with renters) and homeowners. Use a made-up petitioner.
+- **Scenario (updated Nov 7):** a made-up petition to rezone the parcel from I-1 Light Industrial to PUD (Planned Unit Development, § 335-49) for a mixed-use neighborhood: apartments and townhomes (extending the R-4 next door), a small commercial node on Playbird Rd, and a stormwater pond and trail along the wooded south edge. It is believable (R-4 already borders it on two sides) and has a real conflict: the I-1 businesses on Playbird Rd would be notified that housing is coming next to their truck traffic. The mailing list mixes industrial owners, apartment owners (absentee, with renters) and homeowners. Check § 335-49 for PUD steps (pre-application meeting, general development plan) before writing the petition. Use a made-up petitioner.
 - **What:** Do what the Town's planner or GIS consultant does with the petition:
   1. Buffer the subject parcel by 200 ft and select every parcel that touches the buffer.
   2. Pull owner names and mailing addresses, then clean the list: one letter per owner (combine people and LLCs with several parcels), standardized addresses, absentee owners flagged (this is how the rental buildings show up).
@@ -174,48 +195,56 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Next step:** In Pro, select parcel 59024341550 from the item 4 Sheboygan parcels, run the 200 ft buffer selection by hand once, and note how many parcels and owners it catches before building the tool.
 
 ### 38. Year-over-year parcel change report · E5 F4 · 4.6
+- **Part of item 46, chapter 6.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** Two years of the Wisconsin Statewide Parcel Map for Sheboygan County (e.g. V11 and V12), compared in PostGIS: new splits and combinations, owner changes, parcels whose geometry moved, with a change map.
 - **Why:** Shows data maintenance thinking, not only one-off analysis. Reuses the PostGIS database from item 4.
 - **Need:** The previous version of the statewide parcel layer for the county (SCO's parcel archive).
 - **Next step:** Download the earlier version and load it next to the current one in `parcel_qa`.
 
 ### 39. Addressing a new subdivision · E5 F4 · 4.6
+- **Part of item 46, chapter 5.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** Take a recorded plat (or a fictional one), add the new road centerline, and assign addresses by the county's addressing grid rules: odd and even sides, spacing, a duplicate road name check. Then run the item 4 NG911 checks on the result.
 - **Why:** Addressing appears in nearly every county posting, and the QA side is already built.
 - **Need:** Sheboygan County's addressing ordinance (grid origin and spacing).
 - **Next step:** Find the ordinance and pick a plat.
 
 ### 40. Wisconsin statewide parcel submission dry run · E5 F4 · 4.6
+- **Part of item 46, chapter 6.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** Every Wisconsin county sends its parcels to DOA and the State Cartographer's Office each year in a set schema. Crosswalk the Sheboygan data into that schema, run SCO's validation tool, and document what failed and how it was fixed.
 - **Why:** A Wisconsin hiring manager sees right away that you know their yearly deadline. Could also become a chapter of item 4.
 - **Need:** The current year's submission documentation and validation tool from SCO (check the version before starting).
 - **Next step:** Read the submission documentation and list the required fields.
 
 ### 41. NENA NG911 schema migration · E5 F4 · 4.6
+- **Part of item 46, chapter 5.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** Convert the county's address points and road centerlines into the NENA NG9-1-1 GIS Data Model: field mapping, domain values and a validation report.
 - **Why:** Schema migration is a classic technician task, and this builds on item 4 without repeating it.
 - **Need:** The current NENA NG9-1-1 GIS Data Model standard and its template geodatabase; Wisconsin's NG911 GIS requirements.
 - **Next step:** Get the NENA template and draft the field crosswalk table.
 
 ### 42. County supervisory district redistricting · E5 F4 · 4.6
+- **Part of item 46, chapter 7.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** Population-balanced county supervisory districts built from 2020 census blocks and wards for one county, with a deviation table and a public-facing map.
 - **Why:** Wisconsin counties redraw supervisory districts from wards after every census; county clerks and GIS staff do it together. A distinctly Wisconsin skill and a good WLIA conversation starter.
 - **Need:** 2020 census blocks with population (P.L. 94-171); the county's wards (LTSB) and current districts.
 - **Next step:** Pick the county and download its wards and block populations.
 
 ### 43. Public parcel viewer (Experience Builder) · E5 F4 · 4.6
+- **Part of item 46, chapter 8.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** A county-style land-records web map: search by parcel number or address, an identify panel, a link to the tax bill, a print widget.
 - **Why:** Most counties' public GIS work centers on this app, and it closes the web-app gap from the posting analysis.
 - **Have:** Sheboygan parcels and address points; ArcGIS Online account.
 - **Next step:** Publish the parcels as a hosted layer and start the Experience Builder app.
 
 ### 44. Field Maps asset inventory, collected yourself · E5 F4 · 4.6
+- **Part of item 46, chapter 8.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** A Field Maps form for something visible from the road in a nearby town (stop signs, culverts or hydrants), 50–100 points collected with a phone's GPS, attribute domains, QA checks and a small dashboard.
 - **Why:** GPS field collection is an essential function in county postings (e.g. St. Croix County's GIS Technician). This is field work that is entirely your own, beyond the Restoring Lands internship.
 - **Need:** A town and asset type; a public road route to walk or drive.
 - **Next step:** Design the form (fields and domains) before going out.
 
 ### 45. PLSS section map book (Pro Map Series) · E4 F5 · 4.4
+- **Part of item 46, chapter 6.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** An index map and one page per section for one township, with parcels, parcel numbers and dimensions, made with ArcGIS Pro's Map Series.
 - **Why:** Looks like a real county plat book, and Map Series is a skill hiring managers look for.
 - **Have:** Sheboygan parcels; PLSS sections (Wisconsin PLSS layer).
@@ -263,6 +292,7 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Next step:** COLMAP with both cameras, train, clean, then a viewer page and an orbit-video homepage card.
 
 ### 12. Site plans from drone surveys and county GIS · E4 F4 · 4.0
+- **Part of item 46, chapter 4.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** Site plans built in ArcGIS Pro: a drone orthomosaic and surface model made with Pro's ortho mapping (needs the Advanced license, which James has) from timed drone photos, contours, the county parcel lines, setbacks buffered from zoning, utilities and footprints; exported to CAD/SketchUp for the building model and renders.
 - **Why:** James no longer does floor plans at PX Design; he and his boss want him to take over the site plans the business now outsources. Site planning, drone mapping and parcel/zoning work are also everyday GIS tasks for counties, cities and engineering firms.
 - **Need:** A practice site that isn't a client's (for the portfolio); Esri's "Create drone imagery products with ortho mapping" tutorial; the drone flown in timed-photo mode (video frames carry no GPS tags, which ortho mapping needs).
@@ -277,6 +307,7 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Next step:** Run the building footprint model on one NAIP tile and compare with the county footprints.
 
 ### 14. Network Analyst project: fire and EMS coverage in Sheboygan County · E4 F4 · 4.0
+- **Part of item 46, chapter 7.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** Drive-time service areas (4, 8 and 12 minutes) from Sheboygan County's fire and EMS stations, the addresses outside each band, and where a new station would cover the most of them (location-allocation). Reuses the county's road centerlines and address points from the Parcel QA project.
 - **Why:** Network Analyst backs 911, public safety, utility and transit jobs; James already holds the Esri routing and closest-facility certificates, and this turns them into a real project. It pairs with the NG911 side of item 4.
 - **Need:** Network Analyst (have); a network dataset built from the county road centerlines (speed limits or road class for travel times); station locations.
@@ -303,6 +334,7 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Next step:** Lessons 1, 2 and 5 (about 2 hours).
 
 ### 19. LiDAR terrain and feature extraction · E4 F3 · 3.6
+- **Part of item 46, chapter 1.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** From Wisconsin county LiDAR: bare-earth DEM, hillshade, canopy height and extracted building footprints for one town, with an accuracy check against existing footprints.
 - **Why:** LiDAR and feature extraction show up in surveying and engineering-firm postings. The same data feeds items 20 and 32.
 - **Need:** County LiDAR point cloud (WisconsinView or the county); ArcGIS Pro 3D Analyst: Classify LAS Building, then LAS Building Multipatch for roof forms; Extract LAS for site clips.
@@ -310,6 +342,7 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Tip:** Build items 19 and 20 together on the same town to save time.
 
 ### 20. Solar suitability map · E4 F3 · 3.6
+- **Part of item 46, chapter 4.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
 - **What:** Rooftop solar potential for a Wisconsin town from a LiDAR surface model: solar radiation, slope, aspect and shading, ranked by building.
 - **Why:** A planning and sustainability analysis cities actually commission; shows raster analysis beyond defaults.
 - **Need:** Item 19's surface model and footprints.
