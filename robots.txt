@@ -1,2 +1,4 @@
 User-agent: *
+# Starcast is public; the rest of the portfolio stays out of search results for now.
+Allow: /Starcast/
 Disallow: /
