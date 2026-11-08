@@ -202,7 +202,8 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Have:** Sheboygan County parcels, address points and road centerlines (item 4); ArcGIS Pro Advanced; the item 4 Python patterns.
 - **Need:** the Town of Sheboygan zoning layer (for the adjacent-districts part of the plot plan); municipal boundaries.
 - **Portfolio page:** zoning-notice.html with the scenario, the raw vs. cleaned owner list, the notice map, a screenshot of the tool dialog, and a link to the code. Blur or replace owner names in screenshots.
-- **Next step:** In Pro, select parcel 59024341550 from the item 4 Sheboygan parcels, run the 200 ft buffer selection by hand once, and note how many parcels and owners it catches before building the tool.
+- **Hand run (Nov 8, Pro 3.7.3):** 200 ft Select By Location caught **29 parcels**; Summary Statistics on OWNERNME1 gave **17 owner rows**. Findings that the toolbox must handle: (1) Playbird Rd is the Town of Sheboygan / Town of Mosel line, so Mosel parcels north of the road are in the buffer and the Town of Mosel clerk gets the 1,000 ft notice; (2) Concord 5 LLC owns 12 Stonefield Creek lots → one letter; (3) "PETERSON & SONS CO LLC" and "PETERSON & SONS COMPANY LLC" are the same owner spelled two ways → merge (16 real owners); (4) one parcel has a blank owner name (likely road or common area; check before mailing); (5) the Town of Sheboygan owns 2 parcels and is on its own list; (6) the "First Owner Name Alt" field has names in first-last order, better for labels than "LAST, FIRST".
+- **Next step:** get the parcel layer's field names (owner, alt owner, mailing address, city/state/ZIP) from Data Design > Fields, then write the toolbox.
 
 ### 38. Year-over-year parcel change report · E5 F4 · 4.6
 - **Part of item 46, chapter 6.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
