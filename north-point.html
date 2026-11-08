@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Drone 3D Captures – James Krauska</title>
-<meta name="description" content="Interactive 3D Gaussian splats of Milwaukee's North Point Water Tower and St. Mary's Hospital campus, built from drone video with COLMAP and Brush.">
+<meta name="description" content="Interactive 3D Gaussian splats of Milwaukee's North Point Water Tower, St. Mary's Hospital campus and the Milwaukee Art Museum, built from drone video with COLMAP and Brush.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -138,7 +138,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 .models button[aria-pressed="true"] { color: var(--on-forest); background: var(--forest); }
 .v-caption { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
 @media (max-width: 640px) {
-  .models { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .models { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; }
   .models button { font-size: 0.75rem; padding: 0.7rem 0.5rem; }
   .v-label { display: none; }
 }
@@ -184,7 +184,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         <span class="label">Milwaukee · October 2026</span>
       </div>
       <h1>Milwaukee from the air, <em>in the round</em></h1>
-      <p class="lede">Two interactive 3D models built from drone video: a single landmark, the North Point Water Tower, and a whole city block, the St. Mary's Hospital campus. Turn them, zoom in, and look from any side.</p>
+      <p class="lede">Three interactive 3D models built from drone video: a single landmark, the North Point Water Tower; a whole city block, the St. Mary's Hospital campus; and Calatrava's winged pavilion at the Milwaukee Art Museum. Turn them, zoom in, and look from any side.</p>
     </div>
   </div>
 
@@ -193,6 +193,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       <div class="models" role="group" aria-label="Choose a model">
         <button type="button" data-model="north-point" aria-pressed="true">North Point Water Tower</button>
         <button type="button" data-model="st-marys" aria-pressed="false">St. Mary's Hospital</button>
+        <button type="button" data-model="art-museum" aria-pressed="false">Milwaukee Art Museum</button>
       </div>
       <figure class="viewer" id="viewer" aria-label="Interactive 3D model. Drag to orbit, scroll or pinch to zoom.">
         <span class="v-label" id="v-label" aria-hidden="true">North Point Water Tower · Gaussian splat</span>
@@ -242,12 +243,12 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         </ol>
         <div class="table-scroll">
           <table class="compare">
-            <thead><tr><th scope="col"></th><th scope="col">North Point Water Tower</th><th scope="col">St. Mary's Hospital</th></tr></thead>
+            <thead><tr><th scope="col"></th><th scope="col">North Point Water Tower</th><th scope="col">St. Mary's Hospital</th><th scope="col">Milwaukee Art Museum</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Flights</th><td>5 clips at 3 heights</td><td>3 orbits at 3 heights + an overhead pass</td></tr>
-              <tr><th scope="row">Images</th><td>578 drone frames + 26 handheld ground photos</td><td>427 drone frames</td></tr>
-              <tr><th scope="row">Gaussians kept</th><td>90,814</td><td>559,596</td></tr>
-              <tr><th scope="row">Web file</th><td>5.3 MB</td><td>13.5 MB</td></tr>
+              <tr><th scope="row">Flights</th><td>5 clips at 3 heights</td><td>3 orbits at 3 heights + an overhead pass</td><td>1 full orbit at 1 height</td></tr>
+              <tr><th scope="row">Images</th><td>578 drone frames + 26 handheld ground photos</td><td>427 drone frames</td><td>338 drone frames</td></tr>
+              <tr><th scope="row">Gaussians kept</th><td>90,814</td><td>559,596</td><td>168,870</td></tr>
+              <tr><th scope="row">Web file</th><td>5.3 MB</td><td>13.5 MB</td><td>9.9 MB</td></tr>
             </tbody>
           </table>
         </div>
@@ -257,7 +258,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
           <li><strong>Coverage, not frame count, decides quality.</strong> Several orbits at different heights beat one long pass. I now check the flight logs before processing to catch gaps early.</li>
           <li><strong>Mixing cameras.</strong> Ground photos fill in what a drone sees poorly, but only if COLMAP treats them as a second camera with its own lens. One shared lens model bends the reconstruction.</li>
           <li><strong>Floaters and fringe.</strong> Stray Gaussians in the sky and large faint ones along the crop edge show up as haze. A short filter on height, size and opacity removed about a thousand of them from the hospital model without touching the buildings.</li>
-          <li><strong>Web delivery.</strong> The tower's trained splat was 458 MB. Cropping and compression brought the two models to 5.3 MB and 13.5 MB, small enough to load in seconds on a phone.</li>
+          <li><strong>Web delivery.</strong> The tower's trained splat was 458 MB. Cropping and compression brought the three models to between 5.3 MB and 13.5 MB, small enough to load in seconds on a phone.</li>
         </ul>
       </div>
     </div>
@@ -267,7 +268,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
     <div class="wrap cs-body">
       <span class="label">My role</span>
       <div class="prose">
-        <p>I planned and flew both captures, ran the processing pipeline, cleaned the models, and built this viewer page.</p>
+        <p>I planned and flew all three captures, ran the processing pipeline, cleaned the models, and built this viewer page.</p>
         <ul class="chips" aria-label="Tools">
           <li>DJI drone</li><li>ffmpeg</li><li>COLMAP</li><li>Brush</li><li>SuperSplat</li><li>splat-transform</li><li>three.js</li><li>Spark</li>
         </ul>
@@ -309,6 +310,12 @@ const MODELS = {
     view: { target: [0.4, 0.05, -0.85], dist: 8.6, az: 335, el: 28 },
     label: 'St. Mary\'s Hospital campus · Gaussian splat',
     caption: 'St. Mary\'s Hospital campus on Milwaukee\'s East Side: the main entrance, the curved glass tower, the helipad and the round tower. Best viewed from drone height; the street level was not flown.',
+  },
+  'art-museum': {
+    url: 'media/north-point/art-museum.compressed.ply', flip: false,
+    view: { target: [-0.59, 0.4, 0.62], dist: 5.4, az: 200, el: 24 },
+    label: 'Milwaukee Art Museum · Gaussian splat',
+    caption: 'The Milwaukee Art Museum on the lakefront: Santiago Calatrava\'s Quadracci Pavilion with its wings open, the mast and its cables, the long gallery wing and the rock breakwater. Flown as one full orbit at a single height.',
   },
 };
 const SPIN_SPEED = 0.6;
