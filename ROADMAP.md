@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 7, 2026 (new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 8, 2026 (added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -69,11 +69,14 @@ Each idea gets two scores from 1 to 5:
 | 42 | County supervisory district redistricting (ch. 7 of 46) | 5 | 4 | 4.6 | 💡 |
 | 43 | Public parcel viewer (Experience Builder) (ch. 8 of 46) | 5 | 4 | 4.6 | 💡 |
 | 44 | Field Maps asset inventory, collected yourself (ch. 8 of 46) | 5 | 4 | 4.6 | 💡 |
+| 49 | Shoreland permit: application to inspection (pipeline) | 5 | 4 | 4.6 | 💡 |
 | 3 | Employer quotes and references | 4 | 5 | 4.4 | 🔜 |
 | 45 | PLSS section map book (Pro Map Series) (ch. 6 of 46) | 4 | 5 | 4.4 | 💡 |
 | 4 | Parcel and NG911 data QA toolkit (with PostGIS) | 5 | 3 | 4.2 | 🔧 |
 | 5 | ~~Geodatabase and SQL project~~ (merged into item 4) | | | | ➡️ |
 | 6 | Utility mapping from as-built drawings (ch. 1 of 46) | 5 | 3 | 4.2 | 💡 |
+| 47 | County road reconstruction: pavement rating to as-built (pipeline) | 5 | 3 | 4.2 | 💡 |
+| 48 | Spring flood: forecast to buyout list (pipeline) | 5 | 3 | 4.2 | 💡 |
 | 7 | Dark Skies of Wisconsin poster (WLIA map contest) | 4 | 4 | 4.0 | 💡 |
 | 8 | Esri Academy advanced course project | 4 | 4 | 4.0 | 💡 |
 | 9 | Lake Winnebago from space, 1999–2026 (Earth Engine) | 4 | 4 | 4.0 | 🔜 |
@@ -92,10 +95,17 @@ Each idea gets two scores from 1 to 5:
 | 22 | Horicon Marsh open water since 1985 (Earth Engine, Random Forest) | 4 | 3 | 3.6 | 💡 |
 | 23 | Milwaukee: a divided city, 1940–2020 (StoryMap) | 4 | 3 | 3.6 | 💡 |
 | 34 | IAT Trail Designer: soil- and slope-aware trail routing | 4 | 3 | 3.6 | 💡 |
+| 52 | Hailstorm: radar to claims (insurance pipeline) | 4 | 3 | 3.6 | 💡 |
+| 53 | Lake Michigan bluff erosion: imagery to setbacks (pipeline) | 4 | 3 | 3.6 | 💡 |
+| 55 | Urban tree canopy and heat (pipeline) | 4 | 3 | 3.6 | 💡 |
+| 56 | Wetland and land cover update (pipeline) | 4 | 3 | 3.6 | 💡 |
+| 50 | Land protection: candidate parcel to stewardship (pipeline over 34–35) | 4 | 3 | 3.6 | 💡 |
 | 24 | Camino Francés StoryMap | 3 | 4 | 3.4 | 🔧 |
 | 25 | Still maps and posters gallery | 3 | 4 | 3.4 | 💡 |
+| 51 | Printed trail map and tri-fold brochure | 3 | 4 | 3.4 | 💡 |
 | 35 | IAT Parcel Picker: land-protection suitability and for-sale alerts | 4 | 2 | 3.2 | 💡 |
 | 36 | Eddie's Parcel Picker: a new lot for a relocated house | 3 | 3 | 3.0 | 💡 |
+| 54 | A growing season: planting to crop insurance (pipeline) | 3 | 3 | 3.0 | 💡 |
 | 26 | Fall color change from satellite imagery (ESA SNAP) | 3 | 3 | 3.0 | 💡 |
 | 27 | Migratory bird movements map | 3 | 3 | 3.0 | 💡 |
 | 28 | Atlas of the round worlds (Robinson maps of every planetary-mass body) | 3 | 3 | 3.0 | 💡 |
@@ -250,6 +260,30 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Have:** Sheboygan parcels; PLSS sections (Wisconsin PLSS layer).
 - **Next step:** Pick the township (the Town of Lima, already used in item 4) and set up the index layer.
 
+### 47–56. More pipelines like Playbird Rd, plus remote sensing (added Nov 8)
+*Each pipeline follows one made-up event on real public data through several offices, and each chapter is a finished piece on its own, the same as item 46. Real data, made-up event, labeled which is which. Places are suggestions under the one-community rule; check the list before starting. The public parcel viewer asked about the same day is already item 43.*
+
+### 49. Shoreland permit: application to inspection · E5 F4 · 4.6
+- **What:** One made-up shoreland zoning permit (a house addition near a lake), handled the way a county zoning office does: find the ordinary high-water mark, check the 75 ft shoreland setback and the floodplain, calculate impervious surface on the lot, score mitigation points, draw the permit map, then a follow-up inspection form in Field Maps.
+- **Where (suggested):** Green Lake County (Green Lake), a new place.
+- **Why:** The most common permit a Wisconsin county zoning office reviews (NR 115 and the county shoreland ordinance). Small enough to finish quickly; a short second story beside item 46.
+- **Need:** The county's shoreland ordinance and permit form; county parcels, LiDAR, FEMA flood zones, DNR hydrography.
+- **Next step:** Read the county ordinance and list the measurements a permit needs.
+
+### 47. County road reconstruction: pavement rating to as-built · E5 F3 · 4.2
+- **What:** A county highway department's year for one road: pavement condition (PASER ratings) and the state's local-road database (WISLR), choosing which segment to rebuild, a culvert inventory in Field Maps, right-of-way parcels to acquire, detour routing, a public notice map, then updating road centerlines, addresses and NG911 after construction.
+- **Where (suggested):** Manitowoc County, a new place.
+- **Why:** Transportation work is rare in portfolios and counties hire for it. Reuses item 4's road checks, item 14's routing and item 44's Field Maps form.
+- **Need:** WISLR data and PASER ratings for the county; county road centerlines and parcels; LiDAR for culverts.
+- **Next step:** Get the county's WISLR and PASER data and pick the road.
+
+### 48. Spring flood: forecast to buyout list · E5 F3 · 4.2
+- **What:** One made-up flood on a real river: flood extent from LiDAR and FEMA flood maps, parcels, addresses and people affected, a damage-assessment form in Survey123, a situation dashboard for the emergency operations center, the FEMA damage summary, then ranking repeatedly flooded parcels for buyout.
+- **Where (suggested):** Gays Mills and the Kickapoo River, Crawford County, a new place. The village moved part of its downtown out of the floodplain after the 2007–08 floods, so the buyout chapter has a real precedent.
+- **Why:** Touches emergency management, zoning and the assessor; reuses the dashboard skills from item 1.
+- **Need:** LiDAR DEM, FEMA flood zones and river gauge history; county parcels and address points; census blocks.
+- **Next step:** Pull the river gauge record and pick the flood stage to model.
+
 ---
 
 ## Tier 2: good additions
@@ -395,6 +429,45 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **What:** A gallery page of finished static maps: lab maps worth showing (Monroe County change map, Wisconsin cities population map), the Dark Skies poster, any WLIA contest entry.
 - **Why:** Shows cartographic care at a glance.
 
+### 52. Hailstorm: radar to claims (insurance pipeline) · E4 F3 · 3.6
+- **What:** One real hailstorm followed through an insurer's catastrophe team: hail swath from NOAA's radar hail product (MRMS MESH), checked against Storm Prediction Center hail reports; a made-up book of policies on real building footprints and address points (no real customer data); policies under 1-inch-plus hail and an estimated loss for each; before/after imagery of a sample area with roof damage flagged (free imagery is coarse, so drone captures from item 11 can be the close-up); a claims-triage dashboard and adjuster routes (Network Analyst); renewal risk scores (distance to fire station and hydrant, flood zone, hail history).
+- **Where (suggested):** the Sheboygan area (Acuity is headquartered there); a repeat of Sheboygan County is fine here.
+- **Why:** Opens the insurance GIS job track. Wisconsin insurers include Acuity (Sheboygan), American Family (Madison), Sentry (Stevens Point), West Bend, Church Mutual and Secura.
+- **Need:** MRMS MESH archive for the storm date; SPC storm reports; building footprints; before/after imagery.
+- **Next step:** Find a recent hail day over eastern Wisconsin in the SPC reports.
+
+### 53. Lake Michigan bluff erosion: imagery to setbacks · E4 F3 · 3.6
+- **What:** Bluff-top lines traced from historic aerials and LiDAR, recession rates, parcels and homes at risk in 10, 25 and 50 years, setback recommendations for county zoning, and an insurance or buyout chapter.
+- **Where (suggested):** Ozaukee County shoreline, tying to the Donges Bay Gorge field season (item 2).
+- **Why:** Connects remote sensing, land records and zoning; a live issue for every Lake Michigan county.
+- **Need:** Historic aerials (county or USDA), LiDAR from two or more years, county parcels.
+- **Next step:** Find the oldest and newest LiDAR and aerials for the Ozaukee shoreline.
+
+### 55. Urban tree canopy and heat · E4 F3 · 3.6
+- **What:** Tree canopy mapped from NAIP imagery and LiDAR, land surface temperature from Landsat, the hottest blocks with the least shade, and a tree-planting priority map for a city forestry department.
+- **Where (suggested):** Green Bay, a new place (or a chapter of item 23 in Milwaukee).
+- **Why:** Image classification plus a clear public-service result; city forestry and sustainability offices use exactly this.
+- **Need:** NAIP, LiDAR, Landsat summer scenes, city boundaries and blocks.
+- **Next step:** Pick the city and pull one clear summer Landsat scene.
+
+### 56. Wetland and land cover update · E4 F3 · 3.6
+- **What:** Classify a county's land cover from imagery and LiDAR, check accuracy against field points collected in person, and flag where the state's wetland inventory looks out of date.
+- **Where (suggested):** Waushara County, a new place.
+- **Why:** DNR and county conservation work; a real accuracy assessment is what most student classifications skip.
+- **Need:** NAIP or Sentinel-2, LiDAR, the Wisconsin Wetland Inventory, field points.
+- **Next step:** Pick the study area and plan the field points.
+
+### 50. Land protection: candidate parcel to stewardship · E4 F3 · 3.6
+- **What:** Items 34–35 framed as one land-trust chain: Parcel Picker finds the candidates, a landowner outreach list, the easement boundary drafted, a baseline documentation report, and yearly monitoring visits in Field Maps.
+- **Why:** Turns the IAT ideas into the full workflow a land trust runs, which also matches the Restoring Lands experience.
+- **Next step:** Build item 35 first; the rest follows from its output.
+
+### 51. Printed trail map and tri-fold brochure · E3 F4 · 3.4
+- **What:** A print-ready trail and park guide: a folded map with trails, distances, parking and features, plus a tri-fold brochure, laid out in ArcGIS Pro (and finished in a design program if needed), exported with bleeds for a print shop.
+- **Where (suggested):** the Devil's Lake segment of the Ice Age Trail, Sauk County, a new place; can share data with the IAT items.
+- **Why:** Proves print cartography (layout, type, folds, export) on a site that is mostly web maps; parks, tourism and economic development offices make these. The interactive, playful counterpart is item 32 (Fabled Atlas).
+- **Next step:** Pick the segment and get the IAT trail and county park data.
+
 ---
 
 ## Tier 3: showpieces and passion projects
@@ -415,6 +488,12 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Privacy:** the repo and site are public, so no address, names or the family's criteria list go in them. The portfolio version uses a made-up house and town.
 - **Need:** The family's list of needs written out; the house's dimensions and weight; the house mover's limits; parcels and zoning for the search area; road network with bridges (WisDOT) and overhead utility crossings where available.
 - **Next step:** Write the needs list with the family, then turn each need into a map layer or a rule.
+
+### 54. A growing season: planting to crop insurance · E3 F3 · 3.0
+- **What:** A Sentinel-2 vegetation index time series over one county's fields, crop types from USDA's Cropland Data Layer, flooded or drought-stressed fields spotted from space, prevented-planting and crop-loss checks like those federal crop insurance adjusters make, and nutrient runoff risk toward Lake Winnebago.
+- **Where:** Calumet or Fond du Lac County fields draining to Lake Winnebago (shares data with items 9 and 10).
+- **Why:** Agricultural remote sensing and a second insurance angle (crop insurance).
+- **Next step:** Pull one season of Sentinel-2 and the CDL in Earth Engine.
 
 ### 26. Fall color change from satellite imagery (ESA SNAP) · E3 F3 · 3.0
 - **What:** Track Wisconsin's fall color from north to south with Sentinel-2 imagery processed in ESA SNAP (NDVI change between dates), as an animated map.
