@@ -567,8 +567,11 @@ Skills that remote sensing and imagery postings ask for but that aren't on the r
 | Drone photogrammetry software (Pro ortho mapping, WebODM or Metashape) | Items 11, 12 | 🔧 |
 | Point cloud classification (ArcGIS LAS tools, LAStools) | Item 19 | 💡 |
 | Python raster and vector libraries (rasterio, GDAL, geopandas) | Item 21; ArcPy in item 4 | 💡 |
+| Hyperspectral imagery (NASA EMIT, spectral signatures) | Saved idea below; could fit items 9, 54 or 56 | 💡 |
 
 **FAA Part 107.** Many drone and remote sensing postings require it, and right now the drone at PX Design is flown under the boss's license. Study with the FAA's free materials, take the knowledge test at an approved testing center (fee was about $175; check the current price), then add it to the resume and LinkedIn. It also lets James fly the site plan (item 12) and splat (item 11) captures himself.
+
+**Saved for later (Nov 8): "285 colors the eye cannot see."** A chart James liked: NASA EMIT hyperspectral reflectance (381–2493 nm) over Paraná, Brazil, with one mean line and shaded spread per land use (native forest, planted forest, soybean, pasture, urban, water at Itaipu, sample counts in the legend), dark background, labeled features (chlorophyll absorption, red edge, leaf water, cellulose and clay), gaps where the atmosphere's water bands block the signal, and the line "Every land use has a signature." A Wisconsin version is possible (EMIT covers about 52° S to 52° N): sample fields, forest, marsh, town and Lake Winnebago, and use the chart in item 9, 54 or 56. A copy of the image is in Claude outputs\Inspiration.
 
 ---
 
