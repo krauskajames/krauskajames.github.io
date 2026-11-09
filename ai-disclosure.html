@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Use Disclosure – James Krauska</title>
+<meta name="description" content="How I use AI in my GIS work and on this portfolio: a signed statement, first written by hand.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: museum-catalog single column — generous margins, a topographic hero plate,
+   project "plates" with a map-collar metadata strip, quiet hairlines, one forest-green accent. */
+:root {
+  --paper: #f1f2ec;      /* green-grey paper */
+  --paper-2: #e6e9dd;    /* plate ground */
+  --ink: #1b241d;        /* forest black */
+  --ink-2: #4c5a4f;      /* secondary text */
+  --forest: #2e4a34;     /* primary accent */
+  --olive: #6d7a3a;      /* secondary accent */
+  --rule: #c7ccbb;       /* hairlines */
+  --contour: rgba(46, 74, 52, 0.22);
+  --contour-strong: rgba(109, 122, 58, 0.55);
+  --on-forest: #f1f2ec;
+
+  --display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 4vw, 3rem);
+  --step-4: clamp(2.75rem, 7vw, 5rem);
+  --measure: 62ch;
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+    --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+    --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+    --on-forest: #121813; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+  --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+  --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+  --on-forest: #121813; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+html { scroll-padding-top: 5rem; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 var(--step-0)/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: inherit; text-decoration-color: var(--olive); text-underline-offset: 0.2em; }
+a:hover { color: var(--forest); }
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; border-radius: 2px; }
+
+.wrap {
+  max-width: var(--wrap); margin-inline: auto;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 480px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.label {
+  font: 500 var(--step--1)/1.4 var(--mono);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; flex-wrap: wrap; }
+.wordmark { font: 600 1.5rem/1 var(--display); letter-spacing: 0.01em; text-decoration: none; }
+.wordmark span { color: var(--olive); font-style: italic; font-weight: 500; }
+.nav { display: flex; gap: clamp(1rem, 3vw, 2.25rem); font: 500 0.9375rem/1 var(--body); }
+.nav a { text-decoration: none; padding-block: 0.25rem; border-bottom: 1px solid transparent; }
+.nav a:hover { border-bottom-color: var(--olive); }
+
+/* Hero */
+.hero { position: relative; border-bottom: 1px solid var(--rule); overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .wrap { position: relative; padding-block: clamp(4rem, 10vw, 7.5rem) clamp(3rem, 7vw, 5rem); display: grid; gap: 1.75rem; }
+.hero h1 {
+  font: 500 var(--step-4)/1.02 var(--display); letter-spacing: -0.01em;
+  max-width: 14ch; margin: 0; text-wrap: balance;
+}
+.hero h1 em { color: var(--forest); font-style: italic; }
+.hero p.lede { font-size: var(--step-1); line-height: 1.55; max-width: 48ch; margin: 0; color: var(--ink-2); }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 500 0.9375rem/1 var(--body); text-decoration: none;
+  padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px;
+  transition: background-color .2s ease, color .2s ease;
+}
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+
+/* Sections */
+section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(--rule); }
+.section-head { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; align-items: baseline; margin-bottom: 3rem; }
+.section-head h2 { font: 500 var(--step-3)/1.1 var(--display); margin: 0; text-wrap: balance; }
+.section-head p { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
+@media (max-width: 760px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+
+/* Project plates */
+.plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 2.5rem; }
+@media (max-width: 760px) { .plates { grid-template-columns: minmax(0, 1fr); } }
+.plate { display: grid; gap: 1rem; min-width: 0; }
+.plate figure { margin: 0; background: var(--paper-2); border: 1px solid var(--rule); aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
+.plate figure svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate figure video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.plate .collar { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.6rem; }
+.status { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.55rem; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
+.status.live { color: var(--forest); }
+.status.planned { color: var(--olive); }
+.plate h3 { font: 600 var(--step-2)/1.15 var(--display); margin: 0; text-wrap: balance; }
+.plate p { margin: 0; color: var(--ink-2); max-width: var(--measure); }
+.plate dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.35rem 1.25rem; margin: 0.25rem 0 0; font-size: 0.9375rem; }
+.plate dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.plate dd { margin: 0; }
+
+/* svg strokes */
+.s-ink { stroke: var(--ink); } .s-forest { stroke: var(--forest); } .s-olive { stroke: var(--olive); } .s-rule { stroke: var(--rule); }
+.f-forest { fill: var(--forest); } .f-olive { fill: var(--olive); } .f-paper { fill: var(--paper); } .f-ink { fill: var(--ink); }
+.f-tint { fill: var(--olive); fill-opacity: .14; }
+.svg-label { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .06em; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; }
+@media (max-width: 760px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+.about-grid .prose p { margin: 0 0 1.1rem; max-width: var(--measure); }
+.about-grid .prose p:first-child { font: 500 var(--step-2)/1.35 var(--display); color: var(--ink); }
+.facts { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.facts div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1rem; padding-block: 0.85rem; border-bottom: 1px solid var(--rule); }
+.facts dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.facts dd { margin: 0; }
+
+/* Experience */
+.roles { display: grid; gap: 0; border-top: 1px solid var(--ink); }
+.role { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 0.5rem 3rem; padding-block: 1.75rem; border-bottom: 1px solid var(--rule); }
+@media (max-width: 760px) { .role { grid-template-columns: minmax(0, 1fr); } }
+.role h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0; }
+.role .org { color: var(--forest); font-weight: 500; }
+.role ul { margin: 0.75rem 0 0; padding-left: 1.1rem; color: var(--ink-2); max-width: var(--measure); }
+.role li + li { margin-top: 0.4rem; }
+
+/* Toolkit */
+.toolkit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+@media (max-width: 860px) { .toolkit { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .toolkit { grid-template-columns: minmax(0, 1fr); } }
+.toolkit h3 { font: 600 var(--step-1)/1.2 var(--display); margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.toolkit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; color: var(--ink-2); }
+
+/* Contact */
+.contact { display: grid; gap: 1.5rem; }
+.contact h2 { font: 500 var(--step-4)/1.05 var(--display); margin: 0; max-width: 16ch; text-wrap: balance; }
+.contact-row { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; }
+.email { font: 500 var(--step-1)/1.4 var(--mono); user-select: all; word-break: break-all; }
+.copy { font: 500 0.875rem/1 var(--body); background: none; color: var(--forest); border: 1px solid var(--forest); padding: 0.6rem 0.9rem; border-radius: 2px; cursor: pointer; }
+.copy:hover { background: var(--paper-2); }
+.phone { font: 500 var(--step-1)/1.4 var(--mono); text-decoration: none; white-space: nowrap; }
+
+/* Footer: map collar */
+footer { padding-block: 2.5rem 3rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: end; }
+.scalebar { display: grid; gap: 0.35rem; }
+.scalebar .bar { display: flex; width: 12rem; max-width: 100%; height: 6px; border: 1px solid var(--ink); }
+.scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
+.scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<style>
+/* Report page: reads like the resume, a signed one-page statement */
+.rp-hero .wrap { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2rem, 4vw, 3rem); display: grid; gap: 1.25rem; }
+.rp-hero h1 { font: 500 var(--step-4)/1.02 var(--display); margin: 0; letter-spacing: -0.01em; }
+.back { font: 500 0.875rem/1 var(--body); text-decoration: none; color: var(--forest); }
+.back:hover { text-decoration: underline; }
+.report { padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(3.5rem, 8vw, 6rem); }
+.report-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 18rem); gap: 3rem 4rem; align-items: start; }
+@media (max-width: 860px) { .report-grid { grid-template-columns: minmax(0, 1fr); } }
+.report-doc { max-width: var(--measure); border-top: 2px solid var(--forest); padding-top: 1.75rem; }
+.report-doc .doc-meta { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.3rem 1.25rem; margin: 0 0 2rem; }
+.report-doc .doc-meta dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.report-doc .doc-meta dd { margin: 0; }
+.report-doc h2 { font: 600 var(--step-2)/1.2 var(--display); color: var(--forest); margin: 2.25rem 0 0.75rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--rule); }
+.report-doc h2 .num { font: 500 0.8125rem/1 var(--mono); color: var(--olive); margin-right: 0.75rem; letter-spacing: 0.06em; vertical-align: 0.35em; }
+.report-doc p { margin: 0 0 1.1rem; }
+.report-doc ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 1.25rem; border-top: 1px solid var(--rule); }
+.report-doc ol.steps li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; padding-block: 0.8rem; border-bottom: 1px solid var(--rule); }
+.report-doc ol.steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
+.signature { margin-top: 3rem; display: grid; gap: 0.35rem; max-width: 26rem; }
+.signature .sig { font: italic 500 2.6rem/1 var(--display); color: var(--ink); padding: 0 0 0.4rem 0.25rem; border-bottom: 1px solid var(--ink); }
+.signature .sig img { display: block; max-height: 4.5rem; }
+.signature .who { font: 600 0.9375rem/1.4 var(--body); margin-top: 0.4rem; }
+.draft-fig { margin: 0; border: 1px solid var(--rule); background: var(--paper-2); position: sticky; top: 6rem; }
+.draft-fig img { display: block; width: 100%; height: auto; }
+.draft-fig figcaption { padding: 0.65rem 0.8rem; border-top: 1px solid var(--rule); background: var(--paper); }
+@media (max-width: 860px) { .draft-fig { position: static; max-width: 22rem; } }
+@media print {
+  :root { --paper: #fff; --paper-2: #fff; }
+  .site-header, footer, .back, .draft-fig { display: none !important; }
+  .report-grid { grid-template-columns: 1fr; }
+  .rp-hero .wrap, .report { padding-block: 0.5rem; }
+  section, .rp-hero { border: none !important; }
+  body { font-size: 10.5pt; }
+}
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="rp-hero" style="border-bottom:1px solid var(--rule)">
+    <div class="wrap">
+      <a class="back" href="index.html#toolkit">← Back to the portfolio</a>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
+        <span class="label">Statement</span>
+        <span class="label">Written by hand · November 2026</span>
+      </div>
+      <h1>AI Use Disclosure</h1>
+    </div>
+  </div>
+
+  <div class="report">
+    <div class="wrap report-grid">
+      <article class="report-doc">
+        <dl class="doc-meta">
+          <dt>Author</dt><dd>James Krauska, Geospatial &amp; CAD Technician</dd>
+          <dt>Date</dt><dd>November 9, 2026</dd>
+          <dt>Subject</dt><dd>How I use AI in my GIS work and on this portfolio</dd>
+        </dl>
+
+        <h2><span class="num">01</span>How this was written</h2>
+        <p>I wrote the first draft of this statement by hand, outside on a bench in a park near my apartment. I drafted, wrote, proofread and typed it without the use of AI in about three hours. I did this to showcase my natural writing and to disclose my relationship with AI in an honest and professional way, where my ideas come across and not an AI chatbot&rsquo;s. Afterward, I revised it using editing suggestions from Claude, an AI assistant, for length, tone and grammar.</p>
+
+        <h2><span class="num">02</span>My view of AI</h2>
+        <p>AI is a polarizing issue among working-age people, and many believe it threatens jobs across several industries. AI chatbots started coming out around the time my college experience began, and I have watched the technology grow and evolve since. I have wrestled with the threat it poses, but since I started building my portfolio website, I have come to see the role of an entry-level employee shifting toward that of a manager: someone who directs the tools, checks their work and takes responsibility for the result.</p>
+        <p>I have seen many products (e.g., websites, fliers and apps) made from quick, uncreative prompts, glanced at briefly and approved without deeper consideration. I don&rsquo;t think that uses AI to its highest potential. Chatbots and agents need to be supervised and guided through their work with tact and deliberation.</p>
+
+        <h2><span class="num">03</span>How I work with AI</h2>
+        <p>I have used Claude, Anthropic&rsquo;s AI assistant, since I started putting this portfolio together from revamped college labs and new projects. I don&rsquo;t hand it a single prompt and publish what comes back; that hands-off approach creates bugs and errors that can&rsquo;t be used in a professional capacity. Instead, we work as a team through a back-and-forth process:</p>
+        <ol class="steps">
+          <li><span>I write informatively and exhaustively during pre-planning and planning.</span></li>
+          <li><span>I read the AI&rsquo;s responses closely and ask in-depth, investigative questions that move the project forward.</span></li>
+          <li><span>The AI writes hands-on labs that teach me how to get the outcome I want, and I run the steps myself.</span></li>
+          <li><span>We give each other feedback.</span></li>
+          <li><span>I thoroughly check and beta-test every professional deliverable before it is published.</span></li>
+        </ol>
+
+        <h2><span class="num">04</span>What AI does on this site</h2>
+        <p>Claude writes most of the code on this site and in tools like DuctBuilder. I am still building my own fluency in programming languages, so I read, test and debug that code rather than writing it from scratch. The project ideas, data choices, analysis design, field work and final calls are mine, and I take responsibility for the accuracy of everything I publish. Every page on this site ends with a &ldquo;Built with&rdquo; line that says how it was made.</p>
+
+        <h2><span class="num">05</span>What I bring</h2>
+        <p>I believe the most important thing for an entry-level geospatial professional to learn is how the ecosystem of GIS programs can work in tandem: each program&rsquo;s breadth and limits, and how each can be implemented in a project so that the wants and needs of the end user are not just met but exceeded. That is the work I want to bring to your team.</p>
+
+        <div class="signature">
+          <div class="sig">James Krauska</div>
+          <div class="who">James Krauska</div>
+          <span class="label">Geospatial &amp; CAD Technician · November 9, 2026</span>
+        </div>
+      </article>
+
+      <figure class="draft-fig">
+        <img src="media/ai-disclosure-draft.webp" alt="A page of the handwritten pencil draft of this statement in a grid-paper notebook, with one crossed-out line at the top" width="900" height="1316" loading="lazy">
+        <figcaption class="label">A page from the handwritten first draft</figcaption>
+      </figure>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="label built-with" style="flex-basis:100%;margin:0">Statement written by hand, edited with suggestions from Claude · Page code written with Claude</p>
+    <div class="scalebar" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><i></i></div>
+      <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
+    </div>
+    <span class="label">© 2026 James Krauska</span>
+  </div>
+</footer>
+
+<!-- Visitor stats: GoatCounter (no cookies, no personal data) -->
+<script data-goatcounter="https://krauskagis.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

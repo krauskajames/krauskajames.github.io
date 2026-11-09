@@ -288,6 +288,8 @@ section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(
 @media (max-width: 520px) { .toolkit { grid-template-columns: minmax(0, 1fr); } }
 .toolkit h3 { font: 600 var(--step-1)/1.2 var(--display); margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
 .toolkit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; color: var(--ink-2); }
+.ai-note { margin: 2.5rem 0 0; padding-top: 1.25rem; border-top: 1px solid var(--rule); max-width: var(--measure); color: var(--ink-2); }
+.ai-note a { color: var(--forest); font-weight: 500; }
 
 /* Contact */
 .contact { display: grid; gap: 1.5rem; }
@@ -619,6 +621,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         <div><h3>Remote sensing</h3><ul><li>ERDAS Imagine</li><li>Image classification</li><li>Accuracy assessment</li><li>LiDAR and DEMs</li><li>Photogrammetry</li></ul></div>
         <div><h3>Code &amp; CAD</h3><ul><li>Python, Ruby, SQL, R, Java</li><li>SketchUp Pro and Ruby API</li><li>Thea Render</li><li>Git and GitHub</li><li>MaxEnt</li></ul></div>
       </div>
+      <p class="ai-note">I use AI the way I use ArcGIS or Python: as a tool I direct and check. Claude, an AI assistant, writes much of the code on this site; the ideas, data choices, analysis and final checks are mine. <a href="ai-disclosure.html">Read my full AI use disclosure&nbsp;→</a></p>
     </div>
   </section>
 
@@ -658,6 +661,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 
 <footer>
   <div class="wrap">
+    <p class="label built-with" style="flex-basis:100%;margin:0">Built with HTML, CSS and JavaScript on GitHub Pages · Code written with Claude · <a href="ai-disclosure.html">How I use AI</a></p>
     <div class="scalebar" aria-hidden="true">
       <div class="bar"><i></i><i></i><i></i><i></i></div>
       <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
