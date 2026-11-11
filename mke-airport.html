@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MKE Airport Asset Database – James Krauska</title>
+<meta name="description" content="Case study: a SQL Server spatial database and ArcGIS dashboard of Milwaukee Mitchell airport assets, with a runway status correction verified with air traffic control.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: museum-catalog single column — generous margins, a topographic hero plate,
+   project "plates" with a map-collar metadata strip, quiet hairlines, one forest-green accent. */
+:root {
+  --paper: #f1f2ec;      /* green-grey paper */
+  --paper-2: #e6e9dd;    /* plate ground */
+  --ink: #1b241d;        /* forest black */
+  --ink-2: #4c5a4f;      /* secondary text */
+  --forest: #2e4a34;     /* primary accent */
+  --olive: #6d7a3a;      /* secondary accent */
+  --rule: #c7ccbb;       /* hairlines */
+  --contour: rgba(46, 74, 52, 0.22);
+  --contour-strong: rgba(109, 122, 58, 0.55);
+  --on-forest: #f1f2ec;
+
+  --display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 4vw, 3rem);
+  --step-4: clamp(2.75rem, 7vw, 5rem);
+  --measure: 62ch;
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+    --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+    --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+    --on-forest: #121813; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+  --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+  --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+  --on-forest: #121813; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+html { scroll-padding-top: 5rem; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 var(--step-0)/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: inherit; text-decoration-color: var(--olive); text-underline-offset: 0.2em; }
+a:hover { color: var(--forest); }
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; border-radius: 2px; }
+
+.wrap {
+  max-width: var(--wrap); margin-inline: auto;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 480px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.label {
+  font: 500 var(--step--1)/1.4 var(--mono);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; flex-wrap: wrap; }
+.wordmark { font: 600 1.5rem/1 var(--display); letter-spacing: 0.01em; text-decoration: none; }
+.wordmark span { color: var(--olive); font-style: italic; font-weight: 500; }
+.nav { display: flex; gap: clamp(1rem, 3vw, 2.25rem); font: 500 0.9375rem/1 var(--body); }
+.nav a { text-decoration: none; padding-block: 0.25rem; border-bottom: 1px solid transparent; }
+.nav a:hover { border-bottom-color: var(--olive); }
+
+/* Hero */
+.hero { position: relative; border-bottom: 1px solid var(--rule); overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .wrap { position: relative; padding-block: clamp(4rem, 10vw, 7.5rem) clamp(3rem, 7vw, 5rem); display: grid; gap: 1.75rem; }
+.hero h1 {
+  font: 500 var(--step-4)/1.02 var(--display); letter-spacing: -0.01em;
+  max-width: 14ch; margin: 0; text-wrap: balance;
+}
+.hero h1 em { color: var(--forest); font-style: italic; }
+.hero p.lede { font-size: var(--step-1); line-height: 1.55; max-width: 48ch; margin: 0; color: var(--ink-2); }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 500 0.9375rem/1 var(--body); text-decoration: none;
+  padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px;
+  transition: background-color .2s ease, color .2s ease;
+}
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+
+/* Sections */
+section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(--rule); }
+.section-head { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; align-items: baseline; margin-bottom: 3rem; }
+.section-head h2 { font: 500 var(--step-3)/1.1 var(--display); margin: 0; text-wrap: balance; }
+.section-head p { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
+@media (max-width: 760px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+
+/* Project plates */
+.plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 2.5rem; }
+@media (max-width: 760px) { .plates { grid-template-columns: minmax(0, 1fr); } }
+.plate { display: grid; gap: 1rem; min-width: 0; }
+.plate figure { margin: 0; background: var(--paper-2); border: 1px solid var(--rule); aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
+.plate figure svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate figure video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.plate .collar { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.6rem; }
+.status { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.55rem; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
+.status.live { color: var(--forest); }
+.status.planned { color: var(--olive); }
+.plate h3 { font: 600 var(--step-2)/1.15 var(--display); margin: 0; text-wrap: balance; }
+.plate p { margin: 0; color: var(--ink-2); max-width: var(--measure); }
+.plate dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.35rem 1.25rem; margin: 0.25rem 0 0; font-size: 0.9375rem; }
+.plate dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.plate dd { margin: 0; }
+
+/* svg strokes */
+.s-ink { stroke: var(--ink); } .s-forest { stroke: var(--forest); } .s-olive { stroke: var(--olive); } .s-rule { stroke: var(--rule); }
+.f-forest { fill: var(--forest); } .f-olive { fill: var(--olive); } .f-paper { fill: var(--paper); } .f-ink { fill: var(--ink); }
+.f-tint { fill: var(--olive); fill-opacity: .14; }
+.svg-label { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .06em; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; }
+@media (max-width: 760px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+.about-grid .prose p { margin: 0 0 1.1rem; max-width: var(--measure); }
+.about-grid .prose p:first-child { font: 500 var(--step-2)/1.35 var(--display); color: var(--ink); }
+.facts { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.facts div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1rem; padding-block: 0.85rem; border-bottom: 1px solid var(--rule); }
+.facts dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.facts dd { margin: 0; }
+
+/* Experience */
+.roles { display: grid; gap: 0; border-top: 1px solid var(--ink); }
+.role { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 0.5rem 3rem; padding-block: 1.75rem; border-bottom: 1px solid var(--rule); }
+@media (max-width: 760px) { .role { grid-template-columns: minmax(0, 1fr); } }
+.role h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0; }
+.role .org { color: var(--forest); font-weight: 500; }
+.role ul { margin: 0.75rem 0 0; padding-left: 1.1rem; color: var(--ink-2); max-width: var(--measure); }
+.role li + li { margin-top: 0.4rem; }
+
+/* Toolkit */
+.toolkit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+@media (max-width: 860px) { .toolkit { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .toolkit { grid-template-columns: minmax(0, 1fr); } }
+.toolkit h3 { font: 600 var(--step-1)/1.2 var(--display); margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.toolkit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; color: var(--ink-2); }
+
+/* Contact */
+.contact { display: grid; gap: 1.5rem; }
+.contact h2 { font: 500 var(--step-4)/1.05 var(--display); margin: 0; max-width: 16ch; text-wrap: balance; }
+.contact-row { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; }
+.email { font: 500 var(--step-1)/1.4 var(--mono); user-select: all; word-break: break-all; }
+.copy { font: 500 0.875rem/1 var(--body); background: none; color: var(--forest); border: 1px solid var(--forest); padding: 0.6rem 0.9rem; border-radius: 2px; cursor: pointer; }
+.copy:hover { background: var(--paper-2); }
+.phone { font: 500 var(--step-1)/1.4 var(--mono); text-decoration: none; white-space: nowrap; }
+
+/* Footer: map collar */
+footer { padding-block: 2.5rem 3rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: end; }
+.scalebar { display: grid; gap: 0.35rem; }
+.scalebar .bar { display: flex; width: 12rem; max-width: 100%; height: 6px; border: 1px solid var(--ink); }
+.scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
+.scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<style>
+/* Case study additions */
+.cs-hero .wrap { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 1.5rem; }
+.cs-hero h1 { font: 500 var(--step-4)/1.02 var(--display); margin: 0; letter-spacing: -0.01em; }
+.cs-hero .lede { font-size: var(--step-1); line-height: 1.55; max-width: 52ch; margin: 0; color: var(--ink-2); }
+.back { font: 500 0.875rem/1 var(--body); text-decoration: none; color: var(--forest); }
+.back:hover { text-decoration: underline; }
+.cs-video { margin: 0; border: 1px solid var(--rule); background: var(--paper-2); aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
+.cs-video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.cs-video-wrap { padding-block: 0 clamp(3rem, 7vw, 5rem); border-bottom: 1px solid var(--rule); }
+.cs-video-wrap figcaption { margin-top: 0.75rem; }
+
+.compare { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.compare th, .compare td { text-align: left; padding: 1rem 1.25rem 1rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.compare thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
+.compare td.big { font: 500 var(--step-2)/1.1 var(--display); white-space: nowrap; }
+.compare td.after { color: var(--forest); }
+.table-scroll { overflow-x: auto; }
+
+.cs-body { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; }
+@media (max-width: 760px) { .cs-body { grid-template-columns: minmax(0, 1fr); } }
+.cs-body .prose { max-width: var(--measure); }
+.cs-body .prose p { margin: 0 0 1.1rem; }
+.cs-body .prose h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 1.75rem 0 0.5rem; }
+.cs-body .prose ul, .cs-body .prose ol { margin: 0 0 1.1rem; padding-left: 1.2rem; }
+.cs-body .prose li + li { margin-top: 0.45rem; }
+.cs-body .prose strong { font-weight: 600; color: var(--ink); }
+.steps { counter-reset: s; list-style: none; padding: 0 !important; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); margin: 0 !important; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
+.plan-fig { margin: 0 0 1.5rem; border: 1px solid var(--rule); background: #fff; }
+.plan-fig img { display: block; width: 100%; height: auto; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0 0 1.5rem; }
+.pair .plan-fig { margin: 0; display: flex; flex-direction: column; }
+.pair .plan-fig img { aspect-ratio: 1.45; object-fit: contain; background: #fff; }
+.pair .plan-fig.render img { background: var(--paper-2); }
+.pair figcaption { font-size: 0.6875rem; padding: 0.5rem 0.75rem; border-top: 1px solid var(--rule); background: var(--paper); }
+@media (max-width: 640px) { .pair { grid-template-columns: minmax(0, 1fr); } }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; }
+.chips li { margin: 0 !important; font: 500 0.8125rem/1 var(--mono); padding: 0.5rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink-2); }
+</style>
+
+<style>
+.dash-fig { margin: 0; border: 1px solid var(--rule); background: var(--paper-2); }
+.dash-fig img { display: block; width: 100%; height: auto; }
+.dash-wrap { padding-block: 0 clamp(3rem, 7vw, 5rem); border-bottom: 1px solid var(--rule); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin-top: 1rem; align-items: center; }
+.btn-live { font: 600 0.9375rem/1 var(--body); color: var(--on-forest); background: var(--forest); padding: 0.8rem 1.1rem; text-decoration: none; border-radius: 2px; }
+.btn-live:hover { opacity: 0.9; }
+.prose pre { font: 0.8125rem/1.6 var(--mono); background: var(--paper-2); border: 1px solid var(--rule); padding: 1rem 1.1rem; overflow-x: auto; margin: 0 0 1.25rem; }
+.prose code { font-family: var(--mono); font-size: 0.875em; }
+</style>
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="cs-hero">
+    <div class="wrap">
+      <a class="back" href="index.html#work">← All work</a>
+      <div class="meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
+        <span class="label">Case study</span>
+        <span class="label">Spatial database · Dashboard</span>
+        <span class="label">Milwaukee County · 2026</span>
+      </div>
+      <h1>MKE Airport Asset Database</h1>
+      <p class="lede">A SQL Server spatial database of Milwaukee Mitchell International Airport's runways, taxiways, aprons, buildings and gates, built from public data, checked for quality, corrected against air traffic control, and published as a live dashboard.</p>
+    </div>
+  </div>
+
+  <div class="dash-wrap">
+    <div class="wrap">
+      <figure class="dash-fig">
+        <a href="https://krauskagis.maps.arcgis.com/apps/dashboards/f6d189d0fc294acbbfe2e873840d163b"><img src="media/mke-airport-dashboard.webp" alt="Dashboard titled Milwaukee Mitchell International Airport: Asset Inventory. Four indicators read 4 active runways, 48 passenger gates, 231 buildings and 104 taxiway segments missing a designator. Below are a map of the airfield, a bar chart of runway pavement lengths and a pie chart of buildings by use." width="1917" height="938"></a>
+      </figure>
+      <div class="btn-row">
+        <a class="btn-live" href="https://krauskagis.maps.arcgis.com/apps/dashboards/f6d189d0fc294acbbfe2e873840d163b">Open the live dashboard →</a>
+        <span class="label">ArcGIS Dashboards · reads a hosted copy of the database</span>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Result</span>
+        <div>
+          <h2>594 airport features in a database that checks itself</h2>
+          <p>Seven feature tables, five lookup tables and three reporting views, loaded and verified on SQL Server 2022.</p>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th scope="col">Table</th><th scope="col">Geometry</th><th scope="col">Features</th></tr></thead>
+          <tbody>
+            <tr><td>Runway segments (5 runways: pavement, displaced thresholds, stopways)</td><td>Line</td><td class="big after">15</td></tr>
+            <tr><td>Taxiway segments</td><td>Line</td><td class="big after">145</td></tr>
+            <tr><td>Aprons</td><td>Polygon</td><td class="big after">19</td></tr>
+            <tr><td>Buildings (terminals, hangars, tower, parking and others)</td><td>Polygon</td><td class="big after">232</td></tr>
+            <tr><td>Passenger gates</td><td>Point</td><td class="big after">48</td></tr>
+            <tr><td>Airfield markings (holding positions, parking lead-in lines)</td><td>Line</td><td class="big after">102</td></tr>
+            <tr><td>Jet bridges</td><td>Line</td><td class="big after">33</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">The question</span>
+      <div class="prose">
+        <p>Airports run on asset data: what exists, where it is, what state it is in. I wanted to build a small, honest version of that system from scratch, the way a GIS database administrator would: design the tables, enforce valid values in the database itself, load real data, test it, and put the results in front of people.</p>
+        <p>Everything here comes from public data. It is my own database, not the airport's, and it leaves out anything security-sensitive.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">What I built</span>
+      <div class="prose">
+        <ol class="steps">
+          <li><span><strong>Source data.</strong> Pulled every aeroway and building feature inside the airport boundary from OpenStreetMap through the Overpass API.</span></li>
+          <li><span><strong>Database design.</strong> One table per asset type, each with a single geometry type in WGS 84. Lookup tables hold the valid values for status, building use, runway segment type and inspection condition, and foreign keys enforce them.</span></li>
+          <li><span><strong>Rules in the database.</strong> CHECK constraints reject the wrong geometry type, the wrong coordinate system, invalid shapes, and zero or negative lengths and areas. Every feature table has a spatial index.</span></li>
+          <li><span><strong>Views and roles.</strong> Three views summarize runways, asset counts and building footprints for reporting. A read-only role and an editor role control access.</span></li>
+          <li><span><strong>Checks.</strong> A script reports row counts, runway lengths, invalid geometry, missing attributes, and a spatial check for gates near terminals that are no longer active.</span></li>
+          <li><span><strong>Map and dashboard.</strong> Connected ArcGIS Pro to SQL Server, symbolized the layers, published to ArcGIS Online and built the dashboard.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Correcting the record</span>
+      <div class="prose">
+        <p>The source data marked two of the airport's five runways, 01R/19L and 07L/25R, as abandoned, so my first dashboard showed three active runways. That did not match other public sources, which disagreed with each other.</p>
+        <p>I asked an air traffic controller at the airport. The answer: <strong>07L/25R is open. 01R/19L is permanently closed</strong> and slated for removal. Four runways are active, not three.</p>
+        <p>I corrected my database with a short SQL script, run inside a transaction, that updates the status and records where the correction came from:</p>
+<pre>BEGIN TRANSACTION;
+
+UPDATE airport.runway SET status = 'ACTIVE'
+WHERE designator = '07L/25R' AND status &lt;&gt; 'ACTIVE';
+
+INSERT airport.data_source (source_name, license, retrieved_on, notes)
+VALUES (N'Airport operations (air traffic control), personal communication',
+        N'Not applicable', '2026-11-10',
+        N'Runway status correction: 07L/25R is open; 01R/19L is permanently closed.');
+
+COMMIT TRANSACTION;</pre>
+        <p>Then I republished the layer, and the dashboard's count changed from 3 to 4. The rebuild script applies the correction automatically, so reloading the source data cannot undo it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">What the checks found</span>
+      <div class="prose">
+        <ul>
+          <li><strong>Runway lengths match published figures.</strong> Geodesic lengths computed from the geometry: 01L/19R at 9,991 ft, 07R/25L at 8,292 ft and 13/31 at 5,531 ft, each within 10 ft of the published length.</li>
+          <li><strong>Ten gates are still mapped at a demolished concourse.</strong> Gates E60 to E69 sit at Concourse E, which the source marks as demolished. A spatial query flags them for review.</li>
+          <li><strong>104 of 145 taxiway segments have no designator.</strong> The dashboard shows this number on purpose, as a data-quality indicator.</li>
+          <li><strong>171 buildings have no recorded use.</strong> They are kept and labelled Unclassified instead of guessed at.</li>
+          <li><strong>No invalid geometry</strong> in any table.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Limits</span>
+      <div class="prose">
+        <ul>
+          <li>The data is OpenStreetMap's, mapped by volunteers. It is not the airport's own record and should not be used for navigation or operations.</li>
+          <li>This is a SQL Server spatial database read by ArcGIS Pro through a database connection. It is not an Esri enterprise geodatabase, which needs an ArcGIS Server license.</li>
+          <li>The inspection table is designed but empty. A field inspection form is the next step.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Software and methods</span>
+      <div class="prose">
+        <ul class="chips">
+          <li>SQL Server 2022</li><li>T-SQL</li><li>Spatial indexes</li><li>ArcGIS Pro 3.7</li><li>ArcGIS Online</li><li>ArcGIS Dashboards</li><li>Python</li><li>Overpass API</li>
+        </ul>
+        <p class="label" style="margin-top:1rem">Data © OpenStreetMap contributors, Open Database License</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="label built-with" style="flex-basis:100%;margin:0">Built with SQL Server 2022, ArcGIS Pro, ArcGIS Online and ArcGIS Dashboards · SQL and Python scripts written with Claude · <a href="ai-disclosure.html">How I use AI</a></p>
+    <div class="scalebar" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><i></i></div>
+      <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
+    </div>
+    <span class="label">NAD83 / Wisconsin Transverse Mercator · © 2026 James Krauska</span>
+  </div>
+</footer>
+<!-- Visitor stats: GoatCounter (no cookies, no personal data) -->
+<script data-goatcounter="https://krauskagis.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
