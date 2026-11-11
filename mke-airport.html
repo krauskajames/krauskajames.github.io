@@ -380,6 +380,20 @@ COMMIT TRANSACTION;</pre>
 
   <section>
     <div class="wrap cs-body">
+      <span class="label">Power BI report</span>
+      <div class="prose">
+        <p>The same database also feeds a one-page Power BI report. Power BI connects to SQL Server and reads the reporting views directly, so the counts, runway lengths, building footprints and open work orders come from the same queries the dashboard uses.</p>
+        <figure class="dash-fig" style="margin:1.25rem 0">
+          <a href="media/mke-airport-powerbi.webp"><img src="media/mke-airport-powerbi.webp" alt="Power BI report titled MKE Airport Asset Report. Four cards read 4 active runways, 48 passenger gates, 231 active buildings and 3 open work orders. Below are a bar chart of runway length in feet, a bar chart of building footprint by use, a table of the three open work orders and a map of inspection points colored by whether they need repair." width="1440" height="802" loading="lazy"></a>
+        </figure>
+        <p>The four cards are DAX measures. The map plots each inspection from the point recorded in the field form.</p>
+        <p class="label">Built in Power BI Desktop · sample inspection data · click the image to enlarge</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
       <span class="label">What the checks found</span>
       <div class="prose">
         <ul>
@@ -411,7 +425,7 @@ COMMIT TRANSACTION;</pre>
       <span class="label">Software and methods</span>
       <div class="prose">
         <ul class="chips">
-          <li>SQL Server 2022</li><li>T-SQL</li><li>Spatial indexes</li><li>ArcGIS Pro 3.7</li><li>ArcGIS Online</li><li>ArcGIS Dashboards</li><li>ArcGIS Survey123</li><li>Python</li><li>Overpass API</li>
+          <li>SQL Server 2022</li><li>T-SQL</li><li>Spatial indexes</li><li>ArcGIS Pro 3.7</li><li>ArcGIS Online</li><li>ArcGIS Dashboards</li><li>ArcGIS Survey123</li><li>Power BI</li><li>DAX</li><li>Python</li><li>Overpass API</li>
         </ul>
         <p class="label" style="margin-top:1rem">Data © OpenStreetMap contributors, Open Database License</p>
       </div>
@@ -421,7 +435,7 @@ COMMIT TRANSACTION;</pre>
 
 <footer>
   <div class="wrap">
-    <p class="label built-with" style="flex-basis:100%;margin:0">Built with SQL Server 2022, ArcGIS Pro, ArcGIS Online, ArcGIS Dashboards and Survey123 · SQL and Python scripts written with Claude · <a href="ai-disclosure.html">How I use AI</a></p>
+    <p class="label built-with" style="flex-basis:100%;margin:0">Built with SQL Server 2022, ArcGIS Pro, ArcGIS Online, ArcGIS Dashboards, Survey123 and Power BI · SQL and Python scripts written with Claude · <a href="ai-disclosure.html">How I use AI</a></p>
     <div class="scalebar" aria-hidden="true">
       <div class="bar"><i></i><i></i><i></i><i></i></div>
       <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
