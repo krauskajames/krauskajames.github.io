@@ -573,6 +573,8 @@ Skills that remote sensing and imagery postings ask for but that aren't on the r
 
 **Saved for later (Nov 8): "285 colors the eye cannot see."** A chart James liked: NASA EMIT hyperspectral reflectance (381–2493 nm) over Paraná, Brazil, with one mean line and shaded spread per land use (native forest, planted forest, soybean, pasture, urban, water at Itaipu, sample counts in the legend), dark background, labeled features (chlorophyll absorption, red edge, leaf water, cellulose and clay), gaps where the atmosphere's water bands block the signal, and the line "Every land use has a signature." A Wisconsin version is possible (EMIT covers about 52° S to 52° N): sample fields, forest, marsh, town and Lake Winnebago, and use the chart in item 9, 54 or 56. A copy of the image is in Claude outputs\Inspiration.
 
+**Saved for later (Nov 11): [Great Lakes Trolling](https://greatlakestrolling.com/).** A free, no-account map for Great Lakes trolling anglers: water temperature at any depth, thermocline depth, currents, waves, wind, upwelling and downwelling, and a 3D lakebed view, built on NOAA's Great Lakes forecast models (GLOFS), GFS, HRRR and NWS wave forecasts. Worth studying as a reference for the fish chapter of item 9 (Lake Winnebago is not covered by GLOFS, so a Winnebago version would need other data), for Starcast's layer and time-slider design, and for anything on Lake Michigan (items 53 and 55).
+
 ---
 
 ## Housekeeping
