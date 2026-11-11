@@ -270,14 +270,14 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         <span class="label">Milwaukee County · 2026</span>
       </div>
       <h1>MKE Airport Asset Database</h1>
-      <p class="lede">A SQL Server spatial database of Milwaukee Mitchell International Airport's runways, taxiways, aprons, buildings and gates, built from public data, checked for quality, corrected against air traffic control, and published as a live dashboard.</p>
+      <p class="lede">A SQL Server spatial database of Milwaukee Mitchell International Airport's runways, taxiways, aprons, buildings and gates, built from public data, checked for quality, corrected against air traffic control, and published as a live dashboard with a field inspection workflow.</p>
     </div>
   </div>
 
   <div class="dash-wrap">
     <div class="wrap">
       <figure class="dash-fig">
-        <a href="https://krauskagis.maps.arcgis.com/apps/dashboards/f6d189d0fc294acbbfe2e873840d163b"><img src="media/mke-airport-dashboard.webp" alt="Dashboard titled Milwaukee Mitchell International Airport: Asset Inventory. Four indicators read 4 active runways, 48 passenger gates, 231 buildings and 104 taxiway segments missing a designator. Below are a map of the airfield, a bar chart of runway pavement lengths and a pie chart of buildings by use." width="1917" height="938"></a>
+        <a href="https://krauskagis.maps.arcgis.com/apps/dashboards/f6d189d0fc294acbbfe2e873840d163b"><img src="media/mke-airport-dashboard.webp" alt="Dashboard titled Milwaukee Mitchell International Airport: Asset Inventory. Five indicators read 4 active runways, 48 passenger gates, 231 buildings, 104 taxiway segments missing a designator and 3 open work orders. Below are a map of the airfield with inspection points, a bar chart of runway pavement lengths, a pie chart of buildings by use and a list of open work orders." width="1841" height="864"></a>
       </figure>
       <div class="btn-row">
         <a class="btn-live" href="https://krauskagis.maps.arcgis.com/apps/dashboards/f6d189d0fc294acbbfe2e873840d163b">Open the live dashboard →</a>
@@ -292,7 +292,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         <span class="label">Result</span>
         <div>
           <h2>594 airport features in a database that checks itself</h2>
-          <p>Seven feature tables, five lookup tables and three reporting views, loaded and verified on SQL Server 2022.</p>
+          <p>Seven feature tables, an inspection table, five lookup tables and four reporting views, loaded and verified on SQL Server 2022.</p>
         </div>
       </div>
       <div class="table-scroll">
@@ -363,6 +363,23 @@ COMMIT TRANSACTION;</pre>
 
   <section>
     <div class="wrap cs-body">
+      <span class="label">Inspections and work orders</span>
+      <div class="prose">
+        <p>Asset systems such as Cityworks tie inspections and repairs to features on the map. I built a small version of that loop, with sample data, to show how the pieces connect.</p>
+        <ol class="steps">
+          <li><span><strong>Field form.</strong> An ArcGIS Survey123 form records the asset, its condition, whether it needs repair, notes, a photo and a point on the map.</span></li>
+          <li><span><strong>Dashboard.</strong> Inspections appear on the map as they are submitted. Those marked "needs repair" are counted and listed as open work orders.</span></li>
+          <li><span><strong>Back to the database.</strong> A SQL script loads the survey export into the inspection table and matches each record to its asset: gates by number, runways and taxiways by designator, buildings by name. Where several segments share a designator, it takes the one nearest the inspector's point.</span></li>
+          <li><span><strong>Spatial matching.</strong> Jet bridges have no names, so the script finds the bridge nearest the named gate. A faded holding-position line is matched to the nearest marking of that type.</span></li>
+        </ol>
+        <p>All eight sample inspections matched an asset, and three became open work orders. Each survey record loads only once, so the script can be re-run after every export.</p>
+        <p class="label">Sample data: the conditions are invented, not real inspection results.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
       <span class="label">What the checks found</span>
       <div class="prose">
         <ul>
@@ -383,7 +400,7 @@ COMMIT TRANSACTION;</pre>
         <ul>
           <li>The data is OpenStreetMap's, mapped by volunteers. It is not the airport's own record and should not be used for navigation or operations.</li>
           <li>This is a SQL Server spatial database read by ArcGIS Pro through a database connection. It is not an Esri enterprise geodatabase, which needs an ArcGIS Server license.</li>
-          <li>The inspection table is designed but empty. A field inspection form is the next step.</li>
+          <li>The inspections are sample data. I have not inspected the airfield, and the conditions shown are invented to demonstrate the workflow.</li>
         </ul>
       </div>
     </div>
@@ -394,7 +411,7 @@ COMMIT TRANSACTION;</pre>
       <span class="label">Software and methods</span>
       <div class="prose">
         <ul class="chips">
-          <li>SQL Server 2022</li><li>T-SQL</li><li>Spatial indexes</li><li>ArcGIS Pro 3.7</li><li>ArcGIS Online</li><li>ArcGIS Dashboards</li><li>Python</li><li>Overpass API</li>
+          <li>SQL Server 2022</li><li>T-SQL</li><li>Spatial indexes</li><li>ArcGIS Pro 3.7</li><li>ArcGIS Online</li><li>ArcGIS Dashboards</li><li>ArcGIS Survey123</li><li>Python</li><li>Overpass API</li>
         </ul>
         <p class="label" style="margin-top:1rem">Data © OpenStreetMap contributors, Open Database License</p>
       </div>
@@ -404,7 +421,7 @@ COMMIT TRANSACTION;</pre>
 
 <footer>
   <div class="wrap">
-    <p class="label built-with" style="flex-basis:100%;margin:0">Built with SQL Server 2022, ArcGIS Pro, ArcGIS Online and ArcGIS Dashboards · SQL and Python scripts written with Claude · <a href="ai-disclosure.html">How I use AI</a></p>
+    <p class="label built-with" style="flex-basis:100%;margin:0">Built with SQL Server 2022, ArcGIS Pro, ArcGIS Online, ArcGIS Dashboards and Survey123 · SQL and Python scripts written with Claude · <a href="ai-disclosure.html">How I use AI</a></p>
     <div class="scalebar" aria-hidden="true">
       <div class="bar"><i></i><i></i><i></i><i></i></div>
       <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
