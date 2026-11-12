@@ -180,11 +180,11 @@ The files are in `Documents\Claude outputs\ParcelQA`: `ParcelQA.pyt` and `parcel
 
 ## 4b. Run the checks in PostGIS (written for PostgreSQL 18.6, PostGIS 3.6.2, ArcGIS Pro 3.7.3)
 
-Put the `postgis` folder, `config` folder and `fetch_arcgis.py` next to `parcel_qa.py` in `Documents\Claude outputs\ParcelQA`. Then, in the **Python Command Prompt**:
+On James's laptop these files live in `Documents\Claude outputs\ParcelQA\ParcelQA_postgis` (the `postgis` and `config` folders, `fetch_arcgis.py` and a copy of `parcel_qa.py`). Then, in the **Python Command Prompt**:
 
 ```
 activate arcgispro-py3-qa
-cd "%USERPROFILE%\OneDrive\Documents\Claude outputs\ParcelQA"
+cd "%USERPROFILE%\OneDrive\Documents\Claude outputs\ParcelQA\ParcelQA_postgis"
 python postgis\load_postgis.py config\sheboygan.json
 python parcel_qa.py config\sheboygan.json out
 python postgis\load_postgis.py config\sheboygan.json --skip-load --compare out\qa_summary.csv
