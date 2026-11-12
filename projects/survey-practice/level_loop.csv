@@ -1,0 +1,7 @@
+station,backsight_ft,foresight_ft,note
+BM1,6.19,,"benchmark, elevation 860.00 (assumed)"
+TP1,6.50,4.82,turning point
+TP2,4.26,4.84,turning point
+FF,,2.08,side shot from the same setup as the TP2 backsight: finished floor at the building door
+TP3,3.66,5.17,turning point
+BM1,,5.76,close on the benchmark

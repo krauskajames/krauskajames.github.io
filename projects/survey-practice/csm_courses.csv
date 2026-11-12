@@ -1,0 +1,11 @@
+type,course,bearing,distance_ft,along
+tie,T1,"N 00°53'38"" W",1327.45,along the east line of the SE 1/4
+tie,T2,"S 88°05'29"" W",198.38,along the south line of the NE 1/4 of the SE 1/4 to the west right-of-way of S. Moorland Road
+boundary,1,"S 88°05'29"" W",1135.01,south line of the NE 1/4 of the SE 1/4
+boundary,2,"N 01°13'51"" W",158.57,"west line of the NE 1/4 of the SE 1/4, to the Interstate 43 right-of-way"
+boundary,3,"N 54°14'19"" E",272.29,Interstate 43 southerly right-of-way
+boundary,4,"N 81°36'30"" E",398.06,Interstate 43 southerly right-of-way
+boundary,5,"S 79°24'35"" E",155.82,Interstate 43 southerly right-of-way
+boundary,6,"S 01°21'38"" E",288.47,
+boundary,7,"N 88°05'29"" E",362.08,to the west right-of-way of S. Moorland Road
+boundary,8,"S 01°59'46"" E",33.00,"S. Moorland Road west right-of-way, to the point of beginning"

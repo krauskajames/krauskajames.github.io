@@ -1,0 +1,9 @@
+point,northing,easting,description
+A1,5071.97,5657.14,proposed storage building corner
+A2,5069.97,5597.17,proposed storage building corner
+A3,5109.95,5595.84,proposed storage building corner
+A4,5111.95,5655.80,proposed storage building corner
+O1,5072.30,5667.13,"10 ft offset stake for corner A1, on the long wall line"
+O2,5069.64,5587.17,"10 ft offset stake for corner A2, on the long wall line"
+O3,5109.61,5585.84,"10 ft offset stake for corner A3, on the long wall line"
+O4,5112.28,5665.80,"10 ft offset stake for corner A4, on the long wall line"

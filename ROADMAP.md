@@ -483,7 +483,8 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Why:** Civil 3D is a preferred qualification in survey technician postings and is not yet on the resume. Steps 2, 4 and 6 are also the maths on the Certified Survey Technician Level I exam.
 - **Label it:** Only a licensed surveyor can produce an ALTA/NSPS Land Title Survey. The title block says "practice exercise, not a survey", and the field shots are marked as simulated.
 - **Need:** The Civil 3D trial (30 days from download, so start it with a free weekend ahead); a recorded certified survey map from the Waukesha County Register of Deeds; the 2026 ALTA/NSPS Minimum Standard Detail Requirements.
-- **Next step:** Install the trial and report the exact version, so the walkthrough is written for it; then pick the lot.
+- **Prep kit (Nov 12):** projects/survey-practice has the record courses, a simulated 149-point field file, a levelling loop, a stakeout exercise, a checklist against the 2026 standards and an answer key. The lot is in New Berlin, next to Brookfield (S. Moorland Road at Interstate 43), from a draft certified survey map in a public plan-commission file; it was the nearest lot with a complete public description. James to confirm the lot or swap in a Brookfield one.
+- **Next step:** Install the trial and report the exact version, so the walkthrough is written for it.
 
 ### 51. Printed trail map and tri-fold brochure · E3 F4 · 3.4
 - **What:** A print-ready trail and park guide: a folded map with trails, distances, parking and features, plus a tri-fold brochure, laid out in ArcGIS Pro (and finished in a design program if needed), exported with bleeds for a print shop.
