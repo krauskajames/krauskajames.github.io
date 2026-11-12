@@ -1117,6 +1117,24 @@ details.tableview th button:hover { color: var(--forest); }
     </div>
   </section>
 
+  <section id="dashboard">
+    <style>
+      .agol-embed { position: relative; height: clamp(34rem, 80vh, 52rem); border: 1px solid var(--rule); background: var(--paper-2); }
+      .agol-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+    </style>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">ArcGIS Online</span>
+        <div>
+          <h2>The same profile as an ArcGIS Dashboard</h2>
+          <p>The county's municipalities, headline numbers and charts, rebuilt in ArcGIS Dashboards on hosted feature layers and tables in ArcGIS Online.</p>
+        </div>
+      </div>
+      <div class="agol-embed"><iframe src="https://krauskagis.maps.arcgis.com/apps/dashboards/b6983a1a3d674ebe99a53a19f6ccdc63" title="Winnebago County Community Profile dashboard (ArcGIS Online)" loading="lazy" allowfullscreen></iframe></div>
+      <p class="note">Best viewed on a wide screen. <a href="https://krauskagis.maps.arcgis.com/apps/dashboards/b6983a1a3d674ebe99a53a19f6ccdc63" target="_blank" rel="noopener">Open the dashboard full screen ↗</a></p>
+    </div>
+  </section>
+
   <section>
     <div class="wrap cs-body">
       <span class="label">Method</span>
@@ -1184,7 +1202,7 @@ details.tableview th button:hover { color: var(--forest); }
 <script>
 (function () {
 'use strict';
-const AGOL_URL = '';  // set to the ArcGIS Online dashboard URL once published
+const AGOL_URL = 'https://krauskagis.maps.arcgis.com/apps/dashboards/b6983a1a3d674ebe99a53a19f6ccdc63';  // set to the ArcGIS Online dashboard URL once published
 if (AGOL_URL) { const a = document.getElementById('agolLink'); a.href = AGOL_URL; a.hidden = false; }
 
 const $ = (id) => document.getElementById(id);

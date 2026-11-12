@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 12, 2026 (added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 12, 2026 (item 1 done: the Winnebago ArcGIS Online dashboard is public and embedded on the page; added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -48,7 +48,7 @@ Each idea gets two scores from 1 to 5:
 | The Wellness Spa in Experience and About | ✅ | Soft-skills story: listening to clients, Client Testimonial Award |
 | Outside work section with Camino placeholder | ✅ | Finisterre photo; StoryMap still to build |
 | Header stays above animated cards while scrolling | ✅ | |
-| Winnebago County Community Profile page and prism-map card | ✅ | ArcGIS Online dashboard still in progress (item 1) |
+| Winnebago County Community Profile page and prism-map card | ✅ | ArcGIS Online dashboard finished and embedded Nov 12 (item 1) |
 | Parcel and NG911 QA toolkit page and scan-line card | ✅ | COGO drafting (five parcels) and the Lima toolbox run added Nov 6; PostGIS and Quarto parts still to do (item 4) |
 | Field Season 2025 page (Restoring Lands) | ✅ | Map gallery, photo-point slider, fall photo map |
 
@@ -60,7 +60,7 @@ Each idea gets two scores from 1 to 5:
 |---|---|---|---|---|---|
 | 46 | **Playbird Rd: from farm field to neighborhood** (umbrella for the parcel chapters) | 5 | 3 | 4.2 | 🔜 |
 | 37 | Zoning hearing notice packet (Town of Sheboygan, 200 ft) (ch. 2 of 46) | 5 | 5 | 5.0 | 🔜 |
-| 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | 🔧 |
+| 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | ✅ |
 | 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔧 |
 | 38 | Year-over-year parcel change report (ch. 6 of 46) | 5 | 4 | 4.6 | 💡 |
 | 39 | Addressing a new subdivision (ch. 5 of 46) | 5 | 4 | 4.6 | 💡 |
@@ -125,8 +125,8 @@ Each idea gets two scores from 1 to 5:
 - **Why:** Winnebago County's GIS Specialist posting sits in Planning and Zoning. Showing up with a profile of their own county is the "I researched you" move hiring managers remember.
 - **Have:** Spreadsheets, extrapolation models and both memos on the USB drive (Spring 2025 / GEOG 330).
 - **Need:** Current ACS and BEA tables for Winnebago; dashboard (ArcGIS Dashboards or a hand-built page).
-- **Status:** 🔧 The page is live (winnebago.html) with the board memo and the prism-map homepage card. The ArcGIS Online dashboard is half built; ArcGIS Online wasn't loading.
-- **Next step:** Finish the dashboard (indicators, list, charts, selector targets), then send the link so it can go on the page.
+- **Status:** ✅ Done Nov 12, 2026. The page is live (winnebago.html) with the board memo and the prism-map homepage card. The ArcGIS Online dashboard is public (https://krauskagis.maps.arcgis.com/apps/dashboards/b6983a1a3d674ebe99a53a19f6ccdc63): four indicators, the municipality map and list, and population, location quotient, shift-share and commuting charts in the site's colours. It is embedded on the page and linked from the hero button.
+- **Optional polish:** a legend on the commuting chart, a U.S.-average guide on the location quotient chart, smaller markers on the population chart, and a sources note.
 
 ### 2. Field Season 2025 page (Restoring Lands, Donges Bay Gorge) · E5 F4 · 4.6
 - **What:** A page linked from the Restoring Lands entry: the Trimble selfie on the Lake Michigan beach, Field Maps invasive-species screenshots for six preserves, a Donges Bay Gorge section (trail, white pine over the lake, beach, the old stone bridge and pool house), and a map of where every field photo was taken.
