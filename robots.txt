@@ -1,4 +1,9 @@
 User-agent: *
-# Starcast is public; the rest of the portfolio stays out of search results for now.
-Allow: /Starcast/
-Disallow: /
+# Pages stay out of search results with a <meta name="robots" content="noindex"> tag on each one.
+# They must NOT be blocked here: a blocked page can't be read, so Google never sees its noindex tag
+# and may list the bare address anyway ("Indexed, though blocked by robots.txt").
+# Starcast (/Starcast/) is public and has no noindex tag.
+# Working files that aren't pages:
+Disallow: /projects/
+Disallow: /data/
+Disallow: /vendor/
