@@ -1,12 +1,12 @@
 %% Data flow for this project page. Rendered and placed on the page by projects/build_flow.py (Mermaid, mermaid-cli).
-flowchart LR
+flowchart TB
   subgraph S["Public sources"]
     direction TB
-    GFS["<b>NOAA GFS</b><br/>cloud, humidity, temperature and<br/>winds, every 3 hours for 72 hours"]
-    OM["<b>Open-Meteo</b><br/>spot forecasts and regional models"]
-    CAMS["<b>Copernicus CAMS</b><br/>haze (aerosol optical depth)"]
-    SWPC["<b>NOAA SWPC</b><br/>Kp forecast and aurora map"]
-    OSM["<b>OpenStreetMap and OSRM</b><br/>parks, public land, drive times"]
+    GFS["<b>NOAA GFS</b><br/>cloud, humidity,<br/>temperature and winds,<br/>3-hourly for 72 hours"]
+    OM["<b>Open-Meteo</b><br/>spot forecasts and<br/>regional models"]
+    CAMS["<b>Copernicus CAMS</b><br/>haze (aerosol<br/>optical depth)"]
+    SWPC["<b>NOAA SWPC</b><br/>Kp forecast and<br/>aurora map"]
+    OSM["<b>OpenStreetMap, OSRM</b><br/>parks, public land,<br/>drive times"]
   end
   subgraph P["Processing"]
     direction TB
