@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 12, 2026 (item 1 done: the Winnebago ArcGIS Online dashboard is public and embedded on the page; added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 12, 2026 (synced the live pages: Drone 3D Captures (item 11 done), the MKE Airport page with its new radar homepage card, and the AI Use Disclosure; item 1 done: the Winnebago ArcGIS Online dashboard is public and embedded on the page; added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -51,6 +51,9 @@ Each idea gets two scores from 1 to 5:
 | Winnebago County Community Profile page and prism-map card | ✅ | ArcGIS Online dashboard finished and embedded Nov 12 (item 1) |
 | Parcel and NG911 QA toolkit page and scan-line card | ✅ | COGO drafting (five parcels) and the Lima toolbox run added Nov 6; PostGIS and Quarto parts still to do (item 4) |
 | Field Season 2025 page (Restoring Lands) | ✅ | Map gallery, photo-point slider, fall photo map |
+| Drone 3D Captures page (North Point Water Tower and other Milwaukee splats) | ✅ | Interactive Gaussian splat viewer and homepage card (item 11) |
+| MKE Airport Asset Database page and radar card | ✅ | SQL Server spatial database, ArcGIS dashboard, Survey123 inspection loop and Power BI report. Homepage card added Nov 12: the airport's footprints on a radar scope, with a sweep turning about the control tower and the eight sample inspection points flashing red as it passes (built by projects/mke-airport/build_card.py) |
+| AI Use Disclosure page | ✅ | Linked from the homepage and from each page's "Built with" line |
 
 ---
 
@@ -81,7 +84,7 @@ Each idea gets two scores from 1 to 5:
 | 8 | Esri Academy advanced course project | 4 | 4 | 4.0 | 💡 |
 | 9 | Lake Winnebago from space, 1999–2026 (Earth Engine) | 4 | 4 | 4.0 | 🔜 |
 | 10 | 3D watershed analysis: the streams that feed Lake Winnebago at Pipe | 4 | 4 | 4.0 | 🔜 |
-| 11 | Drone capture and Gaussian splats of buildings | 4 | 4 | 4.0 | 🔧 |
+| 11 | Drone capture and Gaussian splats of buildings | 4 | 4 | 4.0 | ✅ |
 | 12 | Site plans from drone surveys and county GIS (ch. 4 of 46) | 4 | 4 | 4.0 | 🔜 |
 | 13 | Deep learning feature extraction (Image Analyst) | 4 | 4 | 4.0 | 💡 |
 | 14 | Network Analyst project: fire and EMS coverage in Sheboygan County (ch. 7 of 46) | 4 | 4 | 4.0 | 💡 |
@@ -325,8 +328,8 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **What:** Drone (DJI Air 2S, flown by the licensed boss) plus ground photos turned into Gaussian splats that visitors can orbit in the browser. First subject: the North Point Water Tower, Milwaukee (captured Oct 29, 2026: two orbits, overhead passes, 26 ground photos).
 - **Why:** Reality capture is now part of the job at PX Design (splats of buildings for the business), and UAS/photogrammetry is marketable in GIS too.
 - **Pipeline (proven Oct 28 on a test object):** ffmpeg frames → COLMAP poses → Brush training (RTX 2000 Ada, 8 GB) → SuperSplat cleanup → .sog for the web, .ply for SketchUp's Gaussian Splats extension and Blender (KIRI 3DGS Render).
-- **Status:** 🔧 Water tower processing. Only non-client buildings go on the portfolio site.
-- **Next step:** COLMAP with both cameras, train, clean, then a viewer page and an orbit-video homepage card.
+- **Status:** ✅ Live (north-point.html, "Drone 3D Captures"): an interactive Gaussian splat viewer with the North Point Water Tower and other Milwaukee captures, linked from a homepage card. Only non-client buildings go on the portfolio site.
+- **Next step:** Add new captures as they are flown.
 
 ### 12. Site plans from drone surveys and county GIS · E4 F4 · 4.0
 - **Part of item 46, chapter 4.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
