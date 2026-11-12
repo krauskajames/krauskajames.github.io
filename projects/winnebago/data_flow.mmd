@@ -1,0 +1,34 @@
+%% Data flow for the Winnebago County Community Profile.
+%% Rendered with mermaid-cli:  mmdc -i data_flow.mmd -o flow.svg -c flow_config.json -b transparent -I wflow
+%% The colours in the SVG are then swapped for the site's CSS variables and it is placed in winnebago.html.
+flowchart LR
+  subgraph S["Public sources"]
+    direction TB
+    DOA["<b>Wisconsin DOA</b><br/>population estimates 1970–2026<br/>and projections to 2050"]
+    BEA["<b>U.S. BEA</b><br/>jobs by industry, 2012 and 2022<br/>per capita income"]
+    LODES["<b>Census LEHD LODES 8</b><br/>where workers live and work, 2023"]
+    ACS["<b>Census ACS 5-year</b><br/>housing, income and age, 2020–2024"]
+    TIGER["<b>Census TIGERweb</b><br/>municipal boundaries and lakes"]
+  end
+  subgraph P["Processing in Python"]
+    direction TB
+    FETCH["<b>fetch_raw.sh · fetch_acs.py</b><br/>download the raw files"]
+    BUILD["<b>build_data.py</b><br/>clean and join by municipality,<br/>fit the projection curves,<br/>location quotients and shift-share,<br/>simplify the boundaries"]
+    FETCH --> BUILD
+  end
+  subgraph O["What it produces"]
+    direction TB
+    PAGE["<b>This page</b><br/>Leaflet map and charts"]
+    DASH["<b>ArcGIS Online dashboard</b><br/>hosted layer and tables"]
+    MEMO["<b>County board memo</b><br/>one-page PDF"]
+    CARD["<b>Homepage card</b><br/>prism map"]
+  end
+  DOA --> FETCH
+  BEA --> FETCH
+  LODES --> FETCH
+  ACS --> FETCH
+  TIGER --> FETCH
+  BUILD -- "JSON and GeoJSON" --> PAGE
+  BUILD -- "export_agol.py" --> DASH
+  BUILD -- "memo.py" --> MEMO
+  BUILD -- "card_data.py" --> CARD
