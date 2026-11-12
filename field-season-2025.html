@@ -994,6 +994,36 @@ svg.leaflet-image-layer.leaflet-interactive path {
   </section>
 
 
+  <section id="plants">
+    <style>
+      .plants { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+      @media (max-width: 900px) { .plants { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+      .plants .shot img { aspect-ratio: 4 / 5; height: auto; }
+      .ptag { display: inline-block; margin-left: .35rem; padding: 0 .4rem; border: 1px solid currentColor; font-size: .75rem; line-height: 1.5; white-space: nowrap; }
+      .ptag.nat { color: var(--forest); }
+      .ptag.non { color: #c0662a; }
+    </style>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Plant ID</span>
+        <div>
+          <h2>Plants I identified</h2>
+          <p>Mapping invasive plants means knowing what belongs and what doesn't. These are some of the plants I identified along the way, native and not, at three of the preserves.</p>
+        </div>
+      </div>
+      <div class="plants">
+        <figure class="shot"><img src="media/field-season-2025/plants/scarlet-pimpernel.webp" alt="Small orange-red scarlet pimpernel flowers with purple centres among low green leaves" width="720" height="900" loading="lazy"><figcaption><b>Scarlet pimpernel</b> <span class="ptag non">not native</span><br>Mayhew</figcaption></figure>
+        <figure class="shot"><img src="media/field-season-2025/plants/cardinal-flower.webp" alt="A tall spike of bright red cardinal flower blooms among cattails and sedges" width="720" height="900" loading="lazy"><figcaption><b>Cardinal flower</b> <span class="ptag nat">native</span><br>Mayhew</figcaption></figure>
+        <figure class="shot"><img src="media/field-season-2025/plants/great-willowherb.webp" alt="Pink four-petalled great willowherb flowers with a white cross-shaped stigma, held up by hand" width="720" height="900" loading="lazy"><figcaption><b>Great willowherb</b> <span class="ptag non">not native</span><br>Mayhew</figcaption></figure>
+        <figure class="shot"><img src="media/field-season-2025/plants/eastern-prickly-pear.webp" alt="Low pads of eastern prickly pear cactus on gravelly ground in dry grass" width="720" height="900" loading="lazy"><figcaption><b>Eastern prickly pear</b> <span class="ptag nat">native</span><br>Kratzsch</figcaption></figure>
+        <figure class="shot"><img src="media/field-season-2025/plants/rough-blazing-star.webp" alt="A purple spike of rough blazing star in a prairie full of black-eyed Susans" width="720" height="900" loading="lazy"><figcaption><b>Rough blazing star</b> <span class="ptag nat">native</span><br>Kratzsch</figcaption></figure>
+        <figure class="shot"><img src="media/field-season-2025/plants/hedge-bindweed.webp" alt="A white funnel-shaped hedge bindweed flower against goldenrod leaves" width="720" height="900" loading="lazy"><figcaption><b>Hedge bindweed</b> <span class="ptag nat">native</span><br>Kratzsch</figcaption></figure>
+        <figure class="shot"><img src="media/field-season-2025/plants/blue-vervain.webp" alt="Branching pencil-thin spikes of small violet blue vervain flowers" width="720" height="900" loading="lazy"><figcaption><b>Blue vervain</b> <span class="ptag nat">native</span><br>Fellenz Woods</figcaption></figure>
+        <figure class="shot"><img src="media/field-season-2025/plants/ohio-spiderwort.webp" alt="Two three-petalled blue-violet Ohio spiderwort flowers above grass-like leaves" width="720" height="900" loading="lazy"><figcaption><b>Ohio spiderwort</b> <span class="ptag nat">native</span><br>Fellenz Woods</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
   <section id="fall">
     <div class="wrap">
       <div class="section-head">
@@ -1070,7 +1100,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const r = cmp.querySelector('input');
   r.addEventListener('input', () => cmp.style.setProperty('--pos', r.value + '%'));
   const lb = document.getElementById('lb'), li = lb.querySelector('img');
-  document.querySelectorAll('.gallery .shot img, .finds .shot img').forEach(im => im.addEventListener('click', () => { li.src = im.src; li.alt = im.alt; lb.classList.add('open'); }));
+  document.querySelectorAll('.gallery .shot img, .finds .shot img, .plants .shot img').forEach(im => im.addEventListener('click', () => { li.src = im.src; li.alt = im.alt; lb.classList.add('open'); }));
   lb.addEventListener('click', () => lb.classList.remove('open'));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
 })();
