@@ -1,0 +1,31 @@
+%% Data flow for this project page. Rendered and placed on the page by projects/build_flow.py (Mermaid, mermaid-cli).
+flowchart LR
+  subgraph S["Public sources"]
+    direction TB
+    REST["<b>Sheboygan County ArcGIS REST services</b><br/>tax parcels, address points,<br/>road centerlines, municipal boundaries"]
+    DEEDS["<b>Recorded legal descriptions</b><br/>deeds and certified survey maps<br/>for five parcels"]
+  end
+  subgraph P["Processing"]
+    direction TB
+    FETCH["<b>fetch_arcgis.py</b><br/>download every feature in the<br/>county's own coordinate system"]
+    PY["<b>parcel_qa.py</b><br/>19 checks in Python (GeoPandas)"]
+    PG["<b>load_postgis.py</b><br/>load into PostGIS and run the<br/>same 19 checks as SQL views"]
+    COGO["<b>ArcGIS Pro parcel fabric</b><br/>draft each parcel by bearings<br/>and distances, check closure"]
+    FETCH --> PY
+    FETCH --> PG
+  end
+  subgraph O["What it produces"]
+    direction TB
+    FIND["<b>Findings layer and summary</b><br/>GeoPackage, 1,323 findings,<br/>Python and SQL counts compared"]
+    TOOL["<b>ArcGIS Pro script tool</b><br/>ParcelQA.pyt"]
+    REPORT["<b>Quarto report</b><br/>HTML and PDF"]
+    PAGE["<b>This page and homepage card</b><br/>findings map, drafted parcels"]
+  end
+  REST --> FETCH
+  DEEDS --> COGO
+  PY --> FIND
+  PG --> FIND
+  PY --> TOOL
+  PG --> REPORT
+  FIND --> PAGE
+  COGO --> PAGE

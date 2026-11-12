@@ -1,0 +1,26 @@
+%% Data flow for this project page. Rendered and placed on the page by projects/build_flow.py (Mermaid, mermaid-cli).
+flowchart LR
+  subgraph S["Captured on site"]
+    direction TB
+    VIDEO["<b>Drone video</b><br/>orbits at several heights,<br/>October 29, 2026"]
+    LOGS["<b>Flight logs (.SRT)</b><br/>position and height per frame"]
+    GROUND["<b>Handheld ground photos</b><br/>26 for the water tower"]
+  end
+  subgraph P["Processing"]
+    direction TB
+    FRAMES["<b>ffmpeg</b><br/>check the passes in the logs,<br/>extract stills, drop blurry ones"]
+    COLMAP["<b>COLMAP</b><br/>solve the camera positions,<br/>remove lens distortion"]
+    BRUSH["<b>Brush</b><br/>train the Gaussian splat"]
+    CLEAN["<b>SuperSplat and Python</b><br/>crop to the site, filter floaters,<br/>compress with splat-transform"]
+    FRAMES --> COLMAP --> BRUSH --> CLEAN
+  end
+  subgraph O["What it produces"]
+    direction TB
+    PAGE["<b>This page</b><br/>four models rendered live<br/>with three.js and Spark"]
+    CARD["<b>Homepage card</b>"]
+  end
+  VIDEO --> FRAMES
+  LOGS --> FRAMES
+  GROUND --> COLMAP
+  CLEAN --> PAGE
+  CLEAN --> CARD

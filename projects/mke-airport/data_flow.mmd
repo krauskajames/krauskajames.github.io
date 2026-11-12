@@ -1,0 +1,30 @@
+%% Data flow for this project page. Rendered and placed on the page by projects/build_flow.py (Mermaid, mermaid-cli).
+flowchart LR
+  subgraph S["Sources"]
+    direction TB
+    OSM["<b>OpenStreetMap (Overpass API)</b><br/>runways, taxiways, aprons,<br/>buildings and gates"]
+    ATC["<b>Air traffic control</b><br/>runway status confirmed<br/>by a controller"]
+    S123["<b>Survey123 field form</b><br/>eight sample inspections"]
+  end
+  subgraph P["Processing"]
+    direction TB
+    BUILD["<b>build_sql.py</b><br/>turn the extract into SQL scripts"]
+    DB["<b>SQL Server 2022 spatial database</b><br/>asset tables, lookup tables,<br/>constraints, spatial indexes,<br/>checks and reporting views"]
+    FIX["<b>Logged SQL update</b><br/>correct the runway status"]
+    INSP["<b>05_load_inspections.sql</b><br/>match each inspection to its asset<br/>by name or nearest feature"]
+    BUILD --> DB
+    FIX --> DB
+    INSP --> DB
+  end
+  subgraph O["What it produces"]
+    direction TB
+    DASH["<b>ArcGIS Online dashboard</b><br/>published from ArcGIS Pro"]
+    PBI["<b>Power BI report</b><br/>reads the reporting views"]
+    PAGE["<b>This page and homepage card</b>"]
+  end
+  OSM --> BUILD
+  ATC --> FIX
+  S123 --> INSP
+  DB --> DASH
+  DB --> PBI
+  DB --> PAGE

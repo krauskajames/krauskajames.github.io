@@ -1,0 +1,26 @@
+%% Data flow for this project page. Rendered and placed on the page by projects/build_flow.py (Mermaid, mermaid-cli).
+flowchart LR
+  subgraph S["Collected in the field"]
+    direction TB
+    GPS["<b>Trimble GNSS and ArcGIS Field Maps</b><br/>invasive plants, trails and<br/>infrastructure at 13 preserves"]
+    PP["<b>Photo-monitoring points</b><br/>2020 originals re-shot in 2025"]
+    PHOTOS["<b>Field photos and daily logs</b><br/>28 GPS-tagged photos,<br/>summer and fall internship logs"]
+  end
+  subgraph P["Processing"]
+    direction TB
+    QA["<b>Desktop review</b><br/>proof each day's points and<br/>polygons before they are used"]
+    PAIR["<b>Pair the photo points</b><br/>match 2025 positions to<br/>2020 GPS that was 30 ft off"]
+    TAGS["<b>Read the photo GPS tags</b><br/>place each photo on a map<br/>with that day's task"]
+  end
+  subgraph O["What it produces"]
+    direction TB
+    TRUST["<b>The land trust's invasives web map</b><br/>used by its stewardship and grant<br/>teams; the layers stay private"]
+    PAGE["<b>This page</b><br/>map gallery from screenshots shared<br/>with permission, photo-point slider,<br/>season photo map"]
+  end
+  GPS --> QA
+  PP --> PAIR
+  PHOTOS --> TAGS
+  QA --> TRUST
+  TRUST -- "screenshots" --> PAGE
+  PAIR --> PAGE
+  TAGS --> PAGE

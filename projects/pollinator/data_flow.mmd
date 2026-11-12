@@ -1,0 +1,30 @@
+%% Data flow for this project page. Rendered and placed on the page by projects/build_flow.py (Mermaid, mermaid-cli).
+flowchart LR
+  subgraph S["Public sources"]
+    direction TB
+    GBIF["<b>GBIF / iNaturalist</b><br/>454,717 research-grade plant<br/>observations in Wisconsin"]
+    WC["<b>WorldClim 2.1</b><br/>19 climate variables and elevation"]
+    SG["<b>SoilGrids 2.0</b><br/>13 soil properties"]
+    WL["<b>WISCLAND 2.0</b><br/>8 land cover layers"]
+  end
+  subgraph P["Processing in Python, R and MaxEnt"]
+    direction TB
+    OCC["<b>Clean the occurrences</b><br/>keep records located within 1 km,<br/>thin to one per 1 km cell,<br/>build the sampling-bias surface"]
+    PRED["<b>Prepare the predictors</b><br/>one grid, masked to Wisconsin,<br/>collinearity screen keeps 22 of 41"]
+    MAX["<b>MaxEnt 3.4.4</b><br/>one model per host plant,<br/>25% test split, jackknife"]
+    WEB["<b>make_web_layers.py</b><br/>reproject to Web Mercator,<br/>write 8-bit PNG map layers"]
+    OCC --> MAX
+    PRED --> MAX
+    MAX --> WEB
+  end
+  subgraph O["What it produces"]
+    direction TB
+    PAGE["<b>This page</b><br/>interactive suitability maps,<br/>variable importance, response curves"]
+    CARD["<b>Homepage card</b><br/>22 predictor layers stacking"]
+  end
+  GBIF --> OCC
+  WC --> PRED
+  SG --> PRED
+  WL --> PRED
+  WEB --> PAGE
+  WEB --> CARD

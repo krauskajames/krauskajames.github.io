@@ -1,0 +1,31 @@
+%% Data flow for this project page. Rendered and placed on the page by projects/build_flow.py (Mermaid, mermaid-cli).
+flowchart LR
+  subgraph S["Public sources"]
+    direction TB
+    GFS["<b>NOAA GFS</b><br/>cloud, humidity, temperature and<br/>winds, every 3 hours for 72 hours"]
+    OM["<b>Open-Meteo</b><br/>spot forecasts and regional models"]
+    CAMS["<b>Copernicus CAMS</b><br/>haze (aerosol optical depth)"]
+    SWPC["<b>NOAA SWPC</b><br/>Kp forecast and aurora map"]
+    OSM["<b>OpenStreetMap and OSRM</b><br/>parks, public land, drive times"]
+  end
+  subgraph P["Processing"]
+    direction TB
+    JOB["<b>GitHub Actions, every 6 hours</b><br/>find the newest GFS run and<br/>download only the needed fields"]
+    PYT["<b>Python (ecCodes, NumPy)</b><br/>decode GRIB2 and pack each<br/>forecast hour into a 1° grid"]
+    APP["<b>In the browser</b><br/>interpolate in space and time,<br/>estimate seeing and transparency,<br/>blend in sharper regional data"]
+    JOB --> PYT --> APP
+  end
+  subgraph O["What it produces"]
+    direction TB
+    GLOBE["<b>Starcast</b><br/>forecast globe drawn with D3"]
+    SPOT["<b>Spot forecasts and Where to go</b>"]
+    ALERT["<b>Clear-night notices</b><br/>sent by a scheduled job"]
+  end
+  GFS --> JOB
+  OM --> APP
+  CAMS --> APP
+  SWPC --> APP
+  OSM --> APP
+  APP --> GLOBE
+  APP --> SPOT
+  PYT --> ALERT

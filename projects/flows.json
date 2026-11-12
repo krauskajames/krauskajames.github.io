@@ -1,0 +1,38 @@
+[
+ [
+  "parcel-qa.html",
+  "projects/parcel-qa",
+  "The county's public land records are downloaded once, checked two ways, in Python and in SQL, and the two sets of results are compared before anything is published.",
+  "Sheboygan County's ArcGIS REST services supply tax parcels, address points, road centerlines and municipal boundaries. fetch_arcgis.py downloads them in the county's coordinate system. parcel_qa.py runs 19 checks in Python, and load_postgis.py loads the same data into PostGIS and runs the same 19 checks as SQL views. Both produce the findings layer and summary, with the two counts compared. The Python checks also run as an ArcGIS Pro script tool, and the PostGIS views feed a Quarto report. Separately, recorded legal descriptions for five parcels are drafted in the ArcGIS Pro parcel fabric. The findings and the drafted parcels appear on this page and the homepage card."
+ ],
+ [
+  "mke-airport.html",
+  "projects/mke-airport",
+  "Everything on this page reads from one SQL Server database: the dashboard, the Power BI report and the inspection loop all use the same tables and views.",
+  "An OpenStreetMap extract of runways, taxiways, aprons, buildings and gates is turned into SQL scripts by build_sql.py and loaded into a SQL Server 2022 spatial database with lookup tables, constraints, spatial indexes, checks and reporting views. A runway status confirmed with air traffic control is applied as a logged SQL update. Eight sample inspections from a Survey123 form are loaded by a SQL script that matches each to its asset. The database feeds the ArcGIS Online dashboard, the Power BI report, and this page and its homepage card."
+ ],
+ [
+  "pollinator.html",
+  "projects/pollinator",
+  "Four public datasets are cleaned and aligned to one grid, modeled in MaxEnt, and converted into the map layers this page draws.",
+  "GBIF and iNaturalist plant observations are cleaned, thinned and used to build a sampling-bias surface. WorldClim climate, SoilGrids soil and WISCLAND land cover layers are put on one grid, masked to Wisconsin and screened for collinearity, keeping 22 of 41 predictors. MaxEnt 3.4.4 fits one model per host plant. make_web_layers.py reprojects the outputs and writes the PNG map layers used by this page and the homepage card."
+ ],
+ [
+  "field-season-2025.html",
+  "projects/field-season-2025",
+  "The mapping itself belongs to the land trust and stays private. This page is built from screenshots shared with permission, my own photos and my field logs.",
+  "Invasive plants, trails and infrastructure were mapped at 13 preserves with a Trimble GNSS receiver and ArcGIS Field Maps, proofed in desktop review, and saved to the land trust's invasives web map, whose layers stay private. Photo-monitoring points from 2020 were re-shot in 2025 and paired despite 30 feet of error in the old positions. GPS tags on 28 field photos place them on a map with each day's task from the internship logs. This page shows a map gallery from screenshots shared with permission, the photo-point slider and the season photo map."
+ ],
+ [
+  "north-point.html",
+  "projects/north-point",
+  "Each model starts as drone video and goes through the same five tools before it reaches the viewer on this page.",
+  "Drone video from orbits at several heights, per-frame flight logs and handheld ground photos are the inputs. The logs are checked and stills are extracted with ffmpeg, COLMAP solves the camera positions and removes lens distortion, Brush trains the Gaussian splat, and SuperSplat and a Python script crop, clean and compress it. The four models are rendered on this page with three.js and Spark and shown on the homepage card."
+ ],
+ [
+  "starcast.html",
+  "projects/starcast",
+  "The worldwide forecast is prepared ahead of time by a scheduled job, so the app downloads small files instead of calling a weather service for every visitor.",
+  "Every 6 hours a GitHub Actions job finds the newest NOAA GFS run and downloads only the fields it needs. A Python script decodes the GRIB2 files and packs each forecast hour into a 1 degree grid. In the browser the app interpolates the grid, estimates seeing and transparency, and blends in Open-Meteo regional forecasts, Copernicus CAMS haze, NOAA SWPC aurora data, and OpenStreetMap parks with OSRM drive times. It produces the Starcast forecast globe, spot forecasts and the Where to go list, and a scheduled job sends clear-night notices."
+ ]
+]
