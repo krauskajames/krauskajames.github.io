@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 8, 2026 (added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 12, 2026 (added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -100,6 +100,7 @@ Each idea gets two scores from 1 to 5:
 | 55 | Urban tree canopy and heat (pipeline) | 4 | 3 | 3.6 | 💡 |
 | 56 | Wetland and land cover update (pipeline) | 4 | 3 | 3.6 | 💡 |
 | 50 | Land protection: candidate parcel to stewardship (pipeline over 34–35) | 4 | 3 | 3.6 | 💡 |
+| 57 | Practice ALTA-style survey drawing in Civil 3D (Brookfield, survey technician path) | 4 | 3 | 3.6 | 🔜 |
 | 24 | Camino Francés StoryMap | 3 | 4 | 3.4 | 🔧 |
 | 25 | Still maps and posters gallery | 3 | 4 | 3.4 | 💡 |
 | 51 | Printed trail map and tri-fold brochure | 3 | 4 | 3.4 | 💡 |
@@ -463,6 +464,21 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **What:** Items 34–35 framed as one land-trust chain: Parcel Picker finds the candidates, a landowner outreach list, the easement boundary drafted, a baseline documentation report, and yearly monitoring visits in Field Maps.
 - **Why:** Turns the IAT ideas into the full workflow a land trust runs, which also matches the Restoring Lands experience.
 - **Next step:** Build item 35 first; the rest follows from its output.
+
+### 57. Practice ALTA-style survey drawing in Civil 3D (Brookfield) · E4 F3 · 3.6
+*Numbered 57 so the other items keep their numbers; it ranks with the other 3.6 items. Scored for the survey technician path (added Nov 12), where it matches postings such as Pinnacle Engineering Group's Survey Technician.*
+- **What:** One real commercial lot near Brookfield, drawn from public records as a practice ALTA/NSPS-style sheet in the Autodesk Civil 3D free trial. Six steps, each matching a duty in survey technician postings:
+  1. Pull a recorded certified survey map for the lot and read its legal description (read and interpret survey maps and plats).
+  2. Enter the boundary in Civil 3D by bearings and distances, then check that it closes (survey calculations; Civil 3D).
+  3. Import a file of simulated "field shots" with point codes, then draw the linework and a contour surface (downloading, organizing and reviewing field data; topographic surveys).
+  4. Write a page of field notes with a sketch, and work a levelling loop by hand (field notes and sketches; benchmarks and control).
+  5. Lay out the sheet against the 2026 ALTA/NSPS checklist: boundary, buildings, easements, title block (ALTA/NSPS surveys).
+  6. Compute stakeout points for a building corner with offsets (construction staking).
+- **Where:** Brookfield, Waukesha County, a new place.
+- **Why:** Civil 3D is a preferred qualification in survey technician postings and is not yet on the resume. Steps 2, 4 and 6 are also the maths on the Certified Survey Technician Level I exam.
+- **Label it:** Only a licensed surveyor can produce an ALTA/NSPS Land Title Survey. The title block says "practice exercise, not a survey", and the field shots are marked as simulated.
+- **Need:** The Civil 3D trial (30 days from download, so start it with a free weekend ahead); a recorded certified survey map from the Waukesha County Register of Deeds; the 2026 ALTA/NSPS Minimum Standard Detail Requirements.
+- **Next step:** Install the trial and report the exact version, so the walkthrough is written for it; then pick the lot.
 
 ### 51. Printed trail map and tri-fold brochure · E3 F4 · 3.4
 - **What:** A print-ready trail and park guide: a folded map with trails, distances, parking and features, plus a tri-fold brochure, laid out in ArcGIS Pro (and finished in a design program if needed), exported with bleeds for a print shop.
