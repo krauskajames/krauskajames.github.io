@@ -301,6 +301,11 @@ section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(
 .role .org { color: var(--forest); font-weight: 500; }
 .role ul { margin: 0.75rem 0 0; padding-left: 1.1rem; color: var(--ink-2); max-width: var(--measure); }
 .role li + li { margin-top: 0.4rem; }
+.role-quote { margin: 1.25rem 0 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid var(--olive); max-width: var(--measure); }
+.role-quote blockquote { margin: 0; font: italic 400 1.25rem/1.45 var(--display); color: var(--ink); }
+.role-quote blockquote p { margin: 0; }
+.role-quote figcaption { margin-top: 0.6rem; font: 500 0.875rem/1.3 var(--body); color: var(--ink-2); }
+.role-quote figcaption strong { color: var(--forest); font-weight: 600; }
 .role .case-link { display: inline-block; margin-top: 1rem; padding: 0.55rem 0.9rem; border: 1px solid var(--forest); font-size: 1rem; font-weight: 600; line-height: 1.2; }
 .role .case-link:hover { background: var(--forest); color: var(--paper); text-decoration: none; }
 
@@ -673,6 +678,10 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
               <li>Model 2D and 3D floor plans and HVAC systems from architectural drawings for schools, clinics, libraries and county buildings.</li>
               <li>Capture buildings with DJI drones and process the footage into interactive 3D Gaussian splats with COLMAP and Brush.</li>
             </ul>
+            <figure class="role-quote">
+              <blockquote><p>&ldquo;James is incredibly talented, hardworking, and detail oriented. His ability to create high-quality 2D and 3D floor plans has been a tremendous asset to my business. Beyond his design skills, he took the initiative to develop custom software that has streamlined my daily workflow, saved me valuable time, and made my job significantly easier. His technical knowledge, creativity, and problem solving abilities make him a valuable asset to any team.&rdquo;</p></blockquote>
+              <figcaption>&mdash; <strong>Jonathon Stippich</strong>, CEO, PX Design</figcaption>
+            </figure>
           </div>
         </div>
         <div class="role">
