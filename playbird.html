@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Playbird Rd: from farm field to neighborhood – James Krauska</title>
+<meta name="description" content="A made-up development on a real Town of Sheboygan farm field, followed through rezoning, land division, addressing and the county's books. Chapter 2: the zoning hearing notice packet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: museum-catalog single column — generous margins, a topographic hero plate,
+   project "plates" with a map-collar metadata strip, quiet hairlines, one forest-green accent. */
+:root {
+  --paper: #f1f2ec;      /* green-grey paper */
+  --paper-2: #e6e9dd;    /* plate ground */
+  --ink: #1b241d;        /* forest black */
+  --ink-2: #4c5a4f;      /* secondary text */
+  --forest: #2e4a34;     /* primary accent */
+  --olive: #6d7a3a;      /* secondary accent */
+  --rule: #c7ccbb;       /* hairlines */
+  --contour: rgba(46, 74, 52, 0.22);
+  --contour-strong: rgba(109, 122, 58, 0.55);
+  --on-forest: #f1f2ec;
+
+  --display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 4vw, 3rem);
+  --step-4: clamp(2.75rem, 7vw, 5rem);
+  --measure: 62ch;
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+    --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+    --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+    --on-forest: #121813; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121813; --paper-2: #1a221b; --ink: #e5e9de; --ink-2: #a9b4a5;
+  --forest: #93b897; --olive: #bcc77f; --rule: #2f3a31;
+  --contour: rgba(147, 184, 151, 0.18); --contour-strong: rgba(188, 199, 127, 0.45);
+  --on-forest: #121813; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+html { scroll-padding-top: 5rem; }
+body { margin: 0; }
+img, svg { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 var(--step-0)/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: inherit; text-decoration-color: var(--olive); text-underline-offset: 0.2em; }
+a:hover { color: var(--forest); }
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; border-radius: 2px; }
+
+.wrap {
+  max-width: var(--wrap); margin-inline: auto;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 480px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.label {
+  font: 500 var(--step--1)/1.4 var(--mono);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; flex-wrap: wrap; }
+.wordmark { font: 600 1.5rem/1 var(--display); letter-spacing: 0.01em; text-decoration: none; }
+.wordmark span { color: var(--olive); font-style: italic; font-weight: 500; }
+.nav { display: flex; gap: clamp(1rem, 3vw, 2.25rem); font: 500 0.9375rem/1 var(--body); }
+.nav a { text-decoration: none; padding-block: 0.25rem; border-bottom: 1px solid transparent; }
+.nav a:hover { border-bottom-color: var(--olive); }
+
+/* Hero */
+.hero { position: relative; border-bottom: 1px solid var(--rule); overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .wrap { position: relative; padding-block: clamp(4rem, 10vw, 7.5rem) clamp(3rem, 7vw, 5rem); display: grid; gap: 1.75rem; }
+.hero h1 {
+  font: 500 var(--step-4)/1.02 var(--display); letter-spacing: -0.01em;
+  max-width: 14ch; margin: 0; text-wrap: balance;
+}
+.hero h1 em { color: var(--forest); font-style: italic; }
+.hero p.lede { font-size: var(--step-1); line-height: 1.55; max-width: 48ch; margin: 0; color: var(--ink-2); }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 500 0.9375rem/1 var(--body); text-decoration: none;
+  padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px;
+  transition: background-color .2s ease, color .2s ease;
+}
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+
+/* Sections */
+section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(--rule); }
+.section-head { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; align-items: baseline; margin-bottom: 3rem; }
+.section-head h2 { font: 500 var(--step-3)/1.1 var(--display); margin: 0; text-wrap: balance; }
+.section-head p { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
+@media (max-width: 760px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+
+/* Project plates */
+.plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 2.5rem; }
+@media (max-width: 760px) { .plates { grid-template-columns: minmax(0, 1fr); } }
+.plate { display: grid; gap: 1rem; min-width: 0; }
+.plate figure { margin: 0; background: var(--paper-2); border: 1px solid var(--rule); aspect-ratio: 5 / 3; max-width: 100%; position: relative; overflow: hidden; }
+.plate figure svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate figure video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.plate .collar { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.6rem; }
+.status { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.55rem; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
+.status.live { color: var(--forest); }
+.status.planned { color: var(--olive); }
+.plate h3 { font: 600 var(--step-2)/1.15 var(--display); margin: 0; text-wrap: balance; }
+.plate p { margin: 0; color: var(--ink-2); max-width: var(--measure); }
+.plate dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.35rem 1.25rem; margin: 0.25rem 0 0; font-size: 0.9375rem; }
+.plate dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.plate dd { margin: 0; }
+
+/* svg strokes */
+.s-ink { stroke: var(--ink); } .s-forest { stroke: var(--forest); } .s-olive { stroke: var(--olive); } .s-rule { stroke: var(--rule); }
+.f-forest { fill: var(--forest); } .f-olive { fill: var(--olive); } .f-paper { fill: var(--paper); } .f-ink { fill: var(--ink); }
+.f-tint { fill: var(--olive); fill-opacity: .14; }
+.svg-label { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .06em; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; }
+@media (max-width: 760px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+.about-grid .prose p { margin: 0 0 1.1rem; max-width: var(--measure); }
+.about-grid .prose p:first-child { font: 500 var(--step-2)/1.35 var(--display); color: var(--ink); }
+.facts { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.facts div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1rem; padding-block: 0.85rem; border-bottom: 1px solid var(--rule); }
+.facts dt { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.facts dd { margin: 0; }
+
+/* Experience */
+.roles { display: grid; gap: 0; border-top: 1px solid var(--ink); }
+.role { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 0.5rem 3rem; padding-block: 1.75rem; border-bottom: 1px solid var(--rule); }
+@media (max-width: 760px) { .role { grid-template-columns: minmax(0, 1fr); } }
+.role h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 0; }
+.role .org { color: var(--forest); font-weight: 500; }
+.role ul { margin: 0.75rem 0 0; padding-left: 1.1rem; color: var(--ink-2); max-width: var(--measure); }
+.role li + li { margin-top: 0.4rem; }
+
+/* Toolkit */
+.toolkit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+@media (max-width: 860px) { .toolkit { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .toolkit { grid-template-columns: minmax(0, 1fr); } }
+.toolkit h3 { font: 600 var(--step-1)/1.2 var(--display); margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.toolkit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; color: var(--ink-2); }
+
+/* Contact */
+.contact { display: grid; gap: 1.5rem; }
+.contact h2 { font: 500 var(--step-4)/1.05 var(--display); margin: 0; max-width: 16ch; text-wrap: balance; }
+.contact-row { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; }
+.email { font: 500 var(--step-1)/1.4 var(--mono); user-select: all; word-break: break-all; }
+.copy { font: 500 0.875rem/1 var(--body); background: none; color: var(--forest); border: 1px solid var(--forest); padding: 0.6rem 0.9rem; border-radius: 2px; cursor: pointer; }
+.copy:hover { background: var(--paper-2); }
+.phone { font: 500 var(--step-1)/1.4 var(--mono); text-decoration: none; white-space: nowrap; }
+
+/* Footer: map collar */
+footer { padding-block: 2.5rem 3rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content: space-between; align-items: end; }
+.scalebar { display: grid; gap: 0.35rem; }
+.scalebar .bar { display: flex; width: 12rem; max-width: 100%; height: 6px; border: 1px solid var(--ink); }
+.scalebar .bar i { flex: 1; } .scalebar .bar i:nth-child(odd) { background: var(--ink); }
+.scalebar .ticks { display: flex; justify-content: space-between; width: 12rem; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>/* Leaflet 1.9.4 (BSD-2-Clause) */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;
+	}
+.leaflet-tile::selection {
+	background: transparent;
+}
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+.leaflet-container .leaflet-overlay-pane svg {
+	max-width: none !important;
+	max-height: none !important;
+	}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;
+	}
+.leaflet-container img.leaflet-tile {
+	mix-blend-mode: plus-lighter;
+}
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	touch-action: none;
+	touch-action: pinch-zoom;
+}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;
+	}
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+.leaflet-pane         { z-index: 400; }
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane   { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; 
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+}
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;
+	}
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted; 
+	pointer-events: auto;
+	}
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: url(images/layers.png);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(images/layers-2x.png);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+.leaflet-default-icon-path { 
+	background-image: url(images/marker-icon.png);
+	}
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+	margin: -10px auto 0;
+	pointer-events: auto;
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-interactive {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+@media print {
+	.leaflet-control {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		}
+	}
+</style>
+</head>
+<body>
+<style>
+.cs-hero .wrap { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 1.5rem; }
+.cs-hero h1 { font: 500 var(--step-4)/1.02 var(--display); margin: 0; letter-spacing: -0.01em; max-width: 20ch; text-wrap: balance; }
+.cs-hero .lede { font-size: var(--step-1); line-height: 1.55; max-width: 62ch; margin: 0; color: var(--ink-2); }
+.back { font: 500 0.875rem/1 var(--body); text-decoration: none; color: var(--forest); }
+.back:hover { text-decoration: underline; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; font: 500 0.9375rem/1 var(--body); text-decoration: none; padding: 0.9rem 1.4rem; border: 1px solid var(--forest); border-radius: 2px; }
+.btn-primary { background: var(--forest); color: var(--on-forest); }
+.btn-ghost { color: var(--forest); }
+.btn-ghost:hover { background: var(--paper-2); }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.compare { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.9375rem; }
+.compare th, .compare td { text-align: left; padding: 0.65rem 1rem 0.65rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.compare thead th { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--ink); }
+.compare .num { text-align: right; padding-right: 0; padding-left: 1rem; }
+.compare td small { display: block; color: var(--ink-2); font-size: 0.8125rem; margin-top: 0.15rem; }
+.compare tr.here td { font-weight: 600; }
+.table-scroll { overflow-x: auto; }
+.cs-body { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; }
+@media (max-width: 760px) { .cs-body { grid-template-columns: minmax(0, 1fr); } }
+.cs-body .prose { max-width: var(--measure); }
+.cs-body .prose p { margin: 0 0 1.1rem; }
+.cs-body .prose h3 { font: 600 var(--step-1)/1.3 var(--body); margin: 1.75rem 0 0.5rem; }
+.cs-body .prose ul, .cs-body .prose ol { margin: 0 0 1.1rem; padding-left: 1.2rem; }
+.cs-body .prose li + li { margin-top: 0.45rem; }
+.cs-body .prose strong { font-weight: 600; color: var(--ink); }
+.steps { counter-reset: s; list-style: none; padding: 0 !important; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); margin: 0 !important; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 500 0.875rem/1.7 var(--mono); color: var(--olive); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; }
+.chips li { margin: 0 !important; font: 500 0.8125rem/1 var(--mono); padding: 0.5rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink-2); }
+.map-note { font-size: 0.8125rem; color: var(--ink-2); margin: 0.75rem 0 0; }
+
+/* chapter strip */
+.chapters { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+@media (max-width: 900px) { .chapters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .chapters { grid-template-columns: minmax(0, 1fr); } }
+.chapters li { padding: 1rem 1.25rem 1.1rem 0; border-bottom: 1px solid var(--rule); display: grid; gap: 0.3rem; align-content: start; }
+.chapters li .n { font: 500 0.8125rem/1 var(--mono); color: var(--olive); display: flex; justify-content: space-between; gap: 1rem; }
+.chapters li .n em { font-style: normal; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.chapters li.done .n em { color: var(--forest); }
+.chapters li strong { font-weight: 600; }
+.chapters li span.d { font-size: 0.875rem; color: var(--ink-2); line-height: 1.45; }
+.chapters li a { color: inherit; }
+
+/* tiles */
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+@media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tile { padding: 1.25rem 1.25rem 1.4rem 0; border-bottom: 1px solid var(--rule); display: grid; gap: 0.35rem; align-content: start; }
+.tile + .tile { padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+@media (max-width: 900px) { .tile:nth-child(odd) { padding-left: 0; border-left: 0; } }
+.tile .num { font: 500 var(--step-3)/1 var(--display); font-variant-numeric: tabular-nums; }
+.tile .ctx { font-size: 0.875rem; color: var(--ink-2); }
+
+/* map */
+:root { --c-subject: #b5462a; --c-biz: #3d6fb0; --c-ind: #2f7a4b; --c-gov: #8a6d1f; --c-x: #888; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-subject: #e0765a; --c-biz: #6b93d0; --c-ind: #4f9e6a; --c-gov: #c9a548; } }
+:root[data-theme="dark"] { --c-subject: #e0765a; --c-biz: #6b93d0; --c-ind: #4f9e6a; --c-gov: #c9a548; }
+.explorer { padding-block: clamp(3rem, 7vw, 5rem); border-bottom: 1px solid var(--rule); }
+.map-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); border: 1px solid var(--rule); background: var(--paper-2); }
+@media (max-width: 900px) { .map-grid { grid-template-columns: minmax(0, 1fr); } }
+#map { height: min(76vh, 660px); min-height: 420px; background: var(--paper-2); }
+@media (max-width: 640px) { #map { height: 460px; min-height: 0; } }
+.panel { border-left: 1px solid var(--rule); padding: 1.1rem 1.25rem; display: grid; gap: 1rem; align-content: start; grid-auto-rows: max-content; background: var(--paper); }
+@media (max-width: 900px) { .panel { border-left: 0; border-top: 1px solid var(--rule); } }
+.detail { border-bottom: 1px solid var(--rule); padding-bottom: 0.9rem; font-size: 0.9375rem; min-height: 6rem; }
+.detail h3 { font: 600 var(--step-1)/1.25 var(--body); margin: 0.3rem 0 0.35rem; }
+.detail .code { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; color: var(--ink-2); }
+.detail p { margin: 0 0 0.45rem; color: var(--ink-2); }
+.legend { display: grid; gap: 0.45rem; font-size: 0.875rem; }
+.legend .row { display: grid; grid-template-columns: 1.1rem minmax(0, 1fr); gap: 0.6rem; align-items: center; }
+.legend i { width: 1rem; height: 0.8rem; display: inline-block; border: 1.5px solid; }
+.legend .t { font: 500 0.75rem/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); margin-top: 0.4rem; }
+.toggles { display: grid; gap: 0.35rem; font-size: 0.875rem; }
+.toggles label { display: flex; gap: 0.5rem; align-items: center; cursor: pointer; }
+.toggles input { accent-color: var(--forest); margin: 0; }
+.leaflet-container { font: 400 0.8125rem/1.4 var(--body); background: var(--paper-2); }
+.leaflet-control-attribution { background: color-mix(in srgb, var(--paper) 85%, transparent) !important; color: var(--ink-2) !important; }
+.leaflet-control-attribution a { color: var(--ink-2) !important; }
+.leaflet-bar a { background: var(--paper) !important; color: var(--ink) !important; border-color: var(--rule) !important; }
+.map-wrap { position: relative; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; z-index: 500; pointer-events: none; font: 500 0.8125rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.lt { background: none; border: 0; box-shadow: none; padding: 0; font: 600 11px/1 var(--mono); color: var(--ink); text-shadow: 0 0 3px var(--paper), 0 0 3px var(--paper), 0 0 3px var(--paper); }
+.lt::before { display: none; }
+.zl { background: none; border: 0; box-shadow: none; padding: 0; font: 500 10px/1 var(--mono); color: var(--ink-2); letter-spacing: .04em; }
+.zl::before { display: none; }
+
+/* funnel */
+.funnel { list-style: none; padding: 0; margin: 0; display: grid; border-top: 1px solid var(--ink); }
+.funnel li { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 1.25rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+.funnel .num { font: 500 var(--step-2)/1 var(--display); font-variant-numeric: tabular-nums; text-align: right; }
+.funnel .num.minus { color: var(--olive); }
+.funnel strong { font-weight: 600; display: block; margin-bottom: 0.2rem; }
+.funnel span.d { color: var(--ink-2); font-size: 0.9375rem; }
+.labels-fig { margin: 0; border: 1px solid var(--rule); background: #fff; }
+.labels-fig img { display: block; width: 100%; height: auto; }
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">James Krauska <span>GIS</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="cs-hero">
+    <div class="wrap">
+      <a class="back" href="index.html#work">← All work</a>
+      <div class="meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 2rem">
+        <span class="label">Case study · in progress</span>
+        <span class="label">Planning · Land records · Python</span>
+        <span class="label">Town of Sheboygan · November 2026</span>
+      </div>
+      <h1>Playbird Rd: from farm field to neighborhood</h1>
+      <p class="lede">One made-up development on one real farm field, followed through every county and town office a GIS technician supports: site analysis, rezoning, land division, addressing, the county's books, services and the public parcel viewer. Real parcels, roads, zoning and rules; the developer, petition, plat and buildings are invented.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#ch2">Chapter 2: the hearing notice</a>
+        <a class="btn btn-ghost" href="https://github.com/krauskajames/krauskajames.github.io/tree/main/projects/zoning-notice">Code on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding-block: 0 clamp(3rem, 7vw, 5rem)">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:1.5rem">
+        <span class="label">The chapters</span>
+        <div>
+          <h2>Nine handoffs, one parcel</h2>
+          <p>Each chapter is finished work on its own and goes live here when it is done. The site is parcel 59024341550: about 31 acres zoned I-1 Light Industrial on the south side of Playbird Rd, between an industrial row, an apartment complex and a subdivision still being built out.</p>
+        </div>
+      </div>
+      <ol class="chapters">
+        <li><span class="n">00<em>Planned</em></span><strong>Why this site</strong><span class="d">A developer's screen of nearby parcels by size, zoning, sewer and road access.</span></li>
+        <li><span class="n">01<em>Planned</em></span><strong>Site analysis</strong><span class="d">Soils, slope from LiDAR, floodplain, wetlands, sewer and water mains, the future land use map.</span></li>
+        <li class="done"><span class="n">02<em>Live</em></span><strong><a href="#ch2">Rezoning: I-1 to PUD</a></strong><span class="d">The hearing notice packet: who must be told, and a tool that builds the list.</span></li>
+        <li><span class="n">03<em>Planned</em></span><strong>Land division</strong><span class="d">A preliminary plat drafted with COGO in a parcel fabric, checked against Town, county and City of Sheboygan review.</span></li>
+        <li><span class="n">04<em>Planned</em></span><strong>Site plan and 3D</strong><span class="d">Setbacks, building massing and rooftop solar.</span></li>
+        <li><span class="n">05<em>Planned</em></span><strong>Addresses and roads</strong><span class="d">Street names, address points by the grid, NG911 checks and the NENA schema.</span></li>
+        <li><span class="n">06<em>Planned</em></span><strong>Into the county's books</strong><span class="d">Parcel splits, a before/after change report and the statewide parcel submission.</span></li>
+        <li><span class="n">07<em>Planned</em></span><strong>Services</strong><span class="d">Fire and EMS drive times, and new residents added to the wards.</span></li>
+        <li><span class="n">08<em>Planned</em></span><strong>Public face</strong><span class="d">The new lots in a public parcel viewer, and a field inventory of hydrants and signs.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="ch2" style="padding-block: 0 clamp(2rem, 5vw, 3rem)">
+    <div class="wrap cs-body">
+      <span class="label">Chapter 02 · Rezoning</span>
+      <div class="prose">
+        <h2 style="font: 500 var(--step-3)/1.1 var(--display); margin: 0 0 1rem">Who has to be told</h2>
+        <p><strong>The petition (made up):</strong> a developer asks the Town of Sheboygan to rezone the field from I-1 Light Industrial to a Planned Unit Development: townhomes and apartments that continue the R-4 complex next door, a small commercial corner on Playbird Rd, and a stormwater pond and trail along the wooded south edge.</p>
+        <p><strong>The rules (real):</strong> the Town's zoning code (Ch. 335, Art. XII) asks for the names and addresses of every owner within <strong>200 ft</strong>, a plot plan at 1 in = 100 ft showing adjacent districts and uses, and written notice at least 10 days before the hearing to the clerk of any municipality within <strong>1,000 ft</strong>. The Plan Commission holds the hearing; the Town Board decides.</p>
+        <p>This is the request a planning office sends its GIS technician more than any other. I ran it by hand in ArcGIS Pro first, then wrote a Python toolbox that does it in one step and checked that both gave the same answer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-block: 0 clamp(2rem, 5vw, 3rem)">
+    <div class="wrap"><div class="tiles" id="tiles"></div></div>
+  </section>
+
+  <div class="explorer" id="explore">
+    <div class="wrap">
+      <div class="map-grid">
+        <div class="map-wrap"><div id="map" role="region" aria-label="Map of the 200 ft notice area around parcel 59024341550"></div><div class="loading" id="loading">Loading parcels…</div></div>
+        <aside class="panel">
+          <div class="detail" id="detail" aria-live="polite"><span class="code">NOTICE AREA</span><h3>Click a parcel</h3><p>Numbers are letter numbers: every parcel with the same number belongs to one owner and gets one letter. Owner names are left off this page.</p></div>
+          <div class="legend" id="legend"></div>
+          <div class="toggles">
+            <label><input type="checkbox" id="tZoning" checked> Zoning districts</label>
+            <label><input type="checkbox" id="tClerk" checked> 1,000 ft clerk notice line</label>
+          </div>
+        </aside>
+      </div>
+      <p class="map-note">Parcels: Sheboygan County Tax Parcels service. Zoning: Sheboygan County Planning zoning districts (Town of Sheboygan and Town of Mosel). Basemap: Esri World Light Gray Canvas. Downloaded November 13, 2026. Not an official notice.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">From 29 to 15</span>
+      <div class="prose">
+        <ol class="funnel">
+          <li><span class="num">29</span><span><strong>Parcels within 200 ft</strong><span class="d">Select By Location, "within a distance" of the subject parcel. The subject parcel counts: its owner is notified too.</span></span></li>
+          <li><span class="num minus">−1</span><span><strong>Set aside: no owner on record</strong><span class="d">One polygon has no owner, no municipality and no acreage: most likely a piece of the road. The tool lists it with the reason instead of printing a blank label, so someone checks it before mailing.</span></span></li>
+          <li><span class="num">16</span><span><strong>Owners on record</strong><span class="d">The other 28 parcels have 16 owner names between them. One developer holds 12 unbuilt subdivision lots, and the Town itself owns 2 parcels; each gets one letter.</span></span></li>
+          <li><span class="num minus">−1</span><span><strong>Same owner, two spellings</strong><span class="d">"… &amp; SONS CO LLC" and "… &amp; SONS COMPANY LLC" at one mailing address. Names and addresses are normalized (CO = COMPANY, &amp; = AND, County Road = County Rd) before comparing; near-misses that are not exact are listed for a person to decide.</span></span></li>
+          <li><span class="num">15</span><span><strong>Letters to owners</strong><span class="d">7 of them to absentee owners whose mailing address is somewhere else: apartment and lot owners, and businesses run from elsewhere. Their tenants hear about the hearing only if someone tells them.</span></span></li>
+          <li><span class="num">+1</span><span><strong>Letter to the Town of Mosel clerk</strong><span class="d">Playbird Rd is the town line. The parcels across the road are in the Town of Mosel, so its clerk gets written notice.</span></span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">The tool</span>
+      <div class="prose">
+        <p>An ArcGIS Pro Python toolbox (Pro 3.7.3, nothing to install beyond Pro). Give it a parcel layer, one or more parcel IDs and a notice distance.</p>
+        <ol class="steps">
+          <li><span><strong>Select.</strong> Every parcel within the distance, from the whole layer even if something else is selected, so it matches the hand method exactly.</span></li>
+          <li><span><strong>Clean.</strong> One letter per owner. Right-of-way and blank owners are set aside with a reason; spelling variants at one address are merged; look-alike names are listed in a review file instead of being merged.</span></li>
+          <li><span><strong>Flag.</strong> Absentee owners (mailing address differs from the parcel's address), the petitioner's own parcels, and owners with several parcels.</span></li>
+          <li><span><strong>Clerks.</strong> Any other municipality with land within 1,000 ft, read from the parcels' municipality field.</span></li>
+          <li><span><strong>Output.</strong> Avery 5160 label sheets, the mailing list and every parcel's letter number as CSV, a summary, and the notice map exported from a Pro layout at the scale the code asks for. Each notified parcel gets its letter number as a field, for labeling the map.</span></li>
+        </ol>
+        <p>The list logic is plain Python with tests, separate from the arcpy part, so it can be checked without ArcGIS. The tool's counts matched my hand run in Pro: 29 parcels, 17 owner rows, 15 letters, one clerk.</p>
+        <h3>Distance is an input, not a constant</h3>
+        <p>Before settling on Playbird Rd I read the rezoning sections of five Wisconsin codes. No two agree, which is why the tool takes the distance as a setting:</p>
+        <div class="table-scroll"><table class="compare">
+          <thead><tr><th>Place</th><th>Who decides</th><th class="num">Owner notice</th></tr></thead>
+          <tbody>
+            <tr class="here"><td>Town of Sheboygan<small>Owner list with the petition, 1 in = 100 ft plot plan</small></td><td>Plan Commission hearing, Town Board</td><td class="num">200 ft</td></tr>
+            <tr><td>Village of Random Lake<small>Protest by 20% of owners within 100 ft forces a three-fourths vote</small></td><td>Plan Commission hearing, Village Board</td><td class="num">200 ft</td></tr>
+            <tr><td>Village of Belgium<small>Petition lists owners within 300 ft; hearing notice goes to owners within 250 ft</small></td><td>Plan Commission, Village Board</td><td class="num">250 / 300 ft</td></tr>
+            <tr><td>St. Croix County<small>Town recommends first; notice published two weeks</small></td><td>Community Development Committee, County Board</td><td class="num">300 ft</td></tr>
+            <tr><td>City of Janesville<small>Also mails tenants adjoining or across the street</small></td><td>Plan Commission, City Council</td><td class="num">400 ft</td></tr>
+          </tbody>
+        </table></div>
+        <p class="map-note">Every one also requires written notice to the clerk of any municipality within 1,000 ft (Wis. Stat. § 62.23(7)(d) and the codes above). Read November 2026; codes change.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Labels</span>
+      <div class="prose">
+        <figure class="labels-fig"><img src="media/playbird-labels-madeup.webp" width="1275" height="1023" loading="lazy" alt="Top of an Avery 5160 label sheet produced by the tool, with made-up names and addresses"></figure>
+        <p class="map-note">The tool's label sheet, filled here with made-up names and addresses. First-last name order comes from the county's alternate owner name field, and ZIP+4 is added when the record has it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">Found along the way</span>
+      <div class="prose">
+        <ul>
+          <li><strong>Two towns, one hearing.</strong> Playbird Rd is the line between the Town of Sheboygan and the Town of Mosel. A rezoning on one side has to be noticed on the other.</li>
+          <li><strong>A city's reach.</strong> The county's extraterritorial jurisdiction layer puts the field inside the City of Sheboygan's ETJ, so the plat in chapter 3 will likely need city review as well as the Town's and the county's.</li>
+          <li><strong>The petitioner gets a letter.</strong> Owners of land inside the petition are on the list too; the tool marks them so staff can treat that letter differently.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">My role</span>
+      <div class="prose">
+        <p>I chose the site and the scenario after comparing candidate parcels in four municipalities, read the ordinances, ran the selection by hand in ArcGIS Pro, checked the tool's results against it, and made the notice map layout. The toolbox and this page were written with AI-assisted coding (Claude).</p>
+        <ul class="chips" aria-label="Tools">
+          <li>ArcGIS Pro 3.7.3</li><li>Python · arcpy</li><li>ArcGIS REST API</li><li>Leaflet</li><li>Wisconsin zoning law</li>
+        </ul>
+        <h3>Data</h3>
+        <ul>
+          <li>Sheboygan County Land Information: Tax Parcels (public ArcGIS REST service), November 13, 2026.</li>
+          <li>Sheboygan County Planning: Zoning districts and Extraterritorial Jurisdiction zones, November 13, 2026.</li>
+          <li>Town of Sheboygan Code, Ch. 335 (Zoning), Art. IV and XII.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="scalebar" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><i></i></div>
+      <div class="ticks label"><span>0</span><span>100</span><span>200 ft</span></div>
+    </div>
+    <span class="label">NAD83(HARN) / WISCRS Sheboygan · © 2026 James Krauska</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+'use strict';
+const $ = (id) => document.getElementById(id);
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const dark = () => document.documentElement.dataset.theme === 'dark' || (document.documentElement.dataset.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+const TYPES = { business: ['Business or LLC', '--c-biz'], individual: ['Individual', '--c-ind'], government: ['Government', '--c-gov'], none: ['No owner on record', '--c-x'] };
+const ZCOL = (z) => z.startsWith('R') ? '#7fa35a' : z.startsWith('I') ? '#7d8fa8' : z.startsWith('B') ? '#c98a4a' : z.startsWith('A') ? '#c7b85a' : z === 'PUD' ? '#9b6fb0' : '#999';
+const title = (s) => s.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+
+Promise.all(['summary.json', 'parcels.geojson', 'buffers.geojson', 'zoning.geojson'].map(f => fetch('data/playbird/' + f).then(r => r.json())))
+  .then(([S, P, B, Z]) => init(S, P, B, Z))
+  .catch(e => { $('loading').textContent = 'Could not load data'; console.error(e); });
+
+function init(S, P, B, Z) {
+  $('tiles').innerHTML = [
+    [S['parcels in notice area'], 'Parcels within 200 ft', 'including the subject parcel'],
+    [String(S['owner name rows as recorded'] - S['parcels excluded']), 'Owners on record', '12 lots belong to one developer'],
+    [S['letters to owners'], 'Letters to owners', `${S['absentee owners']} to absentee owners`],
+    ['1', 'Clerk notice', title(S['clerks to notify (1,000 ft)']) + ', across Playbird Rd'],
+  ].map(([n, l, c]) => `<div class="tile"><span class="label">${l}</span><span class="num">${n}</span><span class="ctx">${c}</span></div>`).join('');
+
+  const map = L.map('map', { zoomSnap: 0.25, scrollWheelZoom: false });
+  const esri = (name) => `https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${name}/MapServer/tile/{z}/{y}/{x}`;
+  const ATTR = 'Esri, HERE, Garmin, © OpenStreetMap contributors · Parcels and zoning: Sheboygan County';
+  let tiles = L.tileLayer(esri(dark() ? 'World_Dark_Gray_Base' : 'World_Light_Gray_Base'), { maxZoom: 19, maxNativeZoom: 16, attribution: ATTR }).addTo(map);
+
+  const zoning = L.geoJSON(Z, { interactive: false, style: f => ({ color: ZCOL(f.properties.z), weight: 0.6, fillColor: ZCOL(f.properties.z), fillOpacity: 0.16, opacity: 0.5 }) }).addTo(map);
+  const ctx = L.geoJSON({ type: 'FeatureCollection', features: P.features.filter(f => f.properties.role === 'context') },
+    { interactive: false, style: () => ({ color: css('--ink-2'), weight: 0.7, opacity: 0.55, fill: false }) }).addTo(map);
+  const ring = L.geoJSON({ type: 'FeatureCollection', features: B.features.filter(f => f.properties.kind === 'clerk1000') },
+    { interactive: false, style: () => ({ color: css('--ink'), weight: 1.2, dashArray: '6 5', fill: false, opacity: 0.7 }) }).addTo(map);
+  L.geoJSON({ type: 'FeatureCollection', features: B.features.filter(f => f.properties.kind === 'notice200') },
+    { interactive: false, style: () => ({ color: css('--forest'), weight: 1.5, fillColor: css('--forest'), fillOpacity: 0.08 }) }).addTo(map);
+
+  const sel = P.features.filter(f => f.properties.role !== 'context');
+  let active = null;
+  const styleOf = (p) => p.role === 'subject'
+    ? { color: css('--c-subject'), weight: 3, fillColor: css('--c-subject'), fillOpacity: 0.12 }
+    : { color: css(TYPES[p.owner_type || 'none'][1]), weight: 1.4, fillColor: css(TYPES[p.owner_type || 'none'][1]), fillOpacity: 0.32, dashArray: p.role === 'excluded' ? '4 3' : null };
+  const parcels = L.geoJSON({ type: 'FeatureCollection', features: sel }, {
+    style: f => styleOf(f.properties),
+    onEachFeature: (f, lyr) => {
+      lyr.on('click', () => {
+        if (active) parcels.resetStyle(active);
+        active = lyr; lyr.setStyle({ weight: 3.5, color: css('--ink') });
+        const p = f.properties, t = TYPES[p.owner_type || 'none'][0];
+        let h = `<span class="code">${p.id} · ${(p.muni || 'NO MUNICIPALITY').toUpperCase()}</span>`;
+        if (p.role === 'excluded') h += `<h3>Set aside</h3><p>${p.why}</p>`;
+        else {
+          h += `<h3>${p.role === 'subject' ? 'Subject parcel · ' : ''}Letter ${p.letter}</h3><p>${t}${p.owner_parcels > 1 ? `, owns ${p.owner_parcels} parcels in the notice area: one letter` : ''}.</p>`;
+          if (p.absentee) h += `<p>Absentee owner: the mailing address is not this parcel.</p>`;
+          if (p.merged) h += `<p>Recorded under two spellings of the same name; merged into one letter.</p>`;
+          if (p.role === 'subject') h += `<p>About ${p.acres} acres, I-1 Light Industrial. The petition (made up) asks for PUD.</p>`;
+          if (p.muni && p.muni !== 'Town Of Sheboygan') h += `<p>Across the town line: this owner is in ${p.muni.replace('Town Of', 'the Town of')}.</p>`;
+        }
+        $('detail').innerHTML = h;
+      });
+    }
+  }).addTo(map);
+
+  // letter numbers
+  const labels = L.layerGroup().addTo(map);
+  sel.forEach(f => { if (f.properties.letter && f.properties.lp) L.tooltip({ permanent: true, direction: 'center', className: 'lt', interactive: false }).setLatLng(f.properties.lp).setContent(String(f.properties.letter)).addTo(labels); });
+
+  map.fitBounds(L.geoJSON(B.features.filter(f => f.properties.kind === 'notice200')).getBounds().pad(0.12));
+  $('loading').remove();
+
+  $('legend').innerHTML = `<span class="t">Notice area</span>
+    <div class="row"><i style="border-color:${css('--c-subject')};background:color-mix(in srgb, ${css('--c-subject')} 12%, transparent)"></i>Subject parcel</div>
+    ${Object.entries(TYPES).map(([k, [l, v]]) => `<div class="row"><i style="border-color:${css(v)};background:color-mix(in srgb, ${css(v)} 32%, transparent)${k === 'none' ? ';border-style:dashed' : ''}"></i>${l}</div>`).join('')}
+    <div class="row"><i style="border-color:${css('--forest')};background:color-mix(in srgb, ${css('--forest')} 8%, transparent)"></i>200 ft notice buffer</div>
+    <span class="t">Zoning</span>
+    ${[['R', 'Residential (R-1, R-4)'], ['I', 'Industrial (I-1)'], ['B', 'Business (B-2)'], ['A', 'Agricultural'], ['PUD', 'Planned Unit Development']].map(([z, l]) => `<div class="row"><i style="border-color:${ZCOL(z)};background:color-mix(in srgb, ${ZCOL(z)} 30%, transparent)"></i>${l}</div>`).join('')}`;
+
+  $('tZoning').addEventListener('change', e => e.target.checked ? zoning.addTo(map).bringToBack() : map.removeLayer(zoning));
+  $('tClerk').addEventListener('change', e => e.target.checked ? ring.addTo(map) : map.removeLayer(ring));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    map.removeLayer(tiles); tiles = L.tileLayer(esri(dark() ? 'World_Dark_Gray_Base' : 'World_Light_Gray_Base'), { maxZoom: 19, maxNativeZoom: 16, attribution: ATTR }).addTo(map); tiles.bringToBack();
+    parcels.eachLayer(l => l.setStyle(styleOf(l.feature.properties)));
+  });
+}
+})();
+</script>
+</body>
+</html>

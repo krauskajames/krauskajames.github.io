@@ -1,0 +1,18 @@
+{
+ "subject parcel(s)": "59024341550",
+ "hearing held by": "TOWN OF SHEBOYGAN",
+ "notice distance": "200 Feet",
+ "municipal clerk distance": "1000 Feet",
+ "parcel layer": "https://gis2.sheboygancounty.com/publicgis1/rest/services/LandInformation/TaxParcels/FeatureServer/0",
+ "run": "2026-11-13 15:33",
+ "ArcGIS Pro": "3.7.3",
+ "parcels in notice area": "29",
+ "owner name rows as recorded": "17",
+ "parcels excluded": "1",
+ "letters to owners": "15",
+ "owners with several parcels": "3",
+ "letters with merged spellings": "1",
+ "absentee owners": "7",
+ "pairs to review": "0",
+ "clerks to notify (1,000 ft)": "TOWN OF MOSEL"
+}

@@ -10,7 +10,7 @@ Written for **ArcGIS Pro 3.7.3**. No extra installs: the toolbox uses arcpy and 
 | 3 | Make a notice map layout (once) | 20 min | ✅ Nov 13 |
 | 4 | Run the tool on 59024341550 | 10 min | ✅ Nov 13 |
 | 5 | Check the results against the hand run | 15 min | ✅ 29 parcels, 15 letters, Town of Mosel |
-| 6 | Send me screenshots and numbers | 10 min | |
+| 6 | Send me screenshots and numbers | 10 min | ✅ Nov 13, on playbird.html |
 
 ## 2. Get the toolbox
 
