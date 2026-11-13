@@ -135,24 +135,48 @@ def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, z
 
     y = PAGE_H - 0.9
     try:
-        _text(aprx, lyt, PANEL_X, y, title, 30, "Title"); y -= 0.75
-        _text(aprx, lyt, PANEL_X, y, "Parcel %s · %s" % (meta.get("subject", ""), meta.get("muni", "").title().replace(" Of ", " of ")), 16, "Subtitle"); y -= 0.6
+        _text(aprx, lyt, PANEL_X, y, title, 34, "Title"); y -= 0.85
+        _text(aprx, lyt, PANEL_X, y, "Parcel %s · %s" % (meta.get("subject", ""), meta.get("muni", "").title().replace(" Of ", " of ")), 18, "Subtitle"); y -= 0.7
         if scenario:
-            _text(aprx, lyt, PANEL_X, y, scenario, 12, "Scenario"); y -= 0.5
-        lines = ["%s parcels within %s" % (counts["parcels_in_notice_area"], meta.get("distance", "")),
+            _text(aprx, lyt, PANEL_X, y, scenario, 14, "Scenario"); y -= 0.8
+        dist_txt = meta.get("distance", "").replace("Feet", "ft").replace("FeetUS", "ft")
+        lines = ["%s parcels within %s" % (counts["parcels_in_notice_area"], dist_txt),
                  "%s letters to owners" % counts["letters_to_owners"],
                  "Clerk notice (1,000 ft): %s" % (", ".join(c.title().replace(" Of ", " of ") for c in clerks) or "none")]
-        _text(aprx, lyt, PANEL_X, y, "\n".join(lines), 12, "Counts"); y -= 1.4
+        _text(aprx, lyt, PANEL_X, y, "\n".join(lines), 14, "Counts"); y -= 1.3
     except Exception as e:
         _warn("title text", e)
     try:
-        leg = lyt.createMapSurroundElement(arcpy.Point(PANEL_X, y - 6.0), "LEGEND", mf, None, "Legend")
-        leg.elementHeight = 6.0
+        leg = lyt.createMapSurroundElement(arcpy.Point(PANEL_X, y - 7.0), "LEGEND", mf, None, "Legend")
+        try:
+            leg.fittingStrategy = "AdjustFrame"
+        except Exception:
+            pass
+        for it in list(leg.items):
+            if it.name in ("Parcels", "1,000 ft municipal clerk notice"):
+                try:
+                    leg.removeItem(it)        # parcels need no legend; the 1,000 ft line is off this sheet
+                except Exception:
+                    pass
         for it in leg.items:
             try:
                 it.showVisibleFeatures = True   # only zoning classes that are on the map
             except Exception:
                 pass
+        try:
+            cim = lyt.getDefinition("V3")
+            for e2 in cim.elements:
+                if e2.name == "Legend":
+                    for li in e2.items:
+                        li.showHeading = False        # drop the "ZoneClass" field heading
+                        try:
+                            li.labelSymbol.symbol.height = 14
+                            li.layerNameSymbol.symbol.height = 16
+                        except Exception:
+                            pass
+            lyt.setDefinition(cim)
+        except Exception as e:
+            _warn("legend text size", e)
     except Exception as e:
         _warn("legend", e)
     try:
@@ -176,11 +200,11 @@ def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, z
     except Exception as e:
         _warn("scale bar", e)
     try:
-        note = ("Scale 1 in = %d ft at 34 x 22 in.\n"
-                "Data: Sheboygan County tax parcels and zoning districts, %s.\n"
+        note = ("Scale 1 in = %d ft at 34 x 22 in.\nThe 1,000 ft clerk-notice line is outside this view.\n"
+                "Data: Sheboygan County parcels and zoning, %s.\n"
                 "Made with the Zoning Hearing Notice Packet toolbox.\n"
                 "Example for a portfolio. Not an official notice.") % (round((scale or 1200) / 12.0), meta.get("run", ""))
-        _text(aprx, lyt, PANEL_X, 2.6, note, 10, "Sources")
+        _text(aprx, lyt, PANEL_X, 2.4, note, 12, "Sources")
     except Exception as e:
         _warn("source note", e)
 
