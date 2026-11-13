@@ -6,10 +6,10 @@ Written for **ArcGIS Pro 3.7.3**. No extra installs: the toolbox uses arcpy and 
 | # | Task | Time | Done |
 |---|---|---|---|
 | 1 | Hand run: 200 ft selection and owner count | 20 min | ✅ Nov 8: 29 parcels, 17 owner rows |
-| 2 | Get the toolbox onto your laptop | 5 min | |
-| 3 | Make a notice map layout (once) | 20 min | |
-| 4 | Run the tool on 59024341550 | 10 min | |
-| 5 | Check the results against the hand run | 15 min | |
+| 2 | Get the toolbox onto your laptop | 5 min | ✅ Nov 11 |
+| 3 | Make a notice map layout (once) | 20 min | ✅ Nov 13 |
+| 4 | Run the tool on 59024341550 | 10 min | ✅ Nov 13 |
+| 5 | Check the results against the hand run | 15 min | ✅ 29 parcels, 15 letters, Town of Mosel |
 | 6 | Send me screenshots and numbers | 10 min | |
 
 ## 2. Get the toolbox
