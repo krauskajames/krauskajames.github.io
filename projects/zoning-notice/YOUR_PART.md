@@ -11,6 +11,7 @@ Written for **ArcGIS Pro 3.7.3**. No extra installs: the toolbox uses arcpy and 
 | 4 | Run the tool on 59024341550 | 10 min | ✅ Nov 13 |
 | 5 | Check the results against the hand run | 15 min | ✅ 29 parcels, 15 letters, Town of Mosel |
 | 6 | Send me screenshots and numbers | 10 min | ✅ Nov 13, on playbird.html |
+| 7 | Re-run with **Build the notice map layout for me** checked | 5 min | |
 
 ## 2. Get the toolbox
 
@@ -25,6 +26,8 @@ Or download `ZoningNotice.pyt` and `notice_core.py` from `projects/zoning-notice
 In Pro: **Catalog pane → Toolboxes → right-click → Add Toolbox →** `ZoningNotice.pyt`.
 
 ## 3. Notice map layout (once)
+
+*Since Nov 13 the tool can build this for you: leave **Build the notice map layout for me** checked and it makes a new map and an ANSI D layout called "Notice Map (auto)" (zoning underneath, red subject outline, letter labels, legend, north arrow, scale bar, sources) and exports `notice_map.pdf`. The manual steps below are only for your own layout.*
 
 The Town's petition asks for a plot plan at **1 in = 100 ft** (1:1,200). The notice area is about 1,500 ft across, so that scale needs a big sheet.
 

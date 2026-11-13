@@ -9,7 +9,6 @@ Page: ANSI D landscape (34 x 22 in). Map frame 26 x 21 in on the left; at 1:1,20
 (1 in = 100 ft, the Town of Sheboygan plot plan scale) it shows 2,600 x 2,100 ft.
 Side panel on the right: title, scenario, counts, legend, north arrow, scale bar, sources.
 """
-import os
 import arcpy
 
 PAGE_W, PAGE_H = 34.0, 22.0
