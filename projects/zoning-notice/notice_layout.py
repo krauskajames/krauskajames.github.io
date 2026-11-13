@@ -38,7 +38,7 @@ def _simple(lyr, fill, outline, width):
     lyr.symbology = sym
 
 
-def _labels(lyr, expression, where=None):
+def _labels(lyr, expression, where=None, size=None):
     lc = lyr.listLabelClasses()[0]
     lc.expressionEngine = "Arcade"
     lc.expression = expression
@@ -46,12 +46,17 @@ def _labels(lyr, expression, where=None):
         lc.SQLQuery = where
     lc.visible = True
     lyr.showLabels = True
+    if size:
+        cim = lyr.getDefinition("V3")
+        sym = cim.labelClasses[0].textSymbol.symbol
+        sym.height = size
+        sym.symbol.symbolLayers[0].color.values = [20, 20, 20, 100]
+        lyr.setDefinition(cim)
 
 
-def _text(lyt, x, y, text, size, name):
-    el = lyt.createTextElement(arcpy.Point(x, y), text, "POINT", name)
-    el.textSize = size
-    return el
+def _text(aprx, lyt, x, y, text, size, name):
+    # In Pro 3.x text and graphics are created on the project, with the layout as the container.
+    return aprx.createTextElement(lyt, arcpy.Point(x, y), "POINT", text, size, name=name)
 
 
 def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, zoning_url=ZONING_URL,
@@ -78,8 +83,8 @@ def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, z
         sym.updateRenderer("UniqueValueRenderer")
         sym.renderer.fields = ["ZoneClass"]
         z.symbology = sym
-        z.transparency = 65
-        _labels(z, "$feature.ZoneClass")
+        z.transparency = 70
+        _labels(z, "$feature.ZoneClass", size=11)
     except Exception as e:
         _warn("zoning layer", e)
     layers = {}
@@ -93,7 +98,7 @@ def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, z
         except Exception as e:
             _warn("adding " + label, e)
     style = {"parcels": (NONE, GRAY, 0.4), "clerk_buffer": (NONE, [60, 60, 60, 100], 1.5),
-             "notice_buffer": (NONE, FOREST, 2.5), "notified": ([127, 176, 105, 45], FOREST, 0.8),
+             "notice_buffer": (NONE, FOREST, 2.5), "notified": (NONE, FOREST, 1.6),
              "subject": (NONE, RED, 4)}
     for key, (fill, outline, width) in style.items():
         if key in layers:
@@ -101,8 +106,14 @@ def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, z
                 _simple(layers[key], fill, outline, width)
             except Exception as e:
                 _warn("symbol for " + key, e)
+    for key in ("parcels", "subject", "notice_buffer", "clerk_buffer"):
+        if key in layers:
+            try:
+                layers[key].showLabels = False      # the county service labels parcel IDs by default
+            except Exception:
+                pass
     try:
-        _labels(layers["notified"], "$feature.LETTER", "LETTER IS NOT NULL")
+        _labels(layers["notified"], "$feature.LETTER", "LETTER IS NOT NULL", size=18)
     except Exception as e:
         _warn("letter labels", e)
 
@@ -124,19 +135,24 @@ def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, z
 
     y = PAGE_H - 0.9
     try:
-        _text(lyt, PANEL_X, y, title, 30, "Title"); y -= 0.75
-        _text(lyt, PANEL_X, y, "Parcel %s · %s" % (meta.get("subject", ""), meta.get("muni", "").title()), 16, "Subtitle"); y -= 0.6
+        _text(aprx, lyt, PANEL_X, y, title, 30, "Title"); y -= 0.75
+        _text(aprx, lyt, PANEL_X, y, "Parcel %s · %s" % (meta.get("subject", ""), meta.get("muni", "").title().replace(" Of ", " of ")), 16, "Subtitle"); y -= 0.6
         if scenario:
-            _text(lyt, PANEL_X, y, scenario, 12, "Scenario"); y -= 0.5
+            _text(aprx, lyt, PANEL_X, y, scenario, 12, "Scenario"); y -= 0.5
         lines = ["%s parcels within %s" % (counts["parcels_in_notice_area"], meta.get("distance", "")),
                  "%s letters to owners" % counts["letters_to_owners"],
-                 "Clerk notice (1,000 ft): %s" % (", ".join(c.title() for c in clerks) or "none")]
-        _text(lyt, PANEL_X, y, "\n".join(lines), 12, "Counts"); y -= 1.4
+                 "Clerk notice (1,000 ft): %s" % (", ".join(c.title().replace(" Of ", " of ") for c in clerks) or "none")]
+        _text(aprx, lyt, PANEL_X, y, "\n".join(lines), 12, "Counts"); y -= 1.4
     except Exception as e:
         _warn("title text", e)
     try:
         leg = lyt.createMapSurroundElement(arcpy.Point(PANEL_X, y - 6.0), "LEGEND", mf, None, "Legend")
         leg.elementHeight = 6.0
+        for it in leg.items:
+            try:
+                it.showVisibleFeatures = True   # only zoning classes that are on the map
+            except Exception:
+                pass
     except Exception as e:
         _warn("legend", e)
     try:
@@ -149,6 +165,14 @@ def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, z
         sb = aprx.listStyleItems("ArcGIS 2D", "SCALE_BAR", "Alternating Scale Bar 1")
         el = lyt.createMapSurroundElement(arcpy.Point(PANEL_X + 1.6, 4.4), "SCALE_BAR", mf, sb[0] if sb else None, "Scale Bar")
         el.elementWidth = 4.5
+        cim = lyt.getDefinition("V3")
+        for e2 in cim.elements:
+            if e2.name == "Scale Bar":
+                e2.units = {"uwkid": 9003}        # US survey feet
+                e2.unitLabel = "Feet"
+                e2.divisions = 2
+                e2.subdivisions = 0
+        lyt.setDefinition(cim)
     except Exception as e:
         _warn("scale bar", e)
     try:
@@ -156,7 +180,7 @@ def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, z
                 "Data: Sheboygan County tax parcels and zoning districts, %s.\n"
                 "Made with the Zoning Hearing Notice Packet toolbox.\n"
                 "Example for a portfolio. Not an official notice.") % (round((scale or 1200) / 12.0), meta.get("run", ""))
-        _text(lyt, PANEL_X, 2.6, note, 10, "Sources")
+        _text(aprx, lyt, PANEL_X, 2.6, note, 10, "Sources")
     except Exception as e:
         _warn("source note", e)
 
