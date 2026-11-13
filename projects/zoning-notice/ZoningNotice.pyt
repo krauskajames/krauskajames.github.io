@@ -74,7 +74,13 @@ class NoticePacket:
                 parameterType="Optional", direction="Input")
         scale = P(name="map_scale", displayName="Notice map scale 1:", datatype="GPLong", parameterType="Optional", direction="Input")
         scale.value = 1200   # 1 in = 100 ft
-        params = [parcels, pid, subj, dist, mdist, home, out, lay, scale]
+        build = P(name="build_map", displayName="Build the notice map layout for me", datatype="GPBoolean",
+                  parameterType="Optional", direction="Input")
+        build.value = True
+        scen = P(name="scenario", displayName="Scenario line for the map (optional)", datatype="GPString",
+                 parameterType="Optional", direction="Input")
+        scen.value = "Example petition: rezone from I-1 Light Industrial to PUD"
+        params = [parcels, pid, subj, dist, mdist, home, out, build, scen, lay, scale]
         for name, label, key in FIELD_PARAMS:
             f = P(name=name, displayName=label, datatype="Field", parameterType="Optional", direction="Input",
                   category="Field names")
@@ -97,6 +103,10 @@ class NoticePacket:
         try:
             layouts = [l.name for l in arcpy.mp.ArcGISProject("CURRENT").listLayouts()]
             p["layout"].filter.list = layouts
+        except Exception:
+            pass
+        try:
+            p["layout"].enabled = not p["build_map"].value
         except Exception:
             pass
 
@@ -138,8 +148,10 @@ class NoticePacket:
         subject_fc = os.path.join(gdb, "zn_subject")
         buffer_fc = os.path.join(gdb, "zn_notice_buffer")
         notified_fc = os.path.join(gdb, "zn_notified_parcels")
+        clerk_fc = os.path.join(gdb, "zn_clerk_buffer")
         arcpy.conversion.ExportFeatures(subj_lyr, subject_fc)
         arcpy.analysis.PairwiseBuffer(subject_fc, buffer_fc, dist, dissolve_option="ALL")
+        arcpy.analysis.PairwiseBuffer(subject_fc, clerk_fc, mdist, dissolve_option="ALL")
 
         # 1. Notice area: same as Select By Location "within a distance" by hand.
         arcpy.management.SelectLayerByLocation(all_lyr, "WITHIN_A_DISTANCE", subject_fc, dist, "NEW_SELECTION")
@@ -189,7 +201,21 @@ class NoticePacket:
                 m.addDataFromPath(fc)
         except Exception as e:
             arcpy.AddWarning("Could not add layers to the map: %s" % e)
-        if p["layout"].valueAsText:
+        if p["build_map"].value:
+            try:
+                import notice_layout
+                importlib.reload(notice_layout)
+                pdf = notice_layout.build(
+                    aprx, {"subject": subject_fc, "notice_buffer": buffer_fc, "clerk_buffer": clerk_fc, "notified": notified_fc},
+                    src, res["counts"], {"subject": ", ".join(subject_ids), "muni": home, "distance": dist.replace("FeetUS", "ft"),
+                                         "run": meta["run"][:10]},
+                    clerks, os.path.join(out_dir, "notice_map.pdf"), p["map_scale"].value or 0,
+                    scenario=p["scenario"].valueAsText or "")
+                files.append(pdf)
+                arcpy.AddMessage("Notice map: new map and layout 'Notice Map (auto)' in the project; PDF exported.")
+            except Exception as e:
+                arcpy.AddWarning("Notice map not built: %s" % e)
+        elif p["layout"].valueAsText:
             try:
                 lay = aprx.listLayouts(p["layout"].valueAsText)[0]
                 mf = lay.listElements("MAPFRAME_ELEMENT")[0]
