@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 12, 2026 (synced the live pages: Drone 3D Captures (item 11 done), the MKE Airport page with its new radar homepage card, and the AI Use Disclosure; item 1 done: the Winnebago ArcGIS Online dashboard is public and embedded on the page; added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 13, 2026 (item 3 in progress: quotes from Jonathon Stippich and Ryan Wallin are live under their roles in Experience; added the PreGISP exam to Housekeeping; earlier, Nov 12: synced the live pages: Drone 3D Captures (item 11 done), the MKE Airport page with its new radar homepage card, and the AI Use Disclosure; item 1 done: the Winnebago ArcGIS Online dashboard is public and embedded on the page; added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -54,6 +54,7 @@ Each idea gets two scores from 1 to 5:
 | Field Season 2025 page (Restoring Lands) | ✅ | Map gallery, photo-point slider, fall photo map |
 | Drone 3D Captures page (North Point Water Tower and other Milwaukee splats) | ✅ | Interactive Gaussian splat viewer and homepage card (item 11) |
 | MKE Airport Asset Database page and radar card | ✅ | SQL Server spatial database, ArcGIS dashboard, Survey123 inspection loop and Power BI report. Homepage card added Nov 12: the airport's footprints on a radar scope, with a sweep turning about the control tower and the eight sample inspection points flashing red as it passes (built by projects/mke-airport/build_card.py) |
+| Employer quotes in Experience (item 3) | 🔧 | PX Design and Restoring Lands live Nov 13; The Wellness Spa still to ask |
 | AI Use Disclosure page | ✅ | Linked from the homepage and from each page's "Built with" line |
 
 ---
@@ -74,7 +75,7 @@ Each idea gets two scores from 1 to 5:
 | 43 | Public parcel viewer (Experience Builder) (ch. 8 of 46) | 5 | 4 | 4.6 | 💡 |
 | 44 | Field Maps asset inventory, collected yourself (ch. 8 of 46) | 5 | 4 | 4.6 | 💡 |
 | 49 | Shoreland permit: application to inspection (pipeline) | 5 | 4 | 4.6 | 💡 |
-| 3 | Employer quotes and references | 4 | 5 | 4.4 | 🔜 |
+| 3 | Employer quotes and references | 4 | 5 | 4.4 | 🔧 |
 | 45 | PLSS section map book (Pro Map Series) (ch. 6 of 46) | 4 | 5 | 4.4 | 💡 |
 | 4 | Parcel and NG911 data QA toolkit (with PostGIS) | 5 | 3 | 4.2 | 🔧 |
 | 5 | ~~Geodatabase and SQL project~~ (merged into item 4) | | | | ➡️ |
@@ -147,7 +148,10 @@ Each idea gets two scores from 1 to 5:
 - **What:** Two or three short quotes from people who worked with you, shown in About or Experience: The Wellness Spa owner or manager, Restoring Lands supervisor, and your boss at PX Design if he is comfortable being quoted without project details.
 - **Why:** Every hiring manager in the r/gis threads said soft skills decide the final pick. Someone else saying it beats you saying it.
 - **Need:** Ask for a LinkedIn recommendation or a two-sentence quote; get permission to use their name and title.
-- **Next step:** Message The Wellness Spa contact this week.
+- **Status:** 🔧 Two of three live (Nov 13). Each quote sits under its role in Experience, styled as a pull quote with an olive rule:
+  - Jonathon Stippich, CEO, PX Design (approved)
+  - Ryan Wallin, Stewardship Director, Restoring Lands (approved Nov 13)
+- **Next step:** Ask Ella Adams (The Wellness Spa manager) for a two-sentence quote, then add it under the Wellness Spa role.
 
 ### 4. Parcel and NG911 data QA toolkit, with a PostGIS database · E5 F3 · 4.2
 - **What:** The parcel data pipeline, in five parts:
@@ -606,4 +610,5 @@ Skills that remote sensing and imagery postings ask for but that aren't on the r
 | Decide on repo privacy (GitHub Pro, or confirm a public repo is fine with your boss) | 💡 | The old video and earlier "PX Duct Designer" wording remain in the repo history |
 | Keep the resume and Work Experience Repository in sync with the site | 🔧 | Wellness Spa and DuctBuilder updates done |
 | Interview prep tracker (GIS_Candidate_Standout_Tracker.xlsx) | 🔧 | In Documents\Claude outputs |
+| PreGISP exam (earns the GISP-E) | 💡 | Eligible as a Dec 2025 grad. Next exam April 19–26, 2027; register by April 5, 2027. The GISP-E cuts the full GISP experience requirement from 4 years to 3 (gisci.org/PreGISP) |
 | Separate remote sensing version of the resume | 💡 | Pull from the Work Experience Repository's "remote sensing keywords" section; add skills from the table above as items finish |
