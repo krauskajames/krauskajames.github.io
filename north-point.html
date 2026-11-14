@@ -281,6 +281,29 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
     </div>
   </section>
 
+  <section id="print">
+    <style>
+      .print-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 18rem); gap: 1.5rem 2.5rem; align-items: start; }
+      .print-fig { margin: 0; border: 1px solid var(--rule); background: var(--paper-2); }
+      .print-fig img { display: block; width: 100%; height: auto; }
+      .print-fig figcaption { font-size: 0.875rem; color: var(--ink-2); padding: 0.65rem 0.8rem; border-top: 1px solid var(--rule); background: var(--paper); }
+      @media (max-width: 860px) { .print-grid { grid-template-columns: 1fr; } .print-fig { max-width: 20rem; } }
+    </style>
+    <div class="wrap cs-body">
+      <span class="label">Off the screen</span>
+      <div class="print-grid">
+        <div class="prose">
+          <p>The same capture also works as a physical object. I turned the North Point Water Tower model into a printable solid and printed it on my Bambu Lab P2S.</p>
+          <p>The print keeps the Gothic base, the corner pinnacles and the lantern with its spire, which shows the drone and ground photos captured the tower's shape and not just its colour.</p>
+        </div>
+        <figure class="print-fig">
+          <img src="media/north-point/tower-print.webp" width="700" height="1400" loading="lazy" alt="A white 3D print of the North Point Water Tower standing on a gridded cutting mat: a square Gothic base with corner pinnacles, a tall tapering shaft, and a lantern topped by a spire.">
+          <figcaption>The North Point Water Tower, 3D printed from the drone capture.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
 <!-- data-flow:start -->
   <section id="data-flow">
     <style>
