@@ -10,9 +10,9 @@ Written for **ArcGIS Pro 3.7.3** (your version). It reuses what you learned in t
 |---|---|---|---|
 | 1 | Read the rules and fill in the rules table | 1–1.5 h | |
 | 2 | Find the section, quarter and the two monuments | 20 min | |
-| 3 | Sketch the layout (blocks, streets, outlot) | 30–45 min | |
+| 3 | Sketch the layout (blocks, streets, outlots) from concept 2 | 45 min | |
 | 4 | Draft the boundary in the fabric | 30 min | |
-| 5 | Draft the streets | 1–1.5 h | |
+| 5 | Draft the streets, including curves | 1.5–2.5 h | |
 | 6 | Divide the blocks into lots | 1–2 h | |
 | 7 | Check it: closure, areas, frontage, gaps | 30 min | |
 | 8 | Lot table | 20 min | |
@@ -61,17 +61,21 @@ Open both tie sheets and write down the coordinates they list (they should match
 
 ## 3. Sketch the layout
 
-Start from `ch3_concept_sketch.png` (made up, not to scale):
-- **Street A:** from Playbird Rd south into the site.
-- **Street B:** east–west, with **stubs** to the west line and the east line so future streets can connect. Most codes want streets continued to the edge of the tract.
-- **C1 commercial:** about 3 ac on Playbird Rd, at the west end.
-- **Block 1:** apartment lots next to the existing R-4 apartments.
-- **Blocks 2 and 3:** townhome lots.
-- **Outlot 1:** stormwater pond and trail along the wooded south edge.
+Start from `ch3_concept2.png` (made up, drawn to scale on the real outline). It borrows the pattern of the North Town development just south, where buildings front the streets and the parking sits behind them:
+- **Boulevard:** a divided entry from Playbird Rd (about 90 ft ROW with a planted median), centered on the field.
+- **Commons Loop:** a loop street (66 ft ROW) around an oval green, "The Commons," with a pavilion. It's the center of the neighborhood and the view down the boulevard.
+- **Street B:** gently curving east–west from the loop to the west and east lines, with **stubs** at both edges for future connections.
+- **Mixed use:** two L-shaped buildings framing the boulevard on Playbird Rd (shops below, apartments above), with parking behind.
+- **Retail pad:** at the northwest corner, where the diagonal property line makes an awkward lot anyway.
+- **Apartments:** two L-shaped buildings in the northeast, next to the existing R-4 apartments, with parking in the courtyards.
+- **Townhomes:** rows along Street B, loaded from **rear alleys** (24 ft), so the fronts face the street with no garage doors.
+- **Outlot:** a stormwater pond with a trail loop along the wooded south edge, and a path from the Commons down to it.
 
-Before drafting, check the sketch against the rules table: street widths, block lengths, the distance of Street A from N 40th St, and whether the stubs need temporary turnarounds. Change the sketch if anything breaks a rule, and note what you changed and why. That note is good material for the page.
+Before drafting, check the sketch against the rules table: street widths, block lengths, the boulevard's distance from N 40th St, whether the Town allows alleys and divided streets (and who maintains them), and whether the stubs need temporary turnarounds. Change the sketch if anything breaks a rule, and note what you changed and why. That note is good material for the page.
 
-Decide the lot sizes for the made-up PUD (for example, townhome lots about 40–50 ft wide), then count roughly how many lots fit in each block.
+Decide the lot sizes for the made-up PUD (for example, 24–26 ft wide townhome lots, one per unit, plus common outlots for the alleys if the Town won't take them), then count roughly how many lots fit in each block.
+
+The first concept (`ch3_concept_sketch.png`, a plain T of two streets) is kept for comparison; the page can show why the second one is better.
 
 ## 4. Boundary in the fabric
 
@@ -95,7 +99,7 @@ County boundary courses, measured from the county polygon in WISCRS Sheboygan fe
 ## 5. Streets
 
 Draft the right-of-way lines, not just centerlines:
-1. Draw each **centerline** first in the record (Traverse, or the line tools with distance/direction).
+1. Draw each **centerline** first in the record (Traverse, or the line tools with distance/direction). The Commons Loop and Street B have **curves**: in the Traverse pane, enter them as curve courses (radius, arc length or chord, and left/right). That's the same skill a surveyor's plat needs, and a good one to show. A true oval isn't a surveyed shape, so build the loop from straight tangents and circular curves (for example, two half-circles joined by short straights).
 2. Offset both sides by half the ROW width from your rules table (33 ft each side for a 66 ft ROW) using **Edit → Modify → Parallel** (Copy Parallel). Snap the offsets to the boundary.
 3. Where Street A meets Playbird Rd and where A meets B, add **corner curves** on the ROW lines (the Town section on streets may give a minimum radius; 15–25 ft corner radii are common). Use the **Fillet** tool, or enter a curve in the Traverse.
 4. **Build Active.** The streets become their own parcel (a dedication to the Town) and the blocks between them become separate parcels.
