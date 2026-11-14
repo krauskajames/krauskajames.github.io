@@ -988,7 +988,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <li><span><strong>Clean.</strong> One letter per owner. Right-of-way and blank owners are set aside with a reason; spelling variants at one address are merged; look-alike names are listed in a review file instead of being merged.</span></li>
           <li><span><strong>Flag.</strong> Absentee owners (mailing address differs from the parcel's address), the petitioner's own parcels, and owners with several parcels.</span></li>
           <li><span><strong>Clerks.</strong> Any other municipality with land within 1,000 ft, read from the parcels' municipality field.</span></li>
-          <li><span><strong>Output.</strong> Avery 5160 label sheets, the mailing list and every parcel's letter number as CSV, a summary, and the notice map exported from a Pro layout at the scale the code asks for. Each notified parcel gets its letter number as a field, for labeling the map.</span></li>
+          <li><span><strong>Output.</strong> Avery 5160 label sheets, the mailing list and every parcel's letter number as CSV, a summary, and the notice map: the tool builds the map and the layout itself (title, counts, legend, north arrow, scale bar, sources) and exports it at the scale the code asks for.</span></li>
         </ol>
         <p>The list logic is plain Python with tests, separate from the arcpy part, so it can be checked without ArcGIS. The tool's counts matched my hand run in Pro: 29 parcels, 17 owner rows, 15 letters, one clerk.</p>
         <h3>Distance is an input, not a constant</h3>
@@ -1004,6 +1004,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
           </tbody>
         </table></div>
         <p class="map-note">Every one also requires written notice to the clerk of any municipality within 1,000 ft (Wis. Stat. § 62.23(7)(d) and the codes above). Read November 2026; codes change.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cs-body">
+      <span class="label">The notice map</span>
+      <div class="prose">
+        <figure class="labels-fig"><a href="media/playbird-notice-map.pdf"><img src="media/playbird-notice-map.webp" width="2040" height="1320" loading="lazy" alt="Notice map on a 34 by 22 inch sheet: the subject parcel outlined in red, the 200-foot notice buffer, neighboring parcels labeled with letter numbers over colored zoning districts, with a title, counts, legend, north arrow, scale bar and source note"></a></figure>
+        <p class="map-note">Built by the toolbox, not by hand: a new map and an ANSI D layout made with arcpy.mp, at 1 in = 100 ft as the Town's plot plan rule asks, with zoning districts underneath and each parcel labeled with its letter number. <a href="media/playbird-notice-map.pdf">Open the PDF (34 × 22 in)</a>.</p>
       </div>
     </div>
   </section>
@@ -1035,7 +1045,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div class="wrap cs-body">
       <span class="label">My role</span>
       <div class="prose">
-        <p>I chose the site and the scenario after comparing candidate parcels in four municipalities, read the ordinances, ran the selection by hand in ArcGIS Pro, checked the tool's results against it, and made the notice map layout. The toolbox and this page were written with AI-assisted coding (Claude).</p>
+        <p>I chose the site and the scenario after comparing candidate parcels in four municipalities, read the ordinances, ran the selection by hand in ArcGIS Pro, checked the tool's results against it, and reviewed five rounds of the generated notice map until it was right. The toolbox and this page were written with AI-assisted coding (Claude).</p>
         <ul class="chips" aria-label="Tools">
           <li>ArcGIS Pro 3.7.3</li><li>Python · arcpy</li><li>ArcGIS REST API</li><li>Leaflet</li><li>Wisconsin zoning law</li>
         </ul>

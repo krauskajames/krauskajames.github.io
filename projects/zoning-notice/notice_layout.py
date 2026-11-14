@@ -147,7 +147,7 @@ def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, z
     except Exception as e:
         _warn("title text", e)
     try:
-        leg = lyt.createMapSurroundElement(arcpy.Point(PANEL_X, y - 7.0), "LEGEND", mf, None, "Legend")
+        leg = lyt.createMapSurroundElement(arcpy.Point(PANEL_X, y - 5.5), "LEGEND", mf, None, "Legend")
         try:
             leg.fittingStrategy = "AdjustFrame"
         except Exception:
@@ -167,6 +167,8 @@ def build(aprx, paths, parcels_src, counts, meta, clerks, out_pdf, scale=1200, z
             cim = lyt.getDefinition("V3")
             for e2 in cim.elements:
                 if e2.name == "Legend":
+                    e2.items = [li for li in e2.items
+                                if li.name not in ("Parcels", "1,000 ft municipal clerk notice")]
                     for li in e2.items:
                         li.showHeading = False        # drop the "ZoneClass" field heading
                         try:
