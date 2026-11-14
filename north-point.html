@@ -283,23 +283,27 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 
   <section id="print">
     <style>
-      .print-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 18rem); gap: 1.5rem 2.5rem; align-items: start; }
-      .print-fig { margin: 0; border: 1px solid var(--rule); background: var(--paper-2); }
-      .print-fig img { display: block; width: 100%; height: auto; }
-      .print-fig figcaption { font-size: 0.875rem; color: var(--ink-2); padding: 0.65rem 0.8rem; border-top: 1px solid var(--rule); background: var(--paper); }
-      @media (max-width: 860px) { .print-grid { grid-template-columns: 1fr; } .print-fig { max-width: 20rem; } }
+      .print-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 15rem)); gap: 1.25rem; margin-top: 0.5rem; }
+      .print-fig { margin: 0; border: 1px solid var(--rule); background: var(--paper-2); display: flex; flex-direction: column; }
+      .print-fig img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1.5; object-fit: cover; }
+      .print-fig figcaption { font-size: 0.875rem; color: var(--ink-2); padding: 0.65rem 0.8rem; border-top: 1px solid var(--rule); background: var(--paper); flex: 1; }
+      @media (max-width: 560px) { .print-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; } }
     </style>
     <div class="wrap cs-body">
       <span class="label">Off the screen</span>
-      <div class="print-grid">
-        <div class="prose">
-          <p>The same capture also works as a physical object. I turned the North Point Water Tower model into a printable solid and printed it on my Bambu Lab P2S.</p>
-          <p>The print keeps the Gothic base, the corner pinnacles and the lantern with its spire, which shows the drone and ground photos captured the tower's shape and not just its colour.</p>
+      <div class="prose">
+        <p>The same capture also works as a physical object. I turned the North Point Water Tower model into a printable solid, sliced it in Bambu Studio and printed it on my Bambu Lab P2S.</p>
+        <p>At 0.12 mm layers it took 1,149 layers, about 2 hours and 15 g of PLA to reach 138 mm tall. The print keeps the Gothic base, the corner pinnacles and the lantern with its spire, which shows the drone and ground photos captured the tower's shape and not just its colour.</p>
+        <div class="print-pair">
+          <figure class="print-fig">
+            <img src="media/north-point/tower-sliced.webp" width="790" height="1180" loading="lazy" alt="The tower model sliced in Bambu Studio, shown in green on the build plate with a brim around its base.">
+            <figcaption>Sliced: 1,149 layers at 0.12 mm, with a brim to hold the narrow base down.</figcaption>
+          </figure>
+          <figure class="print-fig">
+            <img src="media/north-point/tower-print.webp" width="700" height="1400" loading="lazy" alt="A white 3D print of the North Point Water Tower standing on a gridded cutting mat: a square Gothic base with corner pinnacles, a tall tapering shaft, and a lantern topped by a spire.">
+            <figcaption>Printed: 138 mm tall in PLA.</figcaption>
+          </figure>
         </div>
-        <figure class="print-fig">
-          <img src="media/north-point/tower-print.webp" width="700" height="1400" loading="lazy" alt="A white 3D print of the North Point Water Tower standing on a gridded cutting mat: a square Gothic base with corner pinnacles, a tall tapering shaft, and a lantern topped by a spire.">
-          <figcaption>The North Point Water Tower, 3D printed from the drone capture.</figcaption>
-        </figure>
       </div>
     </div>
   </section>
