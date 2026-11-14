@@ -122,6 +122,11 @@ a:hover { color: var(--forest); }
 
 /* Sections */
 section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(--rule); }
+.role-quote { margin: 2rem 0 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid var(--olive); max-width: var(--measure); }
+.role-quote blockquote { margin: 0; font: italic 400 1.25rem/1.45 var(--display); color: var(--ink); }
+.role-quote blockquote p { margin: 0; }
+.role-quote figcaption { margin-top: 0.6rem; font: 500 0.875rem/1.3 var(--body); color: var(--ink-2); }
+.role-quote figcaption strong { color: var(--forest); font-weight: 600; }
 .section-head { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 1rem 3rem; align-items: baseline; margin-bottom: 3rem; }
 .section-head h2 { font: 500 var(--step-3)/1.1 var(--display); margin: 0; text-wrap: balance; }
 .section-head p { margin: 0.75rem 0 0; color: var(--ink-2); max-width: var(--measure); }
@@ -933,6 +938,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <div class="rule-box"><span class="label">The rule I mapped by</span><p>A patch about 6 feet across or smaller is a <strong>point</strong>. Anything bigger is a <strong>polygon</strong>, recorded live by walking its edge with the GPS.</p></div>
         <p>The two people using these maps wanted different things. The grant-writing side wanted detailed polygons, because precise acreage wins funding. The field stewards wanted fast points, just enough to find a patch again next season. Polygons take far longer to walk, so I settled on a balance: polygons where the size mattered for treatment and reporting, points everywhere else. It's the same question every field data collection plan has to answer: what does each user of the data actually need?</p>
         <p>I didn't always get it right the first time. One September day at Forest Beach I worked zoomed in too far and logged dozens of points along what was really one continuous thicket of autumn olive and honeysuckle. My log for that day reads "too many points, need to rework into polygons," and I went back and did.</p>
+        <figure class="role-quote">
+          <blockquote><p>&ldquo;James is thorough and an incredibly hard worker. He planned and ran his own field mapping across our preserves from his first week, and his maps supercharged our stewardship team.&rdquo;</p></blockquote>
+          <figcaption><strong>Ryan Wallin</strong>, Stewardship Director, Restoring Lands</figcaption>
+        </figure>
       </div>
     </div>
   </section>
