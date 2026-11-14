@@ -370,14 +370,14 @@
 
         <h3>What L01 catches</h3>
         <ul>
-          <li><strong>59026385841</strong> runs S 88°43′16″ W <strong>834.89 ft</strong> and returns N 88°43′16″ E <strong>823.89 ft</strong>: one transposed digit, and the parcel misses by 12 ft.</li>
+          <li><strong>59026385841</strong> runs S 88°43′16″ W <strong>834.89 ft</strong> and returns N 88°43′16″ E <strong>823.89 ft</strong>: one wrong digit, and the parcel misses by 12 ft.</li>
           <li><strong>59004032630</strong> runs N 85°40′ W 422.9 ft twice. The closing call has to run east, so as written it misses by 843 ft.</li>
           <li><strong>59024342760</strong> goes 724 ft east and comes back 687 ft west: a 37 ft gap in a 22-acre description.</li>
         </ul>
         <p>In a random sample of 20 L01 findings read by hand, 18 were real misclosures in the tax-roll text, from rounding and "M/L" calls to typos like these. The other 2 were misreads of garbled or cut-off text. The reader also recognizes when a description doesn't mark its point of beginning, or ends back at its point of commencement, and treats the first calls or the tie line accordingly instead of reporting a false gap.</p>
 
         <h3>What it leaves alone</h3>
-        <p>4,934 descriptions are read only in part, usually because a call runs "to the N line of the SW SW" or "along the bank" with no distance, or follows a road "NELY" with no bearing. Those can't be checked from the text alone and are counted, not flagged. 43,110 parcels are described by lot, block or quarter-quarter only and have no courses to read.</p>
+        <p>4,934 descriptions are read only in part, usually because a call runs "to the N line of the SW SW" or "along the bank" with no distance, or follows a road "NELY" with no bearing. Those can't be checked from the text alone and are counted, not flagged. 43,110 parcels have no metes-and-bounds courses at all: they are described by lot, block or quarter-quarter, or as "the N 396 ft of" a larger description.</p>
 
         <h3>Back into ArcGIS Pro</h3>
         <p>For any single parcel the reader writes an ArcMap-format traverse file that ArcGIS Pro's Traverse pane loads directly. This is the one for Parcel 59010122560, with a start point estimated from the county map, to be snapped to the PLSS corner in the parcel fabric:</p>

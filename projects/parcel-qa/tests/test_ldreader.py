@@ -53,7 +53,7 @@ FORMATS = [
     ("a point of beginning in the middle of the text",
      "COM AT NW COR SW1/4 SEC 34, TH S 00*34'17\" W ALG W LN SW1/4 SEC 34 697.72' TO SELY ROW LN OF UNION PACIFIC RR AND THE POINT OF BEG; TH S 43*06'29\" W 161.43', TH S 56*05'38\" E 338.95', TH S 54*06'07\" E 63.61', TH S 71*12'31\" E 324', TH N 18*47'29\" E 258', TH N 71*12'31\" W 291.57', TH N 56*05'38\" W 325.19' TO ROW LN, TH S 43*06'29\" W 97.22' TO POB 3.96 A",
      "parsed", 1, 8, 0.00),
-    ("a transposed digit is reported, not hidden",
+    ("a wrong digit is reported, not hidden",
      "COM AT N1/4 COR,SD SEC,TH S88 DEG 43'16\"W 834.89',S03 DEG 09'00\"E 233.90',S00 DEG 27'15\"W 757.56',N88 DEG 43' 16\"E 823.89',TH N00 DEG 27' 15\"W 991.35'TO BEG.",
      "parsed", 0, 5, 12.01),
     ("courses that end back at the point of commencement",
