@@ -4,6 +4,7 @@ flowchart TB
     direction TB
     REST["<b>Sheboygan County ArcGIS REST services</b><br/>tax parcels, address points,<br/>road centerlines, municipal boundaries"]
     DEEDS["<b>Recorded legal descriptions</b><br/>deeds and certified survey maps<br/>for five parcels"]
+    TAX["<b>Tax-roll descriptions</b><br/>TAXDSCRP field, 63,391 parcels"]
   end
   subgraph P["Processing"]
     direction TB
@@ -11,6 +12,7 @@ flowchart TB
     PY["<b>parcel_qa.py</b><br/>19 checks in Python (GeoPandas)"]
     PG["<b>load_postgis.py</b><br/>load into PostGIS and run the<br/>same 19 checks as SQL views"]
     COGO["<b>ArcGIS Pro parcel fabric</b><br/>draft each parcel by bearings<br/>and distances, check closure"]
+    LDR["<b>ldreader.py</b><br/>read every description, check<br/>closure, fit to the mapped parcel"]
     FETCH --> PY
     FETCH --> PG
   end
@@ -19,6 +21,7 @@ flowchart TB
     FIND["<b>Findings layer and summary</b><br/>GeoPackage, 1,323 findings,<br/>Python and SQL counts compared"]
     TOOL["<b>ArcGIS Pro script tool</b><br/>ParcelQA.pyt"]
     REPORT["<b>Quarto report</b><br/>HTML and PDF"]
+    LDF["<b>Two description checks</b><br/>L01 and L02, 1,639 findings,<br/>traverse files for ArcGIS Pro"]
     PAGE["<b>This page and homepage card</b><br/>findings map, drafted parcels"]
   end
   REST --> FETCH
@@ -29,3 +32,7 @@ flowchart TB
   PG --> REPORT
   FIND --> PAGE
   COGO --> PAGE
+  TAX --> LDR
+  COGO -. answer key .-> LDR
+  LDR --> LDF
+  LDF --> PAGE

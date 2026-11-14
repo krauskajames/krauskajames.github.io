@@ -50,6 +50,28 @@ environment (instructions at the top of the file).
 | R01 | Roads | A range side mixing odd and even |
 | R02 | Roads | Overlapping ranges on one street (same parity) |
 | R03 | Roads | Segment with linked addresses but no range |
+| L01 | Descriptions | Tax-roll legal description doesn't close (more than 1 ft and worse than 1:5,000) |
+| L02 | Descriptions | Description closes but doesn't match the mapped parcel (over 10 ft after best fit, or area off by over 5%) |
+
+## Legal description reader (L01, L02)
+
+`legal_desc/ldreader.py` reads the metes-and-bounds descriptions in the tax roll's `TAXDSCRP` field:
+tie courses, boundary courses, curves (by chord), misclosure, area, a review table of every call's
+source text next to what was read, and an ArcMap-format traverse file that ArcGIS Pro's Traverse pane
+loads. Parsing is deterministic (regular expressions, no machine learning).
+
+```bash
+python3 legal_desc/ldreader.py "COM AT NE COR, TH S89 DEG 08'58\"W 835.44', ... TO BEG."   # one description
+python3 legal_desc/county_run.py config/sheboygan.json raw out                          # every parcel: L01 and L02
+python3 tests/test_ldreader.py      # answer key: James's five hand-drafted COGO parcels, plus tax-roll formats
+```
+
+Outputs in `out/`: `legal_desc_results.csv` (one row per parcel), `legal_desc_findings.gpkg`, `legal_desc_summary.json`.
+Traverse files for the five drafted parcels are in `legal_desc/traverse/`; their start points are estimated
+from the county map and should be snapped to the PLSS corner in the parcel fabric.
+
+L01 and L02 run in Python only: reading the descriptions is text parsing that has no PostGIS equivalent,
+so they are not part of the 19-check SQL comparison.
 
 ## PostGIS version
 

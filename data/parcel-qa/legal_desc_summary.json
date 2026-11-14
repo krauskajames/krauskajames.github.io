@@ -1,0 +1,25 @@
+{
+ "parcels": 63391,
+ "empty": 3670,
+ "no_bearings": 43110,
+ "with_courses": 16597,
+ "parsed": 11663,
+ "partial": 4934,
+ "close_10000": 8322,
+ "close_5000": 8592,
+ "misclose_over_1ft": 2344,
+ "compared": 6032,
+ "not_compared": {
+  "exception or several tracts": 3226,
+  "vague course": 1260,
+  "does not close": 1087,
+  "too few courses": 56,
+  "drawn shape not a valid polygon": 2
+ },
+ "L01_does_not_close": 1087,
+ "L02_does_not_match": 552,
+ "L02_map_stops_short": 254,
+ "fit_offset_median_ft": 0.27,
+ "fit_within_5ft": 5346,
+ "seconds": 14.1
+}
