@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 13, 2026 (item 3 in progress: quotes from Jonathon Stippich and Ryan Wallin are live under their roles in Experience; added the PreGISP exam to Housekeeping; earlier, Nov 12: synced the live pages: Drone 3D Captures (item 11 done), the MKE Airport page with its new radar homepage card, and the AI Use Disclosure; item 1 done: the Winnebago ArcGIS Online dashboard is public and embedded on the page; added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 14, 2026 (added item 58: finish the Pollinator ArcGIS Online web map and add a click-to-load embed to the page; earlier, Nov 13: item 3 in progress: quotes from Jonathon Stippich and Ryan Wallin are live under their roles in Experience; added the PreGISP exam to Housekeeping; earlier, Nov 12: synced the live pages: Drone 3D Captures (item 11 done), the MKE Airport page with its new radar homepage card, and the AI Use Disclosure; item 1 done: the Winnebago ArcGIS Online dashboard is public and embedded on the page; added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -45,7 +45,7 @@ Each idea gets two scores from 1 to 5:
 | Portfolio site with custom domain, About, Experience, Toolkit, Contact | ✅ | Phone, email, LinkedIn and GitHub in Contact |
 | DuctBuilder card and case study | ✅ | Blender render on the card, demo video on hover; plan-in / model-out pair; results table ("one person now does the work of five") |
 | Starcast card and case study | ✅ | Globe video at half speed. Starcast has its own feature log in the Starcast repo |
-| Pollinator Habitat Explorer (MaxEnt revamp) | ✅ | Rerun with WISCLAND 2.0 land cover; interactive map and case study |
+| Pollinator Habitat Explorer (MaxEnt revamp) | ✅ | Rerun with WISCLAND 2.0 land cover; interactive map and case study; button to the ArcGIS Online Instant App. Finishing that web map and a click-to-load embed is item 58 |
 | The Wellness Spa in Experience and About | ✅ | Soft-skills story: listening to clients, Client Testimonial Award |
 | Outside work section with Camino placeholder | ✅ | Finisterre photo; StoryMap still to build |
 | Header stays above animated cards while scrolling | ✅ | |
@@ -77,6 +77,7 @@ Each idea gets two scores from 1 to 5:
 | 49 | Shoreland permit: application to inspection (pipeline) | 5 | 4 | 4.6 | 💡 |
 | 3 | Employer quotes and references | 4 | 5 | 4.4 | 🔧 |
 | 45 | PLSS section map book (Pro Map Series) (ch. 6 of 46) | 4 | 5 | 4.4 | 💡 |
+| 58 | Pollinator: finish the ArcGIS Online web map and add a click-to-load embed | 4 | 5 | 4.4 | 🔧 |
 | 4 | Parcel and NG911 data QA toolkit (with PostGIS) | 5 | 3 | 4.2 | 🔧 |
 | 5 | ~~Geodatabase and SQL project~~ (merged into item 4) | | | | ➡️ |
 | 6 | Utility mapping from as-built drawings (ch. 1 of 46) | 5 | 3 | 4.2 | 💡 |
@@ -275,6 +276,20 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Why:** Looks like a real county plat book, and Map Series is a skill hiring managers look for.
 - **Have:** Sheboygan parcels; PLSS sections (Wisconsin PLSS layer).
 - **Next step:** Pick the township (the Town of Lima, already used in item 4) and set up the index layer.
+
+### 58. Pollinator: finish the ArcGIS Online web map and add a click-to-load embed · E4 F5 · 4.4
+*Numbered 58 so the other items keep their numbers; it ranks with the other 4.4 items. Added Nov 14 at James's request.*
+- **What:** Finish the Pollinator Habitat Explorer web map in ArcGIS Online, then show it on pollinator.html in its own section lower on the page ("Also built in ArcGIS Online"). The section shows a static screenshot with a "Load interactive map" button, and the Instant App loads in place only when someone clicks it. The existing "Explore the data in ArcGIS Online ↗" button under the main map stays.
+- **Already done:** Hosted feature layers published from projects/pollinator/make_agol_layers.py (suitable habitat, overlap, records); web map and Sidebar Instant App public; layer list turned on; the page button links to the app.
+- **Left to do in Map Viewer:**
+  1. Finish the species split: three filtered copies of Suitable Habitat, each a single symbol (wild lupine #2d5638, swamp milkweed #5f8c4c, fringed loosestrife #9bb26a), no outline, about 30% transparency; lupine on by default.
+  2. Swap the Light Gray Reference labels for Living Atlas "World Boundaries and Places" (darker text) and keep it in the Reference group.
+  3. Short layer names: Wild lupine, Swamp milkweed, Fringed loosestrife (grouped as "Suitable habitat"), Habitat overlap, iNaturalist records.
+  4. Save, and check that the map and layers are still shared with Everyone.
+- **Then on the site:** take the screenshot from the published app, add the click-to-load section, and test it on a phone.
+- **Why:** Most Wisconsin county and state GIS offices work in Esri. The custom Leaflet map shows open-source web mapping; this shows the same data handled in ArcGIS Online, on the page, without slowing it down for visitors who never click.
+- **Why click-to-load:** A plain embed loads several megabytes of ArcGIS code for every visitor, competes with the main map and traps the mouse wheel when scrolling.
+- **Next step:** James finishes steps 1–4 in Map Viewer; then Claude builds the embed section.
 
 ### 47–56. More pipelines like Playbird Rd, plus remote sensing (added Nov 8)
 *Each pipeline follows one made-up event on real public data through several offices, and each chapter is a finished piece on its own, the same as item 46. Real data, made-up event, labeled which is which. Places are suggestions under the one-community rule; check the list before starting. The public parcel viewer asked about the same day is already item 43.*
