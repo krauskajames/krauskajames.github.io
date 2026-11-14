@@ -66,7 +66,7 @@ Each idea gets two scores from 1 to 5:
 | 46 | **Playbird Rd: from farm field to neighborhood** (umbrella for the parcel chapters) | 5 | 3 | 4.2 | 🔜 |
 | 37 | Zoning hearing notice packet (Town of Sheboygan, 200 ft) (ch. 2 of 46) | 5 | 5 | 5.0 | 🔜 |
 | 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | ✅ |
-| 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | 🔧 |
+| 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | ✅ |
 | 38 | Year-over-year parcel change report (ch. 6 of 46) | 5 | 4 | 4.6 | 💡 |
 | 39 | Addressing a new subdivision (ch. 5 of 46) | 5 | 4 | 4.6 | 💡 |
 | 40 | Wisconsin statewide parcel submission dry run (ch. 6 of 46) | 5 | 4 | 4.6 | 💡 |
@@ -139,12 +139,12 @@ Each idea gets two scores from 1 to 5:
 - **Why:** The only hands-on field GIS job on the resume. Trimble experience is a minimum requirement for the Historical Society job.
 - **Have:** 9 Field Maps screenshots (Pictures\OWLT INTERNSHIP), summer photos, fall internship report, the four Donges Bay photos.
 - **Need:** Permission from Ryan Wallin to show the screenshots; original photos exported with location data; skip photos of the high school interns.
-- **Status:** 🔧 Live (field-season-2025.html, linked from the Restoring Lands entry). Permission received Oct 30, 2026 for photos and screenshots, not the feature layers. Built from the GEOG 480 report and the nine Field Maps screenshots: Trimble beach photo, points-vs-polygons rule, map gallery, 2020/2025 Spirit Lake photo-point slider, field finds.
+- **Status:** ✅ Live (field-season-2025.html, linked from the Restoring Lands entry). Permission received Oct 30, 2026 for photos and screenshots, not the feature layers. Built from the GEOG 480 report and the nine Field Maps screenshots: Trimble beach photo, points-vs-polygons rule, map gallery, 2020/2025 Spirit Lake photo-point slider, field finds.
 - **Added Oct 30:** preserve names on every screenshot; a fall field days section (Donges Bay Gorge, Oct 22; Schoof's Preserve and the Zinn Preserve's Beck Lake, Oct 29) with 13 photos placed on a map from their GPS tags.
 - **Added Oct 30 (later):** the photo map now covers the whole season, August 5 to November 4 (28 photos at 10 preserves), each with that day's task from the summer and fall internship logs; the fall switch to woody invasives and trail data; the "too many points" lesson from the log.
 - **Added Nov 12:** a "Plants I identified" strip: eight plants James named from his own photos (scarlet pimpernel, cardinal flower, great willowherb, eastern prickly pear, rough blazing star, hedge bindweed, blue vervain, Ohio spiderwort), each tagged native or not native with its preserve (Mayhew, Kratzsch, Fellenz Woods).
 - **Added Nov 14:** Ryan Wallin's approved quote as a pull quote at the end of "The job" (it is also under the Restoring Lands role in Experience). The held-back plant is confirmed as **sweet William** (not native, Fellenz Woods), not garden phlox.
-- **Next step:** Add the sweet William card to the plant strip once James attaches the photo again (it was attached in an earlier chat and isn't in Claude outputs\Field Work 2025). Then mark this item ✅.
+- **Done Nov 14:** sweet William card added to the plant strip (nine plants). Item complete.
 
 ### 3. Employer quotes and references · E4 F5 · 4.4
 - **What:** Two or three short quotes from people who worked with you, shown in About or Experience: The Wellness Spa owner or manager, Restoring Lands supervisor, and your boss at PX Design if he is comfortable being quoted without project details.
