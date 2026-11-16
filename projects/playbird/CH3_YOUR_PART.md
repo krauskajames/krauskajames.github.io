@@ -8,47 +8,44 @@ Written for **ArcGIS Pro 3.7.3** (your version). It reuses what you learned in t
 
 | # | Task | Time | Done |
 |---|---|---|---|
-| 1 | Read the rules and fill in the rules table | 1–1.5 h | |
+| 1 | Read the rules and fill in the rules table | 1–1.5 h | ✅ Nov 16 (Claude) |
 | 2 | Find the section, quarter and the two monuments | 20 min | |
-| 3 | Sketch the layout (blocks, streets, outlots) from concept 2 | 45 min | |
+| 3 | Layout: concept 3, checked against the rules | 45 min | ✅ Nov 16 (Claude); you refine lots while drafting |
 | 4 | Draft the boundary in the fabric | 30 min | |
 | 5 | Draft the streets, including curves | 1.5–2.5 h | |
 | 6 | Divide the blocks into lots | 1–2 h | |
 | 7 | Check it: closure, areas, frontage, gaps | 30 min | |
 | 8 | Lot table | 20 min | |
-| 9 | Review routing table (who gets a copy) | 20 min | |
+| 9 | Review routing table (who gets a copy) | 20 min | ✅ Nov 16 (Claude) |
 | 10 | Send me the results | 10 min | |
 
 ---
 
-## 1. Read the rules
+## 1. The rules (filled in Nov 16, 2026)
 
-Fill in the **Value** column as you read, and keep the section number next to each value. This table becomes part of the page, and it's also exactly the kind of homework a county planner does before reviewing a plat.
+Read from the Town of Sheboygan Code (Ch. 337 Subdivision and Land Development, Ch. 335 Zoning) and the City of Sheboygan Municipal Code (Ch. 103 Subdivisions) on Nov 16, 2026. Re-check before anything is published as current.
 
-| Rule | Where to look | Value |
+| Rule | Value | Source |
 |---|---|---|
-| What counts as a "subdivision" (needs a plat) vs. a CSM | Wis. Stat. § 236.02(12); Town Ch. 337 § 337-9 | |
-| Preliminary consultation required? | Town § 337-14 | |
-| Preliminary plat contents and scale | Town § 337-16; Wis. Stat. § 236.11 | |
-| Street right-of-way width (local street) | Town § 337-23 | |
-| Cul-de-sac / dead-end limits, temporary stub rules | Town § 337-23 | |
-| Block length limits | Town § 337-25 | |
-| Lot minimums (width, depth, frontage, corner lots) | Town § 337-26; your made-up PUD can set its own within the zoning | |
-| Utility easements (width, which lot lines) | Town § 337-24 | |
-| Park or open-space dedication | Town § 337-28 and § 337-34 | |
-| Shared-use paths | Town § 337-29 | |
-| County review and minimum frontage | Sheboygan County Code Ch. 71 (Subdivision Ordinance) | |
-| City of Sheboygan extraterritorial (ETJ) review: does it apply, and what does the City check? | City of Sheboygan land division ordinance; Wis. Stat. § 236.10 | |
-| Who gets the streets when a plat in the ETJ dedicates them | City ordinance (usually the Town) | |
-| State plat review (DOA), what it checks | Wis. Stat. §§ 236.12, 236.15–236.20; DOA Plat Review | |
+| What counts as a subdivision (needs a plat) | Town: 5 or more parcels or building sites of 1½ acres or less, created at once or by successive divisions within 5 years. City (applies in its ETJ): 3 or more parcels of 5 acres or less. Either way, this project is a subdivision and needs a plat. | Town § 337-9; City § 103-4; Wis. Stat. § 236.02(12) |
+| Concept sketch / consultation | A sketch goes to the Plan Commission, Town Board and County Planning first (boundaries, roads, lot layout, slopes over 15°, soils, wet areas, floodplain, adjoining land the subdivider owns). A consultation meeting is recommended but not mandatory. | Town § 337-14 |
+| Preliminary plat | Required for every subdivision; based on a survey by a Wisconsin-licensed land surveyor; scale **not more than 100 ft to the inch**. Must show title, location by section/township/range with a small location map, date/scale/owner/subdivider/surveyor, lot width and depth, streets, parks, utilities, easements, soils, wetlands, **10-ft contours**, floodplain, proposed improvements and covenants, approximate radii of all curves, and the surveyor's affidavit. | Town § 337-16; Wis. Stat. § 236.11 |
+| Street right-of-way | **66 ft minimum** unless the Official Map says otherwise (subdivision code). The PUD zoning lets the Town Board set public ROW down to **49.5 ft**, and approve private streets narrower. City standard for local streets in its ETJ: 60 ft plus an 8-ft tree easement each side. | Town § 337-23; Town § 335-49D(2); City § 103-77 |
+| Grades, curves, intersections | Town: max grade 6%; streets meet as near 90° as possible, no more than two streets at one point, no jogs under 125 ft, property corners rounded with a **12-ft radius**. City: local-street centerline radius **at least 100 ft**, no angle under 70°, offset intersections at least 150 ft apart, 15-ft corner radius. | Town § 337-23; City § 103-77 |
+| Cul-de-sacs, dead ends | Permanent cul-de-sacs **500 ft max**, with a turnaround at least 100 ft in diameter (Town) / 50-ft radius (City). Half streets prohibited. | Town § 337-23; City § 103-77 |
+| **Alleys** | **Not allowed** in the Town of Sheboygan. The City allows residential alleys only for topography or exceptional cases. | Town § 337-23; City § 103-78 |
+| Blocks | Residential blocks **270–1,500 ft** between street lines; a 10-ft crosswalk may be required through blocks over 900 ft. Blocks should be wide enough for **two tiers of lots**. City: 1,200 ft max (1,500 for curvilinear designs with approval), crosswalk in blocks over 800 ft. | Town § 337-25; City § 103-79 |
+| Lots | Every lot fronts on a public street; side lot lines at right angles or radial to the street; double-frontage lots avoided; corner lots wider; lot sizes follow zoning. In a PUD, lot width, yards, density and parking can all be varied, and lots may front on public or private streets as long as each has access to a public street. City: residential lots at least 40 ft wide at the street. | Town § 337-26; Town § 335-49D; City § 103-80 |
+| Utility easements | At least **12 ft wide**, across lots or centered on rear/side lot lines, continuous from block to block; drainage easements along any watercourse. Each utility returns its easement needs within 10 working days. | Town §§ 337-24, 337-15 |
+| Park / open space | Dedicate **5% of the subdivision area** for parks, playgrounds, public access and open space, or pay 5% of the platted market value (Town's choice). City (if its plan shows a park here): 1 acre per 35 lots. | Town § 337-34; City § 103-106 |
+| Shared-use paths | The layout must provide for current and future shared-use paths for walking and biking, as the Town Board decides. | Town § 337-29 |
+| County | Sheboygan County Planning gets two copies of the preliminary plat and reviews under its Subdivision Ordinance (Ch. 71). The county CSM checklist asks for 66 ft of frontage on a public road for new lots. | Town § 337-15; County Ch. 71 |
+| City of Sheboygan ETJ | Yes, it applies: the City's ETJ is the unincorporated area within **3 miles** of the city limits, and the field is inside it (county ETJ layer). The City Planner gets two copies; the **Common Council** (on the Plan Commission's recommendation) approves final plats in the ETJ along with the Town and County. City § 103-126 says no lots may be sold or building permits issued in an ETJ subdivision until the subdivider installs streets, sewer and water to City specifications; state law limits what an ETJ city can require inside a town plat, so a planner would flag that conflict. | City §§ 103-4, 103-5, 103-126; Wis. Stat. § 236.10 |
+| Who gets the streets | Streets are dedicated to the **Town** of Sheboygan (the Town names-and-approves them; it must not duplicate existing names). | Town §§ 337-23, 337-33 |
+| State review (DOA) | DOA Plat Review gets two copies and checks the plat against the state platting rules (Wis. Stat. §§ 236.15, 236.16, 236.20, 236.21): monuments, minimum lot and street standards, and the drafting requirements of the final plat. DSPS gets copies where soil tests apply; DOT only if the plat abuts a state highway (Playbird Rd is not one). | Town § 337-15; DOA Plat Review |
+| Timeline | Public hearing before the Plan Commission (Class 2 notice, plus written notice to owners within **200 ft**); Plan Commission recommends within **60 days** of filing; Town Board acts within **90 days**. Preliminary approval good for **36 months**; final plat within 36 months; record within 12 months of the last approval. | Town §§ 337-15, 337-17, 337-18 |
 
-Where to read them:
-- Town of Sheboygan Code, Ch. 337 Subdivision and Land Development: [ecode360.com/40066421](https://ecode360.com/40066421)
-- Sheboygan County Subdivision Ordinance (Ch. 71): [Planning & Conservation, Subdivision](https://sheboygancounty.com/departments/departments-f-q/planning-and-conservation/ordinances-regulations/subdivision). The county's CSM checklist says new lots need at least **66 ft of frontage** on a public road (the Town may require more).
-- City of Sheboygan Code: search ecode360 for "Sheboygan, WI" → land division / subdivision chapter, and look for "extraterritorial."
-- Wisconsin DOA Plat Review: the [platting manual review process](https://doa.wi.gov/DIR/_WI_Platting_Manual-Review_Process.pdf) explains approving vs. objecting authorities and ETJ distances.
-
-What we already know (Nov 13): the county's ETJ layer puts the field inside the **City of Sheboygan's extraterritorial jurisdiction**. A plat there typically needs approval from the Town, the County and the City, and the City can review against its ordinance and plans but can't require improvements inside the subdivision. Confirm this in the City's code.
+**What this means for the design:** concept 2 broke the Town's no-alley rule (its townhomes were loaded from rear alleys), its loop street had lots that didn't front a public street, and its townhome rows didn't make two-tier blocks. Concept 3 (`ch3_concept3.png`) is redrawn to these rules.
 
 ## 2. Section, quarter and monuments
 
@@ -59,23 +56,25 @@ From the county's PLSS and control corner layers (I checked these Nov 13):
 
 Open both tie sheets and write down the coordinates they list (they should match the numbers above; if not, the tie sheet wins). The field looks like it's in the **NW¼ of Section 4**, mostly the NE¼ of the NW¼. Confirm by checking where the sixteenth line falls. That gives the plat's location line: "Part of the NW¼ of Section 4, T15N, R23E, Town of Sheboygan, Sheboygan County, Wisconsin."
 
-## 3. Sketch the layout
+## 3. The layout: concept 3
 
-Start from `ch3_concept2.png` (made up, drawn to scale on the real outline). It borrows the pattern of the North Town development just south, where buildings front the streets and the parking sits behind them:
-- **Boulevard:** a divided entry from Playbird Rd (about 90 ft ROW with a planted median), centered on the field.
-- **Commons Loop:** a loop street (66 ft ROW) around an oval green, "The Commons," with a pavilion. It's the center of the neighborhood and the view down the boulevard.
-- **Street B:** gently curving east–west from the loop to the west and east lines, with **stubs** at both edges for future connections.
-- **Mixed use:** two L-shaped buildings framing the boulevard on Playbird Rd (shops below, apartments above), with parking behind.
-- **Retail pad:** at the northwest corner, where the diagonal property line makes an awkward lot anyway.
-- **Apartments:** two L-shaped buildings in the northeast, next to the existing R-4 apartments, with parking in the courtyards.
-- **Townhomes:** rows along Street B, loaded from **rear alleys** (24 ft), so the fronts face the street with no garage doors.
-- **Outlot:** a stormwater pond with a trail loop along the wooded south edge, and a path from the Commons down to it.
+Draft from `ch3_concept3.png` (made up, drawn to scale on the real outline, checked against the rules table):
+- **Street A** (66 ft ROW) from Playbird Rd south to **Street C**, crossing **Street B**.
+- **Street B** (66 ft) east–west with **stubs** to the west and east lines for future connections.
+- **Street C**, a loop from Street B around the middle blocks, with **120-ft centerline curves** (over the City's 100-ft minimum).
+- **North block (on Playbird Rd):** C1 commercial (2.7 ac, the odd-shaped corner), MU1 and MU2 mixed use framing Street A (1.6 ac each), APT1 apartments (3.1 ac) next to the existing R-4 apartments.
+- **Middle blocks:** two tiers of 50-ft lots, the north tier fronting Street B and the south tier fronting Street C. No alleys, no double frontage.
+- **South of Street C:** 50-ft lots backing onto the pond, with a 10-ft walk from Street A's axis down to the trail (the block is about 1,290 ft long, so a crosswalk belongs there).
+- **APT2** (1.4 ac) at the east end, and **Outlot 1** (pond, trail, park) plus **Outlot 2** (park and trail) on the west: about 6.5 ac of open space, far above the 5% (1.6 ac) the Town requires.
+- About **70 residential lots**, averaging about 5,400 sq ft, which the PUD allows because it can vary lot width and area.
 
-Before drafting, check the sketch against the rules table: street widths, block lengths, the boulevard's distance from N 40th St, whether the Town allows alleys and divided streets (and who maintains them), and whether the stubs need temporary turnarounds. Change the sketch if anything breaks a rule, and note what you changed and why. That note is good material for the page.
+Things to fix while drafting (the sketch doesn't do these yet):
+- Make side lot lines **radial** on the curves (the sketch's are straight).
+- Round the property corners at every intersection (12 ft, or 15 ft if the City asks).
+- Add 12-ft utility easements centered on rear lot lines.
+- Decide the townhome or twin-home pattern (for example, pairs of 25-ft twin-home lots inside each 50-ft frontage) and note it as a PUD condition.
 
-Decide the lot sizes for the made-up PUD (for example, 24–26 ft wide townhome lots, one per unit, plus common outlots for the alleys if the Town won't take them), then count roughly how many lots fit in each block.
-
-The first concept (`ch3_concept_sketch.png`, a plain T of two streets) is kept for comparison; the page can show why the second one is better.
+The earlier concepts stay in the folder for the page's "how the design changed" story: concept 1 (a plain T) and concept 2 (looked good, but broke the no-alley rule).
 
 ## 4. Boundary in the fabric
 
@@ -126,22 +125,23 @@ Aim for every lot to front on Street A, Street B or Playbird Rd, with at least t
 
 Export the record's parcels (Tax polygons for `PLAYBIRD-PRELIM-EXAMPLE`) to a table with: lot or outlot name, block, use (townhome, apartment, commercial, outlot, street), area in sq ft and acres, and street frontage in ft. Add **Calculate Geometry** fields for area if they're not there. Save it as `ch3_lots.csv`.
 
-## 9. Review routing table
+## 9. Review routing table (filled in Nov 16, 2026)
 
-Fill this in from step 1. It's the "who gets a copy" sheet a GIS tech or planning assistant keeps for every plat:
+From Town § 337-15 and the City and state rules above:
 
-| Office | Role (approving / objecting / advisory) | What they check | Copies or format |
+| Office | Role | What they check | Copies |
 |---|---|---|---|
-| Town of Sheboygan Plan Commission and Town Board | | | |
-| Sheboygan County Planning (Ch. 71) | | | |
-| City of Sheboygan (ETJ) | | | |
-| Wisconsin DOA Plat Review | | | |
-| Others you find (DOT if a state highway is involved, school district, sanitary district, utilities) | | | |
+| Town of Sheboygan Plan Commission, then Town Board | Approving | Ch. 337 design rules, PUD plan, comprehensive plan; public hearing with notice to owners within 200 ft | 2 + soil data |
+| Sheboygan County Planning & Conservation | Approving (county planning agency) | County Subdivision Ordinance (Ch. 71) | 2 + soil data |
+| City of Sheboygan Planner, Plan Commission and Common Council | Approving (extraterritorial plat jurisdiction) | City Ch. 103 and City plans and official map | 2 |
+| Wisconsin DOA Plat Review | Objecting | State platting law (Wis. Stat. ch. 236) | 2 |
+| Wisconsin DSPS | Objecting where soil tests apply | Lots not served by public sewer (not expected here) | 2 + soil data |
+| Wisconsin DOT | Only if a state highway is abutted | Not needed: Playbird Rd is not a state highway | — |
+| Each utility serving the area | Advisory | Easement locations and widths, due within 10 working days | 1 |
 
 ## 10. Send me
 
 Into a folder like `Claude outputs\Playbird\ch3`:
-- the filled-in rules table and routing table (just type them into a text file or this file)
 - `ch3_lots.csv`
 - the record's parcels exported to a file geodatabase or shapefile (`Export Features` on the Tax polygons, filtered to the record), so I can put them on the web map
 - a screenshot of the fabric with your lots, and one of any QA results
