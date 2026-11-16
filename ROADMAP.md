@@ -2,7 +2,7 @@
 
 Every portfolio idea for krauskagis.com in one place, ranked by how much it helps land a GIS job weighed against how hard it is to build.
 
-Last updated: November 14, 2026 (item 4 done: the legal description reader is live on the Parcel QA page with checks L01 and L02; item 2 done: sweet William card and Ryan Wallin's quote on the Field Season page; item 11: 3D-printed water tower added to the Drone 3D Captures page; earlier the same day: added item 58: finish the Pollinator ArcGIS Online web map and add a click-to-load embed to the page; earlier, Nov 13: item 3 in progress: quotes from Jonathon Stippich and Ryan Wallin are live under their roles in Experience; added the PreGISP exam to Housekeeping; earlier, Nov 12: synced the live pages: Drone 3D Captures (item 11 done), the MKE Airport page with its new radar homepage card, and the AI Use Disclosure; item 1 done: the Winnebago ArcGIS Online dashboard is public and embedded on the page; added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
+Last updated: November 16, 2026 (checked the live site against this roadmap: the MKE Airport page, its radar card, the public dashboard, the Power BI report and the data-flow chart are all live and confirmed done; Playbird Rd statuses synced: item 37 done and item 46 in progress, with chapter 2 live since Nov 13, and the page added to Already live; three small site fixes noted under Housekeeping; earlier, Nov 14: item 4 done: the legal description reader is live on the Parcel QA page with checks L01 and L02; item 2 done: sweet William card and Ryan Wallin's quote on the Field Season page; item 11: 3D-printed water tower added to the Drone 3D Captures page; earlier the same day: added item 58: finish the Pollinator ArcGIS Online web map and add a click-to-load embed to the page; earlier, Nov 13: item 3 in progress: quotes from Jonathon Stippich and Ryan Wallin are live under their roles in Experience; added the PreGISP exam to Housekeeping; earlier, Nov 12: synced the live pages: Drone 3D Captures (item 11 done), the MKE Airport page with its new radar homepage card, and the AI Use Disclosure; item 1 done: the Winnebago ArcGIS Online dashboard is public and embedded on the page; added item 57: a practice ALTA-style survey drawing in Civil 3D, for the survey technician path; earlier, Nov 8: added items 47–56: three more county pipelines like Playbird Rd (road reconstruction, spring flood, shoreland permit), a land-protection pipeline, a printed trail map and brochure, an insurance hailstorm pipeline and four remote sensing pipelines; earlier, Nov 7: new umbrella item 46, "Playbird Rd: from farm field to neighborhood", with items 6, 12, 14, 19, 20, 37–45 as its chapters; item 37 rezoning now I-1 → PUD; earlier: one community per project; item 37 set in the Town of Sheboygan (Playbird Rd field), 200 ft; earlier: added items 37–45: nine everyday county land-records tasks, all Tier 1; earlier the same day: Parcel QA progress synced, and IAT Trail Designer, IAT Parcel Picker and Eddie's Parcel Picker added as items 34–36)
 
 **Status key:** ✅ Done · 🔧 In progress · 🔜 Next up · 💡 Planned for later
 
@@ -53,7 +53,8 @@ Each idea gets two scores from 1 to 5:
 | Parcel and NG911 QA toolkit page and scan-line card | ✅ | COGO drafting (five parcels) and the Lima toolbox run added Nov 6; PostGIS and Quarto parts done; legal description reader section ("Reading the tax roll", checks L01 and L02) added Nov 14 (item 4 complete) |
 | Field Season 2025 page (Restoring Lands) | ✅ | Map gallery, photo-point slider, fall photo map, nine-plant ID strip, Ryan Wallin quote (item 2 complete Nov 14) |
 | Drone 3D Captures page (North Point Water Tower and other Milwaukee splats) | ✅ | Interactive Gaussian splat viewer and homepage card (item 11); "Off the screen" section with the 3D-printed water tower added Nov 14 |
-| MKE Airport Asset Database page and radar card | ✅ | SQL Server spatial database, ArcGIS dashboard, Survey123 inspection loop and Power BI report. Homepage card added Nov 12: the airport's footprints on a radar scope, with a sweep turning about the control tower and the eight sample inspection points flashing red as it passes (built by projects/mke-airport/build_card.py) |
+| MKE Airport Asset Database page and radar card | ✅ | SQL Server spatial database, ArcGIS dashboard, Survey123 inspection loop and Power BI report. Homepage card added Nov 12: the airport's footprints on a radar scope, with a sweep turning about the control tower and the eight sample inspection points flashing red as it passes (built by projects/mke-airport/build_card.py). Checked live Nov 16: page, card, public dashboard (4 active runways, 48 gates, 231 buildings, 104 taxiway segments missing a designator, 3 open work orders), Power BI section and data-flow chart all up. Done |
+| Playbird Rd page and notice-buffer card (item 46) | 🔧 | Chapter 2, the rezoning hearing notice (item 37), live Nov 13; chapter 3 (land division) is next |
 | Employer quotes in Experience (item 3) | 🔧 | PX Design and Restoring Lands live Nov 13; The Wellness Spa still to ask |
 | AI Use Disclosure page | ✅ | Linked from the homepage and from each page's "Built with" line |
 
@@ -63,8 +64,8 @@ Each idea gets two scores from 1 to 5:
 
 | Rank | Item | E | F | Score | Status |
 |---|---|---|---|---|---|
-| 46 | **Playbird Rd: from farm field to neighborhood** (umbrella for the parcel chapters) | 5 | 3 | 4.2 | 🔜 |
-| 37 | Zoning hearing notice packet (Town of Sheboygan, 200 ft) (ch. 2 of 46) | 5 | 5 | 5.0 | 🔜 |
+| 46 | **Playbird Rd: from farm field to neighborhood** (umbrella for the parcel chapters) | 5 | 3 | 4.2 | 🔧 |
+| 37 | Zoning hearing notice packet (Town of Sheboygan, 200 ft) (ch. 2 of 46) | 5 | 5 | 5.0 | ✅ |
 | 1 | County profile dashboard (Winnebago County) | 5 | 4 | 4.6 | ✅ |
 | 2 | Field Season 2025 page (Restoring Lands, Donges Bay Gorge) | 5 | 4 | 4.6 | ✅ |
 | 38 | Year-over-year parcel change report (ch. 6 of 46) | 5 | 4 | 4.6 | 💡 |
@@ -195,7 +196,8 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Not included:** item 4 stays its own county-wide project (the story borrows its tools); the IAT projects (34, 35) stay separate.
 - **Why:** shows how the pieces connect: planning, land records, addressing, 911 and the assessor all touch one development. Very few portfolios show the whole chain, and it gives one strong story for WLIA 2027.
 - **Order:** chapter 2 first (item 37 is ready to start), then 3 and 5 (they reuse item 4), then 1, 6, 8, 4, 7, 0.
-- **Next step:** item 37's hand run in Pro (200 ft selection on parcel 59024341550).
+- **Status (Nov 16):** chapter 2 is live on playbird.html (item 37 done Nov 13).
+- **Next step:** chapter 3, land division: James works through projects/playbird/CH3_YOUR_PART.md.
 
 ### 37–45. Everyday county land-records tasks (added Nov 6)
 *Numbered 37–45 so the other items keep their numbers. All nine score Tier 1: each is a task a county land-records or planning office does every week, and each reuses tools already on hand (the item 4 QA scripts, the PostGIS database, ArcGIS Pro Advanced). Under the one-community-per-project rule, items 38–45 each still need their own county (they were first written for Sheboygan); the Wisconsin Statewide Parcel Map covers every county.*
@@ -634,4 +636,7 @@ Skills that remote sensing and imagery postings ask for but that aren't on the r
 | Keep the resume and Work Experience Repository in sync with the site | 🔧 | Wellness Spa and DuctBuilder updates done |
 | Interview prep tracker (GIS_Candidate_Standout_Tracker.xlsx) | 🔧 | In Documents\Claude outputs |
 | PreGISP exam (earns the GISP-E) | 💡 | Eligible as a Dec 2025 grad. Next exam April 19–26, 2027; register by April 5, 2027. The GISP-E cuts the full GISP experience requirement from 4 years to 3 (gisci.org/PreGISP) |
+| Homepage heading says "Seven projects" but the grid shows nine cards (eight live, one coming) | 💡 | Found Nov 16. Update the count or drop the number |
+| MKE Airport page: view count disagrees with itself | 💡 | Found Nov 16. The Result section says "four reporting views"; "What I built" says "Three views". Make both match the database |
+| MKE Airport page: 232 buildings in the table, 231 on the dashboard and Power BI card | 💡 | Found Nov 16. Likely one inactive building (the cards count active ones); add a short note on the page so it doesn't read as an error |
 | Separate remote sensing version of the resume | 💡 | Pull from the Work Experience Repository's "remote sensing keywords" section; add skills from the table above as items finish |
