@@ -292,7 +292,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         <span class="label">Result</span>
         <div>
           <h2>594 airport features in a database that checks itself</h2>
-          <p>Seven feature tables, an inspection table, five lookup tables and four reporting views, loaded and verified on SQL Server 2022.</p>
+          <p>Seven feature tables, an inspection table, five lookup tables and five reporting views, loaded and verified on SQL Server 2022.</p>
         </div>
       </div>
       <div class="table-scroll">
@@ -302,7 +302,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
             <tr><td>Runway segments (5 runways: pavement, displaced thresholds, stopways)</td><td>Line</td><td class="big after">15</td></tr>
             <tr><td>Taxiway segments</td><td>Line</td><td class="big after">145</td></tr>
             <tr><td>Aprons</td><td>Polygon</td><td class="big after">19</td></tr>
-            <tr><td>Buildings (terminals, hangars, tower, parking and others)</td><td>Polygon</td><td class="big after">232</td></tr>
+            <tr><td>Buildings (terminals, hangars, tower, parking and others; 231 active, 1 demolished)</td><td>Polygon</td><td class="big after">232</td></tr>
             <tr><td>Passenger gates</td><td>Point</td><td class="big after">48</td></tr>
             <tr><td>Airfield markings (holding positions, parking lead-in lines)</td><td>Line</td><td class="big after">102</td></tr>
             <tr><td>Jet bridges</td><td>Line</td><td class="big after">33</td></tr>
@@ -328,9 +328,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
       <div class="prose">
         <ol class="steps">
           <li><span><strong>Source data.</strong> Pulled every aeroway and building feature inside the airport boundary from OpenStreetMap through the Overpass API.</span></li>
-          <li><span><strong>Database design.</strong> One table per asset type, each with a single geometry type in WGS 84. Lookup tables hold the valid values for status, building use, runway segment type and inspection condition, and foreign keys enforce them.</span></li>
+          <li><span><strong>Database design.</strong> One table per asset type, each with a single geometry type in WGS 84. Lookup tables hold the valid values for status, building use, runway segment type, marking type and inspection condition, and foreign keys enforce them.</span></li>
           <li><span><strong>Rules in the database.</strong> CHECK constraints reject the wrong geometry type, the wrong coordinate system, invalid shapes, and zero or negative lengths and areas. Every feature table has a spatial index.</span></li>
-          <li><span><strong>Views and roles.</strong> Three views summarize runways, asset counts and building footprints for reporting. A read-only role and an editor role control access.</span></li>
+          <li><span><strong>Views and roles.</strong> Five views: three summarize runways, asset counts and building footprints, one lists open work orders, and one gives Power BI each inspection with a readable label and plain coordinates. A read-only role and an editor role control access.</span></li>
           <li><span><strong>Checks.</strong> A script reports row counts, runway lengths, invalid geometry, missing attributes, and a spatial check for gates near terminals that are no longer active.</span></li>
           <li><span><strong>Map and dashboard.</strong> Connected ArcGIS Pro to SQL Server, symbolized the layers, published to ArcGIS Online and built the dashboard.</span></li>
         </ol>

@@ -1198,7 +1198,7 @@ DD S0-0-0E 511.90</p>
         <span class="label">In PostGIS</span>
         <div>
           <h2>The same checks as spatial SQL</h2>
-          <p>All 19 checks are also written as SQL views in PostgreSQL 18.6 with PostGIS 3.6.2, on a schema with lookup tables in place of geodatabase domains, foreign keys, CHECK constraints and spatial indexes. Run on the whole county, the SQL and Python versions return the same 1,323 findings on the same features. A Quarto report reads the database and rebuilds every table, map and chart when the county updates its data.</p>
+          <p>All 19 checks are also written as SQL views in PostgreSQL 18.6 with PostGIS 3.6.2, on a schema with lookup tables in place of geodatabase domains, foreign keys, CHECK constraints and spatial indexes. Run on the whole county, the SQL and Python versions return the same 1,323 findings on the same features. That run used a newer download (November 5–6, 2026: 61,811 address points and 9,852 road segments); the map and results table above use the October 26 download, which has 1,321 findings. A Quarto report reads the database and rebuilds every table, map and chart when the county updates its data.</p>
           <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem">
         <a class="btn btn-primary" href="media/parcel-qa/parcel-qa-report.html">Read the report</a>
         <a class="btn btn-ghost" href="media/parcel-qa/parcel-qa-report.pdf">PDF (5 pages)</a>
