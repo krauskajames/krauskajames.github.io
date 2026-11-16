@@ -98,9 +98,9 @@ County boundary courses, measured from the county polygon in WISCRS Sheboygan fe
 ## 5. Streets
 
 Draft the right-of-way lines, not just centerlines:
-1. Draw each **centerline** first in the record (Traverse, or the line tools with distance/direction). The Commons Loop and Street B have **curves**: in the Traverse pane, enter them as curve courses (radius, arc length or chord, and left/right). That's the same skill a surveyor's plat needs, and a good one to show. A true oval isn't a surveyed shape, so build the loop from straight tangents and circular curves (for example, two half-circles joined by short straights).
+1. Draw each **centerline** first in the record (Traverse, or the line tools with distance/direction). Street C has two **120-ft curves**: in the Traverse pane, enter them as curve courses (radius, arc length or chord, and left/right). That's the same skill a surveyor's plat needs, and a good one to show.
 2. Offset both sides by half the ROW width from your rules table (33 ft each side for a 66 ft ROW) using **Edit → Modify → Parallel** (Copy Parallel). Snap the offsets to the boundary.
-3. Where Street A meets Playbird Rd and where A meets B, add **corner curves** on the ROW lines (the Town section on streets may give a minimum radius; 15–25 ft corner radii are common). Use the **Fillet** tool, or enter a curve in the Traverse.
+3. At every intersection, round the ROW corners with a **12-ft radius** (Town § 337-23). Use the **Fillet** tool, or enter a curve in the Traverse.
 4. **Build Active.** The streets become their own parcel (a dedication to the Town) and the blocks between them become separate parcels.
 
 ## 6. Lots
