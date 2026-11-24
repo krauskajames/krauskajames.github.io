@@ -37,6 +37,10 @@ var CONFIG = {
   galleryMonths: [7, 8],
   cottageYears: [1999, 2026],     // Part C: the cottage years (Pipe, then Taycheedah)
 
+  // Run one part at a time. All three at once is more than the free tier allows
+  // ("Too many concurrent aggregations").
+  parts: {daily: false, filmstrips: true, augusts: false},
+
   driveFolder: 'earthengine',
   filePrefix: 'winnebago'
 };
@@ -143,6 +147,7 @@ var stats = ee.FeatureCollection(daily.map(function (img) {
 }));
 
 var good = stats.filter(ee.Filter.gte('clear_frac', CONFIG.minClearFraction));
+if (CONFIG.parts.daily) {
 print('Clear days kept', good.size());
 
 print(ui.Chart.feature.byFeature(good, 't', ['chl_median', 'chl_p90'])
@@ -172,6 +177,7 @@ Export.table.toDrive({
   selectors: ['date', 'clear_frac', 'chl_median', 'chl_p90', 'chl_west', 'chl_east',
               'wind_u', 'wind_v']
 });
+}
 
 // ---- Map ------------------------------------------------------------------
 var CHL_VIS = {min: 0, max: 60, palette: ['08306b', '2171b5', '4eb3d3', '7fcdbb',
@@ -182,27 +188,66 @@ Map.addLayer(ee.Image().paint(west, 1, 2), {palette: ['1e88e5']}, 'West nearshor
 Map.addLayer(ee.Image().paint(east, 1, 2), {palette: ['e65100']}, 'East nearshore strip');
 
 // ---- Part B: one summer as filmstrips -------------------------------------
-var gy = CONFIG.galleryYear, gm = CONFIG.galleryMonths;
-var galleryDates = good
-  .filter(ee.Filter.date(ee.Date.fromYMD(gy, gm[0], 1), ee.Date.fromYMD(gy, gm[1], 1).advance(1, 'month')))
-  .filter(ee.Filter.gte('clear_frac', 0.8))
-  .aggregate_array('date');
-var gallery = daily.filter(ee.Filter.inList('date', galleryDates)).sort('system:time_start');
-print('Gallery dates (' + gy + ')', galleryDates);
+// Days with at least 80% of the lake cloud-free, from the winnebago_daily.csv export (Part A).
+// The filmstrips pick their frames from this list, so Part B needs no lake statistics.
+var CLEAR_DAYS = [
+  '2017-06-10', '2017-06-15', '2017-06-23', '2017-07-05', '2017-07-08', '2017-07-28', '2017-08-02', '2017-09-03',
+  '2017-09-11', '2017-09-18', '2017-09-23', '2018-06-05', '2018-06-08', '2018-06-13', '2018-06-23', '2018-06-28',
+  '2018-06-30', '2018-07-03', '2018-07-08', '2018-07-15', '2018-07-18', '2018-07-23', '2018-07-28', '2018-08-09',
+  '2018-08-12', '2018-08-14', '2018-08-19', '2018-08-22', '2018-09-06', '2018-09-11', '2018-09-13', '2018-09-23',
+  '2018-09-26', '2019-06-08', '2019-06-10', '2019-06-13', '2019-07-03', '2019-07-10', '2019-07-23', '2019-07-25',
+  '2019-07-28', '2019-08-02', '2019-08-04', '2019-08-07', '2019-08-09', '2019-08-19', '2019-08-27', '2019-09-01',
+  '2019-09-18', '2019-09-23', '2019-09-26', '2019-09-28', '2020-06-02', '2020-06-04', '2020-06-14', '2020-06-17',
+  '2020-06-27', '2020-07-04', '2020-07-07', '2020-07-17', '2020-07-19', '2020-07-24', '2020-07-29', '2020-08-06',
+  '2020-08-11', '2020-08-13', '2020-08-16', '2020-08-18', '2020-08-23', '2020-08-26', '2020-09-02', '2020-09-05',
+  '2020-09-17', '2020-09-20', '2020-09-25', '2021-06-02', '2021-06-09', '2021-06-12', '2021-06-14', '2021-06-19',
+  '2021-07-02', '2021-07-04', '2021-07-09', '2021-07-17', '2021-07-19', '2021-07-27', '2021-08-03', '2021-08-13',
+  '2021-08-16', '2021-08-18', '2021-09-05', '2021-09-10', '2021-09-15', '2021-09-17', '2021-09-25', '2021-09-27',
+  '2022-06-02', '2022-06-04', '2022-06-09', '2022-06-12', '2022-06-14', '2022-06-17', '2022-06-22', '2022-06-27',
+  '2022-07-02', '2022-07-09', '2022-07-14', '2022-07-17', '2022-07-22', '2022-08-11', '2022-08-23', '2022-08-26',
+  '2022-08-31', '2022-09-05', '2022-09-07', '2022-09-15', '2022-09-17', '2022-09-30', '2023-06-02', '2023-06-07',
+  '2023-06-09', '2023-06-14', '2023-06-17', '2023-06-22', '2023-06-24', '2023-06-29', '2023-07-07', '2023-07-09',
+  '2023-07-14', '2023-07-22', '2023-07-29', '2023-08-03', '2023-08-06', '2023-08-16', '2023-08-18', '2023-08-23',
+  '2023-08-31', '2023-09-12', '2023-09-15', '2023-09-17', '2024-06-26', '2024-07-01', '2024-07-03', '2024-07-06',
+  '2024-07-13', '2024-07-16', '2024-07-26', '2024-07-31', '2024-08-02', '2024-08-07', '2024-08-10', '2024-08-12',
+  '2024-09-04', '2024-09-09', '2024-09-11', '2024-09-19', '2024-09-21', '2024-09-26', '2024-09-29', '2025-06-01',
+  '2025-06-28', '2025-07-01', '2025-07-03', '2025-07-13', '2025-07-18', '2025-07-20', '2025-07-21', '2025-07-28',
+  '2025-07-31', '2025-08-02', '2025-08-07', '2025-08-15', '2025-08-30', '2025-09-01', '2025-09-09', '2025-09-14',
+  '2025-09-16', '2025-09-29', '2026-06-06', '2026-06-15', '2026-06-16', '2026-06-18', '2026-06-23', '2026-07-06',
+  '2026-07-11', '2026-07-13', '2026-07-23', '2026-07-28', '2026-08-02', '2026-08-20', '2026-08-27', '2026-09-01',
+  '2026-09-09', '2026-09-11', '2026-09-16', '2026-09-23', '2026-09-24', '2026-09-26', '2026-09-29'
+];
 
 var frameArea = lake.bounds().buffer(1500);
 var filmParams = {region: frameArea, dimensions: 480, crs: 'EPSG:3857', framesPerSecond: 1};
-var rgbFrames = gallery.map(function (img) { return img.visualize(RGB_VIS); });
-var chlFrames = gallery.map(function (img) {
-  return img.visualize(RGB_VIS).blend(chlorophyll(img).visualize(CHL_VIS));
-});
-print('True color, clearest days of ' + gy, ui.Thumbnail({image: rgbFrames, params: filmParams}));
-print('Chlorophyll-a over true color', ui.Thumbnail({image: chlFrames, params: filmParams}));
-print('Download links (GIF)', rgbFrames.getVideoThumbURL(filmParams),
-      chlFrames.getVideoThumbURL(filmParams));
+
+if (CONFIG.parts.filmstrips) {
+  var gy = CONFIG.galleryYear, gm = CONFIG.galleryMonths;
+  var galleryDates = CLEAR_DAYS.filter(function (d) {
+    var y = Number(d.slice(0, 4)), m = Number(d.slice(5, 7));
+    return y === gy && m >= gm[0] && m <= gm[1];
+  });
+  print('Gallery dates (' + gy + '), one frame each, in order', galleryDates);
+  if (galleryDates.length === 0) { throw new Error('No clear days listed for ' + gy + '. Pick another galleryYear.'); }
+
+  // One mosaic per listed day, built straight from the Sentinel-2 tiles.
+  var gallery = ee.ImageCollection.fromImages(galleryDates.map(function (d) {
+    var d0 = ee.Date(d);
+    return s2.filterDate(d0, d0.advance(1, 'day')).mosaic().set('system:time_start', d0.millis(), 'date', d);
+  }));
+  var rgbFrames = gallery.map(function (img) { return img.visualize(RGB_VIS); });
+  var chlFrames = gallery.map(function (img) {
+    return img.visualize(RGB_VIS).blend(chlorophyll(img).visualize(CHL_VIS));
+  });
+  print('True color, clearest days of ' + gy, ui.Thumbnail({image: rgbFrames, params: filmParams}));
+  print('Chlorophyll-a over true color', ui.Thumbnail({image: chlFrames, params: filmParams}));
+  print('Download link, true color (GIF)', rgbFrames.getVideoThumbURL(filmParams));
+  print('Download link, chlorophyll (GIF)', chlFrames.getVideoThumbURL(filmParams));
+}
 
 // ---- Part C: Augusts at the cottage (Landsat, 1984 on) ---------------------
 // Landsat 7 is left out: its scan-line stripes after 2003 would cross the lake.
+if (CONFIG.parts.augusts) {
 var L5 = ee.ImageCollection('LANDSAT/LT05/C02/T1_L2').select(['SR_B3', 'SR_B2', 'SR_B1'], ['R', 'G', 'B']);
 var L89 = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2').merge(ee.ImageCollection('LANDSAT/LC09/C02/T1_L2'))
   .select(['SR_B4', 'SR_B3', 'SR_B2'], ['R', 'G', 'B']);
@@ -226,3 +271,4 @@ print('Landsat scene dates used', augusts.aggregate_array('DATE_ACQUIRED'));
 print('Late summers on the lake, ' + CONFIG.cottageYears.join('–'),
       ui.Thumbnail({image: augustFrames, params: filmParams}));
 print('Download link (GIF)', augustFrames.getVideoThumbURL(filmParams));
+}

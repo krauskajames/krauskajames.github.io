@@ -114,7 +114,7 @@ Monthly medians smooth over the blooms you remember. Blooms come and go in days 
 - It records chlorophyll in a **2 km strip along the east shore** and the **west shore**.
 - It records the **wind for that day and the two days before** (ERA5-Land).
 
-1. Paste `winnebago_blooms.js` into a new script named `winnebago_daily` and press **Run**.
+1. Paste `winnebago_blooms.js` into a new script named `winnebago_daily`. In the settings, `parts` chooses what runs: set `daily: true` and the other two to `false` for this step. Running all three parts at once fails on the free tier with "Too many concurrent aggregations". Press **Run**.
 2. The Console prints, in order:
    - **Clear days kept**: how many days have at least half the lake cloud-free.
    - A dot chart of chlorophyll on every clear day.
@@ -129,7 +129,7 @@ Monthly medians smooth over the blooms you remember. Blooms come and go in days 
 
 ## 4. Make the summer filmstrips
 
-The same script (Part B) prints two animations of the clearest July and August days of `galleryYear` (2025):
+Set `parts` to `filmstrips: true` and the other two to `false`. Part B then prints two animations of the clearest July and August days of `galleryYear` (2025). The frames come from the list of clear days in the script, taken from the `winnebago_daily.csv` export:
 
 - **True color**: what the lake looked like from space. Blooms show as green swirls and streaks.
 - **Chlorophyll over true color**: the same days colored by chlorophyll-a (blue = low, red = high).
@@ -138,13 +138,13 @@ The same script (Part B) prints two animations of the clearest July and August d
 2. Click each **Download link (GIF)** and save the GIFs.
 3. Try another summer: change `galleryYear` (2018–2025) and run again. Pick the most striking year for the page.
 
-If a filmstrip is empty, that summer had few clear days. Lower `0.8` in the `galleryDates` filter to `0.6`, or pick another year.
+If the script says there are no clear days listed for that year, pick another year. Summer 2019 has the strongest east-shore blooms in the record (July 28 and August 19).
 
 ---
 
 ## 5. Find the Augusts at the cottage
 
-Part C finds the clearest Landsat image of the lake from late July through August, for every year in `cottageYears`, back to 1984. It strings them into one filmstrip, one summer per frame.
+Set `parts` to `augusts: true` and the other two to `false`. Part C finds the clearest Landsat image of the lake from late July through August, for every year in `cottageYears`, back to 1984. It strings them into one filmstrip, one summer per frame.
 
 1. `cottageYears` is already set to `[1999, 2026]`. The script prints which date each frame comes from. 2012 will be missing (Landsat 5 had stopped and Landsat 8 hadn't launched yet).
 2. Run it and save the GIF from the **Download link**.
