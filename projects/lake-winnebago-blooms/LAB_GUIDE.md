@@ -25,15 +25,15 @@ The ice log for chapter 4 has to happen this winter, so it's set up now. See **W
 
 | # | Task | Time | Done |
 |---|---|---|---|
-| 0 | Set up Earth Engine | 20 min | ☐ |
-| 1 | Warm up with three course lessons | 1.5–2 h | ☐ |
-| 2 | Run the monthly chlorophyll monitor on Lake Winnebago | 45 min | ☐ |
-| 3 | Run the daily script: clear days, east vs. west shore, wind | 45 min | ☐ |
-| 4 | Make the summer filmstrips | 20 min | ☐ |
-| 5 | Find the Augusts at the cottage (Landsat, back to 1984) | 30 min | ☐ |
-| 6 | Download the DNR's chlorophyll samples | 30 min | ☐ |
-| 7 | Write the story | 1–2 h | ☐ |
-| 8 | Send me the files | 10 min | ☐ |
+| 0 | Set up Earth Engine | 20 min | ☑ |
+| 1 | Warm up with three course lessons | 1.5–2 h | ☑ |
+| 2 | Run the monthly chlorophyll monitor on Lake Winnebago | 45 min | ☑ |
+| 3 | Run the daily script: clear days, east vs. west shore, wind | 45 min | ☑ |
+| 4 | Make the summer filmstrips | 20 min | ☑ |
+| 5 | Find the Augusts at the cottage (Landsat, back to 1984) | 30 min | ☑ |
+| 6 | Download the DNR's chlorophyll samples | 30 min | ☑ |
+| 7 | Write the story | 1–2 h | ☑ |
+| 8 | Send me the files | 10 min | ☑ |
 
 **Files in this folder**
 
