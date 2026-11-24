@@ -34,7 +34,7 @@ By the direction the wind came from:
 | E | 21 | 38% | −1.1 |
 | NE | 36 | 25% | −4.4 |
 
-Grandma JoAnn's claim names the northwest wind. For the east shore as a whole the west and southwest winds do it. Open question (James to design): test the claim at the cottage near Pipe, not along the whole shore.
+Grandma JoAnn's claim: "The west wind blows the blue-green algae from the other side of the lake." The data agrees. A west wind is the strongest of the eight directions: the east shore is worse on 80% of those days. James also remembers finding the mat from a boat while it was crossing the lake; a possible follow-up is to show a mat moving east across consecutive clear days.
 
 Limits: days are not independent; clear days only; an index until validated; even in light wind the east shore is higher 61% of the time.
 
