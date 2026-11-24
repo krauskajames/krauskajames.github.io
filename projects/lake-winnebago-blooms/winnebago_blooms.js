@@ -241,8 +241,13 @@ if (CONFIG.parts.filmstrips) {
   });
   print('True color, clearest days of ' + gy, ui.Thumbnail({image: rgbFrames, params: filmParams}));
   print('Chlorophyll-a over true color', ui.Thumbnail({image: chlFrames, params: filmParams}));
-  print('Download link, true color (GIF)', rgbFrames.getVideoThumbURL(filmParams));
-  print('Download link, chlorophyll (GIF)', chlFrames.getVideoThumbURL(filmParams));
+  // The links are requested in the background (with a callback) so the page does not freeze.
+  rgbFrames.getVideoThumbURL(filmParams, function (url, err) {
+    print('Download link, true color (GIF)', err || url);
+  });
+  chlFrames.getVideoThumbURL(filmParams, function (url, err) {
+    print('Download link, chlorophyll (GIF)', err || url);
+  });
 }
 
 // ---- Part C: Augusts at the cottage (Landsat, 1984 on) ---------------------
@@ -252,6 +257,7 @@ var L5 = ee.ImageCollection('LANDSAT/LT05/C02/T1_L2').select(['SR_B3', 'SR_B2', 
 var L89 = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2').merge(ee.ImageCollection('LANDSAT/LC09/C02/T1_L2'))
   .select(['SR_B4', 'SR_B3', 'SR_B2'], ['R', 'G', 'B']);
 var summerLandsat = L5.merge(L89)
+  .filterBounds(lake)
   .filter(ee.Filter.contains({leftField: '.geo', rightValue: lake}))
   .filter(ee.Filter.calendarRange(200, 240, 'day_of_year'))   // about July 19 to August 28
   .filter(ee.Filter.lt('CLOUD_COVER', 30));
@@ -270,5 +276,7 @@ var augustFrames = augusts.map(function (img) { return img.visualize(LS_VIS); })
 print('Landsat scene dates used', augusts.aggregate_array('DATE_ACQUIRED'));
 print('Late summers on the lake, ' + CONFIG.cottageYears.join('–'),
       ui.Thumbnail({image: augustFrames, params: filmParams}));
-print('Download link (GIF)', augustFrames.getVideoThumbURL(filmParams));
+augustFrames.getVideoThumbURL(filmParams, function (url, err) {
+  print('Download link (GIF)', err || url);
+});
 }
