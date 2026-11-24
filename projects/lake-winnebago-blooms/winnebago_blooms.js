@@ -256,19 +256,19 @@ if (CONFIG.parts.augusts) {
 var L5 = ee.ImageCollection('LANDSAT/LT05/C02/T1_L2').select(['SR_B3', 'SR_B2', 'SR_B1'], ['R', 'G', 'B']);
 var L89 = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2').merge(ee.ImageCollection('LANDSAT/LC09/C02/T1_L2'))
   .select(['SR_B4', 'SR_B3', 'SR_B2'], ['R', 'G', 'B']);
+// filterBounds and filterDate come first so only the few hundred scenes over the lake are examined.
 var summerLandsat = L5.merge(L89)
   .filterBounds(lake)
-  .filter(ee.Filter.contains({leftField: '.geo', rightValue: lake}))
+  .filterDate(CONFIG.cottageYears[0] + '-01-01', (CONFIG.cottageYears[1] + 1) + '-01-01')
   .filter(ee.Filter.calendarRange(200, 240, 'day_of_year'))   // about July 19 to August 28
-  .filter(ee.Filter.lt('CLOUD_COVER', 30));
+  .filter(ee.Filter.lt('CLOUD_COVER', 30))
+  .filter(ee.Filter.contains({leftField: '.geo', rightValue: lake}));   // whole lake in one scene
 
+// The least cloudy scene of each summer. Years with no scene simply add nothing.
 var years = ee.List.sequence(CONFIG.cottageYears[0], CONFIG.cottageYears[1]);
-var augusts = ee.ImageCollection(years.map(function (y) {
-  var c = summerLandsat.filter(ee.Filter.calendarRange(y, y, 'year')).sort('CLOUD_COVER');
-  return ee.Image(ee.Algorithms.If(c.size().gt(0),
-    c.first().set('empty', 0),
-    ee.Image.constant([0, 0, 0]).rename(['R', 'G', 'B']).updateMask(0).set('empty', 1)));
-})).filter(ee.Filter.eq('empty', 0));
+var augusts = ee.ImageCollection(ee.FeatureCollection(years.map(function (y) {
+  return summerLandsat.filter(ee.Filter.calendarRange(y, y, 'year')).limit(1, 'CLOUD_COVER');
+})).flatten()).sort('system:time_start');
 
 // Collection 2 surface reflectance: reflectance = DN * 0.0000275 - 0.2, so 0 to 0.25 is 7273 to 16364.
 var LS_VIS = {bands: ['R', 'G', 'B'], min: 7273, max: 16364, gamma: 1.2};
