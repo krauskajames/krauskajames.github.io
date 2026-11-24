@@ -71,3 +71,16 @@ The fishing report adds a mechanism the wind test does not capture: strong wind 
 Fox-Wolf Watershed Alliance (fwwa.org/harmful-algae) runs a public bloom report form; reports go to FWWA, the UW Oshkosh HABs research team and the DNR. No records are posted. Possible contact for a dated report log.
 
 Idea for the page: a table of dated public reports (news, fishing reports, advisories) beside the satellite numbers for the same days.
+
+## USGS boat transects, 2023–2025 (found by James, November 24, 2026)
+Phycocyanin (blue-green pigment) from a boat-mounted sensor, with GPS, including runs close to the east shore. First look, median phycocyanin (RFU) east of −88.36 against west of −88.47:
+| Boat date | East | West | Nearest clear Sentinel-2 day (chlorophyll, mg/m³) |
+|---|---|---|---|
+| Aug 7, 2023 | 1.34 | 2.76 | Aug 6: east 25.1, west 26.3, after an east wind |
+| June 24, 2024 | 0.52 | 1.48 | June 26: east 20.7, west 17.5 |
+| July 29, 2024 | 6.25 | 3.86 | July 31: east 68.7, west 24.2 |
+| Aug 19, 2024 | 3.44 | 3.21 | Aug 20: east 31.7, west 33.2 |
+
+Three of the four agree in direction. The two halves of each boat run are hours apart, so this is rough.
+Same-day candidate: on July 8, 2025 the boat ran 16:03–16:46 UTC in the northeast part of the lake and Sentinel-2 passed that morning with 55% of the lake clear. July 29, 2024 has the strongest bloom but Sentinel-2 was clouded out on July 28 and next clear on July 31; Sentinel-3 or Landsat may cover it.
+Next: sample the satellite pixel under each 60 m cell in Earth Engine.
