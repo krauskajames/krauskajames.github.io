@@ -62,6 +62,10 @@ Limits: days are not independent; clear days only; an index until validated; eve
 | WBAY: algae bloom on Lake Winnebago | Jun 29, 2018 | Jun 28: median 43.5 (a normal June is 14–21), 90th percentile 86.5; west 40.5, east 29.2 after an east wind. |
 | AnglingBuzz fishing report, Mark Schram: strong bloom, pea soup in protected areas, recent winds mixed the algae down, few slicks on the main lake as of Tuesday Sep 18 | Sep 20, 2018 | Sep 16: median 53.5, east 77.5, west 33.7. Sep 18 and 21: cloud. Sep 23: median 37.5. Sep 26: 22.5. |
 
+| WBAY: Winnebago County Health Department warns people away from the blooms; the beach at High Cliff State Park had been closed for several days | Aug 6, 2019 | Aug 4: east 84.8, west 41.8, bright green scum visible at the north end in true color. Aug 7: east 52.2, west 23.8. |
+
+NOAA NCCOS posts Sentinel-3 imagery of Green Bay and Lake Winnebago (the last two weeks, with a GeoTIFF archive in its HABs Explorer app). UW-Milwaukee (Todd Miller) has run a sampling buoy on the lake for algal toxins.
+
 The fishing report adds a mechanism the wind test does not capture: strong wind mixes floating algae down into the water, so slicks form in calm weather and are moved by light to moderate wind.
 
 Fox-Wolf Watershed Alliance (fwwa.org/harmful-algae) runs a public bloom report form; reports go to FWWA, the UW Oshkosh HABs research team and the DNR. No records are posted. Possible contact for a dated report log.

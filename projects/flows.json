@@ -34,5 +34,11 @@
   "projects/starcast",
   "The worldwide forecast is prepared ahead of time by a scheduled job, so the app downloads small files instead of calling a weather service for every visitor.",
   "Every 6 hours a GitHub Actions job finds the newest NOAA GFS run and downloads only the fields it needs. A Python script decodes the GRIB2 files and packs each forecast hour into a 1 degree grid. In the browser the app interpolates the grid, estimates seeing and transparency, and blends in Open-Meteo regional forecasts, Copernicus CAMS haze, NOAA SWPC aurora data, and OpenStreetMap parks with OSRM drive times. It produces the Starcast forecast globe, spot forecasts and the Where to go list, and a scheduled job sends clear-night notices."
+ ],
+ [
+  "lake-winnebago.html",
+  "projects/lake-winnebago-blooms",
+  "Satellite images and wind go through two Earth Engine scripts, and their exports are checked against lab samples and against what people on the water reported.",
+  "Sentinel-2 summer passes from 2017 to 2026 with Cloud Score+ cloud masks feed two Google Earth Engine scripts: lake_chlorophyll.js for monthly lake chlorophyll-a, and winnebago_blooms.js for daily chlorophyll-a, east and west shore strips, three-day wind and filmstrips. Landsat 5, 8 and 9 late-summer scenes from 1999 to 2026 and ERA5-Land daily wind also feed the daily script. Both scripts export CSV files to build_page.py, a Python script that runs the wind test, compares the satellite with Wisconsin DNR lab samples from three in-lake stations downloaded from the Water Quality Portal, and builds the charts and tables. The filmstrips, the charts and tables, and news reports, fishing reports and family photos all appear on this page."
  ]
 ]

@@ -1,0 +1,28 @@
+%% Data flow for this project page. Rendered and placed on the page by projects/build_flow.py (Mermaid, mermaid-cli).
+flowchart TB
+  subgraph S["Sources"]
+    S2["<b>Sentinel-2</b><br/>every summer pass,<br/>2017–2026, with Cloud<br/>Score+ cloud masks"]
+    LS["<b>Landsat 5, 8 and 9</b><br/>late-summer scenes,<br/>1999–2026"]
+    ERA["<b>ERA5-Land</b><br/>daily wind around the lake"]
+    DNR["<b>Wisconsin DNR lab samples</b><br/>three in-lake stations, from<br/>the Water Quality Portal"]
+    PEOPLE["<b>People on the water</b><br/>news and fishing reports,<br/>family photos"]
+  end
+  subgraph P["Processing"]
+    MON["<b>lake_chlorophyll.js</b><br/>monthly lake chlorophyll-a<br/>(Earth Engine)"]
+    DAY["<b>winnebago_blooms.js</b><br/>daily chlorophyll-a, east and west<br/>shore strips, three-day wind,<br/>filmstrips (Earth Engine)"]
+    PY["<b>build_page.py</b><br/>reads the exported CSV files:<br/>wind test, DNR comparison,<br/>charts and tables (Python)"]
+    MON --> PY
+    DAY --> PY
+  end
+  subgraph O["What it produces"]
+    FILM["<b>Filmstrips</b><br/>summer 2019 and the<br/>cottage years"]
+    PAGE["<b>This page</b><br/>charts, tables and the<br/>report comparison"]
+  end
+  S2 --> MON
+  S2 --> DAY
+  LS --> DAY
+  ERA --> DAY
+  DNR --> PY
+  PEOPLE --> PAGE
+  DAY --> FILM
+  PY --> PAGE
