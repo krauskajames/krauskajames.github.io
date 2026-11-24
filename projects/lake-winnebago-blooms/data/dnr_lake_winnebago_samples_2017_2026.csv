@@ -1,0 +1,493 @@
+station_id,station,lat,lon,date,time,parameter,value,unit,fraction,method,comment,result_id
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-05-08,09:30:00,"Depth, Secchi disk depth",6,ft,Total,,,STORET-616219153
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-05-08,09:30:00,"Depth, Secchi disk depth",6,ft,Total,,,STORET-616219568
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-05-08,09:30:00,Phosphorus,0.0322,mg/L,Total,Phosphorus by Colorimetry,,STORET-729751254
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2017-05-08,00:15:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-616219203
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2017-05-08,00:15:00,Phosphorus,0.0499,mg/L,Total,Phosphorus by Colorimetry,,STORET-729751253
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-05-08,11:15:00,"Depth, Secchi disk depth",5.0,ft,Total,,,STORET-616219184
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-05-08,11:15:00,Phosphorus,0.0423,mg/L,Total,Phosphorus by Colorimetry,,STORET-729751255
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-06-01,11:00:00,"Depth, Secchi disk depth",7.5,ft,Total,,,STORET-671730657
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-06-08,10:00:00,"Depth, Secchi disk depth",3.0,ft,Total,,,STORET-671730660
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-06-21,13:00:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-671730663
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-06-29,10:00:00,"Depth, Secchi disk depth",1.5,ft,Total,,,STORET-671730666
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-07-07,14:00:00,"Depth, Secchi disk depth",3.0,ft,Total,,,STORET-671730669
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-07-17,11:50:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-647780781
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-07-17,11:50:00,Phosphorus,0.0870,mg/L,Total,Phosphorus by Colorimetry,,STORET-723770643
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2017-07-17,14:30:00,"Depth, Secchi disk depth",4.75,ft,Total,,,STORET-647780813
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2017-07-17,14:30:00,Phosphorus,0.105,mg/L,Total,Phosphorus by Colorimetry,,STORET-723770644
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-07-17,12:30:00,Chlorophyll a (probe relative fluorescence),28.8,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-671730651
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-07-17,12:30:00,"Depth, Secchi disk depth",4,ft,Total,,,STORET-671730654
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-07-17,12:30:00,"Depth, Secchi disk depth",4.75,ft,Total,,,STORET-647780830
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-07-17,12:30:00,Phosphorus,0.0929,mg/L,Total,Phosphorus by Colorimetry,,STORET-723770645
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-07-24,14:00:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-671730672
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-07-31,12:00:00,"Depth, Secchi disk depth",2.75,ft,Total,,,STORET-671730675
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-08-07,12:00:00,"Depth, Secchi disk depth",3.75,ft,Total,,,STORET-671730678
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-08-08,11:25:00,Chlorophyll a (probe relative fluorescence),109,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-716989908
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-08-08,11:25:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-657692229
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-08-08,11:25:00,Phosphorus,0.0861,mg/L,Total,Phosphorus by Colorimetry,,STORET-716989909
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2017-08-08,,Chlorophyll a (probe relative fluorescence),40.1,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-728318977
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2017-08-08,,"Depth, Secchi disk depth",3.0,ft,Total,,,STORET-657692262
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2017-08-08,,Phosphorus,0.114,mg/L,Total,Phosphorus by Colorimetry,,STORET-728318978
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-08-08,12:45:00,Chlorophyll a (probe relative fluorescence),40.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-716989910
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-08-08,12:45:00,"Depth, Secchi disk depth",3.0,ft,Total,,,STORET-657692285
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-08-08,12:45:00,Phosphorus,0.0848,mg/L,Total,Phosphorus by Colorimetry,,STORET-716989911
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-08-15,10:00:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-671730681
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-08-23,14:00:00,"Depth, Secchi disk depth",2.75,ft,Total,,,STORET-671730684
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-09-01,15:00:00,"Depth, Secchi disk depth",2.25,ft,Total,,,STORET-671730687
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-09-28,09:00:00,Chlorophyll a (probe relative fluorescence),38.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-713762909
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-09-28,09:00:00,Chlorophyll a (probe relative fluorescence),34.7,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-713762915
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-09-28,09:00:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-669870300
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-09-28,09:00:00,Phosphorus,0.0675,mg/L,Total,Phosphorus by Colorimetry,,STORET-713762911
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2017-09-28,09:00:00,Phosphorus,0.0770,mg/L,Total,Phosphorus by Colorimetry,,STORET-713762917
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2017-09-28,,Chlorophyll a (probe relative fluorescence),34.7,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-713762921
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2017-09-28,,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-669870329
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2017-09-28,,Phosphorus,0.109,mg/L,Total,Phosphorus by Colorimetry,,STORET-713762923
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-09-28,10:30:00,Chlorophyll a (probe relative fluorescence),27.1,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-713762927
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-09-28,10:30:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-669870352
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2017-09-28,10:30:00,Phosphorus,0.0813,mg/L,Total,Phosphorus by Colorimetry,,STORET-713762929
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-05-26,12:00:00,"Depth, Secchi disk depth",12.0,ft,Total,,,STORET-739482746
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-06-04,11:00:00,"Depth, Secchi disk depth",9.0,ft,Total,,,STORET-739482749
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-06-14,10:00:00,Chlorophyll a (probe relative fluorescence),8.03,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-729776595
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-06-14,10:00:00,"Depth, Secchi disk depth",5.0,ft,Total,,,STORET-728318947
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-06-14,10:00:00,Phosphorus,0.0729,mg/L,Total,Phosphorus by Colorimetry,,STORET-729769530
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-06-14,11:30:00,Chlorophyll a (probe relative fluorescence),6.57,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-729776594
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-06-14,11:30:00,"Depth, Secchi disk depth",6.0,ft,Total,,,STORET-728318979
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-06-14,11:30:00,Phosphorus,0.114,mg/L,Total,Phosphorus by Colorimetry,,STORET-729753155
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-06-14,11:05:00,Chlorophyll a (probe relative fluorescence),12.5,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-729776596
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-06-14,11:05:00,"Depth, Secchi disk depth",8.5,ft,Total,,,STORET-739482716
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-06-14,10:50:00,"Depth, Secchi disk depth",4.5,ft,Total,,,STORET-728319000
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-06-14,10:50:00,Phosphorus,0.0806,mg/L,Total,Phosphorus by Colorimetry,,STORET-729753154
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-06-23,11:00:00,"Depth, Secchi disk depth",3.75,ft,Total,,,STORET-739482752
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-06-30,11:00:00,"Depth, Secchi disk depth",3.0,ft,Total,,,STORET-739482755
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-07-09,13:00:00,"Depth, Secchi disk depth",2.75,ft,Total,,,STORET-739482758
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-07-17,13:20:00,Chlorophyll a (probe relative fluorescence),40.2,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-732819228
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-07-17,13:20:00,Chlorophyll a (probe relative fluorescence),39.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-732819225
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-07-17,13:20:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-731920558
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-07-17,13:20:00,Phosphorus,0.0715,mg/L,Total,Phosphorus by Colorimetry,,STORET-732819226
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-07-17,11:25:00,Chlorophyll a (probe relative fluorescence),18.5,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-732819237
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-07-17,11:25:00,Chlorophyll a (probe relative fluorescence),28.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-732819234
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-07-17,11:25:00,Chlorophyll a (probe relative fluorescence),34.6,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-732819230
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-07-17,11:25:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-731920589
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-07-17,11:25:00,Phosphorus,0.189,mg/L,Total,Phosphorus by Colorimetry,,STORET-732819231
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-07-17,11:25:00,Phosphorus,0.193,mg/L,Total,Phosphorus by Colorimetry,,STORET-732819235
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-07-17,12:15:00,Chlorophyll a (probe relative fluorescence),33.8,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-732819239
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-07-17,12:15:00,Chlorophyll a (probe relative fluorescence),34.5,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-732819242
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-07-17,10:00:00,"Depth, Secchi disk depth",3.75,ft,Total,,,STORET-739482761
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-07-17,12:15:00,"Depth, Secchi disk depth",3.0,ft,Total,,,STORET-731920610
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-07-17,12:15:00,Phosphorus,0.123,mg/L,Total,Phosphorus by Colorimetry,,STORET-732819240
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-07-25,10:00:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-739482764
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-08-03,13:00:00,"Depth, Secchi disk depth",1.75,ft,Total,,,STORET-739482767
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-08-11,12:00:00,"Depth, Secchi disk depth",2.75,ft,Total,,,STORET-739482770
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-08-19,13:00:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-739482773
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-08-20,10:40:00,Chlorophyll a (probe relative fluorescence),77.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-735544244
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-08-20,10:40:00,Chlorophyll a (probe relative fluorescence),68.8,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-735544242
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-08-20,10:40:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-733157534
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-08-20,10:40:00,Phosphorus,0.0954,mg/L,Total,Phosphorus by Colorimetry,,STORET-735544243
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-08-20,13:00:00,Chlorophyll a (probe relative fluorescence),87.2,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-735544251
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-08-20,15:02:00,Chlorophyll a (probe relative fluorescence),84.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-735544249
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-08-20,15:03:00,Chlorophyll a (probe relative fluorescence),86.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-735544252
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-08-20,15:02:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-733157556
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-08-20,15:02:00,Phosphorus,0.0961,mg/L,Total,Phosphorus by Colorimetry,,STORET-735544250
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-08-20,13:10:00,Chlorophyll a (probe relative fluorescence),87.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-735544257
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-08-20,13:00:00,Chlorophyll a (probe relative fluorescence),93.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-735544259
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-08-20,13:10:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-733157581
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-08-20,13:10:00,Phosphorus,0.119,mg/L,Total,Phosphorus by Colorimetry,,STORET-735544258
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-10-02,12:30:00,Chlorophyll a (probe relative fluorescence),8.15,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-747696031
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-10-02,12:30:00,Chlorophyll a (probe relative fluorescence),20.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-747696032
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-10-02,00:30:00,Chlorophyll a (probe relative fluorescence),20.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-747696021
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-10-02,12:30:00,Chlorophyll a (probe relative fluorescence),,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-747696027
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-10-02,00:30:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-739482680
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-10-02,12:30:00,Phosphorus,,mg/L,Total,Phosphorus by Colorimetry,,STORET-747696029
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2018-10-02,00:30:00,Phosphorus,0.0811,mg/L,Total,Phosphorus by Colorimetry,,STORET-747696023
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-10-02,14:00:00,Chlorophyll a (probe relative fluorescence),36.5,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-747696039
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-10-02,14:00:00,Chlorophyll a (probe relative fluorescence),21.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-747696035
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-10-02,14:00:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-739482706
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2018-10-02,14:00:00,Phosphorus,0.199,mg/L,Total,Phosphorus by Colorimetry,,STORET-747696037
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-10-02,13:00:00,Chlorophyll a (probe relative fluorescence),33.1,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-747696042
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-10-02,13:00:00,Chlorophyll a (probe relative fluorescence),8.79,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,Analyzed past the 28 days holding time.,STORET-747696046
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-10-02,13:00:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-739482734
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2018-10-02,13:00:00,Phosphorus,0.0869,mg/L,Total,Phosphorus by Colorimetry,,STORET-747696044
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-05-31,09:40:00,"Depth, Secchi disk depth",7.25,ft,Total,,,STORET-790183077
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-05-31,09:40:00,Phosphorus,0.0269,mg/L,Total,Phosphorus by Colorimetry,,STORET-790184109
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-05-31,13:25:00,"Depth, Secchi disk depth",5,ft,Total,,,STORET-790183008
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-05-31,13:25:00,Phosphorus,0.0576,mg/L,Total,Phosphorus by Colorimetry,,STORET-790184111
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-05-31,,"Depth, Secchi disk depth",8.5,ft,Total,,,STORET-790183044
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-05-31,,Phosphorus,0.0451,mg/L,Total,Phosphorus by Colorimetry,,STORET-790184110
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-07-17,09:30:00,Chlorophyll a (probe relative fluorescence),70.8,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-794778715
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-07-17,09:30:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-794778684
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-07-17,09:30:00,Phosphorus,0.0995,mg/L,Total,Phosphorus by Colorimetry,,STORET-794778716
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-07-17,11:20:00,Chlorophyll a (probe relative fluorescence),83.2,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-794778738
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-07-17,11:20:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-794778717
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-07-17,11:20:00,Phosphorus,0.108,mg/L,Total,Phosphorus by Colorimetry,,STORET-794778739
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-07-17,10:35:00,Chlorophyll a (probe relative fluorescence),71.1,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-794778771
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-07-17,10:35:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-794778740
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-07-17,10:35:00,Phosphorus,0.0744,mg/L,Total,Phosphorus by Colorimetry,,STORET-794778772
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-08-29,09:40:00,Chlorophyll a (probe relative fluorescence),92.9,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-798446312
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-08-29,09:40:00,"Depth, Secchi disk depth",2,ft,Total,,,STORET-797751091
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-08-29,09:40:00,Phosphorus,0.141,mg/L,Total,Phosphorus by Colorimetry,,STORET-798446307
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-08-30,10:10:00,Chlorophyll a (probe relative fluorescence),109,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-798446320
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-08-30,10:10:00,"Depth, Secchi disk depth",1.5,ft,Total,,,STORET-797751122
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-08-30,10:10:00,Phosphorus,0.265,mg/L,Total,Phosphorus by Colorimetry,,STORET-798446315
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-08-30,11:20:00,Chlorophyll a (probe relative fluorescence),104,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-798446328
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-08-30,11:20:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-797751143
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-08-30,11:20:00,Phosphorus,0.121,mg/L,Total,Phosphorus by Colorimetry,,STORET-798446323
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-09-16,10:40:00,Chlorophyll a (probe relative fluorescence),62.6,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-801047195
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-09-16,10:40:00,"Depth, Secchi disk depth",1.0,ft,Total,,,STORET-798060373
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-09-16,10:40:00,"Depth, Secchi disk depth",1,ft,Total,,,STORET-801047197
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2019-09-16,10:40:00,Phosphorus,0.145,mg/L,Total,Phosphorus by Colorimetry,,STORET-801047196
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-09-16,11:46:00,Chlorophyll a (probe relative fluorescence),0.566,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-801047204
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-09-16,11:46:00,Chlorophyll a (probe relative fluorescence),18.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-801047201
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-09-16,11:46:00,Chlorophyll a (probe relative fluorescence),19.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-801047198
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-09-16,11:46:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-801047203
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-09-16,11:46:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-801047206
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-09-16,11:46:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-801047200
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-09-16,11:46:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-798060404
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-09-16,11:46:00,Phosphorus,0.113,mg/L,Total,Phosphorus by Colorimetry,,STORET-801047202
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-09-16,11:46:00,Phosphorus,0.108,mg/L,Total,Phosphorus by Colorimetry,,STORET-801047199
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2019-09-16,11:46:00,Phosphorus,,mg/L,Total,Phosphorus by Colorimetry,,STORET-801047205
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-09-16,12:45:00,Chlorophyll a (probe relative fluorescence),58.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-801047210
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-09-16,12:45:00,Chlorophyll a (probe relative fluorescence),58.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-801047207
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-09-16,12:45:00,Chlorophyll a (probe relative fluorescence),0.307,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-801047213
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-09-16,12:45:00,"Depth, Secchi disk depth",2.8,ft,Total,,,STORET-801047209
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-09-16,12:45:00,"Depth, Secchi disk depth",2.8,ft,Total,,,STORET-801047215
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-09-16,12:45:00,"Depth, Secchi disk depth",2.8,ft,Total,,,STORET-801047212
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-09-16,12:45:00,"Depth, Secchi disk depth",2.8,ft,Total,,,STORET-798060425
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-09-16,12:45:00,Phosphorus,0.0806,mg/L,Total,Phosphorus by Colorimetry,,STORET-801047211
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-09-16,12:45:00,Phosphorus,0.0829,mg/L,Total,Phosphorus by Colorimetry,,STORET-801047208
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2019-09-16,12:45:00,Phosphorus,,mg/L,Total,Phosphorus by Colorimetry,,STORET-801047214
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-06-04,10:15:00,"Depth, Secchi disk depth",9.75,ft,Total,,,STORET-958676315
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-06-17,08:30:00,"Depth, Secchi disk depth",9.75,ft,Total,,,STORET-958662703
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-06-30,10:11:00,"Depth, Secchi disk depth",7.50,ft,Total,,,STORET-958662758
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-07-01,13:51:00,"Depth, Secchi disk depth",1.75,ft,Total,,,STORET-958790859
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2020-07-01,13:00:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-958790890
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-07-16,13:00:00,Chlorophyll a (probe relative fluorescence),54.9,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-854245193
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-07-16,13:00:00,"Depth, Secchi disk depth",2.75,ft,Total,,,STORET-958662836
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-07-16,13:00:00,Phosphorus,0.121,mg/L,Total,Phosphorus by Colorimetry,,STORET-854245194
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-07-16,12:00:00,Chlorophyll a (probe relative fluorescence),35.2,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-858351964
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-07-16,12:00:00,Chlorophyll a (probe relative fluorescence),40.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-854245198
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-07-16,12:00:00,Phosphorus,0.162,mg/L,Total,Phosphorus by Colorimetry,,STORET-858351965
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-07-16,12:00:00,Phosphorus,0.119,mg/L,Total,Phosphorus by Colorimetry,,STORET-854245199
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2020-07-16,13:00:00,Chlorophyll a (probe relative fluorescence),75.1,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-854245196
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2020-07-16,13:00:00,Phosphorus,0.154,mg/L,Total,Phosphorus by Colorimetry,,STORET-854245197
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-08-17,12:00:00,"Depth, Secchi disk depth",2.60,ft,Total,,,STORET-958662895
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-08-26,14:30:00,Chlorophyll a (probe relative fluorescence),54.5,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-858351961
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-08-26,14:30:00,Phosphorus,0.116,mg/L,Total,Phosphorus by Colorimetry,,STORET-858351962
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-08-26,12:10:00,Chlorophyll a (probe relative fluorescence),35.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-858351967
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-08-26,12:10:00,Phosphorus,0.160,mg/L,Total,Phosphorus by Colorimetry,,STORET-858351968
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2020-08-26,13:24:00,Chlorophyll a (probe relative fluorescence),15.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-858351970
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2020-08-26,13:24:00,"Depth, Secchi disk depth",3.75,ft,Total,,,STORET-958790892
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2020-08-26,13:24:00,Phosphorus,0.114,mg/L,Total,Phosphorus by Colorimetry,,STORET-858351971
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-08-30,13:30:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-958121517
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-09-14,14:00:00,Chlorophyll a (probe relative fluorescence),21.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-859462146
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-09-14,14:00:00,Chlorophyll a (probe relative fluorescence),0.282,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-859462150
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-09-14,14:00:00,"Depth, Secchi disk depth",4.0,ft,Total,,,STORET-958231429
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-09-14,14:00:00,Phosphorus,0.163,mg/L,Total,Phosphorus by Colorimetry,,STORET-859462148
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-09-14,14:00:00,Phosphorus,,mg/L,Total,Phosphorus by Colorimetry,,STORET-859462152
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-09-14,13:00:00,Chlorophyll a (probe relative fluorescence),44.1,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-859462154
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-09-14,13:00:00,"Depth, Secchi disk depth",3.25,ft,Total,,,STORET-958121537
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2020-09-14,13:00:00,Phosphorus,0.117,mg/L,Total,Phosphorus by Colorimetry,,STORET-859462156
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2020-09-22,,Chlorophyll a (probe relative fluorescence),33.7,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-861183489
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2020-09-22,,"Depth, Secchi disk depth",4,ft,Total,,,STORET-861183495
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2020-09-22,,Phosphorus,0.120,mg/L,Total,Phosphorus by Colorimetry,,STORET-861183490
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2020-10-08,10:15:00,"Depth, Secchi disk depth",7.0,ft,Total,,,STORET-958790881
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-06-08,09:36:00,"Depth, Secchi disk depth",8,ft,Total,,,STORET-902494829
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-06-08,09:36:00,Phosphorus,0.0391,mg/L,Total,Phosphorus by Colorimetry,,STORET-900345051
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-06-08,11:30:00,"Depth, Secchi disk depth",8.5,ft,Total,,,STORET-902494850
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-06-08,11:30:00,Phosphorus,0.0425,mg/L,Total,Phosphorus by Colorimetry,,STORET-900345052
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-06-08,10:38:00,"Depth, Secchi disk depth",6.5,ft,Total,,,STORET-902494881
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-06-08,10:38:00,Phosphorus,0.0511,mg/L,Total,Phosphorus by Colorimetry,,STORET-900345053
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-07-20,14:40:00,Chlorophyll a (probe relative fluorescence),32.1,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-907416511
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-07-20,14:40:00,"Depth, Secchi disk depth",5,ft,Total,,,STORET-905426511
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-07-20,14:40:00,Phosphorus,0.0830,mg/L,Total,Phosphorus by Colorimetry,,STORET-907416510
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-07-20,12:35:00,Chlorophyll a (probe relative fluorescence),34.8,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-907416517
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-07-20,12:35:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-905426537
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-07-20,12:35:00,Phosphorus,0.0749,mg/L,Total,Phosphorus by Colorimetry,,STORET-907416516
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-07-20,10:26:00,Chlorophyll a (probe relative fluorescence),36.6,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-907416523
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-07-20,10:26:00,"Depth, Secchi disk depth",4.5,ft,Total,,,STORET-905426551
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-07-20,10:26:00,Phosphorus,0.0522,mg/L,Total,Phosphorus by Colorimetry,,STORET-907416522
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-08-17,10:15:00,Chlorophyll a (probe relative fluorescence),42.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-912807965
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-08-17,10:10:00,Chlorophyll a (probe relative fluorescence),,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-912808000
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-08-17,10:15:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-912807966
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-08-17,10:15:00,Phosphorus,0.0925,mg/L,Total,Phosphorus by Colorimetry,,STORET-912807962
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-08-17,10:10:00,Phosphorus,,mg/L,Total,Phosphorus by Colorimetry,,STORET-912807997
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-08-17,11:40:00,Chlorophyll a (probe relative fluorescence),26.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-912808004
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-08-17,11:40:00,"Depth, Secchi disk depth",5,ft,Total,,,STORET-912808005
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-08-17,11:40:00,Phosphorus,0.0924,mg/L,Total,Phosphorus by Colorimetry,,STORET-912808001
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-08-17,11:05:00,Chlorophyll a (probe relative fluorescence),37.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-912808029
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-08-17,11:05:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-912808030
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-08-17,11:05:00,Phosphorus,0.0886,mg/L,Total,Phosphorus by Colorimetry,,STORET-912808026
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-09-13,11:00:00,Chlorophyll a (probe relative fluorescence),108,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-914724691
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-09-13,11:00:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-914537720
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2021-09-13,11:00:00,Phosphorus,0.122,mg/L,Total,Phosphorus by Colorimetry,,STORET-914724690
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-09-13,14:30:00,Chlorophyll a (probe relative fluorescence),44.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-914724693
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-09-13,14:30:00,Chlorophyll a (probe relative fluorescence),62.7,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-914724695
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-09-13,14:30:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-914537751
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-09-13,14:30:00,Phosphorus,0.130,mg/L,Total,Phosphorus by Colorimetry,,STORET-914724694
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-09-13,14:30:00,Phosphorus,0.143,mg/L,Total,Phosphorus by Colorimetry,,STORET-914724692
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-09-13,13:05:00,Chlorophyll a (probe relative fluorescence),23.8,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-914724697
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-09-13,13:05:00,"Depth, Secchi disk depth",4.5,ft,Total,,,STORET-914537767
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2021-09-13,13:05:00,Phosphorus,0.119,mg/L,Total,Phosphorus by Colorimetry,,STORET-914724696
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2021-10-03,10:20:00,"Depth, Secchi disk depth",9.63,ft,Total,,,STORET-957254177
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-05-11,12:15:00,"Depth, Secchi disk depth",8.5,ft,Total,,,STORET-956568635
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-05-18,14:29:00,Phosphorus,0.0618,mg/L,Total,Phosphorus by Colorimetry,,STORET-942010216
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-05-19,10:45:00,"Depth, Secchi disk depth",7,ft,Total,,,STORET-949159040
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-05-19,10:45:00,Phosphorus,0.0399,mg/L,Total,Phosphorus by Colorimetry,,STORET-942010215
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-05-19,12:15:00,"Depth, Secchi disk depth",8,ft,Total,,,STORET-949159122
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-05-19,11:30:00,"Depth, Secchi disk depth",9.5,ft,Total,,,STORET-949159080
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-05-19,11:30:00,Phosphorus,0.0516,mg/L,Total,Phosphorus by Colorimetry,,STORET-942012410
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-05-26,10:17:00,"Depth, Secchi disk depth",4,ft,Total,,,STORET-957255748
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-06-14,09:25:00,"Depth, Secchi disk depth",4.125,ft,Total,,,STORET-957089055
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-06-24,09:11:00,"Depth, Secchi disk depth",3.38,ft,Total,,,STORET-956567664
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-07-14,10:00:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-957089083
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-07-26,14:30:00,Chlorophyll a (probe relative fluorescence),22.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-948390559
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-07-26,14:30:00,"Depth, Secchi disk depth",4.0,ft,Total,,,STORET-949159269
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-07-26,14:30:00,"Depth, Secchi disk depth",4,ft,Total,,,STORET-948390560
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-07-26,14:30:00,Phosphorus,0.0844,mg/L,Total,Phosphorus by Colorimetry,,STORET-948390558
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-07-26,12:00:00,Chlorophyll a (probe relative fluorescence),66.8,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-948390573
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-07-26,12:00:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-949159331
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-07-26,12:00:00,"Depth, Secchi disk depth",1,ft,Total,,,STORET-948390574
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-07-26,12:00:00,Phosphorus,0.119,mg/L,Total,Phosphorus by Colorimetry,,STORET-948390572
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-07-26,13:12:00,Chlorophyll a (probe relative fluorescence),39.2,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-948390566
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-07-26,13:12:00,"Depth, Secchi disk depth",3.0,ft,Total,,,STORET-949159300
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-07-26,13:12:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-948390567
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-07-26,13:12:00,Phosphorus,0.0977,mg/L,Total,Phosphorus by Colorimetry,,STORET-948390565
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-08-15,10:16:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-957089111
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-08-17,10:15:00,Chlorophyll a (probe relative fluorescence),,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-951587496
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-08-17,10:15:00,Chlorophyll a (probe relative fluorescence),34.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-951587491
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-08-17,10:15:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-951587492
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-08-17,11:20:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-956567686
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-08-17,10:15:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-949159583
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-08-17,10:15:00,Phosphorus,0.126,mg/L,Total,Phosphorus by Colorimetry,,STORET-951587489
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-08-17,10:15:00,Phosphorus,0.0124,mg/L,Total,Phosphorus by Colorimetry,,STORET-951587494
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-08-17,11:55:00,Chlorophyll a (probe relative fluorescence),9.49,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-951587473
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-08-17,11:55:00,"Depth, Secchi disk depth",4.0,ft,Total,,,STORET-949159567
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-08-17,11:55:00,"Depth, Secchi disk depth",4,ft,Total,,,STORET-951587474
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-08-17,11:55:00,Phosphorus,0.156,mg/L,Total,Phosphorus by Colorimetry,,STORET-951587471
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-08-17,11:15:00,Chlorophyll a (probe relative fluorescence),50.7,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-951587482
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-08-17,11:15:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-949159536
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-08-17,11:15:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-951587483
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-08-17,11:15:00,Phosphorus,0.152,mg/L,Total,Phosphorus by Colorimetry,,STORET-951587480
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-09-19,10:00:00,Chlorophyll a (probe relative fluorescence),20.9,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-954840417
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-09-19,10:30:00,"Depth, Secchi disk depth",6.25,ft,Total,,,STORET-956567704
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-09-19,10:00:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-953631928
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2022-09-19,10:00:00,Phosphorus,0.116,mg/L,Total,Phosphorus by Colorimetry,,STORET-954840415
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-09-19,11:45:00,Chlorophyll a (probe relative fluorescence),29.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-954840425
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-09-19,11:45:00,"Depth, Secchi disk depth",1.5,ft,Total,,,STORET-953631833
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2022-09-19,11:45:00,Phosphorus,0.118,mg/L,Total,Phosphorus by Colorimetry,,STORET-954840423
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-09-19,11:00:00,Chlorophyll a (probe relative fluorescence),17.6,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-954840433
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-09-19,11:00:00,Chlorophyll a (probe relative fluorescence),19.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-954840441
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-09-19,11:00:00,"Depth, Secchi disk depth",4.0,ft,Total,,,STORET-953631866
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-09-19,11:00:00,"Depth, Secchi disk depth",4.0,ft,Total,,,STORET-953631897
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-09-19,11:00:00,Phosphorus,0.172,mg/L,Total,Phosphorus by Colorimetry,,STORET-954840431
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2022-09-19,11:00:00,Phosphorus,0.147,mg/L,Total,Phosphorus by Colorimetry,,STORET-954840439
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-05-10,09:45:00,"Depth, Secchi disk depth",14.75,ft,Total,,,STORET-990603736
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-05-10,09:45:00,Phosphorus,0.0207,mg/L,Total,Phosphorus by Colorimetry,,STORET-974974374
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-05-10,11:30:00,"Depth, Secchi disk depth",8.25,ft,Total,,,STORET-990605381
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-05-10,11:30:00,Phosphorus,0.0288,mg/L,Total,Phosphorus by Colorimetry,,STORET-974974372
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-05-10,10:45:00,"Depth, Secchi disk depth",12.5,ft,Total,,,STORET-990605286
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-05-10,10:45:00,Phosphorus,0.0209,mg/L,Total,Phosphorus by Colorimetry,,STORET-974974373
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-05-31,09:09:00,"Depth, Secchi disk depth",13.7,ft,Total,,,STORET-1051977696
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-06-14,08:16:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1001342386
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-06-27,10:50:00,"Depth, Secchi disk depth",7.75,ft,Total,,,STORET-1001342426
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-07-11,10:05:00,Chlorophyll a (probe relative fluorescence),38.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-987825119
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-07-11,10:05:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-987825120
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-07-11,10:05:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-990605441
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-07-11,10:05:00,Phosphorus,0.0983,mg/L,Total,Phosphorus by Colorimetry,,STORET-987825118
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-07-11,13:30:00,Chlorophyll a (probe relative fluorescence),50.1,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-987825122
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-07-11,13:30:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-990605401
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-07-11,13:30:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-987825123
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-07-11,13:30:00,Phosphorus,0.104,mg/L,Total,Phosphorus by Colorimetry,,STORET-987825121
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-07-11,12:05:00,Chlorophyll a (probe relative fluorescence),36.6,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-987825116
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-07-11,12:05:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-987825117
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-07-11,12:05:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-990605316
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-07-11,12:05:00,Phosphorus,0.0645,mg/L,Total,Phosphorus by Colorimetry,,STORET-987825115
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-07-13,12:30:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1001342453
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-07-17,10:44:00,"Depth, Secchi disk depth",4,ft,Total,,,STORET-1001342390
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-08-16,09:00:00,"Depth, Secchi disk depth",4,ft,Total,,,STORET-1001342475
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-08-18,11:20:00,Chlorophyll a (probe relative fluorescence),18.6,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-988985317
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-08-18,11:20:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-990605471
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-08-18,11:20:00,Phosphorus,0.0698,mg/L,Total,Phosphorus by Colorimetry,,STORET-988985315
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-08-18,10:45:00,Chlorophyll a (probe relative fluorescence),49.2,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-988985321
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-08-18,10:45:00,"Depth, Secchi disk depth",1.5,ft,Total,,,STORET-990605421
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-08-18,10:45:00,Phosphorus,0.177,mg/L,Total,Phosphorus by Colorimetry,,STORET-988985319
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-08-18,10:08:00,Chlorophyll a (probe relative fluorescence),62.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-988985313
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-08-18,10:10:00,Chlorophyll a (probe relative fluorescence),78.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-988985325
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-08-18,10:08:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-990605351
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-08-18,10:10:00,Phosphorus,0.111,mg/L,Total,Phosphorus by Colorimetry,,STORET-988985323
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-08-18,10:08:00,Phosphorus,0.102,mg/L,Total,Phosphorus by Colorimetry,,STORET-988985311
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-08-21,08:19:00,"Depth, Secchi disk depth",1.5,ft,Total,,,STORET-1001342394
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-09-12,15:30:00,"Depth, Secchi disk depth",4,ft,Total,,,STORET-1001342500
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-09-13,07:49:00,"Depth, Secchi disk depth",2.25,ft,Total,,,STORET-1001342398
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-09-14,10:00:00,Chlorophyll a (probe relative fluorescence),25.8,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-990864443
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-09-14,10:00:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-990603706
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-09-14,10:00:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-990864444
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2023-09-14,10:00:00,Phosphorus,0.0744,mg/L,Total,Phosphorus by Colorimetry,,STORET-990864442
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-09-14,11:40:00,Chlorophyll a (probe relative fluorescence),46.6,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-990864449
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-09-14,11:40:00,"Depth, Secchi disk depth",2.75,ft,Total,,,STORET-990864450
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-09-14,11:40:00,"Depth, Secchi disk depth",2.75,ft,Total,,,STORET-990603068
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-09-14,11:40:00,"Depth, Secchi disk depth",2.75,ft,Total,,,STORET-1003528920
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-09-14,11:40:00,Phosphorus,0.0727,mg/L,Total,Phosphorus by Colorimetry,,STORET-990864448
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-09-14,,Chlorophyll a (probe relative fluorescence),12.9,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-990864446
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-09-14,,"Depth, Secchi disk depth",4,ft,Total,,,STORET-990864447
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-09-14,,"Depth, Secchi disk depth",4,ft,Total,,,STORET-990603009
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2023-09-14,,Phosphorus,0.0782,mg/L,Total,Phosphorus by Colorimetry,,STORET-990864445
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2023-10-04,07:33:00,"Depth, Secchi disk depth",4.88,ft,Total,,,STORET-1001342402
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-05-16,12:20:00,Phosphorus,0.0906,mg/L,Total,Phosphorus by Colorimetry,,STORET-1034441247
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-05-17,10:45:00,"Depth, Secchi disk depth",15,ft,Total,,,STORET-1042203462
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-05-17,10:45:00,Phosphorus,0.0355,mg/L,Total,Phosphorus by Colorimetry,,STORET-1034441251
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-05-17,12:20:00,"Depth, Secchi disk depth",9.0,ft,Total,,,STORET-1042203405
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-05-17,11:35:00,"Depth, Secchi disk depth",13.5,ft,Total,,,STORET-1042203428
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-05-17,11:30:00,Phosphorus,0.0524,mg/L,Total,Phosphorus by Colorimetry,,STORET-1034441246
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-05-21,10:45:00,"Depth, Secchi disk depth",11.5,ft,Total,,,STORET-1073110201
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-05-23,09:10:00,"Depth, Secchi disk depth",8.75,ft,Total,,,STORET-1045617117
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-06-19,18:15:00,"Depth, Secchi disk depth",4,ft,Total,,,STORET-1036485185
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-06-21,09:35:00,"Depth, Secchi disk depth",10.5,ft,Total,,,STORET-1036485203
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-07-17,08:30:00,"Depth, Secchi disk depth",5,ft,Total,,,STORET-1051977731
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-07-19,09:35:00,"Depth, Secchi disk depth",4.25,ft,Total,,,STORET-1038582463
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-07-25,10:15:00,Chlorophyll a (probe relative fluorescence),62.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1039363072
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-07-25,10:15:00,"Depth, Secchi disk depth",2,ft,Total,,,STORET-1042203803
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-07-25,10:15:00,"Depth, Secchi disk depth",20,ft,Total,,,STORET-1039363073
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-07-25,10:15:00,Phosphorus,0.113,mg/L,Total,Phosphorus by Colorimetry,,STORET-1039363071
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-07-25,11:15:00,Chlorophyll a (probe relative fluorescence),39.9,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1039363075
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-07-25,11:15:00,"Depth, Secchi disk depth",4.0,ft,Total,,,STORET-1039363076
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-07-25,11:15:00,"Depth, Secchi disk depth",4,ft,Total,,,STORET-1042203782
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-07-25,11:15:00,Phosphorus,0.139,mg/L,Total,Phosphorus by Colorimetry,,STORET-1039363074
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-07-25,11:55:00,Chlorophyll a (probe relative fluorescence),67.5,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1039363078
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-07-25,11:55:00,"Depth, Secchi disk depth",2,ft,Total,,,STORET-1042203834
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-07-25,11:55:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1039363079
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-07-25,11:55:00,Phosphorus,0.146,mg/L,Total,Phosphorus by Colorimetry,,STORET-1039363077
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-08-13,10:30:00,Chlorophyll a (probe relative fluorescence),79.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1040620231
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-08-13,10:00:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1051977713
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-08-13,10:30:00,"Depth, Secchi disk depth",1.5,ft,Total,,,STORET-1042203938
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-08-13,10:30:00,"Depth, Secchi disk depth",1.5,ft,Total,,,STORET-1040620232
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-08-13,10:30:00,Phosphorus,0.159,mg/L,Total,Phosphorus by Colorimetry,,STORET-1040620229
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-08-13,11:40:00,Chlorophyll a (probe relative fluorescence),19.9,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1040620222
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-08-13,11:40:00,"Depth, Secchi disk depth",35,ft,Total,,,STORET-1040620223
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-08-13,11:40:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-1042203973
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-08-13,10:23:00,"Depth, Secchi disk depth",4.5,ft,Total,,,STORET-1045617148
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-08-13,11:40:00,Phosphorus,0.0943,mg/L,Total,Phosphorus by Colorimetry,,STORET-1040620220
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-08-13,12:15:00,Chlorophyll a (probe relative fluorescence),74.8,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1040620240
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-08-13,12:15:00,"Depth, Secchi disk depth",2,ft,Total,,,STORET-1042203907
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-08-13,12:15:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-1040620241
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-08-13,12:15:00,Phosphorus,0.116,mg/L,Total,Phosphorus by Colorimetry,,STORET-1040620238
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-09-12,10:30:00,Chlorophyll a (probe relative fluorescence),56.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1041783970
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-09-12,10:30:00,"Depth, Secchi disk depth",1.5,ft,Total,,,STORET-1042203103
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-09-12,10:30:00,"Depth, Secchi disk depth",1.5,ft,Total,,,STORET-1041783971
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-09-12,10:30:00,Phosphorus,0.113,mg/L,Total,Phosphorus by Colorimetry,,STORET-1041783969
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-09-12,11:45:00,Chlorophyll a (probe relative fluorescence),26.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1041783967
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-09-12,11:45:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-1041783968
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-09-12,11:45:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-1042203142
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-09-12,11:45:00,Phosphorus,0.102,mg/L,Total,Phosphorus by Colorimetry,,STORET-1041783966
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-09-12,12:30:00,Chlorophyll a (probe relative fluorescence),,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1041783979
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-09-12,12:30:00,Chlorophyll a (probe relative fluorescence),62.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1041783976
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-09-12,12:30:00,Chlorophyll a (probe relative fluorescence),65.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1041783973
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-09-12,12:30:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1041783980
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-09-12,12:30:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1041783974
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-09-12,12:30:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1041783977
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-09-12,12:30:00,"Depth, Secchi disk depth",2,ft,Total,,,STORET-1042203068
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-09-12,12:30:00,Phosphorus,,mg/L,Total,Phosphorus by Colorimetry,,STORET-1041783978
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-09-12,12:30:00,Phosphorus,0.103,mg/L,Total,Phosphorus by Colorimetry,,STORET-1041783972
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-09-12,12:30:00,Phosphorus,0.105,mg/L,Total,Phosphorus by Colorimetry,,STORET-1041783975
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2024-09-17,09:30:00,"Depth, Secchi disk depth",4.5,ft,Total,,,STORET-1051977749
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-09-17,10:25:00,"Depth, Secchi disk depth",5.75,ft,Total,,,STORET-1045617176
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2024-10-10,14:22:00,"Depth, Secchi disk depth",3.3,ft,Total,,,STORET-1073110516
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2024-10-16,10:12:00,"Depth, Secchi disk depth",0.75,ft,Total,,,STORET-1045617196
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-05-26,09:05:00,"Depth, Secchi disk depth",6.5,ft,Total,,,STORET-1073110605
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-05-29,10:30:00,"Depth, Secchi disk depth",9.5,ft,Total,,,STORET-1077270758
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-05-29,10:30:00,Phosphorus,0.0521,mg/L,Total,Phosphorus by Colorimetry,,STORET-1066994631
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-05-29,11:18:00,"Depth, Secchi disk depth",6.0,ft,Total,,,STORET-1077271841
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-05-29,11:18:00,Phosphorus,0.103,mg/L,Total,Phosphorus by Colorimetry,,STORET-1066994633
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-05-29,11:46:00,"Depth, Secchi disk depth",6.0,ft,Total,,,STORET-1077271822
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-05-29,11:46:00,Phosphorus,0.0446,mg/L,Total,Phosphorus by Colorimetry,,STORET-1066994632
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-06-16,10:15:00,"Depth, Secchi disk depth",6.5,ft,Total,,,STORET-1122063991
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-07-14,10:36:00,Chlorophyll a (probe relative fluorescence),23.7,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1071876041
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-07-14,10:36:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1077386719
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-07-14,10:36:00,"Depth, Secchi disk depth",25,ft,Total,,,STORET-1071876042
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-07-14,10:36:00,Phosphorus,0.0868,mg/L,Total,Phosphorus by Colorimetry,,STORET-1071876040
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-07-14,12:30:00,Chlorophyll a (probe relative fluorescence),8.55,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1071876038
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-07-14,12:30:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1077386742
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-07-14,12:30:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1071876039
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-07-14,12:30:00,Phosphorus,0.0903,mg/L,Total,Phosphorus by Colorimetry,,STORET-1071876037
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-07-14,11:30:00,Chlorophyll a (probe relative fluorescence),32.5,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1071876044
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-07-14,11:30:00,"Depth, Secchi disk depth",2,ft,Total,,,STORET-1071876045
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-07-14,11:30:00,"Depth, Secchi disk depth",5.4,ft,Total,,,STORET-1077386687
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-07-14,11:30:00,Phosphorus,0.0694,mg/L,Total,Phosphorus by Colorimetry,,STORET-1071876043
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-07-29,11:00:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-1073110826
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-08-11,11:30:00,"Depth, Secchi disk depth",2.63,ft,Total,,,STORET-1072612841
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-08-14,09:25:00,Chlorophyll a (probe relative fluorescence),112,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1073695793
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-08-14,09:25:00,Chlorophyll a (probe relative fluorescence),113,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1073823759
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-08-14,09:25:00,"Depth, Secchi disk depth",2,ft,Total,,,STORET-1073695794
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-08-14,09:25:00,"Depth, Secchi disk depth",2,ft,Total,,,STORET-1073823760
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-08-14,09:25:00,"Depth, Secchi disk depth",2,ft,Total,,,STORET-1077386774
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-08-14,09:25:00,Phosphorus,0.203,mg/L,Total,Phosphorus by Colorimetry,,STORET-1073823757
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-08-14,09:25:00,Phosphorus,0.164,mg/L,Total,Phosphorus by Colorimetry,,STORET-1073695792
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-08-14,11:30:00,Chlorophyll a (probe relative fluorescence),27.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1073823751
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-08-14,11:30:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1073823752
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-08-14,11:30:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1077386797
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-08-14,11:30:00,Phosphorus,0.151,mg/L,Total,Phosphorus by Colorimetry,,STORET-1073823749
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-08-14,10:45:00,Chlorophyll a (probe relative fluorescence),23.6,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1073823767
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-08-14,10:45:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-1077386830
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-08-14,10:45:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-1073823768
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-08-14,10:45:00,Phosphorus,0.123,mg/L,Total,Phosphorus by Colorimetry,,STORET-1073823765
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-09-01,12:00:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-1122062768
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-09-11,,Chlorophyll a (probe relative fluorescence),45.9,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1085750658
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-09-11,,"Depth, Secchi disk depth",3.0,ft,Total,,,STORET-1085749492
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-09-11,,"Depth, Secchi disk depth",3,ft,Total,,,STORET-1085750659
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2025-09-11,,Phosphorus,0.0940,mg/L,Total,Phosphorus by Colorimetry,,STORET-1085750655
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-09-11,,Chlorophyll a (probe relative fluorescence),110,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1085750644
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-09-11,,"Depth, Secchi disk depth",3,ft,Total,,,STORET-1085750645
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-09-11,,"Depth, Secchi disk depth",3.0,ft,Total,,,STORET-1085749446
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2025-09-11,,Phosphorus,0.119,mg/L,Total,Phosphorus by Colorimetry,,STORET-1085750641
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-09-11,11:20:00,Chlorophyll a (probe relative fluorescence),23.2,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1085750651
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-09-11,11:20:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-1085749528
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-09-11,11:20:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-1085750652
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-09-11,11:20:00,Phosphorus,0.124,mg/L,Total,Phosphorus by Colorimetry,,STORET-1085750648
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-09-28,10:46:00,"Depth, Secchi disk depth",4.75,ft,Total,,,STORET-1122062840
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2025-10-08,11:38:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1122063774
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-05-14,10:15:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-1128220402
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-05-14,10:15:00,Phosphorus,0.0449,mg/L,Total,Phosphorus by Colorimetry,,STORET-1118164727
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-05-14,10:55:00,"Depth, Secchi disk depth",1.375,ft,Total,,,STORET-1116222097
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-05-14,11:55:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-1128220538
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-05-14,11:55:00,Phosphorus,0.101,mg/L,Total,Phosphorus by Colorimetry,,STORET-1118164725
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-05-14,11:10:00,"Depth, Secchi disk depth",1.75,ft,Total,,,STORET-1128219857
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-05-14,11:10:00,Phosphorus,0.0505,mg/L,Total,Phosphorus by Colorimetry,,STORET-1118164726
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-06-22,11:00:00,"Depth, Secchi disk depth",5.4,ft,Total,,,STORET-1131718027
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-06-23,10:45:00,"Depth, Secchi disk depth",6.63,ft,Total,,,STORET-1119958469
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-07-08,10:40:00,"Depth, Secchi disk depth",7.25,ft,Total,,,STORET-1120229526
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-07-13,08:30:00,Chlorophyll a (probe relative fluorescence),3.21,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1121675790
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-07-13,08:30:00,"Depth, Secchi disk depth",7.5,ft,Total,,,STORET-1121675791
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-07-13,08:30:00,"Depth, Secchi disk depth",7.5,ft,Total,,,STORET-1128220433
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-07-13,08:30:00,Phosphorus,0.0318,mg/L,Total,Phosphorus by Colorimetry,,STORET-1121675789
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-07-13,10:30:00,Chlorophyll a (probe relative fluorescence),13.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1121675784
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-07-13,10:30:00,"Depth, Secchi disk depth",5.5,ft,Total,,,STORET-1128220559
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-07-13,10:30:00,"Depth, Secchi disk depth",5.5,ft,Total,,,STORET-1121675785
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-07-13,10:30:00,Phosphorus,0.0647,mg/L,Total,Phosphorus by Colorimetry,,STORET-1121675783
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-07-13,09:38:00,Chlorophyll a (probe relative fluorescence),14.6,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1121675787
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-07-13,09:38:00,"Depth, Secchi disk depth",4,ft,Total,,,STORET-1121675788
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-07-13,09:38:00,"Depth, Secchi disk depth",4.0,ft,Total,,,STORET-1128219893
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-07-13,09:38:00,Phosphorus,0.0391,mg/L,Total,Phosphorus by Colorimetry,,STORET-1121675786
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-08-12,10:20:00,Chlorophyll a (probe relative fluorescence),18.8,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1125032390
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-08-12,10:20:00,Chlorophyll a (probe relative fluorescence),20.4,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1125032397
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-08-12,10:20:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1128220464
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-08-12,10:20:00,Phosphorus,0.0437,mg/L,Total,Phosphorus by Colorimetry,,STORET-1125032388
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-08-12,10:20:00,Phosphorus,0.0441,mg/L,Total,Phosphorus by Colorimetry,,STORET-1125032395
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-08-12,13:15:00,Chlorophyll a (probe relative fluorescence),12.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1125032411
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-08-12,13:15:00,"Depth, Secchi disk depth",4.0,ft,Total,,,STORET-1128220580
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-08-12,13:15:00,Phosphorus,0.0585,mg/L,Total,Phosphorus by Colorimetry,,STORET-1125032409
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-08-12,12:00:00,Chlorophyll a (probe relative fluorescence),12.5,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1125032404
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-08-12,12:00:00,"Depth, Secchi disk depth",3.5,ft,Total,,,STORET-1128220335
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-08-12,12:00:00,Phosphorus,0.0462,mg/L,Total,Phosphorus by Colorimetry,,STORET-1125032402
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-08-20,14:20:00,"Depth, Secchi disk depth",3,ft,Total,,,STORET-1128552048
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-09-08,10:30:00,"Depth, Secchi disk depth",1,ft,Total,,,STORET-1125741139
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-09-10,10:43:00,Chlorophyll a (probe relative fluorescence),42.3,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1128220251
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-09-10,10:43:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1128220252
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-09-10,10:43:00,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1128220495
+713243,2 mi from Neenah (north),44.1830480000,-88.4041790000,2026-09-10,10:43:00,Phosphorus,0.0715,mg/L,Total,Phosphorus by Colorimetry,,STORET-1128220250
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-09-10,,Chlorophyll a (probe relative fluorescence),19.0,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1128220254
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-09-10,,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1128220255
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-09-10,,"Depth, Secchi disk depth",2.5,ft,Total,,,STORET-1128220601
+713244,"Deep Hole, south end",43.8313870000,-88.4316780000,2026-09-10,,Phosphorus,0.0426,mg/L,Total,Phosphorus by Colorimetry,,STORET-1128220253
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-09-10,12:15:00,Chlorophyll a (probe relative fluorescence),53.9,ug/L,Total,445.0 ~ EPA; Chlorophyll and Pheophytin in Algae by Fluorescence,,STORET-1128220248
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-09-10,12:15:00,"Depth, Secchi disk depth",2,ft,Total,,,STORET-1128220249
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-09-10,12:15:00,"Depth, Secchi disk depth",2.0,ft,Total,,,STORET-1128220366
+713245,3 mi off Oshkosh (west-central),43.9930510000,-88.4625080000,2026-09-10,12:15:00,Phosphorus,0.0774,mg/L,Total,Phosphorus by Colorimetry,,STORET-1128220247
