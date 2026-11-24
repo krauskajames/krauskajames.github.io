@@ -54,3 +54,16 @@ Limits: days are not independent; clear days only; an index until validated; eve
 
 ## Media
 `media/`: filmstrips for July–August 2025 and 2019 (true color and chlorophyll), the Landsat late-summer filmstrip 1999–2026 (21 scenes) with dated frame sheets.
+
+## Public reports checked against the satellite (found by James, November 24, 2026)
+| Report | Date | Nearest clear Sentinel-2 days |
+|---|---|---|
+| FOX 11: health officials warn of toxic blue-green algae in Lake Winnebago | Aug 4, 2017 | Aug 2: median 29.5, east 50.5, west 19.2. Aug 9: median 57.5, east 88.5, west 19.2. Landsat Aug 5 shows green streaks down the east side. |
+| WBAY: algae bloom on Lake Winnebago | Jun 29, 2018 | Jun 28: median 43.5 (a normal June is 14–21), 90th percentile 86.5; west 40.5, east 29.2 after an east wind. |
+| AnglingBuzz fishing report, Mark Schram: strong bloom, pea soup in protected areas, recent winds mixed the algae down, few slicks on the main lake as of Tuesday Sep 18 | Sep 20, 2018 | Sep 16: median 53.5, east 77.5, west 33.7. Sep 18 and 21: cloud. Sep 23: median 37.5. Sep 26: 22.5. |
+
+The fishing report adds a mechanism the wind test does not capture: strong wind mixes floating algae down into the water, so slicks form in calm weather and are moved by light to moderate wind.
+
+Fox-Wolf Watershed Alliance (fwwa.org/harmful-algae) runs a public bloom report form; reports go to FWWA, the UW Oshkosh HABs research team and the DNR. No records are posted. Possible contact for a dated report log.
+
+Idea for the page: a table of dated public reports (news, fishing reports, advisories) beside the satellite numbers for the same days.
