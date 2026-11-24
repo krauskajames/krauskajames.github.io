@@ -102,7 +102,7 @@ This is the original script with Lake Winnebago settings. It gives monthly lake 
 
 **What to notice**
 - Months with less than 50 km² of clear water are left off the chart (but kept in the CSV).
-- MODIS usually reads lower than Sentinel-2. Its pixels are 4.6 km and use an ocean algorithm, and Lake Winnebago is murky and only about 16 km wide. That gap is a good interview point.
+- MODIS and Sentinel-2 disagree. On the first run (2023–2025) MODIS read higher, about 40–80 mg/m³ against a Sentinel-2 median of 20–40. Its pixels are 4.6 km and use an ocean algorithm, and Lake Winnebago is murky and only about 16 km wide. That gap is a good interview point.
 
 ---
 
@@ -233,7 +233,7 @@ Every hole you and your cousins drill is a field measurement: ice thickness at a
 - **Cloud Score+** is Google's per-pixel cloud and shadow score for Sentinel-2. It masks better than the old QA60 band.
 - **JRC Global Surface Water mask:** only pixels that are water at least 80% of the time are used. This keeps shoreline mixing, reeds and docks out of the statistics.
 - **Daily vs. monthly:** a monthly median hides short blooms. Daily mosaics catch them, at the cost of more cloud gaps.
-- **Why MODIS disagrees:** 4.6 km pixels that mix in shoreline, and an ocean algorithm used on murky lake water.
+- **Why MODIS disagrees:** 4.6 km pixels that mix in shoreline, and an ocean algorithm used on murky lake water, where sediment and dissolved organic matter absorb blue light and get counted as chlorophyll.
 - **Wind and scum:** floating cyanobacteria pile up downwind. ERA5-Land's u-component of wind sorts days by direction.
 - **Validation:** satellite estimates are only as good as their match to field samples. Report the agreement and its limits honestly: few same-day matches, and a station is a point while a pixel is an area.
 
