@@ -289,6 +289,9 @@ section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(
 .lake-card .lw-stack { opacity: 0; }
 .lake-card .lw-date { fill: var(--ink); font-size: 13px; }
 .lake-card .lw-dots rect { fill: var(--ink-2); }
+.lake-card .lw-ring { fill: none; stroke: var(--rule); stroke-width: 1; }
+.lake-card .lw-arrow path { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.lake-card .lw-arrow circle { fill: var(--ink); }
 .lake-card .svg-label { paint-order: stroke; stroke: var(--paper-2); stroke-width: 4px; stroke-linejoin: round; }
 
 /* About */
@@ -655,11 +658,18 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         <!-- Lake Winnebago -->
         <article class="plate" data-topics="remote web code" data-order="7">
           <!-- lake-card:start -->
-          <figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches where chlorophyll was highest. The patches change shape from one clear satellite day to the next through July and August 2025, ten days in all. It ends with all ten days laid over each other, darkest along the east side and the north end.">
+          <figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches where chlorophyll was highest. The patches change shape from one clear satellite day to the next through July and August 2025, ten days in all, while a wind vane beside the lake turns to show which way the wind had been blowing over the three days before each image. It ends with all ten days laid over each other, darkest along the east side and the north end.">
             <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               <g class="lw-stage"></g>
               <text x="16" y="26" class="svg-label">SUMMER 2025 · SENTINEL-2</text>
               <g class="lw-dots"></g>
+              <g class="lw-vane" transform="translate(318 112)">
+                <circle r="24" class="lw-ring"/>
+                <path class="lw-ring" d="M0,-24V-20M24,0H20M0,24V20M-24,0H-20"/>
+                <text y="-30" class="svg-label" text-anchor="middle">N</text>
+                <g class="lw-arrow"><path d="M0,15V-13M-5,-7L0,-15L5,-7M-4,17L0,12L4,17M-4,12L0,7L4,12"/><circle r="2"/></g>
+                <text y="44" class="svg-label lw-wind" text-anchor="middle">WIND FROM W</text>
+              </g>
               <text x="16" y="222" class="svg-label lw-date">JUL 3</text>
               <text x="384" y="222" class="svg-label lw-tag" text-anchor="end" style="opacity:0">ALL 10 CLEAR DAYS, STACKED</text>
             </svg>
