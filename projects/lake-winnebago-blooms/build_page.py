@@ -85,10 +85,37 @@ DN_RHO = pearson(ranks([p["sample"] for p in pairs]), ranks([p["sat"] for p in p
 DN_RATIO = st.median(p["sat"] / p["sample"] for p in pairs)
 
 
+boat = []
+for r in csv.DictReader(open(f"{HERE}/data/winnebago_boat_match.csv")):
+    pc, ch, cs, tb = f(r["phycocyanin_rfu"]), f(r["s2_chl"]), f(r["s2_clear_score"]), f(r["turbidity_fnu"])
+    if pc is not None and ch is not None and cs is not None and cs >= 0.65:
+        boat.append(dict(date=r["date"], pc=pc, chl=ch, off=abs(int(float(r["s2_days_off"]))), fai=f(r["s2_fai"]), tb=tb,
+                         bchl=f(r["chlorophyll_rfu"])))
+N_BOAT = len(boat); BOAT_DATES = sorted({b["date"] for b in boat})
+def rho(a, b):
+    k = [(x, y) for x, y in zip(a, b) if x is not None and y is not None]
+    return pearson(ranks([x for x, _ in k]), ranks([y for _, y in k]))
+B_RHO = rho([b["pc"] for b in boat], [b["chl"] for b in boat])
+B_SAME = rho([b["pc"] for b in boat if b["off"] == 0], [b["chl"] for b in boat if b["off"] == 0])
+B_FAI = rho([b["pc"] for b in boat], [b["fai"] for b in boat])
+B_BCHL = rho([b["bchl"] for b in boat], [b["chl"] for b in boat])
+_k = [b for b in boat if b["tb"] is not None]
+_ab, _ac, _bc = rho([b["pc"] for b in _k], [b["chl"] for b in _k]), rho([b["pc"] for b in _k], [b["tb"] for b in _k]), rho([b["chl"] for b in _k], [b["tb"] for b in _k])
+B_PARTIAL = (_ab - _ac * _bc) / math.sqrt((1 - _ac ** 2) * (1 - _bc ** 2))
+BINS = []
+for i in range(9):                                   # 0-1, 1-2, ... 7-8, and 8 or more
+    g = [b for b in boat if (i <= b["pc"] < i + 1) or (i == 8 and b["pc"] >= 8)]
+    if len(g) < 30: continue
+    c = sorted(b["chl"] for b in g)
+    BINS.append(dict(x=min(st.median(b["pc"] for b in g), 8.6), lo=c[len(c) // 4], med=st.median(c), hi=c[3 * len(c) // 4], n=len(g),
+                     lab=(f"{i} to {i + 1}" if i < 8 else "8 or more")))
+
+
 def day(d): return datetime.date.fromisoformat(d).strftime("%b %-d, %Y").replace("Jun ", "June ").replace("Jul ", "July ")
 def n1(x): return f"{x:.1f}"
 def n0(x): return f"{x:.0f}"
 def sgn(x): return ("+" if x >= 0 else "−") + f"{abs(x):.1f}"
+def sgn2(x): return ("" if x >= 0 else "−") + f"{abs(x):.2f}"
 
 
 # ---------------------------------------------------------------- images
@@ -192,6 +219,27 @@ def chart_dnr():
     s.append(f'<text class="note" x="{Wd - r_}" y="{H - 10}" text-anchor="end">DNR lab samples, mean of the stations (µg/L) →</text><text class="note" x="{l + 8}" y="{t + 12}">↑ satellite lake median (mg/m³)</text>')
     for p in pairs:
         s.append(f'<circle class="dot solid" cx="{X(min(mx, p["sample"])):.1f}" cy="{Y(p["sat"]):.1f}" r="5"{tip(f"Sampled {day(p["date"])}: DNR {p["sample"]:.0f}, satellite {p["sat"]:.0f} ({abs(p["lag"])} day{"s" if abs(p["lag"]) != 1 else ""} apart)" if p["lag"] else f"Sampled {day(p["date"])}: DNR {p["sample"]:.0f}, satellite {p["sat"]:.0f} (same day)")}/>')
+    s.append("</svg>"); return "".join(s)
+
+
+def chart_boat():
+    Wd, H, l, r_, t, b = 720, 400, 62, 24, 20, 52; pw, ph = Wd - l - r_, H - t - b; mx, my = 9, 80
+    X = lambda v: l + pw * min(v, mx) / mx; Y = lambda v: t + ph * (1 - min(v, my) / my)
+    s = [f'<svg class="chart" viewBox="0 0 {Wd} {H}" role="img" aria-labelledby="c5t"><title id="c5t">Satellite chlorophyll estimate against the blue-green pigment measured from the USGS boat at the same place</title>']
+    for v in range(0, my + 1, 20):
+        s.append(f'<line class="grid" x1="{l}" x2="{Wd - r_}" y1="{Y(v):.1f}" y2="{Y(v):.1f}"/><text class="tick" x="{l - 8}" y="{Y(v) + 4:.1f}" text-anchor="end">{v}</text>')
+    for v in range(0, mx, 2):
+        s.append(f'<line class="grid" x1="{X(v):.1f}" x2="{X(v):.1f}" y1="{t}" y2="{H - b}"/><text class="tick" x="{X(v):.1f}" y="{H - b + 18}" text-anchor="middle">{v}</text>')
+    s.append(f'<text class="note" x="{Wd - r_}" y="{H - 10}" text-anchor="end">blue-green pigment measured from the boat (phycocyanin, RFU) →</text><text class="note" x="{l + 8}" y="{t + 12}">↑ satellite chlorophyll estimate (mg/m³)</text>')
+    step = max(1, len(boat) // 700)
+    for bb in sorted(boat, key=lambda z: (z["date"], z["pc"]))[::step]:
+        if bb["pc"] > mx or bb["chl"] > my: continue
+        s.append(f'<circle class="bg" cx="{X(bb["pc"]):.1f}" cy="{Y(bb["chl"]):.1f}" r="2"/>')
+    up = " ".join(f"{X(q['x']):.1f},{Y(q['hi']):.1f}" for q in BINS); dn = " ".join(f"{X(q['x']):.1f},{Y(q['lo']):.1f}" for q in reversed(BINS))
+    s.append(f'<polygon class="band" points="{up} {dn}"/>')
+    s.append(f'<polyline class="main" points="{" ".join(f"{X(q['x']):.1f},{Y(q['med']):.1f}" for q in BINS)}"/>')
+    for q in BINS:
+        s.append(f'<circle class="end" cx="{X(q["x"]):.1f}" cy="{Y(q["med"]):.1f}" r="4"{tip(f"Boat pigment {q["lab"]} RFU ({q["n"]:,} places): satellite median {q["med"]:.0f} mg/m³, middle half {q["lo"]:.0f} to {q["hi"]:.0f}")}/>')
     s.append("</svg>"); return "".join(s)
 
 
@@ -304,6 +352,8 @@ svg.chart {{ display: block; width: 100%; min-width: 560px; height: auto; font-f
 .chart .main {{ stroke: var(--forest); stroke-width: 2.5; fill: none; stroke-linejoin: round; stroke-linecap: round; }}
 .chart .end {{ fill: var(--forest); stroke: var(--paper); stroke-width: 2; }}
 .chart .hit {{ fill: transparent; }}
+.chart .bg {{ fill: var(--ink-2); fill-opacity: 0.28; }}
+.chart .band {{ fill: var(--forest); fill-opacity: 0.12; }}
 .chart [data-tip] {{ cursor: default; outline: none; }}
 .chart [data-tip]:hover, .chart [data-tip]:focus-visible {{ fill-opacity: 1; stroke: var(--ink); }}
 .chart .hit:hover, .chart .hit:focus-visible {{ fill: var(--forest); fill-opacity: 0.25; }}
@@ -474,7 +524,7 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
         <span class="label">Checking it</span>
         <div>
           <h2>Did anyone on the water see the same thing?</h2>
-          <p>A satellite estimate is only worth as much as its match to what people saw and measured. Three checks: news and fishing reports, my own family's photos, and the DNR's lab samples.</p>
+          <p>A satellite estimate is only worth as much as its match to what people saw and measured. Four checks: news and fishing reports, my own family's photos, the DNR's lab samples, and a USGS boat that measured blue-green algae directly.</p>
         </div>
       </div>
       <div class="table-scroll">
@@ -508,9 +558,24 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
       <figure class="chart-fig wide">
         <h3>Satellite estimate against DNR lab samples</h3>
         <p class="sub">{len(pairs)} sampling dates, 2017 to 2026, that had a clear Sentinel-2 day within two days. Dots under the line mean the satellite read lower than the lab.</p>
-        <div class="chart-scroll">{chart_dnr()}</div><p class="scroll-hint">Scroll sideways to see the whole chart.</p>
+        <div class="chart-scroll">{chart_dnr()}</div>
+        <p class="scroll-hint">Scroll sideways to see the whole chart.</p>
         <p class="small" style="margin:0.75rem 0 0;max-width:62ch">The Wisconsin DNR samples three stations out on the lake; {N_DNR} of its chlorophyll-a lab results fall in these years. The two measures rise and fall together (rank correlation {DN_RHO:.2f}), but the satellite's lake median reads low, about {100 * DN_RATIO:.0f}% of the sampled value on a typical date, and it misses most on the heaviest bloom days. This is a first comparison of three points against a whole-lake median. Matching the satellite pixel at each station comes next.</p>
       </figure>
+
+      <figure class="chart-fig wide">
+        <h3>Satellite estimate against blue-green algae measured from a boat</h3>
+        <p class="sub">{N_BOAT:,} places on {len(BOAT_DATES)} dates, 2023 to 2025. The line is the typical satellite value at each level of boat-measured pigment, the band is the middle half, and the grey dots are a sample of the individual places. A few readings above 9 RFU or 80 mg/m³ are off the chart.</p>
+        <div class="chart-scroll">{chart_boat()}</div><p class="scroll-hint">Scroll sideways to see the whole chart.</p>
+        <p class="small" style="margin:0.75rem 0 0;max-width:62ch">The U.S. Geological Survey ran a boat across the lake with a sensor for phycocyanin, the pigment that marks blue-green algae, logging a GPS position every few seconds. I reduced its track to 60 m squares and read the Sentinel-2 pixel under each one from the nearest clear day, within two days. The two rise together: rank correlation {B_RHO:.2f} overall, and {B_SAME:.2f} on July 8, 2025, the one date the boat and the satellite were there the same morning.</p>
+      </figure>
+      <div class="cs-body">
+        <span class="label">Reading it</span>
+        <div class="prose">
+          <p>The satellite estimate follows the boat's blue-green pigment, and it does not follow the boat's own chlorophyll channel (rank correlation {sgn2(B_BCHL)}). Blue-green algae give off little of the fluorescence that channel reads. So on this lake in summer, the chlorophyll number from space is mostly a measure of blue-green algae.</p>
+          <p><strong>Two cautions.</strong> Murkier water has more of everything: with turbidity held constant, the correlation falls from {B_RHO:.2f} to {B_PARTIAL:.2f}. And two of the things I tried against the boat data showed nothing: a floating-algae index on the same images ({sgn2(B_FAI)}), and same-day images from the coarser MODIS satellites.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -524,6 +589,7 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
           <li><span><strong>Clear days.</strong> A day counts when at least half the lake is cloud-free. That leaves {N_CLEAR} days.</span></li>
           <li><span><strong>Shores.</strong> The median in a 2 km strip along the east shore and the same along the west, from Taycheedah to just below Neenah.</span></li>
           <li><span><strong>Wind.</strong> ERA5-Land daily wind, averaged over the lake and a 10 km ring of shore for the image day and the two days before.</span></li>
+          <li><span><strong>Boat comparison.</strong> A third Earth Engine script reads Sentinel-2 under each 60 m square of the USGS boat track. Nothing is cloud-masked in the script; the cloud score is exported and the cut is made afterwards.</span></li>
           <li><span><strong>Monthly record.</strong> The open-source Lake Chlorophyll-a Monitor by Parisa Abbasalizadehrezaei, set up for Lake Winnebago.</span></li>
         </ol>
       </div>
@@ -535,12 +601,12 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
       <span class="label">What this does not show</span>
       <div class="prose">
         <ul>
-          <li><strong>Not the mats.</strong> The index measures chlorophyll in open water. The thick floating mats I remember are a different target, and the formula is unreliable on them.</li>
-          <li><strong>Not which algae.</strong> Every kind of algae has chlorophyll-a. Sentinel-2 has no band for the pigment that marks blue-green algae. NOAA <a href="https://coastalscience.noaa.gov/science-areas/habs/hab-monitoring-system/cyanobacteria-algal-bloom-from-satellite-in-green-bay-and-lake-winnebago-wi/">monitors this lake with Sentinel-3</a>, which does.</li>
+          <li><strong>Not the mats.</strong> The index measures chlorophyll in open water. The thick floating mats I remember are a different target, the formula is unreliable on them, and the floating-algae index I tried did not pick them up.</li>
+          <li><strong>Not which algae, directly.</strong> Every kind of algae has chlorophyll-a, and Sentinel-2 has no band for the pigment that marks blue-green algae. The boat comparison says the two go together on this lake, but only on eight dates. NOAA <a href="https://coastalscience.noaa.gov/science-areas/habs/hab-monitoring-system/cyanobacteria-algal-bloom-from-satellite-in-green-bay-and-lake-winnebago-wi/">monitors this lake with Sentinel-3</a>, which has that band.</li>
           <li><strong>Not movement.</strong> Images are two or more days apart. The result is where chlorophyll sits after the wind, not a bloom tracked across the lake.</li>
           <li><strong>Clear days only.</strong> Clear weather comes with its own typical winds, and neighboring days are not independent, so {N_CLEAR} days is fewer than {N_CLEAR} separate tests.</li>
           <li><strong>Land-tuned correction.</strong> The images use the standard atmospheric correction, which is built for land and less accurate over dark water.</li>
-          <li><strong>No east-shore samples.</strong> None of the three DNR stations is near the east shore, so the lab data checks the lake-wide numbers and not the pile-up itself.</li>
+          <li><strong>Few east-shore measurements.</strong> None of the three DNR stations is near the east shore. The USGS boat ran within about a mile of it, on a handful of dates.</li>
         </ul>
       </div>
     </div>
@@ -551,8 +617,8 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
       <span class="label">Next</span>
       <div class="prose">
         <ul>
-          <li>A floating-algae index on the same images, to measure the mats instead of the green water.</li>
-          <li>One bloom followed across several satellites, including the twice-daily ones, to see whether movement shows up within a day.</li>
+          <li>A way to measure the mats themselves. The floating-algae index did not work against the boat data, so this is still open.</li>
+          <li>Sentinel-3, which passes almost daily and sees the blue-green pigment, to follow one bloom from day to day.</li>
           <li>Chapter 2, ice: freeze-up and ice-out every winter since 2000. Chapter 3, trends. Chapter 4, fish, with an ice-fishing log collected this winter.</li>
         </ul>
       </div>
@@ -564,10 +630,10 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
       <span class="label">Software and methods</span>
       <div class="prose">
         <ul class="chips">
-          <li>Google Earth Engine</li><li>JavaScript</li><li>Sentinel-2</li><li>Landsat 5, 8 and 9</li><li>MODIS</li><li>ERA5-Land</li><li>Cloud Score+</li><li>NDCI</li><li>Python</li><li>Water Quality Portal</li>
+          <li>Google Earth Engine</li><li>JavaScript</li><li>Sentinel-2</li><li>Landsat 5, 8 and 9</li><li>MODIS</li><li>ERA5-Land</li><li>Cloud Score+</li><li>NDCI</li><li>Python</li><li>Water Quality Portal</li><li>USGS FLAMe boat data</li>
         </ul>
-        <p>Built with AI-assisted coding (Claude): the daily Earth Engine script, the statistics and this page's code. I set up and ran the Earth Engine work, questioned the results until the claims matched the evidence, found the reports and photos, and wrote the opening story.</p>
-        <p class="label" style="margin-top:1rem">Monthly monitor and Earth Engine course: Parisa Abbasalizadehrezaei (MIT license) · Data: Copernicus Sentinel-2, Google Cloud Score+, JRC Global Surface Water, USGS Landsat, NASA MODIS, ECMWF ERA5-Land, U.S. Census TIGER, Wisconsin DNR via the Water Quality Portal · Faces in family photos are blurred</p>
+        <p>Built with AI-assisted coding (Claude): the daily Earth Engine script, the statistics and this page's code. I set up and ran the Earth Engine work, questioned the results until the claims matched the evidence, found the reports, the photos and the USGS boat data, and wrote the opening story.</p>
+        <p class="label" style="margin-top:1rem">Monthly monitor and Earth Engine course: Parisa Abbasalizadehrezaei (MIT license) · Data: Copernicus Sentinel-2, Google Cloud Score+, JRC Global Surface Water, USGS Landsat, NASA MODIS, ECMWF ERA5-Land, U.S. Census TIGER, Wisconsin DNR via the Water Quality Portal, U.S. Geological Survey (doi.org/10.5066/P1XHRFKZ) · Faces in family photos are blurred</p>
       </div>
     </div>
   </section>
