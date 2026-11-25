@@ -84,3 +84,10 @@ Phycocyanin (blue-green pigment) from a boat-mounted sensor, with GPS, including
 Three of the four agree in direction. The two halves of each boat run are hours apart, so this is rough.
 Same-day candidate: on July 8, 2025 the boat ran 16:03–16:46 UTC in the northeast part of the lake and Sentinel-2 passed that morning with 55% of the lake clear. July 29, 2024 has the strongest bloom but Sentinel-2 was clouded out on July 28 and next clear on July 31; Sentinel-3 or Landsat may cover it.
 Next: sample the satellite pixel under each 60 m cell in Earth Engine.
+
+## Which boat dates a satellite could see (November 24, 2026)
+Same-day true color from NASA GIBS (MODIS Terra about 10:30 am, NOAA-20 VIIRS about 1:30 pm); sheet in `media/usgs_boat_dates_cloud_check.png`.
+- Clear: June 24, 2024 (both passes; early-season, low bloom). August 7, 2023 (afternoon). August 19, 2024 (morning; broken cloud in the afternoon). July 7, 2025 (afternoon).
+- Partly usable: June 25, 2024 (north end, morning). July 8, 2025 (haze bands in the morning, partly clear in the afternoon).
+- Overcast: August 8, 2023; July 29, 2024; April 28 and May 1, 2025.
+July 29, 2024 has the strongest bloom in the boat data but was overcast all day, so no optical satellite can be matched to it on the day. Against NOAA's July 29–August 7 maximum composite (Sentinel-3 CIcyano, 333 pixels), boat phycocyanin correlates weakly (Spearman 0.15): the composite is not a same-day image. Both do put the east side higher that week (boat median 5.1 vs 4.3 RFU; composite DN 218 vs 184).
