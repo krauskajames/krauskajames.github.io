@@ -33,7 +33,8 @@ var CONFIG = {
   splitLon: -88.415,              // east/west split, roughly the middle of the lake
   stripLats: [43.80, 44.15],      // Taycheedah to below Neenah; leaves out the Neenah end
 
-  galleryYear: 2026,              // Part B
+  galleryYear: 2019,              // Part B
+  galleryChlMax: 150,             // Part B: top of the chlorophyll colour scale, mg/m3. 60 suits most summers; 2019 ran to 120 and needs 150.
   galleryMonths: [7, 8],
   cottageYears: [1999, 2026],     // Part C: the cottage years (Pipe, then Taycheedah)
 
@@ -237,7 +238,7 @@ if (CONFIG.parts.filmstrips) {
   }));
   var rgbFrames = gallery.map(function (img) { return img.visualize(RGB_VIS); });
   var chlFrames = gallery.map(function (img) {
-    return img.visualize(RGB_VIS).blend(chlorophyll(img).visualize(CHL_VIS));
+    return img.visualize(RGB_VIS).blend(chlorophyll(img).visualize({min: 0, max: CONFIG.galleryChlMax, palette: CHL_VIS.palette}));
   });
   print('True color, clearest days of ' + gy, ui.Thumbnail({image: rgbFrames, params: filmParams}));
   print('Chlorophyll-a over true color', ui.Thumbnail({image: chlFrames, params: filmParams}));

@@ -8,7 +8,8 @@ How the change between days is drawn: each day's shapes are stored as a small gr
 The card blends two days' grids and redraws the edge where the blend crosses zero, so patches grow, shrink, join and split.
 Only the ten dated shapes are data. The in-between shapes are drawn by the animation, and are not measurements.
 The loop ends with all ten days laid over each other, which shows where the chlorophyll sat most often.
-The wind vane points the way the wind was blowing: the average of the three days up to each image (ERA5-Land), the same wind the page tests.
+The wind vane points the way the wind was blowing, with its speed: the average of the three days up to each image (ERA5-Land), the same wind the page tests.
+The speed is that of the averaged wind, so three days of shifting wind read lower than any one of them.
 
 Run from the repository root:  python3 projects/lake-winnebago-blooms/build_card.py
 Writes media/lake-winnebago-card/morph.js and card.html (the figure markup for index.html).
@@ -27,7 +28,7 @@ SUMMERS = {
     2026: dict(mode="top", dates=["2026-07-06", "2026-07-11", "2026-07-13", "2026-07-23", "2026-07-28", "2026-08-02", "2026-08-20", "2026-08-27"]),
 }
 args = [a for a in sys.argv[1:] if not a.startswith("--")]; PREVIEW = "--preview" in sys.argv
-YEAR = args[0] if args else "2025"; MODE = SUMMERS[int(YEAR)]["mode"]; DATES = SUMMERS[int(YEAR)]["dates"]; TOP_SHARE = 0.20
+YEAR = args[0] if args else "2026"; MODE = SUMMERS[int(YEAR)]["mode"]; DATES = SUMMERS[int(YEAR)]["dates"]; TOP_SHARE = 0.20
 DARKEST = {"2025": "along the east side and the north end", "2026": "down the east half of the lake"}[YEAR]
 SUFFIX = f"_{YEAR}" if PREVIEW else ""
 W, H = 219, 480                                # frame size of the filmstrip
@@ -104,7 +105,7 @@ for d in DATES:
     u, v = float(daily[d]["wind_u"]), float(daily[d]["wind_v"])
     to = math.degrees(math.atan2(u, v)) % 360                                  # bearing the wind blows toward, clockwise from north
     frm = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][int((((to + 180) % 360) + 22.5) // 45) % 8]
-    frames.append(dict(date=d, label=datetime.date.fromisoformat(d).strftime("%b %-d").upper(), to=round(to), frm=frm, g=base64.b64encode(q.tobytes()).decode()))
+    frames.append(dict(date=d, label=datetime.date.fromisoformat(d).strftime("%b %-d").upper(), to=round(to), frm=frm, mph=round(math.hypot(u, v) * 2.237), g=base64.b64encode(q.tobytes()).decode()))
     print(d, "patches", len(cs), "share of lake", round(share), "%", "| wind from", frm, "toward", round(to), "deg,", round(math.hypot(u, v) * 2.237, 1), "mph")
 
 JS = r"""/* Lake Winnebago card: the high-chlorophyll patches of summer 2025, each clear day's shapes changing into the next day's.
@@ -114,7 +115,7 @@ JS = r"""/* Lake Winnebago card: the high-chlorophyll patches of summer 2025, ea
   var fig = document.getElementById('lwcard'); if (!fig) return;
   var NS = 'http://www.w3.org/2000/svg', svg = fig.querySelector('svg'), stage = svg.querySelector('.lw-stage');
   var tick = svg.querySelector('.lw-date'), tag = svg.querySelector('.lw-tag'), dots = svg.querySelector('.lw-dots');
-  var vane = svg.querySelector('.lw-vane'), arrow = svg.querySelector('.lw-arrow'), wind = svg.querySelector('.lw-wind');
+  var vane = svg.querySelector('.lw-vane'), arrow = svg.querySelector('.lw-arrow'), wind = svg.querySelector('.lw-wind'), speed = svg.querySelector('.lw-speed');
   var GW = D.gw, GH = D.gh, N = D.frames.length, M = GW * GH;
   var grids = D.frames.map(function (f) { var b = atob(f.g), a = new Float32Array(M); for (var i = 0; i < M; i++) { var c = b.charCodeAt(i); a[i] = c > 127 ? c - 256 : c; } return a; });
   function el(name, cls, parent) { var e = document.createElementNS(NS, name); if (cls) e.setAttribute('class', cls); (parent || stage).appendChild(e); return e; }
@@ -182,6 +183,7 @@ JS = r"""/* Lake Winnebago card: the high-chlorophyll patches of summer 2025, ea
     var a0 = D.frames[i].to, a1 = D.frames[Math.min(N - 1, i + 1)].to, turn = ((a1 - a0 + 540) % 360) - 180;
     arrow.setAttribute('transform', 'rotate(' + (a0 + turn * u).toFixed(1) + ')');
     var wl = 'WIND FROM ' + D.frames[cur].frm; if (wind.textContent !== wl) wind.textContent = wl;
+    var sl = D.frames[cur].mph + ' MPH'; if (speed.textContent !== sl) speed.textContent = sl;
     var end = TOTAL - 2 * FADE;
     if (t > end) all = t < end + FADE ? 1 - (t - end) / FADE : 0;
     if (t < FADE && ms > TOTAL) all = t / FADE;
@@ -209,7 +211,7 @@ data = {"outline": OUTLINE, "gw": GW, "gh": GH, "ox": round(ox, 3), "oy": round(
 open(os.path.join(OUT, f"morph{SUFFIX}.js"), "w").write(JS.replace("__DATA__", json.dumps(data, separators=(",", ":"))))
 if os.path.exists(os.path.join(OUT, "tunnel.js")): os.remove(os.path.join(OUT, "tunnel.js"))
 CARD = """<!-- lake-card:start -->
-<figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches where chlorophyll was highest. The patches change shape from one clear satellite day to the next through July and August 2025, ten days in all, while a wind vane beside the lake turns to show which way the wind had been blowing over the three days before each image. It ends with all ten days laid over each other, darkest along the east side and the north end.">
+<figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches where chlorophyll was highest. The patches change shape from one clear satellite day to the next through July and August 2025, ten days in all, while a wind vane beside the lake turns to show which way and how fast the wind had been blowing over the three days before each image. It ends with all ten days laid over each other, darkest along the east side and the north end.">
   <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <g class="lw-stage"></g>
     <text x="16" y="26" class="svg-label">SUMMER 2025 · SENTINEL-2</text>
@@ -220,6 +222,7 @@ CARD = """<!-- lake-card:start -->
       <text y="-30" class="svg-label" text-anchor="middle">N</text>
       <g class="lw-arrow"><path d="M0,15V-13M-5,-7L0,-15L5,-7M-4,17L0,12L4,17M-4,12L0,7L4,12"/><circle r="2"/></g>
       <text y="44" class="svg-label lw-wind" text-anchor="middle">WIND FROM W</text>
+      <text y="60" class="svg-label lw-speed" text-anchor="middle">5 MPH</text>
     </g>
     <text x="16" y="222" class="svg-label lw-date">JUL 3</text>
     <text x="384" y="222" class="svg-label lw-tag" text-anchor="end" style="opacity:0">ALL 10 CLEAR DAYS, STACKED</text>

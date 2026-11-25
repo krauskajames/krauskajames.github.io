@@ -31,10 +31,10 @@ body { margin:0; background:var(--paper); color:var(--ink); font:400 1rem/1.65 v
 .lake-card .svg-label { paint-order:stroke; stroke:var(--paper-2); stroke-width:4px; stroke-linejoin:round; }
 </style></head>
 <body><div class="wrap">
-<p class="label">Card preview · summer 2026 version, not on the homepage yet</p>
+<p class="label">Card preview · same card as the homepage</p>
 <article class="plate">
 <!-- lake-card:start -->
-<figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches over the fifth of the lake with the most chlorophyll each day. The patches change shape from one clear satellite day to the next through July and August 2026, eight days in all, while a wind vane beside the lake turns to show which way the wind had been blowing over the three days before each image. It ends with all eight days laid over each other, darkest down the east half of the lake.">
+<figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches over the fifth of the lake with the most chlorophyll each day. The patches change shape from one clear satellite day to the next through July and August 2026, eight days in all, while a wind vane beside the lake turns to show which way and how fast the wind had been blowing over the three days before each image. It ends with all eight days laid over each other, darkest down the east half of the lake.">
   <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <g class="lw-stage"></g>
     <text x="16" y="26" class="svg-label">SUMMER 2026 · SENTINEL-2</text>
@@ -45,6 +45,7 @@ body { margin:0; background:var(--paper); color:var(--ink); font:400 1rem/1.65 v
       <text y="-30" class="svg-label" text-anchor="middle">N</text>
       <g class="lw-arrow"><path d="M0,15V-13M-5,-7L0,-15L5,-7M-4,17L0,12L4,17M-4,12L0,7L4,12"/><circle r="2"/></g>
       <text y="44" class="svg-label lw-wind" text-anchor="middle">WIND FROM W</text>
+      <text y="60" class="svg-label lw-speed" text-anchor="middle">5 MPH</text>
     </g>
     <text x="16" y="222" class="svg-label lw-date">JUL 3</text>
     <text x="384" y="222" class="svg-label lw-tag" text-anchor="end" style="opacity:0">ALL 8 CLEAR DAYS, STACKED</text>
@@ -56,5 +57,5 @@ body { margin:0; background:var(--paper); color:var(--ink); font:400 1rem/1.65 v
   <dl><dt>Data</dt><dd>Sentinel-2, Landsat, ERA5-Land, Wisconsin DNR, USGS</dd><dt>Tools</dt><dd>Google Earth Engine, Python, Leaflet</dd></dl>
 </article>
 </div>
-<script src="../../media/lake-winnebago-card/morph_2026.js"></script>
+<script src="../../media/lake-winnebago-card/morph.js"></script>
 </body></html>
