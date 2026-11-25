@@ -282,6 +282,14 @@ section { padding-block: clamp(4rem, 9vw, 6.5rem); border-bottom: 1px solid var(
 .f-forest { fill: var(--forest); } .f-olive { fill: var(--olive); } .f-paper { fill: var(--paper); } .f-ink { fill: var(--ink); }
 .f-tint { fill: var(--olive); fill-opacity: .14; }
 .svg-label { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .06em; }
+/* Lake Winnebago card */
+.lake-card .lw-line { fill: none; stroke: var(--forest); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.lake-card .lw-blob { fill: var(--forest); fill-opacity: .5; }
+.lake-card .lw-stack path { fill: var(--forest); fill-opacity: .17; }
+.lake-card .lw-stack { opacity: 0; }
+.lake-card .lw-date { fill: var(--ink); font-size: 13px; }
+.lake-card .lw-dots rect { fill: var(--ink-2); }
+.lake-card .svg-label { paint-order: stroke; stroke: var(--paper-2); stroke-width: 4px; stroke-linejoin: round; }
 
 /* About */
 .about-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; }
@@ -645,6 +653,27 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
         </article>
 
         <!-- Lake Winnebago -->
+        <article class="plate" data-topics="remote web code" data-order="7">
+          <!-- lake-card:start -->
+          <figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches where chlorophyll was highest. The patches change shape from one clear satellite day to the next through July and August 2025, ten days in all. It ends with all ten days laid over each other, darkest along the east side and the north end.">
+            <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <g class="lw-stage"></g>
+              <text x="16" y="26" class="svg-label">SUMMER 2025 · SENTINEL-2</text>
+              <g class="lw-dots"></g>
+              <text x="16" y="222" class="svg-label lw-date">JUL 3</text>
+              <text x="384" y="222" class="svg-label lw-tag" text-anchor="end" style="opacity:0">ALL 10 CLEAR DAYS, STACKED</text>
+            </svg>
+          </figure>
+          <!-- lake-card:end -->
+          <div class="collar"><span class="label">Remote sensing · Earth Engine</span><span class="status live">Chapter 1 live</span></div>
+          <h3><a href="lake-winnebago.html">Lake Winnebago from Space</a></h3>
+          <p>My grandmother said the west wind blew the algae to our side of the lake. Ten summers of satellite images, checked against lab samples and a USGS boat survey, agree with her: after a west wind the east shore had more chlorophyll than the west on 80% of days.</p>
+          <dl>
+            <dt>Data</dt><dd>Sentinel-2, Landsat, ERA5-Land, Wisconsin DNR, USGS</dd>
+            <dt>Tools</dt><dd>Google Earth Engine, Python, Leaflet</dd>
+          </dl>
+          <a class="case-link" href="lake-winnebago.html">Read the case study →</a>
+        </article>
       </div>
     </div>
   </section>
@@ -922,6 +951,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; justify-content
 <script src="media/winnebago-card/prism.js" defer></script>
 <script src="media/parcel-qa-card/sweep.js" defer></script>
 <script src="media/mke-airport-card/radar.js" defer></script>
+<script src="media/lake-winnebago-card/morph.js" defer></script>
 
 <script>
 /* Projects: filter by topic and sort. Works without JS (toolbar stays hidden). ?topic=remote links straight to a filter. */

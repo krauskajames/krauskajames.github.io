@@ -425,7 +425,6 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
       </div>
       <h1>Lake Winnebago from Space</h1>
       <p class="lede">My grandmother said the west wind blew the algae to our side of the lake. I checked her claim against {N_CLEAR} clear days of satellite images and ten summers of wind. After a west wind, the east shore had more chlorophyll than the west on {W["share"]:.0f}% of days.</p>
-      <p class="draft">Draft for review. Not yet linked from the homepage.</p>
     </div>
   </div>
 
