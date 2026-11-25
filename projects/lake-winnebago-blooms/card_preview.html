@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card preview: Lake Winnebago from Space</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root { --paper:#f1f2ec; --paper-2:#e6e9dd; --ink:#1b241d; --ink-2:#4c5a4f; --forest:#2e4a34; --olive:#6d7a3a; --rule:#c7ccbb;
+  --display:"Cormorant Garamond",Georgia,serif; --body:"Public Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace; }
+@media (prefers-color-scheme: dark) { :root { --paper:#121813; --paper-2:#1a221b; --ink:#e5e9de; --ink-2:#a9b4a5; --forest:#93b897; --olive:#bcc77f; --rule:#2f3a31; color-scheme: dark; } }
+body { margin:0; background:var(--paper); color:var(--ink); font:400 1rem/1.65 var(--body); }
+.wrap { max-width:36rem; margin:3rem auto; padding:0 1.25rem; display:grid; gap:1rem; }
+.label { font:500 0.8125rem/1.4 var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2); }
+.plate { display:grid; gap:1rem; }
+.plate figure { margin:0; background:var(--paper-2); border:1px solid var(--rule); aspect-ratio:5/3; position:relative; overflow:hidden; }
+.plate figure svg { position:absolute; inset:0; width:100%; height:100%; }
+.collar { display:flex; justify-content:space-between; gap:1rem; border-bottom:1px solid var(--rule); padding-bottom:.6rem; }
+.status { font:500 0.75rem/1 var(--mono); letter-spacing:.06em; text-transform:uppercase; padding:.35rem .55rem; border:1px solid currentColor; border-radius:2px; color:var(--olive); }
+.plate h3 { font:600 1.75rem/1.15 var(--display); margin:0; } .plate p { margin:0; color:var(--ink-2); }
+.plate dl { display:grid; grid-template-columns:max-content minmax(0,1fr); gap:.35rem 1.25rem; margin:.25rem 0 0; font-size:.9375rem; }
+.plate dt { font:500 0.75rem/1.9 var(--mono); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-2); } .plate dd { margin:0; }
+.svg-label { font:500 11px var(--mono); fill:var(--ink-2); letter-spacing:.06em; }
+/* card styles (these go into index.html with the card) */
+.lake-card .lw-line { fill:none; stroke:var(--forest); stroke-width:1.2; vector-effect:non-scaling-stroke; }
+.lake-card .lw-blob { fill:var(--forest); fill-opacity:.5; }
+.lake-card .lw-stack path { fill:var(--forest); fill-opacity:.17; }
+.lake-card .lw-stack { opacity:0; }
+.lake-card .lw-date { fill:var(--ink); font-size:13px; }
+.lake-card .svg-label { paint-order:stroke; stroke:var(--paper-2); stroke-width:4px; stroke-linejoin:round; }
+</style></head>
+<body><div class="wrap">
+<p class="label">Card preview · not on the homepage yet</p>
+<article class="plate">
+<!-- lake-card:start -->
+<figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches where chlorophyll was highest. The view travels through ten nested outlines, one for each clear satellite day of July and August 2025, as the patches shift from day to day. It ends with all ten days laid over each other, darkest along the east side and the north end.">
+  <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g class="lw-stage"></g>
+    <text x="16" y="26" class="svg-label">SUMMER 2025 · SENTINEL-2</text>
+    <text x="16" y="222" class="svg-label lw-date">JUL 3</text>
+    <text x="384" y="222" class="svg-label lw-tag" text-anchor="end" style="opacity:0">ALL 10 CLEAR DAYS, STACKED</text>
+  </svg>
+</figure>
+<!-- lake-card:end -->  <div class="collar"><span class="label">Remote sensing · Earth Engine</span><span class="status">Draft</span></div>
+  <h3>Lake Winnebago from Space</h3>
+  <p>My grandmother said the west wind blew the algae to our side of the lake. Ten summers of satellite images, checked against lab samples and a USGS boat survey, say she was right: after a west wind the east shore had more chlorophyll on 80% of days.</p>
+  <dl><dt>Data</dt><dd>Sentinel-2, Landsat, ERA5-Land, Wisconsin DNR, USGS</dd><dt>Tools</dt><dd>Google Earth Engine, Python, Leaflet</dd></dl>
+</article>
+</div>
+<script src="../../media/lake-winnebago-card/tunnel.js"></script>
+</body></html>
