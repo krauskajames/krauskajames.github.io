@@ -25,7 +25,8 @@ SUMMERS = {
     # "fixed": shade where the estimate is about 48 mg/m3 and up (orange to red on the palette).
     2025: dict(mode="fixed", dates=["2025-07-03", "2025-07-13", "2025-07-18", "2025-07-20", "2025-07-21", "2025-07-28", "2025-08-02", "2025-08-07", "2025-08-15", "2025-08-30"]),
     # "top": shade the fifth of the lake with the most chlorophyll that day. Most 2026 days were below the fixed cutoff.
-    2026: dict(mode="top", dates=["2026-07-06", "2026-07-11", "2026-07-13", "2026-07-23", "2026-07-28", "2026-08-02", "2026-08-20", "2026-08-27"]),
+    # "wide" lists days read from the 0-150 export (filmstrip_<year>_chlorophyll_0-150.gif), for blooms that run off the top of the 0-60 scale.
+    2026: dict(mode="top", wide=["2026-07-23"], dates=["2026-07-06", "2026-07-11", "2026-07-13", "2026-07-23", "2026-07-28", "2026-08-02", "2026-08-20", "2026-08-27"]),
 }
 args = [a for a in sys.argv[1:] if not a.startswith("--")]; PREVIEW = "--preview" in sys.argv
 YEAR = args[0] if args else "2026"; MODE = SUMMERS[int(YEAR)]["mode"]; DATES = SUMMERS[int(YEAR)]["dates"]; TOP_SHARE = 0.20
@@ -71,12 +72,14 @@ GW, GH = W // CELL + 1, H // CELL + 1
 daily = {r["date"]: r for r in csv.DictReader(open(f"{HERE}/data/winnebago_daily.csv"))}
 clear = [d for d, r in sorted(daily.items()) if d[:4] == YEAR and d[5:7] in ("07", "08") and float(r["clear_frac"]) >= 0.8 and r["chl_median"]]
 gif = Image.open(f"{HERE}/media/filmstrip_{YEAR}_chlorophyll.gif")
+wide_path = f"{HERE}/media/filmstrip_{YEAR}_chlorophyll_0-150.gif"; gif_wide = Image.open(wide_path) if os.path.exists(wide_path) else None
 PAL = np.array([[int(h[i:i + 2], 16) for i in (0, 2, 4)] for h in ["08306b", "2171b5", "4eb3d3", "7fcdbb", "c7e9b4", "fee08b", "fc8d59", "d73027"]], float)
 LUT = np.array([[np.interp(t, np.linspace(0, 1, 8), PAL[:, c]) for c in range(3)] for t in np.linspace(0, 1, 256)])
 masks = []
 frames = []
 for d in DATES:
-    gif.seek(clear.index(d)); a = np.array(gif.convert("RGB")).astype(int)
+    src = gif_wide if d in SUMMERS[int(YEAR)].get("wide", []) else gif
+    src.seek(clear.index(d)); a = np.array(src.convert("RGB")).astype(int)
     if MODE == "fixed":
         hot = ((a[..., 0] > 200) & (a[..., 1] < 170) & (a[..., 2] < 125)).astype(np.uint8) * 255      # orange to red on the palette
     else:
