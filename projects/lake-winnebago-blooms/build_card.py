@@ -13,14 +13,23 @@ The wind vane points the way the wind was blowing: the average of the three days
 Run from the repository root:  python3 projects/lake-winnebago-blooms/build_card.py
 Writes media/lake-winnebago-card/morph.js and card.html (the figure markup for index.html).
 """
-import base64, csv, datetime, json, math, os
+import base64, csv, datetime, json, math, os, sys
 import cv2, numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 OUT = os.path.join(ROOT, "media", "lake-winnebago-card"); os.makedirs(OUT, exist_ok=True)
-DATES = ["2025-07-03", "2025-07-13", "2025-07-18", "2025-07-20", "2025-07-21", "2025-07-28", "2025-08-02", "2025-08-07", "2025-08-15", "2025-08-30"]
-YEAR = DATES[0][:4]
+# Usage: build_card.py [year] [--preview].  With --preview the files are written as morph_<year>.js and card_<year>.html, and the live card is left alone.
+SUMMERS = {
+    # "fixed": shade where the estimate is about 48 mg/m3 and up (orange to red on the palette).
+    2025: dict(mode="fixed", dates=["2025-07-03", "2025-07-13", "2025-07-18", "2025-07-20", "2025-07-21", "2025-07-28", "2025-08-02", "2025-08-07", "2025-08-15", "2025-08-30"]),
+    # "top": shade the fifth of the lake with the most chlorophyll that day. Most 2026 days were below the fixed cutoff.
+    2026: dict(mode="top", dates=["2026-07-06", "2026-07-11", "2026-07-13", "2026-07-23", "2026-07-28", "2026-08-02", "2026-08-20", "2026-08-27"]),
+}
+args = [a for a in sys.argv[1:] if not a.startswith("--")]; PREVIEW = "--preview" in sys.argv
+YEAR = args[0] if args else "2025"; MODE = SUMMERS[int(YEAR)]["mode"]; DATES = SUMMERS[int(YEAR)]["dates"]; TOP_SHARE = 0.20
+DARKEST = {"2025": "along the east side and the north end", "2026": "down the east half of the lake"}[YEAR]
+SUFFIX = f"_{YEAR}" if PREVIEW else ""
 W, H = 219, 480                                # frame size of the filmstrip
 VB_W, VB_H, LAKE_H = 400, 240, 200             # card viewBox and the lake's height in it
 
@@ -61,10 +70,23 @@ GW, GH = W // CELL + 1, H // CELL + 1
 daily = {r["date"]: r for r in csv.DictReader(open(f"{HERE}/data/winnebago_daily.csv"))}
 clear = [d for d, r in sorted(daily.items()) if d[:4] == YEAR and d[5:7] in ("07", "08") and float(r["clear_frac"]) >= 0.8 and r["chl_median"]]
 gif = Image.open(f"{HERE}/media/filmstrip_{YEAR}_chlorophyll.gif")
+PAL = np.array([[int(h[i:i + 2], 16) for i in (0, 2, 4)] for h in ["08306b", "2171b5", "4eb3d3", "7fcdbb", "c7e9b4", "fee08b", "fc8d59", "d73027"]], float)
+LUT = np.array([[np.interp(t, np.linspace(0, 1, 8), PAL[:, c]) for c in range(3)] for t in np.linspace(0, 1, 256)])
+masks = []
 frames = []
 for d in DATES:
     gif.seek(clear.index(d)); a = np.array(gif.convert("RGB")).astype(int)
-    hot = ((a[..., 0] > 200) & (a[..., 1] < 170) & (a[..., 2] < 125)).astype(np.uint8) * 255      # orange to red on the palette
+    if MODE == "fixed":
+        hot = ((a[..., 0] > 200) & (a[..., 1] < 170) & (a[..., 2] < 125)).astype(np.uint8) * 255      # orange to red on the palette
+    else:
+        # Read each pixel's place on the 0-60 palette back from its colour, then keep the top fifth of the lake's clear pixels.
+        # Pixels that are not a palette colour (cloud) are left out. If more than a fifth of the lake is at the top of the scale, all of it is kept.
+        # The GIF is dithered down to a few dozen colours, so average neighbouring pixels before matching colours to the palette.
+        sm = cv2.GaussianBlur(a.astype(np.float32), (0, 0), 1.6)
+        d2 = ((sm[:, :, None, :] - LUT[None, None, :, :]) ** 2).sum(-1); val = d2.argmin(-1).astype(np.float32) / 255; ok = (d2.min(-1) < 1600) & (lake_mask > 0)
+        val = cv2.GaussianBlur(np.where(ok, val, 0), (0, 0), 3) / np.maximum(cv2.GaussianBlur(ok.astype(np.float32), (0, 0), 3), 1e-3)
+        thr = min(np.quantile(val[ok], 1 - TOP_SHARE), 0.93)                      # 0.93 and up is the top of the scale (about 56 mg/m3)
+        hot = ((val >= thr) & ok).astype(np.uint8) * 255
     hot = cv2.bitwise_and(hot, lake_mask)
     hot = cv2.morphologyEx(hot, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)))
     hot = cv2.morphologyEx(hot, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
@@ -78,7 +100,7 @@ for d in DATES:
     g[:, :] = sd[np.ix_(ys, xs)]
     g[0, :] = np.minimum(g[0, :], -2); g[-1, :] = np.minimum(g[-1, :], -2); g[:, 0] = np.minimum(g[:, 0], -2); g[:, -1] = np.minimum(g[:, -1], -2)
     q = np.clip(np.round(np.clip(g, -CLAMP, CLAMP) * QS), -127, 127).astype(np.int8)
-    share = 100 * (keep > 0).sum() / (lake_mask > 0).sum()
+    share = 100 * (keep > 0).sum() / (lake_mask > 0).sum(); masks.append(keep)
     u, v = float(daily[d]["wind_u"]), float(daily[d]["wind_v"])
     to = math.degrees(math.atan2(u, v)) % 360                                  # bearing the wind blows toward, clockwise from north
     frm = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][int((((to + 180) % 360) + 22.5) // 45) % 8]
@@ -180,8 +202,11 @@ JS = r"""/* Lake Winnebago card: the high-chlorophyll patches of summer 2025, ea
   window.__lwDraw = draw; window.__lwTotal = TOTAL;
 })();
 """
+NUM = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"][len(DATES)]
+WHAT = "where chlorophyll was highest" if MODE == "fixed" else "over the fifth of the lake with the most chlorophyll each day"
+JS = JS.replace("summer 2025", f"summer {YEAR}").replace("Only the ten dated shapes", f"Only the {NUM} dated shapes").replace("all ten days stacked", f"all {NUM} days stacked")
 data = {"outline": OUTLINE, "gw": GW, "gh": GH, "ox": round(ox, 3), "oy": round(oy, 3), "s": round(CELL * k, 5), "frames": frames}
-open(os.path.join(OUT, "morph.js"), "w").write(JS.replace("__DATA__", json.dumps(data, separators=(",", ":"))))
+open(os.path.join(OUT, f"morph{SUFFIX}.js"), "w").write(JS.replace("__DATA__", json.dumps(data, separators=(",", ":"))))
 if os.path.exists(os.path.join(OUT, "tunnel.js")): os.remove(os.path.join(OUT, "tunnel.js"))
 CARD = """<!-- lake-card:start -->
 <figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches where chlorophyll was highest. The patches change shape from one clear satellite day to the next through July and August 2025, ten days in all, while a wind vane beside the lake turns to show which way the wind had been blowing over the three days before each image. It ends with all ten days laid over each other, darkest along the east side and the north end.">
@@ -201,5 +226,10 @@ CARD = """<!-- lake-card:start -->
   </svg>
 </figure>
 <!-- lake-card:end -->"""
-open(os.path.join(OUT, "card.html"), "w").write(CARD)
-print("ok", os.path.getsize(os.path.join(OUT, "morph.js")), "bytes")
+CARD = (CARD.replace("where chlorophyll was highest", WHAT).replace("July and August 2025, ten days in all", f"July and August {YEAR}, {NUM} days in all")
+        .replace("all ten days laid over each other, darkest along the east side and the north end", f"all {NUM} days laid over each other, darkest {DARKEST}")
+        .replace("SUMMER 2025", f"SUMMER {YEAR}").replace("ALL 10 CLEAR DAYS", f"ALL {len(DATES)} CLEAR DAYS"))
+assert YEAR in CARD and "ten" not in CARD.replace("often", "") or len(DATES) == 10
+open(os.path.join(OUT, f"card{SUFFIX}.html"), "w").write(CARD)
+np.save("/tmp/lw_masks.npy", np.array(masks))
+print("ok", os.path.getsize(os.path.join(OUT, f"morph{SUFFIX}.js")), "bytes")
