@@ -223,7 +223,8 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Page (Nov 13):** playbird.html is live with the chapter strip and chapter 2 (interactive notice-area map with letter numbers and zoning, the 29 → 15 funnel, tool steps, a five-place comparison of notice rules, made-up label sheet); homepage card added. Found: the field is inside the City of Sheboygan's ETJ (county ETJ layer), which matters for chapter 3.
 - **Notice map (Nov 13):** the toolbox now builds the map and ANSI D layout itself (notice_layout.py, arcpy.mp); fifth run approved and added to playbird.html as an image and PDF.
 - **Chapter 3 directions (Nov 13):** `projects/playbird/CH3_YOUR_PART.md` + `ch3_concept_sketch.png`: rules table (Town Ch. 337, County Ch. 71, City of Sheboygan ETJ, Wis. Stat. ch. 236), Section 4 T15N R23E with tie sheets 53054000 and 53044020, boundary → streets → lots in the fabric, QA, lot table, review routing table.
-- **Next step:** James works through CH3_YOUR_PART.md.
+- **Layout (Nov 24):** James approved concept 3's road layout (Streets A, B, C loop; C1, MU1, MU2, APT1, APT2; ~70 lots; Outlots 1–2). Rules and routing tables filled in CH3_YOUR_PART.md.
+- **Next step:** James drafts concept 3 in the parcel fabric (CH3 steps 2, 4–8).
 
 ### 38. Year-over-year parcel change report · E5 F4 · 4.6
 - **Part of item 46, chapter 6.** Built on the Playbird Rd site when it fits; the county-wide version stays a stretch goal.
