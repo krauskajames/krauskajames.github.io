@@ -345,6 +345,7 @@ Folded into the Parcel and NG911 QA toolkit (Nov 2, 2026) so the SQL work runs o
 - **Not doing:** analysis on Google Maps or Google Earth imagery (its terms don't allow extracting data from it). Browse it for ideas, then work from NAIP, Sentinel and Landsat.
 - **Status (Nov 24):** Chapter 1 lab work is done: Earth Engine exports, filmstrips, the 1999–2026 Landsat summers, DNR samples and the opening story are in projects/lake-winnebago-blooms/ (see FINDINGS.md and story.md).
 - **Draft page (Nov 24):** lake-winnebago.html, built by projects/lake-winnebago-blooms/build_page.py from the CSV files. Not linked from the homepage until James approves it; the homepage card still says Coming 2027.
+- **Added Nov 24 evening:** the USGS boat comparison (winnebago_boat_match.js; satellite estimate against boat-measured blue-green pigment, rank correlation 0.63) and an interactive study-area map (build_map.py). The ice-log form is published in Survey123.
 - **Next step:** James reviews the draft page; match DNR samples to satellite pixels at each station; publish the ice-log form before ice-up.
 
 ### 10. 3D watershed analysis: the streams that feed Lake Winnebago at Pipe · E4 F4 · 4.0

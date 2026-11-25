@@ -5,7 +5,7 @@ Then:  python3 projects/assemble_page.py projects/lake-winnebago-blooms/page_bod
        and projects/build_flow.py for the data-flow diagram.
 Every number on the page is computed here from the CSV files, so the page cannot drift from the data.
 """
-import csv, datetime, html, math, os, statistics as st
+import csv, datetime, html, json, math, os, statistics as st
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
@@ -272,6 +272,9 @@ def photo(key, alt, cap):
 def sat_cell(d): r = D[d]; return f'{datetime.date.fromisoformat(d).strftime("%b %-d")}: east {r["chl_east"]:.0f}, west {r["chl_west"]:.0f}'
 
 
+MAP = json.load(open(f"{HERE}/map_data.json"))
+MAP_JSON = json.dumps(MAP, separators=(",", ":")).replace("</", "<\\/")
+N_TRACK_DATES = len(MAP["tracks"])
 compass_rows = "\n".join(
     f'<tr{" class=\"hl\"" if s_["name"] == "W" else ""}><td>From the {s_["long"]}</td><td class="num">{s_["n"]}</td><td class="num">{s_["share"]:.0f}%</td><td class="num">{sgn(s_["mean"])}</td></tr>'
     for s_ in sorted(sector, key=lambda z: -z["share"]))
@@ -372,6 +375,31 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
 .scale {{ display: flex; align-items: center; gap: 0.6rem; margin: 1rem 0 0; flex-wrap: wrap; }}
 .scale i {{ display: block; width: min(16rem, 60vw); height: 10px; border: 1px solid var(--rule); background: linear-gradient(90deg, #08306b, #2171b5, #4eb3d3, #7fcdbb, #c7e9b4, #fee08b, #fc8d59, #d73027); }}
 .wide {{ margin-top: 2.5rem; }}
+.map-grid {{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 17rem); border: 1px solid var(--rule); background: var(--paper-2); }}
+@media (max-width: 900px) {{ .map-grid {{ grid-template-columns: minmax(0, 1fr); }} }}
+#lwmap {{ height: min(78vh, 700px); min-height: 420px; background: var(--paper-2); }}
+@media (max-width: 640px) {{ #lwmap {{ height: 480px; min-height: 0; }} }}
+.map-side {{ padding: 1rem 1.1rem; border-left: 1px solid var(--rule); background: var(--paper); display: grid; gap: 0.9rem; align-content: start; font-size: 0.875rem; }}
+@media (max-width: 900px) {{ .map-side {{ border-left: 0; border-top: 1px solid var(--rule); }} }}
+.map-side fieldset {{ border: 0; margin: 0; padding: 0; display: grid; gap: 0.5rem; }}
+.map-side legend {{ padding: 0; margin-bottom: 0.5rem; }}
+.map-side label {{ display: grid; grid-template-columns: 1.1rem 1.6rem minmax(0, 1fr); gap: 0.5rem; align-items: center; cursor: pointer; line-height: 1.3; }}
+.map-side input {{ accent-color: var(--forest); width: 1rem; height: 1rem; margin: 0; }}
+.key {{ display: inline-block; width: 1.6rem; height: 0.8rem; }}
+.key.ramp {{ background: linear-gradient(90deg, #08306b, #4eb3d3, #c7e9b4, #fee08b, #d73027); border: 1px solid var(--rule); }}
+.key.strip {{ border: 2px solid var(--ink); background: color-mix(in srgb, var(--ink) 12%, transparent); }}
+.key.track {{ height: 0; border-top: 2px solid var(--ink); align-self: center; }}
+.key.dot {{ width: 0.8rem; height: 0.8rem; border-radius: 50%; border: 2px solid var(--ink); background: var(--paper); justify-self: center; }}
+.key.pin {{ width: 0.7rem; height: 0.7rem; background: var(--ink); transform: rotate(45deg); justify-self: center; }}
+.map-note {{ font-size: 0.8125rem; color: var(--ink-2); margin: 0; }}
+.leaflet-container {{ font: inherit; }}
+.lw-label {{ background: color-mix(in srgb, var(--paper) 90%, transparent); border: 1px solid var(--rule); border-radius: 2px; color: var(--ink); font: 500 0.75rem/1.2 var(--body); padding: 0.15rem 0.4rem; box-shadow: none; white-space: nowrap; }}
+.lw-label::before {{ display: none; }}
+.leaflet-popup-content-wrapper {{ border-radius: 2px; background: var(--paper); color: var(--ink); box-shadow: 0 1px 6px rgba(0,0,0,.25); }}
+.leaflet-popup-tip {{ background: var(--paper); }}
+.leaflet-popup-content {{ margin: 0.7rem 0.9rem; font: 400 0.875rem/1.45 var(--body); }}
+.leaflet-control-attribution {{ background: color-mix(in srgb, var(--paper) 85%, transparent) !important; color: var(--ink-2) !important; }}
+.leaflet-control-attribution a {{ color: var(--ink-2) !important; }}
 .small {{ font-size: 0.875rem; color: var(--ink-2); }}
 .draft {{ border: 1px solid var(--olive); padding: 0.6rem 0.9rem; font-size: 0.875rem; color: var(--ink-2); max-width: 60ch; }}
 </style>
@@ -413,6 +441,34 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
           {photo("sail_rescue_2014-07-05", "Choppy brown water with whitecaps. A yellow motorboat tows a kayak back by a rope while a boy lies across the kayak holding on. Faces are blurred.", "The same afternoon · Towed back from the middle of the lake")}
         </div>
         <p class="small" style="max-width:60ch;margin-top:1rem">We learned what the wind does on Lake Winnebago long before I looked at any data. A south-southeast wind sent my cousin's kayak to the middle of the lake so fast he had to break the sail, and we went out in my uncle's motorboat to bring him in.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">The lake</span>
+        <div>
+          <h2>Where the measurements come from</h2>
+          <p>Lake Winnebago is about 28 miles long and 10 wide, and shallow enough for the wind to stir. The colors show average chlorophyll-a for July through September 2025. The outlined bands are the two shore strips the wind test compares.</p>
+        </div>
+      </div>
+      <div class="map-grid">
+        <div id="lwmap" role="region" aria-label="Map of Lake Winnebago showing average summer 2025 chlorophyll, the east and west shore strips, three DNR sampling stations, the USGS boat tracks, Pipe and High Cliff State Park"></div>
+        <div class="map-side">
+          <fieldset>
+            <legend class="label">Layers</legend>
+            <label><input type="checkbox" data-layer="chl" checked><span class="key ramp"></span><span>Chlorophyll-a, summer 2025<br><span class="map-note">0 to 60+ mg/m³</span></span></label>
+            <label><input type="checkbox" data-layer="strips" checked><span class="key strip"></span><span>Shore strips, 2 km wide</span></label>
+            <label><input type="checkbox" data-layer="stations" checked><span class="key dot"></span><span>DNR sampling stations</span></label>
+            <label><input type="checkbox" data-layer="tracks"><span class="key track"></span><span>USGS boat tracks, {N_TRACK_DATES} dates</span></label>
+            <label><input type="checkbox" data-layer="places" checked><span class="key pin"></span><span>Places in the story</span></label>
+          </fieldset>
+          <p class="map-note">Click a strip, a station, a track or a place for details. Click the map before using the scroll wheel to zoom.</p>
+          <p class="map-note">The east strip covers {MAP["east_km2"]:.0f} km² and the west {MAP["west_km2"]:.0f} km². The north end above Neenah is left out of both.</p>
+          <p class="map-note">The boat tracks cover the northern two-thirds of the lake. The boat did not go south of Oshkosh.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -590,6 +646,7 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
           <li><span><strong>Shores.</strong> The median in a 2 km strip along the east shore and the same along the west, from Taycheedah to just below Neenah.</span></li>
           <li><span><strong>Wind.</strong> ERA5-Land daily wind, averaged over the lake and a 10 km ring of shore for the image day and the two days before.</span></li>
           <li><span><strong>Boat comparison.</strong> A third Earth Engine script reads Sentinel-2 under each 60 m square of the USGS boat track. Nothing is cloud-masked in the script; the cloud score is exported and the cut is made afterwards.</span></li>
+          <li><span><strong>Map.</strong> The shore strips are rebuilt in Python from the same lake outline and settings as the Earth Engine script, in Wisconsin Transverse Mercator. The chlorophyll layer is the July to September 2025 mean, warped to Web Mercator.</span></li>
           <li><span><strong>Monthly record.</strong> The open-source Lake Chlorophyll-a Monitor by Parisa Abbasalizadehrezaei, set up for Lake Winnebago.</span></li>
         </ol>
       </div>
@@ -606,7 +663,7 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
           <li><strong>Not movement.</strong> Images are two or more days apart. The result is where chlorophyll sits after the wind, not a bloom tracked across the lake.</li>
           <li><strong>Clear days only.</strong> Clear weather comes with its own typical winds, and neighboring days are not independent, so {N_CLEAR} days is fewer than {N_CLEAR} separate tests.</li>
           <li><strong>Land-tuned correction.</strong> The images use the standard atmospheric correction, which is built for land and less accurate over dark water.</li>
-          <li><strong>Few east-shore measurements.</strong> None of the three DNR stations is near the east shore. The USGS boat ran within about a mile of it, on a handful of dates.</li>
+          <li><strong>Few east-shore measurements.</strong> None of the three DNR stations is near the east shore. The USGS boat ran within about a mile of it on a handful of dates, and only along the northern two-thirds of the lake.</li>
         </ul>
       </div>
     </div>
@@ -630,7 +687,7 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
       <span class="label">Software and methods</span>
       <div class="prose">
         <ul class="chips">
-          <li>Google Earth Engine</li><li>JavaScript</li><li>Sentinel-2</li><li>Landsat 5, 8 and 9</li><li>MODIS</li><li>ERA5-Land</li><li>Cloud Score+</li><li>NDCI</li><li>Python</li><li>Water Quality Portal</li><li>USGS FLAMe boat data</li>
+          <li>Google Earth Engine</li><li>JavaScript</li><li>Sentinel-2</li><li>Landsat 5, 8 and 9</li><li>MODIS</li><li>ERA5-Land</li><li>Cloud Score+</li><li>NDCI</li><li>Python</li><li>Water Quality Portal</li><li>USGS FLAMe boat data</li><li>Leaflet</li><li>Shapely, pyproj and rasterio</li>
         </ul>
         <p>Built with AI-assisted coding (Claude): the daily Earth Engine script, the statistics and this page's code. I set up and ran the Earth Engine work, questioned the results until the claims matched the evidence, found the reports, the photos and the USGS boat data, and wrote the opening story.</p>
         <p class="label" style="margin-top:1rem">Monthly monitor and Earth Engine course: Parisa Abbasalizadehrezaei (MIT license) · Data: Copernicus Sentinel-2, Google Cloud Score+, JRC Global Surface Water, USGS Landsat, NASA MODIS, ECMWF ERA5-Land, U.S. Census TIGER, Wisconsin DNR via the Water Quality Portal, U.S. Geological Survey (doi.org/10.5066/P1XHRFKZ) · Faces in family photos are blurred</p>
@@ -641,7 +698,7 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
 
 <footer>
   <div class="wrap">
-    <p class="label built-with" style="flex-basis:100%;margin:0">Built with Google Earth Engine, Sentinel-2, Landsat and Python · Scripts and page code written with Claude</p>
+    <p class="label built-with" style="flex-basis:100%;margin:0">Built with Google Earth Engine, Sentinel-2, Landsat, Python and Leaflet · Scripts and page code written with Claude</p>
     <div class="scalebar" aria-hidden="true">
       <div class="bar"><i></i><i></i><i></i><i></i></div>
       <div class="ticks label"><span>0</span><span>5</span><span>10 mi</span></div>
@@ -649,6 +706,67 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
     <span class="label">NAD83 / Wisconsin Transverse Mercator · © 2026 James Krauska</span>
   </div>
 </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+/* Study-area map. Layers are built by projects/lake-winnebago-blooms/build_map.py. */
+(function () {{
+  var D = {MAP_JSON};
+  var css = function (v) {{ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }};
+  var isDark = function () {{ return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }};
+  var map = L.map('lwmap', {{ zoomSnap: 0.25, minZoom: 8, maxZoom: 14, scrollWheelZoom: false }});
+  map.on('focus', function () {{ map.scrollWheelZoom.enable(); }}); map.on('blur', function () {{ map.scrollWheelZoom.disable(); }});
+  map.attributionControl.setPrefix(false);
+  map.createPane('labels'); map.getPane('labels').style.zIndex = 450; map.getPane('labels').style.pointerEvents = 'none';
+  var ATTR = 'Basemap &copy; <a href="https://www.esri.com">Esri</a>, HERE, Garmin, &copy; OpenStreetMap contributors · Sentinel-2, USGS, Wisconsin DNR';
+  var ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/', base, labels;
+  function setBasemap() {{
+    var tone = isDark() ? 'Dark' : 'Light';
+    if (base) {{ map.removeLayer(base); map.removeLayer(labels); }}
+    base = L.tileLayer(ESRI + 'World_' + tone + '_Gray_Base/MapServer/tile/{{z}}/{{y}}/{{x}}', {{ attribution: ATTR, maxZoom: 16 }}).addTo(map);
+    labels = L.tileLayer(ESRI + 'World_' + tone + '_Gray_Reference/MapServer/tile/{{z}}/{{y}}/{{x}}', {{ pane: 'labels', maxZoom: 16 }}).addTo(map);
+  }}
+  setBasemap();
+  var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+  var nice = function (d) {{ return month[+d.slice(5, 7) - 1] + ' ' + (+d.slice(8, 10)) + ', ' + d.slice(0, 4); }};
+  var ink = function () {{ return css('--ink'); }}, paper = function () {{ return css('--paper'); }};
+  var layers = {{}};
+  layers.chl = L.imageOverlay('{M}' + D.overlay.file, D.overlay.bounds, {{ opacity: 0.92, alt: 'Average chlorophyll-a, July to September 2025' }});
+  var outline = L.geoJSON(D.lake, {{ style: function () {{ return {{ color: ink(), weight: 1, fill: false }}; }}, interactive: false }}).addTo(map);
+  function strip(geom, name, side) {{
+    return L.geoJSON(geom, {{ style: function () {{ return {{ color: ink(), weight: 2, fillColor: ink(), fillOpacity: 0.1 }}; }} }})
+      .bindPopup('<strong>' + name + '</strong><br>The outer 2 km of the lake on the ' + side + ' side, from Taycheedah to just below Neenah. The wind test compares the median chlorophyll-a here with the opposite strip on every clear day.');
+  }}
+  layers.strips = L.layerGroup([strip(D.west, 'West shore strip', 'west'), strip(D.east, 'East shore strip', 'east')]);
+  layers.stations = L.layerGroup(D.stations.map(function (s) {{
+    return L.circleMarker([s.lat, s.lon], {{ radius: 6, color: ink(), weight: 2, fillColor: paper(), fillOpacity: 1 }})
+      .bindPopup('<strong>DNR station ' + s.id + '</strong><br>' + s.name + '<br>' + s.chl + ' chlorophyll-a lab samples, 2017 to 2026');
+  }}));
+  layers.tracks = L.layerGroup(D.tracks.map(function (t) {{
+    var casing = L.geoJSON(t.geometry, {{ style: {{ color: paper(), weight: 4, opacity: 0.9 }}, interactive: false }});
+    var line = L.geoJSON(t.geometry, {{ style: {{ color: ink(), weight: 1.75 }} }})
+      .bindPopup('<strong>USGS boat, ' + nice(t.date) + '</strong>' + (t.pigment == null ? '' : '<br>Median blue-green pigment along the track: ' + t.pigment.toFixed(1) + ' RFU'));
+    return L.layerGroup([casing, line]);
+  }}));
+  var pin = L.divIcon({{ className: '', html: '<span style="display:block;width:11px;height:11px;background:' + ink() + ';border:2px solid ' + paper() + ';transform:rotate(45deg)"></span>', iconSize: [15, 15], iconAnchor: [7, 7] }});
+  layers.places = L.layerGroup(D.places.map(function (p) {{
+    return L.marker([p.lat, p.lon], {{ icon: pin, keyboard: true, title: p.name }})
+      .bindTooltip(p.name, {{ permanent: true, direction: 'right', offset: [8, 0], className: 'lw-label' }})
+      .bindPopup('<strong>' + p.name + '</strong><br>' + p.note);
+  }}));
+  var order = ['chl', 'strips', 'tracks', 'stations', 'places'];
+  function sync() {{
+    order.forEach(function (k) {{
+      var box = document.querySelector('[data-layer="' + k + '"]');
+      if (box.checked) {{ if (!map.hasLayer(layers[k])) layers[k].addTo(map); }} else if (map.hasLayer(layers[k])) map.removeLayer(layers[k]);
+    }});
+    outline.bringToFront();
+  }}
+  document.querySelectorAll('[data-layer]').forEach(function (b) {{ b.addEventListener('change', sync); }});
+  sync();
+  map.fitBounds(outline.getBounds(), {{ padding: [18, 18] }});
+  if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {{ setBasemap(); }});
+}})();
+</script>
 <script>
 /* Chart tooltips: hover or keyboard focus on any mark with data-tip. */
 (function () {{
