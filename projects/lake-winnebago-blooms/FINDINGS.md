@@ -91,3 +91,14 @@ Same-day true color from NASA GIBS (MODIS Terra about 10:30 am, NOAA-20 VIIRS ab
 - Partly usable: June 25, 2024 (north end, morning). July 8, 2025 (haze bands in the morning, partly clear in the afternoon).
 - Overcast: August 8, 2023; July 29, 2024; April 28 and May 1, 2025.
 July 29, 2024 has the strongest bloom in the boat data but was overcast all day, so no optical satellite can be matched to it on the day. Against NOAA's July 29–August 7 maximum composite (Sentinel-3 CIcyano, 333 pixels), boat phycocyanin correlates weakly (Spearman 0.15): the composite is not a same-day image. Both do put the east side higher that week (boat median 5.1 vs 4.3 RFU; composite DN 218 vs 184).
+
+## Boat-to-satellite matchup (winnebago_boat_match.js, run November 24, 2026)
+8,900 boat cells (60 m) on eight dates; 7,315 have boat phycocyanin and a Sentinel-2 clear score of 0.65 or more. Rank correlations (Spearman) with boat phycocyanin:
+- Sentinel-2 chlorophyll estimate (NDCI): 0.63 pooled. By date: 0.49, 0.54, 0.57, 0.55, 0.25, 0.18, 0.27, and 0.67 on July 8, 2025, the only same-day pair. By time gap: 0.67 same day, 0.61 one day, 0.65 two days.
+- Date medians, eight dates: 0.81 (Pearson 0.85).
+- A second instrument, the FluoroProbe blue-green estimate: 0.61 (3,203 cells).
+- Cloud threshold: 0.62 at 0.5, 0.63 at 0.65, 0.48 at 0.8 (the strict threshold removes about half the cells).
+- Floating Algae Index: −0.17 pooled, sign changes by date. No relationship.
+- MODIS near-infrared minus red, same day: 0.00 (Terra), 0.09 (Aqua). No relationship; the 250 m product has no cloud mask.
+- Boat chlorophyll fluorescence against the satellite chlorophyll estimate: −0.19. The satellite index follows the boat's blue-green pigment, not its chlorophyll channel.
+- Turbidity: phycocyanin and turbidity 0.74; satellite estimate and turbidity 0.66. With turbidity held constant, phycocyanin and the satellite estimate still correlate at 0.30.
