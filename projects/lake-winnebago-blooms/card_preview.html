@@ -23,6 +23,7 @@ body { margin:0; background:var(--paper); color:var(--ink); font:400 1rem/1.65 v
 .lake-card .lw-blob { fill:var(--forest); fill-opacity:.5; }
 .lake-card .lw-stack path { fill:var(--forest); fill-opacity:.17; }
 .lake-card .lw-stack { opacity:0; }
+.lake-card .lw-dots rect { fill:var(--ink-2); }
 .lake-card .lw-date { fill:var(--ink); font-size:13px; }
 .lake-card .svg-label { paint-order:stroke; stroke:var(--paper-2); stroke-width:4px; stroke-linejoin:round; }
 </style></head>
@@ -30,10 +31,11 @@ body { margin:0; background:var(--paper); color:var(--ink); font:400 1rem/1.65 v
 <p class="label">Card preview · not on the homepage yet</p>
 <article class="plate">
 <!-- lake-card:start -->
-<figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches where chlorophyll was highest. The view travels through ten nested outlines, one for each clear satellite day of July and August 2025, as the patches shift from day to day. It ends with all ten days laid over each other, darkest along the east side and the north end.">
+<figure class="lake-card" id="lwcard" aria-label="Outline of Lake Winnebago with green patches where chlorophyll was highest. The patches change shape from one clear satellite day to the next through July and August 2025, ten days in all. It ends with all ten days laid over each other, darkest along the east side and the north end.">
   <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <g class="lw-stage"></g>
     <text x="16" y="26" class="svg-label">SUMMER 2025 · SENTINEL-2</text>
+    <g class="lw-dots"></g>
     <text x="16" y="222" class="svg-label lw-date">JUL 3</text>
     <text x="384" y="222" class="svg-label lw-tag" text-anchor="end" style="opacity:0">ALL 10 CLEAR DAYS, STACKED</text>
   </svg>
@@ -44,5 +46,5 @@ body { margin:0; background:var(--paper); color:var(--ink); font:400 1rem/1.65 v
   <dl><dt>Data</dt><dd>Sentinel-2, Landsat, ERA5-Land, Wisconsin DNR, USGS</dd><dt>Tools</dt><dd>Google Earth Engine, Python, Leaflet</dd></dl>
 </article>
 </div>
-<script src="../../media/lake-winnebago-card/tunnel.js"></script>
+<script src="../../media/lake-winnebago-card/morph.js"></script>
 </body></html>
