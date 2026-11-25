@@ -33,7 +33,7 @@ var CONFIG = {
   splitLon: -88.415,              // east/west split, roughly the middle of the lake
   stripLats: [43.80, 44.15],      // Taycheedah to below Neenah; leaves out the Neenah end
 
-  galleryYear: 2025,              // Part B
+  galleryYear: 2026,              // Part B
   galleryMonths: [7, 8],
   cottageYears: [1999, 2026],     // Part C: the cottage years (Pipe, then Taycheedah)
 

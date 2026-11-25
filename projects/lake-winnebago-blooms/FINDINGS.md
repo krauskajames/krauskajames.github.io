@@ -38,6 +38,14 @@ Grandma JoAnn's claim: "The west wind blows the blue-green algae from the other 
 
 Limits: days are not independent; clear days only; an index until validated; even in light wind the east shore is higher 61% of the time.
 
+### Bias check: the two shores with the wind left out (added November 24, 2026, James's question)
+- East strip higher on 151 of 250 clear days (60%). Medians: east 25.4, west 23.2 mg/m³; median gap +1.5.
+- Wind with a westerly part on 155 days, easterly on 95, so some of the 60% is the wind itself.
+- Almost no east-west wind (under 0.5 m/s, 55 days): east higher 65%, median gap +2.5. So part of the east lean is not wind. Cause not tested.
+- East-west wind from the west side, 1 m/s or more (92 days): east higher 78%, median gap +6.0.
+- From the east side, 1 m/s or more (48 days): east higher 25%, median gap −3.1.
+- Reading: the wind moves the result both ways from a 60% starting point, and a west wind widens the east's lead more than an east wind reverses it. The fair comparison for the 80% west-wind figure is 60%, not 50%.
+
 ## Worst east-shore days
 2019-08-19 (east 123.5, west 61.5), 2019-07-28 (115.5 vs 36.7), 2025-09-29 (89.5 vs 45.5), 2017-08-09 (88.5 vs 19.2), 2019-08-09 (86.3 vs 29.3).
 

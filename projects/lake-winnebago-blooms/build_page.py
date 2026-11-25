@@ -41,6 +41,13 @@ for i in range(8):
     sector.append(dict(name=NAMES[i], long=LONG[i], n=len(g), share=100 * sum(r["gap"] > 0 for r in g) / len(g),
                        mean=st.mean(r["gap"] for r in g)))
 W = sector[6]; NEs = sector[1]
+# Bias check: the two shores compared with the wind left out, then with a clear east-west wind either way.
+def grp(test):
+    g = [r for r in clear if test(r["wind_u"])]
+    return dict(n=len(g), share=100 * sum(r["gap"] > 0 for r in g) / len(g), med=st.median(r["gap"] for r in g))
+BASE = grp(lambda u: True); CALM = grp(lambda u: abs(u) < 0.5); WESTERLY = grp(lambda u: u >= 1); EASTERLY = grp(lambda u: u <= -1)
+MED_E = st.median(r["chl_east"] for r in clear); MED_W = st.median(r["chl_west"] for r in clear)
+N_WPART = sum(r["wind_u"] > 0 for r in clear)
 
 
 def ranks(v):
@@ -166,6 +173,9 @@ def chart_compass():
         t = f'Wind from the {r["long"]}: east shore higher on {r["share"]:.0f}% of {r["n"]} clear days; average east minus west {sgn(r["mean"])} mg/m³'
         out.append(f'<div class="hb-row"{tip(t)}><span class="hb-cat">{r["long"].capitalize()} <i>{r["n"]} days</i></span>'
                    f'<span class="hb-track"><span class="hb-fill" style="width:{r["share"]:.1f}%"></span></span><span class="hb-val">{r["share"]:.0f}%</span></div>')
+    t = f'All {BASE["n"]} clear days, whatever the wind: east shore higher on {BASE["share"]:.0f}%'
+    out.append(f'<div class="hb-row hb-base"{tip(t)}><span class="hb-cat">All days <i>{BASE["n"]} days</i></span>'
+               f'<span class="hb-track"><span class="hb-fill" style="width:{BASE["share"]:.1f}%"></span></span><span class="hb-val">{BASE["share"]:.0f}%</span></div>')
     out.append('<div class="hb-row hb-axis" aria-hidden="true"><span></span><span class="hb-ticks"><span>0%</span><span>50%, no difference</span><span>100%</span></span><span></span></div>')
     return '<div class="hbars" role="group" aria-label="Share of clear days when the east shore had more chlorophyll than the west, by the direction the wind came from">' + "".join(out) + "</div>"
 
@@ -334,6 +344,8 @@ BODY = f'''<style>
 .hb-fill {{ position: relative; z-index: 1; display: block; height: 100%; background: var(--forest); border-radius: 0 4px 4px 0; }}
 .hb-row:hover .hb-fill, .hb-row:focus-visible .hb-fill {{ outline: 2px solid var(--ink); outline-offset: 1px; }}
 .hb-val {{ font-weight: 600; font-variant-numeric: tabular-nums; }}
+.hb-base {{ margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px solid var(--rule); }}
+.hb-base .hb-fill {{ background: var(--ink-2); }}
 .hb-axis .hb-ticks {{ display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--ink-2); }}
 @media (max-width: 520px) {{
   .hb-row {{ grid-template-columns: 5.25rem minmax(0, 1fr) 2.5rem; gap: 0.5rem; }}
@@ -424,7 +436,7 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
         <span class="label">Lake Winnebago, Wisconsin · 2017–2026</span>
       </div>
       <h1>Lake Winnebago from Space</h1>
-      <p class="lede">My grandmother said the west wind blew the algae to our side of the lake. I checked her claim against {N_CLEAR} clear days of satellite images and ten summers of wind. After a west wind, the east shore had more chlorophyll than the west on {W["share"]:.0f}% of days.</p>
+      <p class="lede">My grandmother said the west wind blew the algae to our side of the lake. I checked her claim against {N_CLEAR} clear days of satellite images and ten summers of wind. After a west wind, the east shore had more chlorophyll than the west on {W["share"]:.0f}% of days, against {BASE["share"]:.0f}% of all days.</p>
     </div>
   </div>
 
@@ -483,7 +495,7 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
       </div>
       <figure class="chart-fig">
         <h3>How often the east shore was worse than the west</h3>
-        <p class="sub">Share of clear days with more chlorophyll-a along the east shore, by the direction the wind came from.</p>
+        <p class="sub">Share of clear days with more chlorophyll-a along the east shore, by the direction the wind came from. The grey bar is every clear day, whatever the wind.</p>
         {chart_compass()}
         <details class="nums"><summary>Show the numbers</summary>
           <div class="table-scroll"><table class="compare">
@@ -496,7 +508,25 @@ details.nums summary {{ font: 500 0.8125rem/1.4 var(--mono); letter-spacing: 0.0
         <span class="label">Reading it</span>
         <div class="prose">
           <p>A west wind is the strongest of the eight directions: the east shore came out higher on <strong>{W["share"]:.0f}% of {W["n"]} days</strong>, by an average of {W["mean"]:.1f} mg/m³. A northeast wind reverses it. The east shore was higher on only {NEs["share"]:.0f}% of those {NEs["n"]} days.</p>
-          <p>So she was right about the wind. What the data shows is where the chlorophyll sits after the wind has blown, not algae in motion, and it does not show the bloom starting on the far side. The algae grows across the whole lake and the wind sorts it.</p>
+          <p>So she was right about the wind, with one correction from the check below: the east shore starts ahead, so the wind's part is the move from {BASE["share"]:.0f}% to {W["share"]:.0f}%, not from an even split. What the data shows is where the chlorophyll sits after the wind has blown, not algae in motion, and it does not show the bloom starting on the far side. The algae grows across the whole lake and the wind sorts it.</p>
+        </div>
+      </div>
+      <div class="cs-body">
+        <span class="label">Bias check</span>
+        <div class="prose">
+          <p>Before crediting the wind, I compared the two shores with the wind left out. The east shore is higher on <strong>{BASE["share"]:.0f}% of all {BASE["n"]} clear days</strong>, so it starts ahead. The usual gap is small: a median of {MED_E:.0f} mg/m³ on the east against {MED_W:.0f} on the west.</p>
+          <p>Some of that head start is the wind too, since {N_WPART} of the {BASE["n"]} days had wind with a westerly part. But on the {CALM["n"]} days with almost no east-west wind, the east was still higher {CALM["share"]:.0f}% of the time, so part of it belongs to the lake and not the wind. I have not tested why.</p>
+          <div class="table-scroll"><table class="compare">
+            <thead><tr><th scope="col">East-west wind</th><th scope="col" class="num">Days</th><th scope="col" class="num">East higher</th><th scope="col" class="num">Median gap (mg/m³)</th></tr></thead>
+            <tbody>
+              <tr><td>From the west side, 1 m/s or more</td><td class="num">{WESTERLY["n"]}</td><td class="num">{WESTERLY["share"]:.0f}%</td><td class="num">{sgn(WESTERLY["med"])}</td></tr>
+              <tr><td>Almost none, under 0.5 m/s</td><td class="num">{CALM["n"]}</td><td class="num">{CALM["share"]:.0f}%</td><td class="num">{sgn(CALM["med"])}</td></tr>
+              <tr><td>From the east side, 1 m/s or more</td><td class="num">{EASTERLY["n"]}</td><td class="num">{EASTERLY["share"]:.0f}%</td><td class="num">{sgn(EASTERLY["med"])}</td></tr>
+              <tr class="hl"><td>All clear days</td><td class="num">{BASE["n"]}</td><td class="num">{BASE["share"]:.0f}%</td><td class="num">{sgn(BASE["med"])}</td></tr>
+            </tbody>
+          </table></div>
+          <p class="small">Wind is the three-day average. The gap is east minus west.</p>
+          <p>The wind moves the result both ways from that starting point, but not evenly. A west wind widens the east shore's lead more than an east wind reverses it.</p>
         </div>
       </div>
       <figure class="chart-fig wide">
